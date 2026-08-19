@@ -1,0 +1,2 @@
+import type { MetadataRoute } from "next";
+export default function manifest(): MetadataRoute.Manifest { return { name: "Goodly Trials Wiki & Field Archive", short_name: "Goodly Trials Wiki", description: "Verified Goodly Trials units, items, mechanics, builds, guides, and updates.", start_url: "/", display: "standalone", background_color: "#0e0c09", theme_color: "#181410", icons: [{ src: "/images/ui/goodly-trials-crest.png", sizes: "32x32", type: "image/png" }] }; }

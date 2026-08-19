@@ -1,0 +1,6 @@
+[
+  { "slug": "goodly-knight-frontline-build", "title": "Goodly Knight Frontline Build", "unitSlug": "goodly-knight", "faction": "Goodly Folk", "difficulty": "Beginner", "version": "v0.300", "summary": "An editorial starting point built around Formation, adjacent STR support, an Iron Sword, and an Iron Shield." },
+  { "slug": "archer-bow-build", "title": "Archer Bow Timing Build", "unitSlug": "archer", "faction": "Goodly Folk", "difficulty": "Intermediate", "version": "v0.300", "summary": "Plan around Versatile reaching the Bow of Grace requirement, then preserve a safe backline." },
+  { "slug": "wizard-frostfall-build", "title": "Wizard Frostfall Build", "unitSlug": "wizard", "faction": "Goodly Folk", "difficulty": "Beginner", "version": "v0.300", "summary": "Uses the Wizard's verified INT and MP profile to support Frostfall of Lore." },
+  { "slug": "skeleton-child-support-build", "title": "Skeleton Child Adjacency Build", "unitSlug": "skeleton-child", "faction": "Bone Host", "difficulty": "Advanced", "version": "v0.300", "summary": "Treats hand gear as an adjacent-ally buff and preserves a flanking respawn angle." }
+]

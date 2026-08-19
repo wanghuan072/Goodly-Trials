@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "goodly-knight-frontline-build",
+    "quickAnswer": "Use Iron Sword of Brawn and Iron Shield of Brawn as an accessible v0.300 starting point, then place the Goodly Knight beside allies that benefit from Knight's Oath.",
+    "loadout": [["Weapon", "Iron Sword of Brawn", "/wiki/items/iron-sword-of-brawn"], ["Shield", "Iron Shield of Brawn", "/wiki/items/iron-shield-of-brawn"], ["Position", "Formation / adjacency", "/guides/formation-guide"], ["Trait", "Oracle", "/wiki/units/goodly-knight"]],
+    "sections": [
+      { "title": "Why this starting point works", "paragraphs": ["The Goodly Knight begins with enough STR and AGI to meet the Iron Sword requirement and enough STR for the Iron Shield. The pair adds HP, ATK, STR, and armor while preserving the official Formation identity."], "bullets": ["Iron Sword: +2 STR, +3 ATK, +8 HP", "Iron Shield: +2 STR, +1 AR, +10 HP, ranged armor", "Knight's Oath: +1 STR to adjacent allies"] },
+      { "title": "Formation plan", "paragraphs": ["Place the Knight where adjacent STR has a real beneficiary. Do not chase a generic front-center position if it breaks a better support line."] },
+      { "title": "Weaknesses and update checks", "paragraphs": ["Oracle reduces STR and adds AGI and INT after battles, so the unit's long-road identity changes. Recheck item requirements and derived stats as the run develops."] }
+    ]
+  },
+  {
+    "slug": "archer-bow-build",
+    "quickAnswer": "The Archer starts at 3 AGI; after Versatile adds AGI, Bow of Grace becomes a natural verified-requirement milestone for a protected backline.",
+    "loadout": [["Weapon", "Bow of Grace", "/wiki/items/bow-of-grace"], ["Trinket", "Feather Charm of Reflex", "/wiki/items/feather-charm-of-reflex"], ["Position", "Backline", "/guides/formation-guide"], ["Trait", "Versatile", "/wiki/units/archer"]],
+    "sections": [
+      { "title": "Timing the requirement", "paragraphs": ["Bow of Grace requires 4 AGI. The public Archer baseline has 3 AGI, while Versatile adds AGI after each battle after its one-time penalty. Confirm the current card before buying."], "bullets": ["Bow adds AGI, ATK, and RNG", "Bow also applies a SPD penalty", "Feather Charm requires 3 AGI and adds income"] },
+      { "title": "Protect the backline", "paragraphs": ["The Archer carries the Backline tactic and begins with RNG 3 plus a skill that adds another point of range. Preserve target access without exposing the unit to early contact."] },
+      { "title": "Weaknesses", "paragraphs": ["The verified baseline has low HP and no armor. A longer range does not guarantee safety against flankers or an opposing line that collapses quickly."] }
+    ]
+  },
+  {
+    "slug": "wizard-frostfall-build",
+    "quickAnswer": "The Wizard's 7 INT, 27 MP, and four trinket slots make Frostfall of Lore a verified-requirement spell starting point for v0.300.",
+    "loadout": [["Spell", "Frostfall of Lore", "/wiki/items/frostfall-of-lore"], ["Hand gear", "Wand of Wit", "/wiki/items/wand-of-wit"], ["Position", "Backline", "/guides/formation-guide"], ["Trait", "Potent", "/wiki/units/wizard"]],
+    "sections": [
+      { "title": "Spell fit", "paragraphs": ["Frostfall requires 4 INT, deals spell damage based on INT, and adds more INT. The Wizard exceeds that requirement in the verified baseline and Potent adds spell damage."], "bullets": ["Wizard: 7 INT and 27 MP", "Potent: +20% spell damage", "Frostfall: 2 × INT spell damage and +4 INT"] },
+      { "title": "Wand option", "paragraphs": ["Wand of Wit requires 3 INT and adds INT, ATK, MP, and a trinket slot. The fit is based on public requirements and stats, not a permanent best-in-slot claim."] },
+      { "title": "Weaknesses", "paragraphs": ["The public baseline has 10 HP and no armor. Quick-Witted also reduces STR for adjacent allies, so careless placement can weaken a neighbor."] }
+    ]
+  },
+  {
+    "slug": "skeleton-child-support-build",
+    "quickAnswer": "Equip hand gear for the adjacent ally, not for the Skeleton Child. Preserve a useful adjacency before using Flanking and the once-per-battle back-corner respawn.",
+    "loadout": [["Hand gear", "Any verified beneficiary fit", "/wiki/items"], ["Position", "Adjacency into Flanking", "/guides/formation-guide"], ["Trait", "Magnanimous", "/wiki/units/skeleton-child"], ["Skill", "Respawn", "/wiki/units/skeleton-child"]],
+    "sections": [
+      { "title": "Magnanimous changes item value", "paragraphs": ["The Skeleton Child receives no hand-gear benefits. Adjacent allies receive half of those benefits instead, which makes the beneficiary and starting adjacency the first build decision."], "bullets": ["Choose a legal item", "Choose the adjacent recipient", "Confirm half-benefit remains useful", "Do not evaluate the item from the Child's own stat line"] },
+      { "title": "Flanking and respawn", "paragraphs": ["Flanking can take the unit behind enemies, while Respawn returns it once at a back corner. Neither mechanic proves a guaranteed target, so inspect the board before committing."] },
+      { "title": "Weaknesses", "paragraphs": ["A misplaced child can send gear value to the wrong ally and still fail to reach a worthwhile rear target. This is an advanced positioning note, not a universal build."] }
+    ]
+  }
+]

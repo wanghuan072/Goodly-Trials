@@ -1,0 +1,39 @@
+.header { position: sticky; z-index: 100; top: 0; border-bottom: 1px solid var(--border-bronze); background: rgba(11, 9, 7, .94); box-shadow: 0 12px 30px rgba(0, 0, 0, .38); backdrop-filter: blur(12px); }
+.inner { display: flex; min-height: 76px; align-items: center; gap: 28px; }
+.brand { display: flex; min-width: 230px; align-items: center; gap: 10px; }
+.brand img { filter: sepia(.4) saturate(.9); }
+.brand span { display: grid; line-height: 1; }
+.brand b { color: var(--parchment); font-family: var(--font-display); font-size: 1.22rem; letter-spacing: .06em; text-transform: uppercase; }
+.brand small { margin-top: 6px; color: var(--gold); font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; }
+.desktopNav { display: flex; align-items: center; gap: 24px; }
+.desktopNav > a, .wikiMenu > summary { padding: 28px 0 24px; border-bottom: 2px solid transparent; color: var(--parchment-dark); font-family: var(--font-display); font-size: .88rem; letter-spacing: .08em; cursor: pointer; list-style: none; }
+.desktopNav > a:hover, .wikiMenu > summary:hover { border-color: var(--gold); color: var(--gold-bright); }
+.wikiMenu { position: relative; }
+.wikiMenu > summary::-webkit-details-marker { display: none; }
+.wikiMenu > summary::after { content: "⌄"; margin-left: 6px; }
+.wikiMenu > div { position: absolute; top: 66px; left: -18px; display: grid; width: 190px; padding: 10px; border: 1px solid var(--border-bronze); background: #100d09; box-shadow: var(--shadow-deep); }
+.wikiMenu > div a { padding: 9px 12px; color: var(--text-muted); }
+.wikiMenu > div a:hover { color: var(--gold-bright); background: #21180f; }
+.desktopSearch { margin-left: auto; }
+.search { display: flex; width: 240px; height: 38px; border: 1px solid var(--border-bronze); background: #0a0806; }
+.search input { min-width: 0; flex: 1; border: 0; outline: 0; color: var(--text-main); background: transparent; padding-inline: 12px; font-size: .82rem; }
+.search button { width: 40px; border: 0; color: var(--gold); background: transparent; cursor: pointer; font-size: 1.2rem; }
+.mobileMenu { display: none; margin-left: auto; }
+
+@media (max-width: 1100px) { .desktopSearch { display: none; } .desktopNav { margin-left: auto; } }
+@media (max-width: 768px) {
+  .inner { min-height: 66px; }
+  .brand { min-width: 0; }
+  .brand img { width: 44px; height: 44px; }
+  .brand b { font-size: 1rem; }
+  .brand small { font-size: .54rem; }
+  .desktopNav { display: none; }
+  .mobileMenu { display: block; }
+  .mobileMenu > summary { display: grid; width: 42px; height: 42px; place-content: center; gap: 5px; border: 1px solid var(--border-bronze); cursor: pointer; list-style: none; }
+  .mobileMenu > summary span { width: 20px; height: 1px; background: var(--gold-bright); }
+  .mobileMenu > nav { position: fixed; top: 66px; right: 0; left: 0; display: grid; max-height: calc(100vh - 66px); overflow: auto; padding: 20px; border-bottom: 1px solid var(--border-bronze); background: #100d09; box-shadow: var(--shadow-deep); }
+  .mobileMenu > nav > a { padding: 12px 4px; border-bottom: 1px solid var(--border-soft); color: var(--parchment); font-family: var(--font-display); }
+  .mobileWiki { display: grid; grid-template-columns: 1fr 1fr; margin: 10px 0 18px; }
+  .mobileWiki a { padding: 7px 4px; color: var(--text-muted); font-size: .86rem; }
+  .mobileMenu .search { width: 100%; }
+}

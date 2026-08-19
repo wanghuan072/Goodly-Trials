@@ -1,0 +1,65 @@
+[
+  {
+    "slug": "beginners-guide",
+    "quickAnswer": "Survive twelve trials by repeating a deliberate Shop → Place → Equip → Battle → Plan rhythm. Three battles without a win end the journey.",
+    "sections": [
+      { "title": "Start with the road", "paragraphs": ["Draft a leader and a defining trait, then build a company one market at a time. Training leads into Fair, Unfair, and eventually Ranked."], "bullets": ["Inspect requirements before buying gear", "Read unit trait, skills, and tactic together", "Place for range and adjacency before committing", "Use each result to plan the next shop"] },
+      { "title": "Read a unit card", "paragraphs": ["Vitals show HP, ES, and MP. Attributes show STR, AGI, and INT. Combat values show attack, critical chance, range, speed, armor, and evasion. Gear slots, traits, skills, and tactics explain how that baseline changes."], "bullets": ["A high number without a usable position may be wasted", "Rolled traits can change a familiar recruit", "Primary attributes can lead toward Ascendancy"] },
+      { "title": "Avoid early mistakes", "paragraphs": ["Do not buy an item before confirming its requirement and available slot. Do not treat Backline, Formation, and Flanking as cosmetic tags. Do not assume an old build remains current through Early Access patches."], "bullets": ["Check cost and requirement", "Check open hand or trinket slots", "Check version freshness", "Re-read the opposing line"] }
+    ]
+  },
+  {
+    "slug": "formation-guide",
+    "quickAnswer": "Place for tactic, range, adjacency, and the enemy line. Good placement makes verified skills connect before auto-battle takes control.",
+    "sections": [
+      { "title": "Formation, Backline, and Flanking", "paragraphs": ["The current public cards use three tactic labels. Formation units stay in line and can reduce damage, Backline units prefer the rear, and Flanking units can enter behind enemies."], "bullets": ["Goodly Knight and Portly Knight — Formation", "Archer and Wizard — Backline", "Skeleton Child and Skeleton Dog — Flanking"] },
+      { "title": "Build around adjacency", "paragraphs": ["Goodly Knight adds STR to adjacent allies. Skeleton Child can pass half of hand-gear benefits to adjacent allies. Move either unit and the value map changes."], "bullets": ["Identify every adjacent effect", "Choose the beneficiary before equipping", "Do not leave support touching an irrelevant target"] },
+      { "title": "Inspect the opposing line", "paragraphs": ["Range, formation, flanking, adjacency, and opposing-line shape are all named by the official game description as meaningful. Use the available inspection view before locking placement."] }
+    ]
+  },
+  {
+    "slug": "stats-explained",
+    "quickAnswer": "Use vitals to judge resources, attributes to judge scaling, and combat values to judge battlefield behavior. Then read trait, skill, tactic, and gear together.",
+    "sections": [
+      { "title": "Vitals", "paragraphs": ["HP determines when a unit falls. ES absorbs damage first and regenerates. MP powers spell tomes."], "bullets": ["HP — survival", "ES — regenerating shield", "MP — spell resource"] },
+      { "title": "Attributes", "paragraphs": ["STR, AGI, and INT feed different families of derived stats, while a primary attribute may also feed attack and Ascendancy progression."], "bullets": ["STR — HP, armor, recovery", "AGI — speed and evasion", "INT — MP, regeneration, energy shield"] },
+      { "title": "Combat values", "paragraphs": ["ATK is damage before armor, CRT is double-damage chance, RNG is attack distance, SPD is action and movement speed, AR reduces damage, and EVA can avoid a hit before armor or energy shield applies."] }
+    ]
+  },
+  {
+    "slug": "economy-guide",
+    "quickAnswer": "Spend only after checking requirements, slots, and the next placement. In multiplayer, remember that the shop is shared and contested purchases become live bids.",
+    "sections": [
+      { "title": "Single-player shopping", "paragraphs": ["The road cycles through shopping, placement, equipment, combat, and planning. A purchase has value only if the company can equip it and the formation can use it."], "bullets": ["Check item requirement", "Check gear or trinket capacity", "Compare immediate power with future scaling", "Keep enough flexibility for the next market"] },
+      { "title": "Income effects", "paragraphs": ["Some public items and traits add income. Feather Charm of Reflex and Ruby Charm of Wit list income bonuses, while Portly Knight's Hoarding trait rewards several equipment types being on the board."], "bullets": ["Income text is part of the item or trait effect", "Requirements can delay the purchase's practical value", "Do not turn an income example into a universal economy rule"] },
+      { "title": "Multiplayer bidding", "paragraphs": ["In a tournament, 2–8 players share markets. Contested items open at list price; players raise or pass. Mixed-faction lobbies can also put units up for bid."] }
+    ]
+  },
+  {
+    "slug": "ascendancy-guide",
+    "quickAnswer": "Raise a primary attribute far enough to Ascend once, then choose a Power, Fortitude, or Authority outcome that fits the unit's real board job.",
+    "sections": [
+      { "title": "Three paths", "paragraphs": ["Power converts attributes toward attack, Fortitude converts them toward defense and recovery, and Authority converts them toward resource or tempo values."], "bullets": ["Power — damage-oriented conversions", "Fortitude — armor, evasion, ES, or recovery", "Authority — HP, speed, MP, and regeneration"] },
+      { "title": "Verified examples", "paragraphs": ["The public units guide shows Crushing, Elusive, Revelatory, and Momentous as four example Ascendancies."], "bullets": ["Crushing — third hit can stun", "Elusive — heals on evade", "Revelatory — can spend extra MP to restore a spell cooldown", "Momentous — repeated attacks on one target gain ATK"] },
+      { "title": "Avoid automatic recommendations", "paragraphs": ["An Ascendancy label alone does not prove the best choice. Position, gear, target access, mode, and current patch all affect the recommendation."] }
+    ]
+  },
+  {
+    "slug": "multiplayer-guide",
+    "quickAnswer": "A Goodly Trials multiplayer tournament seats 2–8 human or AI companies, shares markets, resolves live bids, locks formations, and tracks a season table.",
+    "sections": [
+      { "title": "Set up the tournament", "paragraphs": ["The host seats humans and AI and chooses how often every pair meets. That choice determines the shape of the season before the first bid."], "bullets": ["2–8 companies", "Humans and AI can share the table", "The host controls meeting frequency"] },
+      { "title": "Bid in the shared market", "paragraphs": ["Players act one decision at a time. Contested items start at list price, and rivals either raise or pass. Mixed-faction lobbies can also auction units."], "bullets": ["Plan a maximum price before bidding", "Remember that denial also costs resources", "Keep formation needs ahead of collection instinct"] },
+      { "title": "Lock, fight, and read standings", "paragraphs": ["Companies prepare independently, then fight across a turn-based league. Standings continue through the season until one champion remains."] }
+    ]
+  },
+  {
+    "slug": "ranked-guide",
+    "quickAnswer": "Finish Training, Fair, and Unfair progression before Ranked. Rating begins at Soldier: 200 and moves with each completed journey.",
+    "sections": [
+      { "title": "Unlocking Ranked", "paragraphs": ["The official route is Training → Fair → Unfair → Ranked. Fair adds bosses and Deed spending, while Unfair unlocks Old Man and later leader traits."], "bullets": ["Training", "Fair Trial", "Unfair Trial", "Ranked"] },
+      { "title": "Rating thresholds", "paragraphs": ["The official modes guide names eight ladder thresholds."], "bullets": ["Peasant — 0", "Soldier — 100", "Squire — 300", "Knight — 500", "Veteran — 700", "Marshal — 900", "High Marshal — 1,150", "Champion — 1,400"] },
+      { "title": "Treat the ladder as versioned", "paragraphs": ["Early Access balance can change unit, trait, item, and evaluation behavior. A Ranked guide should always display its game version and separate official thresholds from player strategy."] }
+    ]
+  }
+]

@@ -1,0 +1,2 @@
+.sprite { --sprite-image: none; --sprite-color: var(--gold); display: block; width: 74px; height: 90px; background: var(--sprite-color); image-rendering: pixelated; -webkit-mask: var(--sprite-image) center bottom / contain no-repeat; mask: var(--sprite-image) center bottom / contain no-repeat; filter: drop-shadow(0 8px 12px rgba(0,0,0,.6)); }
+.large { width: 132px; height: 164px; }

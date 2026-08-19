@@ -2,7 +2,9 @@ export const siteConfig = {
   name: "Goodly Trials Wiki",
   shortName: "Goodly Trials",
   description: "Verified units, items, mechanics, builds, guides, and patch context for Goodly Trials.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    "https://goodly-trials-wiki.wanghuan072.chatgpt.site",
   officialUrl: "https://goodlytrials.com/",
   steamUrl: "https://store.steampowered.com/app/4985160/Goodly_Trials/",
   currentVersion: "v0.300",

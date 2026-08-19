@@ -1,4 +1,4 @@
-.breadcrumb { margin-bottom: 22px; }
-.breadcrumb ol { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-muted); font-size: .75rem; }
-.breadcrumb li + li::before { margin-right: 8px; color: var(--border-bronze); content: "›"; }
+.breadcrumb { margin-bottom: 8px; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; gap: 7px; color: var(--text-muted); font-size: .59rem; }
+.breadcrumb li + li::before { margin-right: 7px; color: var(--gold); content: "›"; }
 .breadcrumb a:hover { color: var(--gold-bright); }

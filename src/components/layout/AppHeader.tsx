@@ -7,7 +7,7 @@ function SearchForm() {
   return (
     <form className={styles.search} action="/search" role="search">
       <label className="sr-only" htmlFor="site-search">Search the Goodly Trials Wiki</label>
-      <input id="site-search" name="q" type="search" placeholder="Search the archive…" />
+      <input id="site-search" name="q" type="search" placeholder="Search Goodly Trials Wiki…" />
       <button type="submit" aria-label="Search">⌕</button>
     </form>
   );
@@ -19,7 +19,7 @@ export default function AppHeader() {
       <div className={`container ${styles.inner}`}>
         <Link className={styles.brand} href="/" aria-label="Goodly Trials Wiki home">
           <Image src="/images/ui/goodly-trials-crest.png" alt="" width={52} height={52} aria-hidden="true" />
-          <span><b>Goodly Trials</b><small>Wiki & Field Archive</small></span>
+          <span><b>Goodly<br />Trials</b><small>Wiki</small></span>
         </Link>
         <nav className={styles.desktopNav} aria-label="Primary navigation">
           {primaryNavigation.map((item) => item.label === "Wiki" ? (

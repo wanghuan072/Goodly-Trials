@@ -40,6 +40,7 @@ export type BuilderLeader = {
 type BuilderSlot = { unitSlug: string; itemSlugs: string[] };
 type BuilderState = { title: string; mode: string; size: number; leaderSlug: string; slots: BuilderSlot[]; notes: string };
 type CatalogTab = "units" | "items" | "leaders";
+type PendingPick = { kind: "unit" | "item"; slug: string } | null;
 type DragPayload = { kind: "unit" | "item" | "leader" | "slot"; slug?: string; from?: number };
 type EquipmentKind = "gear" | "trinkets" | "consumable";
 
@@ -98,18 +99,23 @@ function itemKind(item: Item): EquipmentKind {
 }
 
 function writeDrag(event: DragEvent, payload: DragPayload) {
-  const value = JSON.stringify(payload);
+  const encoded = JSON.stringify(payload);
   event.dataTransfer.effectAllowed = payload.kind === "slot" || payload.from !== undefined ? "move" : "copy";
-  event.dataTransfer.setData(DRAG_TYPE, value);
-  event.dataTransfer.setData("text/plain", value);
+  event.dataTransfer.setData(DRAG_TYPE, encoded);
+  event.dataTransfer.setData("text/plain", encoded);
 }
 
 function readDrag(event: DragEvent): DragPayload | null {
   try {
-    return JSON.parse(event.dataTransfer.getData(DRAG_TYPE) || event.dataTransfer.getData("text/plain")) as DragPayload;
+    const value = event.dataTransfer.getData(DRAG_TYPE) || event.dataTransfer.getData("text/plain");
+    return JSON.parse(value) as DragPayload;
   } catch {
     return null;
   }
+}
+
+function ResourceBar({ label, value, suffix, maximum }: { label: string; value: number; suffix?: string; maximum: number }) {
+  return <div className={styles.resourceRow}><b>{label}</b><span><i style={{ width: `${Math.min(100, Math.max(2, value / maximum * 100))}%` }} /></span><strong>{value}</strong><small>{suffix}</small></div>;
 }
 
 export default function BuilderClient({ roster, leaders, items }: { roster: BuilderRosterUnit[]; leaders: BuilderLeader[]; items: Item[] }) {
@@ -119,8 +125,10 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const [tab, setTab] = useState<CatalogTab>("units");
   const [query, setQuery] = useState("");
   const [faction, setFaction] = useState("all");
-  const [message, setMessage] = useState("Start by adding a unit from the library");
+  const [message, setMessage] = useState("Drag a unit into the board");
+  const [pendingPick, setPendingPick] = useState<PendingPick>(null);
   const [dropTarget, setDropTarget] = useState<number | null>(null);
+  const [inspectSlug, setInspectSlug] = useState(roster.find((unit) => unit.verified)?.slug ?? roster[0]?.slug ?? "");
 
   const unitBySlug = useMemo(() => new Map(roster.map((unit) => [unit.slug, unit])), [roster]);
   const itemBySlug = useMemo(() => new Map(items.map((item) => [item.slug, item])), [items]);
@@ -133,13 +141,13 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       const saved = !shared ? decodeBuild(window.localStorage.getItem(STORAGE_KEY) ?? "") : null;
       const next = shared ?? saved ?? emptyBuild();
       setBuild(next);
-      const firstFilled = next.slots.slice(0, next.size).findIndex((slot) => slot.unitSlug);
-      setActiveSlot(firstFilled >= 0 ? firstFilled : 0);
+      const firstUnit = next.slots.find((slot) => unitBySlug.has(slot.unitSlug));
+      if (firstUnit) setInspectSlug(firstUnit.unitSlug);
       setReady(true);
-      setMessage(shared ? "Shared company loaded" : saved ? "Local company restored" : "Start by adding a unit from the library");
+      setMessage(shared ? "Shared company loaded" : saved ? "Local company restored" : "Drag a unit into the board");
     }, 0);
     return () => window.clearTimeout(restore);
-  }, []);
+  }, [unitBySlug]);
 
   useEffect(() => {
     if (!ready) return;
@@ -150,19 +158,13 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
   const selectedLeader = leaderBySlug.get(build.leaderSlug);
   const selectedSlots = build.slots.slice(0, build.size);
-  const activeRecord = build.slots[activeSlot];
-  const activeUnit = unitBySlug.get(activeRecord?.unitSlug ?? "");
-  const activeItems = activeRecord?.itemSlugs.map((slug) => itemBySlug.get(slug)).filter((item): item is Item => item !== undefined) ?? [];
-  const activeUsage = activeItems.reduce((total, item) => {
-    const used = itemSlotUse(item);
-    return { gear: total.gear + used.gear, trinkets: total.trinkets + used.trinkets };
-  }, { gear: 0, trinkets: 0 });
+  const inspectedUnit = unitBySlug.get(inspectSlug) ?? unitBySlug.get(build.slots[activeSlot]?.unitSlug ?? "");
+  const activeUnit = unitBySlug.get(build.slots[activeSlot]?.unitSlug ?? "");
   const itemCost = selectedSlots.reduce((total, slot) => total + slot.itemSlugs.reduce((sum, slug) => sum + (itemBySlug.get(slug)?.cost ?? 0), 0), 0);
   const queryText = query.trim().toLowerCase();
   const filteredUnits = roster.filter((unit) => (faction === "all" || unit.factionSlug === faction) && (!queryText || `${unit.name} ${unit.faction} ${unit.trait ?? ""}`.toLowerCase().includes(queryText)));
   const filteredItems = items.filter((item) => !queryText || `${item.name} ${item.type} ${item.effects.join(" ")}`.toLowerCase().includes(queryText));
   const filteredLeaders = leaders.filter((leader) => (faction === "all" || leader.factionSlug === faction) && (!queryText || `${leader.name} ${leader.epithet} ${leader.faction} ${leader.trait.name}`.toLowerCase().includes(queryText)));
-  const filledCount = selectedSlots.filter((slot) => slot.unitSlug).length;
 
   function updateSlot(index: number, next: BuilderSlot) {
     setBuild((current) => ({ ...current, slots: current.slots.map((slot, slotIndex) => slotIndex === index ? next : slot) }));
@@ -172,21 +174,14 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     if (index >= build.size) return;
     updateSlot(index, { unitSlug: slug, itemSlugs: [] });
     setActiveSlot(index);
-    setMessage(`${unitBySlug.get(slug)?.name ?? "Unit"} added to slot ${index + 1}`);
-  }
-
-  function addUnit(slug: string) {
-    const firstEmpty = build.slots.slice(0, build.size).findIndex((slot) => !slot.unitSlug);
-    if (firstEmpty < 0) {
-      setMessage("The active board is full · remove a unit or increase the slot count");
-      return;
-    }
-    placeUnit(firstEmpty, slug);
+    setInspectSlug(slug);
+    setPendingPick(null);
+    setMessage(`${unitBySlug.get(slug)?.name ?? "Unit"} placed in board slot ${index + 1}`);
   }
 
   function equipItem(index: number, slug: string, from?: number) {
     if (!build.slots[index]?.unitSlug) {
-      setMessage("Select a filled board slot before equipping an item");
+      setMessage("Place a unit in that board slot first");
       return;
     }
     setBuild((current) => {
@@ -196,7 +191,8 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       return { ...current, slots };
     });
     setActiveSlot(index);
-    setMessage(`${itemBySlug.get(slug)?.name ?? "Item"} equipped on ${unitBySlug.get(build.slots[index].unitSlug)?.name ?? `slot ${index + 1}`}`);
+    setPendingPick(null);
+    setMessage(`${itemBySlug.get(slug)?.name ?? "Item"} equipped on slot ${index + 1}`);
   }
 
   function moveBoardSlot(from: number, to: number) {
@@ -207,7 +203,17 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       return { ...current, slots };
     });
     setActiveSlot(to);
-    setMessage(`Slots ${from + 1} and ${to + 1} swapped`);
+    setMessage(`Board slots ${from + 1} and ${to + 1} swapped`);
+  }
+
+  function handleBoardClick(index: number) {
+    if (index >= build.size) return;
+    if (pendingPick?.kind === "unit") return placeUnit(index, pendingPick.slug);
+    if (pendingPick?.kind === "item") return equipItem(index, pendingPick.slug);
+    setActiveSlot(index);
+    const unit = unitBySlug.get(build.slots[index].unitSlug);
+    if (unit) setInspectSlug(unit.slug);
+    setMessage(unit ? `${unit.name} selected · drag equipment here` : `Slot ${index + 1} selected · choose or drag a unit`);
   }
 
   function handleBoardDrop(index: number, event: DragEvent) {
@@ -226,7 +232,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     const payload = readDrag(event);
     if (payload?.kind !== "leader" || !payload.slug) return;
     setBuild((current) => ({ ...current, leaderSlug: payload.slug ?? "" }));
-    setMessage(`${leaderBySlug.get(payload.slug)?.name ?? "Leader"} selected`);
+    setMessage(`${leaderBySlug.get(payload.slug)?.name ?? "Leader"} assigned`);
   }
 
   async function copyLink() {
@@ -241,105 +247,135 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   function clearBuild() {
     setBuild(emptyBuild());
     setActiveSlot(0);
+    setPendingPick(null);
     setTab("units");
-    setMessage("Company cleared · add a unit from the library");
+    setMessage("Company cleared");
   }
 
-  function equipmentFor(kind: EquipmentKind) {
-    return activeItems.filter((item) => itemKind(item) === kind);
+  function equipmentFor(slot: BuilderSlot, kind: EquipmentKind) {
+    return slot.itemSlugs.map((slug) => itemBySlug.get(slug)).filter((item): item is Item => item !== undefined && itemKind(item) === kind);
   }
-
-  const activeWarning = activeUnit?.verified && ((activeUnit.gear !== undefined && activeUsage.gear > activeUnit.gear) || (activeUnit.trinkets !== undefined && activeUsage.trinkets > activeUnit.trinkets));
 
   return (
     <section className={`container ${styles.builder}`} aria-label="Company builder">
-      <div className={styles.controlBar}>
+      <div className={styles.toolbar}>
         <label className={styles.titleField}><span>Company name</span><input value={build.title} maxLength={64} onChange={(event) => setBuild({ ...build, title: event.target.value })} /></label>
-        <label><span>Mode</span><select value={build.mode} onChange={(event) => setBuild({ ...build, mode: event.target.value })}>{MODES.map((mode) => <option key={mode}>{mode}</option>)}</select></label>
-        <fieldset className={styles.sizePicker}><legend>Slots</legend><div>{SIZES.map((size) => <button className={build.size === size ? styles.selected : ""} type="button" key={size} onClick={() => { setBuild({ ...build, size }); setActiveSlot((slot) => Math.min(slot, size - 1)); }}>{size}</button>)}</div></fieldset>
-        <div className={styles.actions}><button type="button" onClick={clearBuild}>Clear</button><button className={styles.shareButton} type="button" onClick={copyLink}>Copy share link</button></div>
+        <label><span>Plan for</span><select value={build.mode} onChange={(event) => setBuild({ ...build, mode: event.target.value })}>{MODES.map((mode) => <option key={mode}>{mode}</option>)}</select></label>
+        <fieldset className={styles.sizePicker}><legend>Active slots</legend><div>{SIZES.map((size) => <button className={build.size === size ? styles.selected : ""} type="button" key={size} onClick={() => { setBuild({ ...build, size }); setActiveSlot((slot) => Math.min(slot, size - 1)); }}>{size}</button>)}</div></fieldset>
+        <div className={styles.actions}><button type="button" onClick={clearBuild}>Clear</button><button className={styles.copyButton} type="button" onClick={copyLink}>Copy build link</button><span aria-live="polite">{message}</span></div>
       </div>
 
-      <div className={styles.statusLine}><span aria-live="polite">{message}</span><b>{filledCount}/{build.size} units · {itemCost}G known item cost</b></div>
-
-      <ol className={styles.steps} aria-label="Builder steps">
-        <li className={filledCount === 0 ? styles.currentStep : styles.doneStep}><b>1</b><span><strong>Add units</strong><small>Use the library or drag a card</small></span></li>
-        <li className={filledCount > 0 && !activeItems.length ? styles.currentStep : activeItems.length ? styles.doneStep : ""}><b>2</b><span><strong>Select a unit</strong><small>Click a board card to configure it</small></span></li>
-        <li className={activeItems.length ? styles.currentStep : ""}><b>3</b><span><strong>Equip items</strong><small>Use Equip or drag an item</small></span></li>
-        <li><b>4</b><span><strong>Share the plan</strong><small>Copy a link when ready</small></span></li>
-      </ol>
-
-      <div className={styles.workspace}>
-        <section className={styles.boardPanel}>
-          <header className={styles.sectionHeader}><div><p>Formation board</p><h2>Build your company</h2></div><span>Click to select · drag filled cards to rearrange</span></header>
-          <button className={styles.leaderChoice} type="button" onClick={() => { setTab("leaders"); setMessage("Choose a leader from the library below"); }} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
-            <span>{selectedLeader ? selectedLeader.name.slice(0, 1) : "+"}</span><div><small>Company leader</small><strong>{selectedLeader?.name ?? "Choose a leader"}</strong><p>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Optional · select from the Leaders tab"}</p></div><b>Change ↓</b>
-          </button>
-          <div className={styles.boardGrid}>
-            {build.slots.map((slot, index) => {
-              const locked = index >= build.size;
-              const unit = unitBySlug.get(slot.unitSlug);
-              const equipped = slot.itemSlugs.map((slug) => itemBySlug.get(slug)).filter((item): item is Item => item !== undefined);
-              return <article
-                className={`${styles.boardSlot} ${locked ? styles.lockedSlot : ""} ${activeSlot === index && !locked ? styles.activeSlot : ""} ${dropTarget === index ? styles.dropSlot : ""}`}
-                key={index}
-                draggable={Boolean(unit) && !locked}
-                onDragStart={(event) => unit && writeDrag(event, { kind: "slot", from: index })}
-                onDragOver={(event) => { if (!locked) { event.preventDefault(); setDropTarget(index); } }}
-                onDragLeave={() => setDropTarget((current) => current === index ? null : current)}
-                onDrop={(event) => handleBoardDrop(index, event)}
-              >
-                <button className={styles.slotSelect} type="button" disabled={locked} onClick={() => { setActiveSlot(index); setMessage(unit ? `${unit.name} selected` : `Slot ${index + 1} selected · add a unit from the library`); }}>
-                  <span className={styles.slotNumber}>Slot {index + 1}</span>
-                  {locked ? <span className={styles.lockedText}>Inactive</span> : unit ? <>
-                    <UnitSprite src={unit.image} color={unit.accent} large />
-                    <span className={styles.slotCopy}><small>{unit.faction}</small><strong>{unit.name}</strong><em>{unit.verified ? `${unit.trait} · ${unit.tactic}` : "Roster name only"}</em></span>
-                    {unit.stats && <span className={styles.slotStats}><i>HP {unit.stats.hp}</i><i>STR {unit.stats.str}</i><i>AGI {unit.stats.agi}</i><i>INT {unit.stats.int}</i></span>}
-                  </> : <><span className={styles.addMark}>+</span><strong className={styles.emptyTitle}>Empty slot</strong><small className={styles.emptyHelp}>Drop a unit here or use Add to board</small></>}
-                </button>
-                {unit && <footer className={styles.slotFooter}><span>{equipped.length ? equipped.slice(0, 4).map((item) => <Image key={item.slug} src={item.image} alt="" width={26} height={26} unoptimized={item.image.endsWith(".gif")} />) : <small>No items</small>}</span><button type="button" onClick={() => updateSlot(index, { unitSlug: "", itemSlugs: [] })}>Remove</button></footer>}
-              </article>;
-            })}
-          </div>
-          <p className={styles.boardNote}>Slots represent a shareable planning order. The Builder does not claim that every arrangement or duplicated record is legal in every mode.</p>
-        </section>
-
-        <aside className={`${styles.loadoutPanel} ${activeUnit ? "" : styles.emptyLoadout}`} onDragOver={(event) => activeUnit && event.preventDefault()} onDrop={(event) => activeUnit && handleBoardDrop(activeSlot, event)}>
-          <header className={styles.sectionHeader}><div><p>Selected unit</p><h2>{activeUnit?.name ?? "Choose a board card"}</h2></div>{activeUnit && <span>Slot {activeSlot + 1}</span>}</header>
-          {activeUnit ? <>
-            <div className={styles.unitSummary}><UnitSprite src={activeUnit.image} color={activeUnit.accent} large /><div><small>{activeUnit.faction}</small><strong>{activeUnit.name}</strong><p>{activeUnit.verified ? "Verified public card · v0.301" : "Roster name verified · full card pending"}</p></div></div>
-            {activeUnit.stats && <><div className={styles.coreStats}><span><b>HP</b>{activeUnit.stats.hp}</span><span><b>STR</b>{activeUnit.stats.str}</span><span><b>AGI</b>{activeUnit.stats.agi}</span><span><b>INT</b>{activeUnit.stats.int}</span></div><div className={styles.combatStats}><span>ATK <b>{activeUnit.stats.atk}</b></span><span>AR <b>{activeUnit.stats.ar}</b></span><span>EVA <b>{activeUnit.stats.eva}%</b></span><span>RNG <b>{activeUnit.stats.rng}</b></span></div></>}
-            <div className={styles.equipmentBlock}>
-              <header><div><p>Equipment</p><strong>Drag items here or use Equip</strong></div>{activeWarning && <span>Review slot limit</span>}</header>
-              {(["gear", "trinkets", "consumable"] as EquipmentKind[]).map((kind) => {
-                const equipped = equipmentFor(kind);
-                const label = kind === "gear" ? `Gear ${activeUsage.gear}/${activeUnit.gear ?? "?"}` : kind === "trinkets" ? `Trinkets ${activeUsage.trinkets}/${activeUnit.trinkets ?? "?"}` : "Consumables";
-                return <div className={styles.equipmentRow} key={kind}><label>{label}</label><span>{equipped.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => writeDrag(event, { kind: "item", slug: item.slug, from: activeSlot })} onClick={() => updateSlot(activeSlot, { ...activeRecord, itemSlugs: activeRecord.itemSlugs.filter((slug) => slug !== item.slug) })} title={`Remove ${item.name}`}><Image src={item.image} alt="" width={36} height={36} unoptimized={item.image.endsWith(".gif")} /><small>{item.name}</small></button>)}{!equipped.length && <i>Empty</i>}</span></div>;
+      <div className={styles.workbench}>
+        <section className={`${styles.gamePanel} ${styles.boardPanel}`}>
+          <header className={styles.panelHeader}><strong>Board [{selectedSlots.filter((slot) => slot.unitSlug).length}]</strong><span>Drag units into cells · drag equipment onto a unit</span></header>
+          <div className={styles.boardStage}>
+            <button className={styles.leaderDock} type="button" onClick={() => setTab("leaders")} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
+              <span className={styles.dockLabel}>Leader</span>
+              <b>{selectedLeader?.name ?? "+"}</b>
+              <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Drag or choose a leader"}</small>
+            </button>
+            <div className={styles.boardGrid}>
+              {build.slots.map((slot, index) => {
+                const locked = index >= build.size;
+                const unit = unitBySlug.get(slot.unitSlug);
+                const gearItems = equipmentFor(slot, "gear");
+                const trinketItems = equipmentFor(slot, "trinkets");
+                const consumables = equipmentFor(slot, "consumable");
+                const usage = slot.itemSlugs.reduce((total, slug) => {
+                  const item = itemBySlug.get(slug);
+                  if (!item) return total;
+                  const used = itemSlotUse(item);
+                  return { gear: total.gear + used.gear, trinkets: total.trinkets + used.trinkets };
+                }, { gear: 0, trinkets: 0 });
+                const warning = unit?.verified && ((unit.gear !== undefined && usage.gear > unit.gear) || (unit.trinkets !== undefined && usage.trinkets > unit.trinkets));
+                return <article
+                  className={`${styles.boardSlot} ${locked ? styles.lockedSlot : ""} ${activeSlot === index ? styles.activeSlot : ""} ${dropTarget === index ? styles.dropSlot : ""}`}
+                  key={index}
+                  draggable={Boolean(unit) && !locked}
+                  onDragStart={(event) => unit && writeDrag(event, { kind: "slot", from: index })}
+                  onDragOver={(event) => { if (!locked) { event.preventDefault(); setDropTarget(index); } }}
+                  onDragLeave={() => setDropTarget((current) => current === index ? null : current)}
+                  onDrop={(event) => handleBoardDrop(index, event)}
+                >
+                  <button className={styles.boardSlotMain} type="button" disabled={locked} onClick={() => handleBoardClick(index)}>
+                    <span className={styles.slotNumber}>{index + 1}</span>
+                    {locked ? <span className={styles.lockMark}>LOCKED</span> : unit ? <>
+                      <span className={styles.miniTitle}><small>{unit.faction}</small><b>{unit.name}</b></span>
+                      <UnitSprite src={unit.image} color="#e8e8e8" large />
+                      {unit.stats ? <><div className={styles.miniVitals}><span>ES {unit.stats.es}</span><span>HP {unit.stats.hp}</span><span>MP {unit.stats.mp}</span></div><div className={styles.miniAttrs}><b>{unit.stats.str}</b><b>{unit.stats.agi}</b><b>{unit.stats.int}</b></div></> : <span className={styles.pendingStats}>PUBLIC STATS PENDING</span>}
+                    </> : <><span className={styles.emptyCell}>+</span><b className={styles.emptyText}>{pendingPick ? "PLACE HERE" : "EMPTY SLOT"}</b></>}
+                  </button>
+                  {unit && <div className={styles.loadoutDock}>
+                    <div><label>Gear {usage.gear}/{unit.gear ?? "?"}</label><span className={styles.itemSlots}>{gearItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} title={`Drag to transfer or click to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(1, (unit.gear ?? 2) - gearItems.length) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
+                    <div><label>Trinkets {usage.trinkets}/{unit.trinkets ?? "?"}</label><span className={styles.itemSlots}>{trinketItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} title={`Drag to transfer or click to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(1, (unit.trinkets ?? 1) - trinketItems.length) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
+                    {consumables.length > 0 && <div className={styles.consumables}><label>Use</label><span className={styles.itemSlots}>{consumables.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })}><Image src={item.image} alt="" width={24} height={24} /></button>)}</span></div>}
+                    {warning && <strong className={styles.slotWarning}>SLOT LIMIT EXCEEDED</strong>}
+                  </div>}
+                </article>;
               })}
             </div>
-            {activeUnit.verified && <div className={styles.verifiedDetails}><p><strong>{activeUnit.trait}</strong>{activeUnit.traitEffect}</p>{activeUnit.skills?.slice(0, 1).map((skill) => <p key={skill.name}><strong>{skill.name}</strong>{skill.effect}</p>)}<p><strong>{activeUnit.tactic}</strong>{activeUnit.tacticEffect}</p></div>}
-            <a className={styles.libraryJump} href="#builder-library">Choose equipment from the library ↓</a>
-          </> : <div className={styles.emptyState}><span>1</span><h3>Select a unit on the board</h3><p>Its verified stats and equipment slots will appear here. Empty slots can be filled from the library below.</p><a href="#builder-library">Open unit library ↓</a></div>}
+          </div>
+          <footer className={styles.boardFooter}><span>{build.mode}</span><span>{selectedSlots.filter((slot) => slot.unitSlug).length}/{build.size} units</span><span>{itemCost}G known item cost</span></footer>
+        </section>
+
+        <section className={`${styles.gamePanel} ${styles.shopPanel}`}>
+          <header className={styles.panelHeader}><strong>Archive [{tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length}]</strong><span>Drag a card to the board · scroll for more</span></header>
+          <div className={styles.tabs} role="tablist" aria-label="Builder archive">{(["units", "items", "leaders"] as CatalogTab[]).map((catalogTab) => <button role="tab" aria-selected={tab === catalogTab} className={tab === catalogTab ? styles.selected : ""} type="button" key={catalogTab} onClick={() => { setTab(catalogTab); setQuery(""); setPendingPick(null); }}>{catalogTab}</button>)}</div>
+          <div className={styles.filters}><input aria-label="Search archive" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Search ${tab}…`} />{tab !== "items" && <select aria-label="Filter by faction" value={faction} onChange={(event) => setFaction(event.target.value)}><option value="all">All factions</option><option value="goodly-folk">Goodly Folk</option><option value="bone-host">Bone Host</option><option value="belowborn">Belowborn</option></select>}</div>
+          <div className={styles.archiveList} role="tabpanel">
+            {tab === "units" && filteredUnits.map((unit, index) => <button
+              className={`${styles.archiveUnit} ${pendingPick?.kind === "unit" && pendingPick.slug === unit.slug ? styles.picked : ""}`}
+              type="button" key={unit.slug} draggable
+              onDragStart={(event) => writeDrag(event, { kind: "unit", slug: unit.slug })}
+              onMouseEnter={() => setInspectSlug(unit.slug)}
+              onFocus={() => setInspectSlug(unit.slug)}
+              onClick={() => { setInspectSlug(unit.slug); setPendingPick({ kind: "unit", slug: unit.slug }); setMessage(`${unit.name} picked up · tap a board cell`); }}
+            >
+              <span className={styles.archiveIndex}>{index + 1}</span>
+              <UnitSprite src={unit.image} color="#e6e6e6" />
+              <span className={styles.archiveIdentity}><small>{unit.faction}</small><strong>{unit.name}</strong><em>{unit.verified ? `${unit.trait} · ${unit.tactic}` : "Roster name verified · public stats pending"}</em></span>
+              {unit.stats ? <span className={styles.archiveStats}><i>HP {unit.stats.hp}</i><i>STR {unit.stats.str}</i><i>AGI {unit.stats.agi}</i><i>INT {unit.stats.int}</i></span> : <span className={styles.unverifiedTag}>NAME ONLY</span>}
+            </button>)}
+            {tab === "items" && filteredItems.map((item, index) => <button
+              className={`${styles.archiveItem} ${pendingPick?.kind === "item" && pendingPick.slug === item.slug ? styles.picked : ""}`}
+              type="button" key={item.slug} draggable
+              onDragStart={(event) => writeDrag(event, { kind: "item", slug: item.slug })}
+              onClick={() => { setPendingPick({ kind: "item", slug: item.slug }); setMessage(`${item.name} picked up · tap a unit card`); }}
+            >
+              <span className={styles.archiveIndex}>{index + 1}</span><Image src={item.image} alt="" width={48} height={48} unoptimized={item.image.endsWith(".gif")} /><span className={styles.archiveIdentity}><small>{item.type}</small><strong>{item.name}</strong><em>{item.effects.slice(0, 2).join(" · ")}</em></span><b>{item.cost}G</b>
+            </button>)}
+            {tab === "leaders" && filteredLeaders.map((leader, index) => <button
+              className={`${styles.archiveLeader} ${build.leaderSlug === leader.slug ? styles.picked : ""}`}
+              type="button" key={leader.slug} draggable
+              onDragStart={(event) => writeDrag(event, { kind: "leader", slug: leader.slug })}
+              onClick={() => { setBuild({ ...build, leaderSlug: build.leaderSlug === leader.slug ? "" : leader.slug }); setMessage(build.leaderSlug === leader.slug ? "Leader removed" : `${leader.name} assigned`); }}
+            >
+              <span className={styles.archiveIndex}>{index + 1}</span><span className={styles.leaderGlyph}>{leader.name.slice(0, 1)}</span><span className={styles.archiveIdentity}><small>{leader.faction}</small><strong>{leader.name}</strong><em>{leader.trait.name} · {leader.trait.effect}</em></span>
+            </button>)}
+          </div>
+        </section>
+
+        <aside className={`${styles.gamePanel} ${styles.inspectPanel}`}>
+          <header className={styles.panelHeader}><strong>Inspect</strong><span>{activeUnit ? `Board slot ${activeSlot + 1}` : "Archive record"}</span></header>
+          {inspectedUnit ? <div className={styles.inspectCard}>
+            <header><small>{inspectedUnit.faction}</small><h2>{inspectedUnit.name}</h2><span>{inspectedUnit.verified ? "PUBLIC CARD · v0.301" : "ROSTER RECORD"}</span></header>
+            <div className={styles.inspectStage}>
+              <div className={styles.slotPreview}><small>GEAR: {inspectedUnit.gear ?? "?"}</small><span>{Array.from({ length: inspectedUnit.gear ?? 2 }, (_, index) => <i key={index} />)}</span></div>
+              <UnitSprite src={inspectedUnit.image} color="#eeeeee" large />
+              <div className={styles.slotPreview}><small>TRINKETS: {inspectedUnit.trinkets ?? "?"}</small><span>{Array.from({ length: inspectedUnit.trinkets ?? 1 }, (_, index) => <i key={index} />)}</span></div>
+            </div>
+            {inspectedUnit.stats ? <>
+              <div className={styles.resources}><ResourceBar label="ES" value={inspectedUnit.stats.es} suffix="+0/s" maximum={45} /><ResourceBar label="HP" value={inspectedUnit.stats.hp} suffix={inspectedUnit.recovery} maximum={40} /><ResourceBar label="MP" value={inspectedUnit.stats.mp} suffix={inspectedUnit.manaRegen} maximum={35} /></div>
+              <div className={styles.attributes}><div><span>STR</span><b>{inspectedUnit.stats.str}</b></div><div><span>AGI</span><b>{inspectedUnit.stats.agi}</b></div><div><span>INT</span><b>{inspectedUnit.stats.int}</b></div></div>
+              <div className={styles.combatStats}><span><b>ATK</b>{inspectedUnit.stats.atk}</span><span><b>CRT</b>{inspectedUnit.stats.crt}%</span><span><b>RNG</b>{inspectedUnit.stats.rng}</span><span><b>SPD</b>{inspectedUnit.stats.spd > 0 ? "+" : ""}{inspectedUnit.stats.spd}%</span><span><b>AR</b>{inspectedUnit.stats.ar}</span><span><b>EVA</b>{inspectedUnit.stats.eva}%</span></div>
+              <section className={styles.inspectText}><h3>Trait</h3><p><strong>{inspectedUnit.trait}</strong> — {inspectedUnit.traitEffect}</p><h3>Skills</h3>{inspectedUnit.skills?.map((skill) => <p key={skill.name}><strong>{skill.name}</strong> — {skill.effect}</p>)}<h3>Tactics</h3><p><strong>{inspectedUnit.tactic}</strong> — {inspectedUnit.tacticEffect}</p></section>
+              {inspectedUnit.quote && <blockquote>“{inspectedUnit.quote}”</blockquote>}
+            </> : <div className={styles.pendingPanel}><strong>PUBLIC STATS PENDING</strong><p>The official roster confirms this name and artwork, but a complete public card is not available in the verified source layer.</p></div>}
+          </div> : <div className={styles.pendingPanel}><strong>NO UNIT SELECTED</strong><p>Hover a unit record or select a board slot to inspect it.</p></div>}
         </aside>
       </div>
 
-      <section className={styles.libraryPanel} id="builder-library">
-        <header className={styles.libraryHeader}><div><p>Builder library</p><h2>Choose what to add</h2><span>Buttons are the primary controls. Dragging is an optional shortcut.</span></div><div className={styles.tabs} role="tablist" aria-label="Builder library">{(["units", "items", "leaders"] as CatalogTab[]).map((catalogTab) => <button role="tab" aria-selected={tab === catalogTab} className={tab === catalogTab ? styles.selected : ""} type="button" key={catalogTab} onClick={() => { setTab(catalogTab); setQuery(""); }}>{catalogTab}</button>)}</div></header>
-        <div className={styles.filters}><input aria-label="Search library" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Search ${tab}…`} />{tab !== "items" && <select aria-label="Filter by faction" value={faction} onChange={(event) => setFaction(event.target.value)}><option value="all">All factions</option><option value="goodly-folk">Goodly Folk</option><option value="bone-host">Bone Host</option><option value="belowborn">Belowborn</option></select>}<span>{tab === "items" && !activeUnit ? "Select a board unit before equipping" : `${tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length} records`}</span></div>
-        <div className={styles.libraryGrid} role="tabpanel">
-          {tab === "units" && filteredUnits.map((unit) => <article className={styles.unitCard} key={unit.slug} draggable onDragStart={(event) => writeDrag(event, { kind: "unit", slug: unit.slug })}>
-            <div className={styles.cardVisual}><UnitSprite src={unit.image} color={unit.accent} large /><span>{unit.verified ? "Verified card" : "Name only"}</span></div><div className={styles.cardContent}><small>{unit.faction}</small><h3>{unit.name}</h3><p>{unit.verified ? `${unit.trait} · ${unit.tactic}` : "Confirmed roster name; public stats pending."}</p>{unit.stats && <div className={styles.cardStats}><span>HP {unit.stats.hp}</span><span>STR {unit.stats.str}</span><span>AGI {unit.stats.agi}</span><span>INT {unit.stats.int}</span></div>}<button type="button" onClick={() => addUnit(unit.slug)}>+ Add to board</button></div>
-          </article>)}
-          {tab === "items" && filteredItems.map((item) => <article className={styles.itemCard} key={item.slug} draggable onDragStart={(event) => writeDrag(event, { kind: "item", slug: item.slug })}>
-            <div className={styles.itemVisual}><Image src={item.image} alt="" width={66} height={66} unoptimized={item.image.endsWith(".gif")} /><span>{item.cost}G</span></div><div className={styles.cardContent}><small>{item.type}</small><h3>{item.name}</h3><p>{item.effects.slice(0, 2).join(" · ")}</p><button type="button" disabled={!activeUnit} onClick={() => equipItem(activeSlot, item.slug)}>Equip {activeUnit ? activeUnit.name : "selected unit"}</button></div>
-          </article>)}
-          {tab === "leaders" && filteredLeaders.map((leader) => <article className={styles.leaderCard} key={leader.slug} draggable onDragStart={(event) => writeDrag(event, { kind: "leader", slug: leader.slug })}>
-            <span className={styles.leaderMark}>{leader.name.slice(0, 1)}</span><div className={styles.cardContent}><small>{leader.faction}</small><h3>{leader.name}</h3><p><strong>{leader.trait.name}</strong> · {leader.trait.effect}</p><button type="button" onClick={() => { setBuild({ ...build, leaderSlug: build.leaderSlug === leader.slug ? "" : leader.slug }); setMessage(build.leaderSlug === leader.slug ? "Leader removed" : `${leader.name} selected`); }}>{build.leaderSlug === leader.slug ? "Remove leader" : "Select leader"}</button></div>
-          </article>)}
-        </div>
-      </section>
-
-      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Evidence boundary</strong><p>Verified cards use official public v0.301 examples. “Name only” records have confirmed names and artwork but no complete public stats here. The Builder does not claim availability, legality, or strength.</p></aside></div>
+      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Desktop: drag units into Board cells, drag equipment onto a unit, and drag occupied cells to swap them. Touch or keyboard: select a record, then select its destination. Click equipped items to remove them.</p><p>Verified cards use official public v0.301 examples. The Builder does not claim availability, legality, or strength.</p></aside></div>
     </section>
   );
 }

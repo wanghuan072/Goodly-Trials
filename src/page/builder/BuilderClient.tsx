@@ -129,10 +129,10 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const [build, setBuild] = useState<BuilderState>(emptyBuild);
   const [ready, setReady] = useState(false);
   const [activeSlot, setActiveSlot] = useState(0);
-  const [tab, setTab] = useState<CatalogTab>("units");
+  const [tab, setTab] = useState<CatalogTab>("leaders");
   const [query, setQuery] = useState("");
   const [faction, setFaction] = useState("all");
-  const [message, setMessage] = useState("Drag a unit into the board");
+  const [message, setMessage] = useState("Choose or drag a leader to begin");
   const [pendingPick, setPendingPick] = useState<PendingPick>(null);
   const [dropTarget, setDropTarget] = useState<number | null>(null);
   const [draggingPayload, setDraggingPayload] = useState<DragPayload | null>(null);
@@ -151,9 +151,10 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       const saved = !imported ? decodeBuild(window.localStorage.getItem(STORAGE_KEY) ?? "") : null;
       const next = imported ?? saved ?? emptyBuild();
       setBuild(next);
+      setTab(next.leaderSlug ? "units" : "leaders");
       if (window.location.hash || window.location.search) window.history.replaceState(null, "", window.location.pathname);
       setReady(true);
-      setMessage(imported ? "Company imported and saved on this device" : saved ? "Local company restored" : "Drag a unit into the board");
+      setMessage(imported ? "Company imported and saved on this device" : saved ? "Local company restored" : "Choose or drag a leader to begin");
     }, 0);
     return () => window.clearTimeout(restore);
   }, []);
@@ -455,6 +456,9 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       return;
     }
     setBuild((current) => ({ ...current, leaderSlug: slug }));
+    setTab("units");
+    setFaction(build.mode === "Multiplayer" ? "all" : leader.factionSlug);
+    setQuery("");
     setMessage(`${leader.name} assigned · ${followerCapLabel(build.mode, leader.factionSlug)}`);
   }
 
@@ -494,21 +498,14 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     setMessage(`Week ${week} board applied · ${nextLimit} follower slots available`);
   }
 
-  async function copyLink() {
-    try {
-      await navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}`);
-      setMessage("Clean page link copied · this company stays saved on your device");
-    } catch {
-      setMessage("Copy was blocked · copy the page URL from your browser");
-    }
-  }
-
   function clearBuild() {
     setBuild(emptyBuild());
     setActiveSlot(0);
     setPendingPick(null);
-    setTab("units");
-    setMessage("Company cleared");
+    setTab("leaders");
+    setFaction("all");
+    setQuery("");
+    setMessage("Company cleared · choose a leader to begin");
   }
 
   function removeUnit(index: number) {
@@ -525,6 +522,8 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       return;
     }
     setBuild((current) => ({ ...current, leaderSlug: "" }));
+    setTab("leaders");
+    setFaction("all");
     setMessage(`${selectedLeader.name} removed from the leader slot`);
   }
 
@@ -554,9 +553,14 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     <section className={`container ${styles.builder}`} aria-label="Company builder" onDragOver={trackDragPosition}>
       <div className={styles.toolbar}>
         <label className={styles.titleField}><span>Company name</span><input value={build.title} maxLength={64} onChange={(event) => setBuild({ ...build, title: event.target.value })} /></label>
-        <label><span>Plan for</span><select value={build.mode} onChange={(event) => changeMode(event.target.value)}>{MODES.map((mode) => <option key={mode}>{mode}</option>)}</select></label>
-        <label><span>Trial week</span><select value={build.week} onChange={(event) => changeWeek(Number(event.target.value))}>{Array.from({ length: MAX_TRIAL_WEEK }, (_, index) => index + 1).map((week) => <option value={week} key={week}>Week {week}</option>)}</select></label>
-        <div className={styles.actions}><button type="button" onClick={clearBuild}>Clear</button><button className={styles.copyButton} type="button" onClick={copyLink}>Copy page link</button><span aria-live="polite">{message}</span></div>
+        <div className={styles.planControls} aria-label="Company rules">
+          <label><span>Game mode</span><select value={build.mode} onChange={(event) => changeMode(event.target.value)}>{MODES.map((mode) => <option key={mode}>{mode}</option>)}</select></label>
+          <label><span>Trial week</span><select value={build.week} onChange={(event) => changeWeek(Number(event.target.value))}>{Array.from({ length: MAX_TRIAL_WEEK }, (_, index) => index + 1).map((week) => <option value={week} key={week}>Week {week}</option>)}</select></label>
+        </div>
+        <div className={styles.toolbarStatus}>
+          <div><span>Current action</span><strong aria-live="polite">{message}</strong><small>Changes save automatically on this device</small></div>
+          <button className={styles.clearButton} type="button" onClick={clearBuild}>Clear company</button>
+        </div>
       </div>
 
       {pendingPick && <div className={styles.carryBar} role="status">

@@ -135,7 +135,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const [message, setMessage] = useState("Drag a unit into the board");
   const [pendingPick, setPendingPick] = useState<PendingPick>(null);
   const [dropTarget, setDropTarget] = useState<number | null>(null);
-  const [hoveredSlot, setHoveredSlot] = useState<number | null>(null);
   const [catalogPreview, setCatalogPreview] = useState<CatalogPreview>(null);
 
   const unitBySlug = useMemo(() => new Map(roster.map((unit) => [unit.slug, unit])), [roster]);
@@ -170,11 +169,9 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const lockedUnitCount = selectedSlots.filter((slot, index) => slot.unitSlug && !availableCells.has(index)).length;
   const rulesInvalid = !selectedLeader ? filledCount > 0 : filledCount > followerLimit || lockedUnitCount > 0;
   const rulesSummary = followerCapLabel(build.mode, selectedLeader?.factionSlug);
-  const hoveredUnit = hoveredSlot === null ? undefined : unitBySlug.get(build.slots[hoveredSlot]?.unitSlug ?? "");
-  const previewUnit = hoveredUnit ?? (catalogPreview?.kind === "unit" ? unitBySlug.get(catalogPreview.slug) : undefined);
+  const previewUnit = catalogPreview?.kind === "unit" ? unitBySlug.get(catalogPreview.slug) : undefined;
   const previewItem = catalogPreview?.kind === "item" ? itemBySlug.get(catalogPreview.slug) : undefined;
   const previewLeader = catalogPreview?.kind === "leader" ? leaderBySlug.get(catalogPreview.slug) : undefined;
-  const hoveredCellLabel = hoveredSlot === null ? "" : `${String.fromCharCode(65 + Math.floor(hoveredSlot / BOARD_COLUMNS))}${hoveredSlot % BOARD_COLUMNS + 1}`;
   const itemCost = selectedSlots.reduce((total, slot) => total + slot.itemSlugs.reduce((sum, slug) => sum + (itemBySlug.get(slug)?.cost ?? 0), 0), 0);
   const queryText = query.trim().toLowerCase();
   const filteredUnits = roster.filter((unit) => (faction === "all" || unit.factionSlug === faction) && (!queryText || `${unit.name} ${unit.faction} ${unit.trait ?? ""}`.toLowerCase().includes(queryText)));
@@ -182,7 +179,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const filteredLeaders = leaders.filter((leader) => (faction === "all" || leader.factionSlug === faction) && (!queryText || `${leader.name} ${leader.epithet} ${leader.faction} ${leader.trait.name}`.toLowerCase().includes(queryText)));
 
   function showCatalogPreview(kind: Exclude<CatalogPreview, null>["kind"], slug: string) {
-    setHoveredSlot(null);
     setCatalogPreview({ kind, slug });
   }
 
@@ -211,7 +207,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     }
     updateSlot(index, { unitSlug: slug, itemSlugs: [] });
     setActiveSlot(index);
-    setHoveredSlot(index);
     setCatalogPreview(null);
     setPendingPick(null);
     setMessage(`${unitBySlug.get(slug)?.name ?? "Unit"} placed in board slot ${index + 1}`);
@@ -233,7 +228,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       return { ...current, slots };
     });
     setActiveSlot(index);
-    setHoveredSlot(index);
     setCatalogPreview(null);
     setPendingPick(null);
     setMessage(`${itemBySlug.get(slug)?.name ?? "Item"} equipped on slot ${index + 1}`);
@@ -251,7 +245,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       return { ...current, slots };
     });
     setActiveSlot(to);
-    setHoveredSlot(to);
     setCatalogPreview(null);
     setMessage(`Board slots ${from + 1} and ${to + 1} swapped`);
   }
@@ -266,7 +259,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     if (pendingPick?.kind === "item") return equipItem(index, pendingPick.slug);
     setActiveSlot(index);
     const unit = unitBySlug.get(build.slots[index].unitSlug);
-    setHoveredSlot(unit ? index : null);
     setCatalogPreview(null);
     setMessage(unit ? `${unit.name} selected · drag equipment here` : `Slot ${index + 1} selected · choose or drag a unit`);
   }
@@ -351,7 +343,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   function removeUnit(index: number) {
     const unitName = unitBySlug.get(build.slots[index]?.unitSlug ?? "")?.name ?? "Unit";
     updateSlot(index, { unitSlug: "", itemSlugs: [] });
-    setHoveredSlot((current) => current === index ? null : current);
     setPendingPick(null);
     setMessage(`${unitName} removed from ${String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS))}${index % BOARD_COLUMNS + 1}`);
   }
@@ -439,11 +430,8 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                   key={index}
                   draggable={Boolean(unit)}
                   onDragStart={(event) => unit && writeDrag(event, { kind: "slot", from: index })}
-                  onMouseEnter={() => { if (unit) { setCatalogPreview(null); setHoveredSlot(index); } }}
                   onDragOver={(event) => { if (cellAvailable) { event.preventDefault(); setDropTarget(index); } }}
-                  onMouseLeave={() => { setDropTarget((current) => current === index ? null : current); setHoveredSlot((current) => current === index ? null : current); }}
-                  onFocusCapture={() => { if (unit) { setCatalogPreview(null); setHoveredSlot(index); } }}
-                  onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setHoveredSlot((current) => current === index ? null : current); }}
+                  onMouseLeave={() => setDropTarget((current) => current === index ? null : current)}
                   onDrop={(event) => handleBoardDrop(index, event)}
                 >
                   {unit && <button className={styles.removeUnitButton} type="button" draggable={false} onClick={(event) => { event.stopPropagation(); removeUnit(index); }} aria-label={`Remove ${unit.name} from ${String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS))}${index % BOARD_COLUMNS + 1}`} title="Remove unit">×</button>}
@@ -473,7 +461,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               </aside>
             </div>
             {previewUnit && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
-              <header className={styles.panelHeader}><strong>Inspect · {hoveredUnit ? hoveredCellLabel : "Unit"}</strong><span>{hoveredUnit ? "Board hover" : "Archive hover"}</span></header>
+              <header className={styles.panelHeader}><strong>Inspect · Unit</strong><span>Archive hover</span></header>
               <div className={styles.inspectCard}>
                 <header><small>{previewUnit.faction}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? "PUBLIC CARD · v0.301" : "ROSTER RECORD"}</span></header>
                 <div className={styles.inspectStage}>
@@ -565,7 +553,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
       </div>
 
-      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Choose a leader and trial week first. The Board only accepts followers in positions unlocked for that week and stops at the current faction or multiplayer cap. Hover, focus, or tap a Board card or Archive record to inspect it; drag equipment onto a unit and occupied cells to rearrange them.</p><p>Placement limits were verified against the official live v0.302 game client on 2026-08-20. Public unit cards remain labeled by their own source version; the Builder does not claim strength or legality beyond the rules enforced here.</p></aside></div>
+      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Choose a leader and trial week first. The Board only accepts followers in positions unlocked for that week and stops at the current faction or multiplayer cap. Hover, focus, or tap a record in the Archive to inspect it; drag equipment onto a unit and occupied cells to rearrange them.</p><p>Placement limits were verified against the official live v0.302 game client on 2026-08-20. Public unit cards remain labeled by their own source version; the Builder does not claim strength or legality beyond the rules enforced here.</p></aside></div>
     </section>
   );
 }

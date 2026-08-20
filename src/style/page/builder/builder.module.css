@@ -118,7 +118,11 @@
 .archiveList::-webkit-scrollbar-thumb { border: 2px solid #090a0a; background: #74756f; }
 .archiveUnit, .archiveItem, .archiveLeader { position: relative; display: grid; width: 100%; min-height: 108px; grid-template-columns: 17px 54px minmax(0, 1fr); align-items: center; gap: 5px; margin: 0; padding: 6px 6px 21px; overflow: hidden; border: 1px solid #30312e; color: var(--game-text); background: #030404; font-family: inherit; cursor: grab; text-align: left; transition: border-color .12s ease, background-color .12s ease, transform .12s ease; }
 .archiveUnit::after, .archiveItem::after, .archiveLeader::after { position: absolute; right: 5px; bottom: 5px; color: #85867f; content: "⋮⋮ DRAG"; font-size: .38rem; font-weight: 700; letter-spacing: .08em; }
+.archiveBlocked { border-color: #4b302d; cursor: not-allowed; }
+.archiveBlocked::after { color: #ef7569; content: attr(data-reason); }
+.archiveBlocked > :not(.archiveIdentity) { opacity: .48; }
 .archiveUnit:active, .archiveItem:active, .archiveLeader:active { cursor: grabbing; transform: scale(.975); }
+.archiveUnit.archiveBlocked:active, .archiveItem.archiveBlocked:active { cursor: not-allowed; transform: none; }
 .archiveUnit:hover, .archiveItem:hover, .archiveLeader:hover, .archiveUnit:focus-visible, .archiveItem:focus-visible, .archiveLeader:focus-visible { border-color: #b7b8b0; outline: 0; }
 .archiveUnit:hover, .archiveItem:hover, .archiveLeader:hover { background: #0a0b0b; }
 .archiveUnit > :global([class*="sprite"]) { width: 52px; height: 66px; background: linear-gradient(#f4f4ed, #85867f); filter: grayscale(1) contrast(1.25); }

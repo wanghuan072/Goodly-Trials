@@ -46,7 +46,7 @@ type PendingPick = { kind: "unit" | "item"; slug: string } | null;
 type DragPayload = { kind: "unit" | "item" | "leader" | "slot"; slug?: string; from?: number };
 type EquipmentKind = "gear" | "trinkets" | "consumable";
 
-const STORAGE_KEY = "goodly-trials-company-builder-v1";
+const STORAGE_KEY = "goodly-trials-company-builder-v2";
 const DRAG_TYPE = "application/x-goodly-builder";
 const MODES = ["Theorycraft", "Single-player", "Ranked", "Multiplayer"];
 const LEGACY_SLOT_POSITIONS = [9, 10, 14, 15, 20, 21];
@@ -56,7 +56,7 @@ function emptySlots(): BuilderSlot[] {
 }
 
 function emptyBuild(): BuilderState {
-  return { title: "Untitled Company", mode: "Theorycraft", week: MAX_TRIAL_WEEK, leaderSlug: "", slots: emptySlots(), notes: "" };
+  return { title: "Untitled Company", mode: "Theorycraft", week: 1, leaderSlug: "", slots: emptySlots(), notes: "" };
 }
 
 function encodeBuild(build: BuilderState) {
@@ -135,6 +135,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const [message, setMessage] = useState("Drag a unit into the board");
   const [pendingPick, setPendingPick] = useState<PendingPick>(null);
   const [dropTarget, setDropTarget] = useState<number | null>(null);
+  const [draggingPayload, setDraggingPayload] = useState<DragPayload | null>(null);
   const [catalogPreview, setCatalogPreview] = useState<CatalogPreview>(null);
 
   const unitBySlug = useMemo(() => new Map(roster.map((unit) => [unit.slug, unit])), [roster]);
@@ -167,7 +168,13 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const availableCells = useMemo(() => activeBoardCells(build.week), [build.week]);
   const followerLimit = followerLimitForRules(build.week, build.mode, selectedLeader?.factionSlug);
   const lockedUnitCount = selectedSlots.filter((slot, index) => slot.unitSlug && !availableCells.has(index)).length;
-  const rulesInvalid = !selectedLeader ? filledCount > 0 : filledCount > followerLimit || lockedUnitCount > 0;
+  const wrongFactionCount = selectedLeader && build.mode !== "Multiplayer"
+    ? selectedSlots.filter((slot) => {
+        const unit = unitBySlug.get(slot.unitSlug);
+        return unit && unit.factionSlug !== selectedLeader.factionSlug;
+      }).length
+    : 0;
+  const rulesInvalid = !selectedLeader ? filledCount > 0 : filledCount > followerLimit || lockedUnitCount > 0 || wrongFactionCount > 0;
   const rulesSummary = followerCapLabel(build.mode, selectedLeader?.factionSlug);
   const previewUnit = catalogPreview?.kind === "unit" ? unitBySlug.get(catalogPreview.slug) : undefined;
   const previewItem = catalogPreview?.kind === "item" ? itemBySlug.get(catalogPreview.slug) : undefined;
@@ -186,23 +193,128 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     setCatalogPreview((current) => current?.kind === kind && current.slug === slug ? null : current);
   }
 
+  function startDrag(event: DragEvent, payload: DragPayload) {
+    setDraggingPayload(payload);
+    setDropTarget(null);
+    setPendingPick(null);
+    writeDrag(event, payload);
+  }
+
+  function finishDrag() {
+    setDraggingPayload(null);
+    setDropTarget(null);
+  }
+
+  function slotUsage(slot: BuilderSlot) {
+    return slot.itemSlugs.reduce((total, itemSlug) => {
+      const item = itemBySlug.get(itemSlug);
+      if (!item) return total;
+      const used = itemSlotUse(item);
+      return { gear: total.gear + used.gear, trinkets: total.trinkets + used.trinkets };
+    }, { gear: 0, trinkets: 0 });
+  }
+
+  function slotCapacity(slot: BuilderSlot, unit: BuilderRosterUnit) {
+    return slot.itemSlugs.reduce((capacity, itemSlug) => {
+      const item = itemBySlug.get(itemSlug);
+      if (!item) return capacity;
+      item.effects.forEach((effect) => {
+        const match = effect.match(/^\+(\d+)\s+(gear|trinket) slot/i);
+        if (!match) return;
+        const amount = Number(match[1]);
+        if (match[2].toLowerCase() === "gear") capacity.gear += amount;
+        else capacity.trinkets += amount;
+      });
+      return capacity;
+    }, { gear: unit.gear ?? 0, trinkets: unit.trinkets ?? 0 });
+  }
+
+  function unitArchiveBlockReason(unit: BuilderRosterUnit) {
+    if (!selectedLeader) return "LEADER REQUIRED";
+    if (build.mode !== "Multiplayer" && unit.factionSlug !== selectedLeader.factionSlug) return "FACTION LOCKED";
+    if (filledCount >= followerLimit) return `CAP ${filledCount}/${followerLimit}`;
+    return null;
+  }
+
+  function unitPlacementError(index: number, slug: string) {
+    const unit = unitBySlug.get(slug);
+    if (!unit) return "That unit is not available in the verified roster";
+    if (index < 0 || index >= BOARD_CELLS || !availableCells.has(index)) return `That position is not available in week ${build.week}`;
+    if (!selectedLeader) return "Assign a leader before placing followers";
+    if (build.mode !== "Multiplayer" && unit.factionSlug !== selectedLeader.factionSlug) return `${unit.name} cannot join a ${selectedLeader.faction} company`;
+    if (build.slots[index].unitSlug) return "That board cell is occupied · move or remove its unit first";
+    if (filledCount >= followerLimit) return `Board is full (${filledCount}/${followerLimit} followers) · ${rulesSummary}`;
+    return null;
+  }
+
+  function itemEquipError(index: number, slug: string, from?: number) {
+    const item = itemBySlug.get(slug);
+    const slot = build.slots[index];
+    const unit = slot ? unitBySlug.get(slot.unitSlug) : undefined;
+    if (!availableCells.has(index)) return `That position is not available in week ${build.week}`;
+    if (!item) return "That item is not available in the verified archive";
+    if (!unit) return "Place a unit in that board slot first";
+
+    const existingIndex = build.slots.findIndex((candidate) => candidate.itemSlugs.includes(slug));
+    if (item.type.includes("Unique") && existingIndex >= 0 && existingIndex !== from) return `${item.name} is unique and is already assigned`;
+    if (slot.itemSlugs.includes(slug)) return `${item.name} is already assigned to ${unit.name}`;
+
+    const required = itemSlotUse(item);
+    if (required.gear === 0 && required.trinkets === 0) return null;
+    if (!unit.verified || unit.gear === undefined || unit.trinkets === undefined) return `${unit.name} has no verified public equipment capacity`;
+
+    const usage = slotUsage(slot);
+    const capacity = slotCapacity(slot, unit);
+    if (required.gear > 0 && usage.gear + required.gear > capacity.gear) return `${unit.name} has no open gear slot (${usage.gear}/${capacity.gear})`;
+    if (required.trinkets > 0 && usage.trinkets + required.trinkets > capacity.trinkets) return `${unit.name} has no open trinket slot (${usage.trinkets}/${capacity.trinkets})`;
+    return null;
+  }
+
+  function itemRemovalError(index: number, slug: string) {
+    const slot = build.slots[index];
+    const unit = slot ? unitBySlug.get(slot.unitSlug) : undefined;
+    const item = itemBySlug.get(slug);
+    if (!slot || !unit || !item || !slot.itemSlugs.includes(slug)) return null;
+    const nextSlot = { ...slot, itemSlugs: slot.itemSlugs.filter((itemSlug) => itemSlug !== slug) };
+    const usage = slotUsage(nextSlot);
+    const capacity = slotCapacity(nextSlot, unit);
+    if (usage.gear > capacity.gear || usage.trinkets > capacity.trinkets) return `Cannot remove ${item.name} · ${unit.name} still depends on the slot capacity it grants`;
+    return null;
+  }
+
+  function removeItem(index: number, slug: string) {
+    const error = itemRemovalError(index, slug);
+    if (error) {
+      setMessage(error);
+      return;
+    }
+    const itemName = itemBySlug.get(slug)?.name ?? "Item";
+    updateSlot(index, { ...build.slots[index], itemSlugs: build.slots[index].itemSlugs.filter((itemSlug) => itemSlug !== slug) });
+    setMessage(`${itemName} removed from slot ${index + 1}`);
+  }
+
+  function itemArchiveBlockReason(item: Item) {
+    if (filledCount === 0) return "PLACE UNIT FIRST";
+    const canEquip = build.slots.some((slot, index) => slot.unitSlug && !itemEquipError(index, item.slug));
+    return canEquip ? null : "NO OPEN SLOT";
+  }
+
+  function canDropOnCell(index: number, payload: DragPayload) {
+    if (payload.kind === "unit" && payload.slug) return !unitPlacementError(index, payload.slug);
+    if (payload.kind === "item" && payload.slug) return !itemEquipError(index, payload.slug, payload.from) && (payload.from === undefined || payload.from === index || !itemRemovalError(payload.from, payload.slug));
+    if (payload.kind === "slot" && payload.from !== undefined) return payload.from !== index && availableCells.has(index);
+    return false;
+  }
+
   function updateSlot(index: number, next: BuilderSlot) {
     setBuild((current) => ({ ...current, slots: current.slots.map((slot, slotIndex) => slotIndex === index ? next : slot) }));
   }
 
   function placeUnit(index: number, slug: string) {
-    if (index < 0 || index >= BOARD_CELLS) return;
-    if (!availableCells.has(index)) {
-      setMessage(`That position is not available in week ${build.week}`);
-      return;
-    }
-    if (!selectedLeader) {
-      setTab("leaders");
-      setMessage("Assign a leader before placing followers");
-      return;
-    }
-    if (!build.slots[index].unitSlug && filledCount >= followerLimit) {
-      setMessage(`Board is full (${filledCount}/${followerLimit} followers) · ${rulesSummary}`);
+    const error = unitPlacementError(index, slug);
+    if (error) {
+      if (!selectedLeader) setTab("leaders");
+      setMessage(error);
       return;
     }
     updateSlot(index, { unitSlug: slug, itemSlugs: [] });
@@ -213,18 +325,22 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   }
 
   function equipItem(index: number, slug: string, from?: number) {
-    if (!availableCells.has(index)) {
-      setMessage(`That position is not available in week ${build.week}`);
+    const error = itemEquipError(index, slug, from);
+    if (error) {
+      setMessage(error);
       return;
     }
-    if (!build.slots[index]?.unitSlug) {
-      setMessage("Place a unit in that board slot first");
-      return;
+    if (from !== undefined && from !== index) {
+      const removalError = itemRemovalError(from, slug);
+      if (removalError) {
+        setMessage(removalError);
+        return;
+      }
     }
     setBuild((current) => {
       const slots = current.slots.map((slot) => ({ ...slot, itemSlugs: [...slot.itemSlugs] }));
       if (from !== undefined && from !== index) slots[from].itemSlugs = slots[from].itemSlugs.filter((itemSlug) => itemSlug !== slug);
-      if (!slots[index].itemSlugs.includes(slug)) slots[index].itemSlugs = [...slots[index].itemSlugs, slug].slice(0, 8);
+      slots[index].itemSlugs = [...slots[index].itemSlugs, slug];
       return { ...current, slots };
     });
     setActiveSlot(index);
@@ -265,7 +381,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
   function handleBoardDrop(index: number, event: DragEvent) {
     event.preventDefault();
-    setDropTarget(null);
+    finishDrag();
     if (index < 0 || index >= BOARD_CELLS) return;
     const payload = readDrag(event);
     if (!payload) return;
@@ -276,6 +392,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
   function handleLeaderDrop(event: DragEvent) {
     event.preventDefault();
+    finishDrag();
     const payload = readDrag(event);
     if (payload?.kind !== "leader" || !payload.slug) return;
     assignLeader(payload.slug);
@@ -287,6 +404,16 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     if (lockedUnitCount > 0) {
       setMessage(`Cannot assign ${leader.name} · move ${lockedUnitCount} follower(s) out of locked positions first`);
       return;
+    }
+    if (build.mode !== "Multiplayer") {
+      const incompatibleFollowers = build.slots.filter((slot) => {
+        const unit = unitBySlug.get(slot.unitSlug);
+        return unit && unit.factionSlug !== leader.factionSlug;
+      }).length;
+      if (incompatibleFollowers > 0) {
+        setMessage(`Cannot assign ${leader.name} · remove ${incompatibleFollowers} follower(s) from other factions first`);
+        return;
+      }
     }
     const nextLimit = followerLimitForRules(build.week, build.mode, leader.factionSlug);
     if (filledCount > nextLimit) {
@@ -302,6 +429,16 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     if (selectedLeader && filledCount > nextLimit) {
       setMessage(`Cannot switch ruleset · remove ${filledCount - nextLimit} follower(s) first`);
       return;
+    }
+    if (selectedLeader && mode !== "Multiplayer") {
+      const incompatibleFollowers = build.slots.filter((slot) => {
+        const unit = unitBySlug.get(slot.unitSlug);
+        return unit && unit.factionSlug !== selectedLeader.factionSlug;
+      }).length;
+      if (incompatibleFollowers > 0) {
+        setMessage(`Cannot switch ruleset · remove ${incompatibleFollowers} follower(s) from other factions first`);
+        return;
+      }
     }
     setBuild((current) => ({ ...current, mode }));
     setMessage(`${mode} rules applied`);
@@ -418,19 +555,22 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                 const gearItems = equipmentFor(slot, "gear");
                 const trinketItems = equipmentFor(slot, "trinkets");
                 const consumables = equipmentFor(slot, "consumable");
-                const usage = slot.itemSlugs.reduce((total, slug) => {
-                  const item = itemBySlug.get(slug);
-                  if (!item) return total;
-                  const used = itemSlotUse(item);
-                  return { gear: total.gear + used.gear, trinkets: total.trinkets + used.trinkets };
-                }, { gear: 0, trinkets: 0 });
-                const warning = unit?.verified && ((unit.gear !== undefined && usage.gear > unit.gear) || (unit.trinkets !== undefined && usage.trinkets > unit.trinkets));
+                const usage = slotUsage(slot);
+                const capacity = unit ? slotCapacity(slot, unit) : { gear: 0, trinkets: 0 };
                 return <article
                   className={`${styles.boardSlot} ${cellAvailable ? "" : styles.lockedSlot} ${unit ? styles.occupiedSlot : ""} ${activeSlot === index ? styles.activeSlot : ""} ${dropTarget === index ? styles.dropSlot : ""}`}
                   key={index}
                   draggable={Boolean(unit)}
-                  onDragStart={(event) => unit && writeDrag(event, { kind: "slot", from: index })}
-                  onDragOver={(event) => { if (cellAvailable) { event.preventDefault(); setDropTarget(index); } }}
+                  onDragStart={(event) => unit && startDrag(event, { kind: "slot", from: index })}
+                  onDragEnd={finishDrag}
+                  onDragOver={(event) => {
+                    if (draggingPayload && canDropOnCell(index, draggingPayload)) {
+                      event.preventDefault();
+                      setDropTarget(index);
+                    } else {
+                      setDropTarget((current) => current === index ? null : current);
+                    }
+                  }}
                   onMouseLeave={() => setDropTarget((current) => current === index ? null : current)}
                   onDrop={(event) => handleBoardDrop(index, event)}
                 >
@@ -444,10 +584,9 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                     </> : cellAvailable ? <><span className={styles.emptyCell}>+</span><b className={styles.emptyText}>{pendingPick ? "PLACE HERE" : "OPEN"}</b></> : <span className={styles.lockedCell}><b>×</b><small>LOCKED</small></span>}
                   </button>
                   {unit && <div className={styles.loadoutDock}>
-                    <div><label>Gear {usage.gear}/{unit.gear ?? "?"}</label><span className={styles.itemSlots}>{gearItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(1, (unit.gear ?? 2) - gearItems.length) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
-                    <div><label>Trinkets {usage.trinkets}/{unit.trinkets ?? "?"}</label><span className={styles.itemSlots}>{trinketItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(1, (unit.trinkets ?? 1) - trinketItems.length) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
-                    {consumables.length > 0 && <div className={styles.consumables}><label>Use</label><span className={styles.itemSlots}>{consumables.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} /></button>)}</span></div>}
-                    {warning && <strong className={styles.slotWarning}>SLOT LIMIT EXCEEDED</strong>}
+                    <div><label>Gear {usage.gear}/{unit.gear === undefined ? "?" : capacity.gear}</label><span className={styles.itemSlots}>{gearItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); startDrag(event, { kind: "item", slug: item.slug, from: index }); }} onDragEnd={finishDrag} onClick={() => removeItem(index, item.slug)} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(0, capacity.gear - usage.gear) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
+                    <div><label>Trinkets {usage.trinkets}/{unit.trinkets === undefined ? "?" : capacity.trinkets}</label><span className={styles.itemSlots}>{trinketItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); startDrag(event, { kind: "item", slug: item.slug, from: index }); }} onDragEnd={finishDrag} onClick={() => removeItem(index, item.slug)} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(0, capacity.trinkets - usage.trinkets) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
+                    {consumables.length > 0 && <div className={styles.consumables}><label>Use</label><span className={styles.itemSlots}>{consumables.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); startDrag(event, { kind: "item", slug: item.slug, from: index }); }} onDragEnd={finishDrag} onClick={() => removeItem(index, item.slug)} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} /></button>)}</span></div>}
                   </div>}
                 </article>;
                 })}
@@ -505,41 +644,68 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </section>
 
         <section className={`${styles.gamePanel} ${styles.shopPanel}`}>
-          <header className={styles.panelHeader}><strong>Archive [{tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length}]</strong><span>Hover to inspect · drag to the board</span></header>
+          <header className={styles.panelHeader}><strong>Archive [{tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length}]</strong><span>{tab === "units" && selectedLeader ? `${filledCount}/${followerLimit} followers · faction rules active` : "Hover to inspect · valid records can be dragged"}</span></header>
           <div className={styles.tabs} role="tablist" aria-label="Builder archive">{(["units", "items", "leaders"] as CatalogTab[]).map((catalogTab) => <button role="tab" aria-selected={tab === catalogTab} className={tab === catalogTab ? styles.selected : ""} type="button" key={catalogTab} onClick={() => { setTab(catalogTab); setQuery(""); setPendingPick(null); setCatalogPreview(null); }}>{catalogTab}</button>)}</div>
           <div className={styles.filters}><input aria-label="Search archive" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Search ${tab}…`} />{tab !== "items" && <select aria-label="Filter by faction" value={faction} onChange={(event) => setFaction(event.target.value)}><option value="all">All factions</option><option value="goodly-folk">Goodly Folk</option><option value="bone-host">Bone Host</option><option value="belowborn">Belowborn</option></select>}</div>
           <div className={styles.archiveList} role="tabpanel">
-            {tab === "units" && filteredUnits.map((unit, index) => <button
-              className={`${styles.archiveUnit} ${pendingPick?.kind === "unit" && pendingPick.slug === unit.slug ? styles.picked : ""}`}
-              type="button" key={unit.slug} draggable
-              onDragStart={(event) => writeDrag(event, { kind: "unit", slug: unit.slug })}
-              onMouseEnter={() => showCatalogPreview("unit", unit.slug)}
-              onMouseLeave={() => clearCatalogPreview("unit", unit.slug)}
-              onFocus={() => showCatalogPreview("unit", unit.slug)}
-              onBlur={() => clearCatalogPreview("unit", unit.slug)}
-              onClick={() => { showCatalogPreview("unit", unit.slug); setPendingPick({ kind: "unit", slug: unit.slug }); setMessage(`${unit.name} picked up · tap a board cell`); }}
-            >
-              <span className={styles.archiveIndex}>{index + 1}</span>
-              <UnitSprite src={unit.image} color="#e6e6e6" />
-              <span className={styles.archiveIdentity}><small>{unit.faction}</small><strong>{unit.name}</strong><em>{unit.verified ? `${unit.trait} · ${unit.tactic}` : "Roster name verified · public stats pending"}</em></span>
-              {unit.stats ? <span className={styles.archiveStats}><i>HP {unit.stats.hp}</i><i>STR {unit.stats.str}</i><i>AGI {unit.stats.agi}</i><i>INT {unit.stats.int}</i></span> : <span className={styles.unverifiedTag}>NAME ONLY</span>}
-            </button>)}
-            {tab === "items" && filteredItems.map((item, index) => <button
-              className={`${styles.archiveItem} ${pendingPick?.kind === "item" && pendingPick.slug === item.slug ? styles.picked : ""}`}
-              type="button" key={item.slug} draggable
-              onDragStart={(event) => writeDrag(event, { kind: "item", slug: item.slug })}
-              onMouseEnter={() => showCatalogPreview("item", item.slug)}
-              onMouseLeave={() => clearCatalogPreview("item", item.slug)}
-              onFocus={() => showCatalogPreview("item", item.slug)}
-              onBlur={() => clearCatalogPreview("item", item.slug)}
-              onClick={() => { showCatalogPreview("item", item.slug); setPendingPick({ kind: "item", slug: item.slug }); setMessage(`${item.name} picked up · tap a unit card`); }}
-            >
-              <span className={styles.archiveIndex}>{index + 1}</span><Image src={item.image} alt="" width={48} height={48} unoptimized={item.image.endsWith(".gif")} /><span className={styles.archiveIdentity}><small>{item.type}</small><strong>{item.name}</strong><em>{item.effects.slice(0, 2).join(" · ")}</em></span><b>{item.cost}G</b>
-            </button>)}
+            {tab === "units" && filteredUnits.map((unit, index) => {
+              const blockReason = unitArchiveBlockReason(unit);
+              return <button
+                className={`${styles.archiveUnit} ${blockReason ? styles.archiveBlocked : ""} ${pendingPick?.kind === "unit" && pendingPick.slug === unit.slug ? styles.picked : ""}`}
+                type="button" key={unit.slug} draggable={!blockReason} aria-disabled={Boolean(blockReason)} data-reason={blockReason ?? undefined}
+                onDragStart={(event) => { if (blockReason) event.preventDefault(); else startDrag(event, { kind: "unit", slug: unit.slug }); }}
+                onDragEnd={finishDrag}
+                onMouseEnter={() => showCatalogPreview("unit", unit.slug)}
+                onMouseLeave={() => clearCatalogPreview("unit", unit.slug)}
+                onFocus={() => showCatalogPreview("unit", unit.slug)}
+                onBlur={() => clearCatalogPreview("unit", unit.slug)}
+                onClick={() => {
+                  showCatalogPreview("unit", unit.slug);
+                  if (blockReason) {
+                    setPendingPick(null);
+                    setMessage(blockReason === "LEADER REQUIRED" ? "Assign a leader before placing followers" : blockReason === "FACTION LOCKED" ? `${unit.name} is outside the selected leader's faction` : `Board is full (${filledCount}/${followerLimit} followers)`);
+                    return;
+                  }
+                  setPendingPick({ kind: "unit", slug: unit.slug });
+                  setMessage(`${unit.name} picked up · tap an active empty board cell`);
+                }}
+              >
+                <span className={styles.archiveIndex}>{index + 1}</span>
+                <UnitSprite src={unit.image} color="#e6e6e6" />
+                <span className={styles.archiveIdentity}><small>{unit.faction}</small><strong>{unit.name}</strong><em>{unit.verified ? `${unit.trait} · ${unit.tactic}` : "Roster name verified · public stats pending"}</em></span>
+                {unit.stats ? <span className={styles.archiveStats}><i>HP {unit.stats.hp}</i><i>STR {unit.stats.str}</i><i>AGI {unit.stats.agi}</i><i>INT {unit.stats.int}</i></span> : <span className={styles.unverifiedTag}>NAME ONLY</span>}
+              </button>;
+            })}
+            {tab === "items" && filteredItems.map((item, index) => {
+              const blockReason = itemArchiveBlockReason(item);
+              return <button
+                className={`${styles.archiveItem} ${blockReason ? styles.archiveBlocked : ""} ${pendingPick?.kind === "item" && pendingPick.slug === item.slug ? styles.picked : ""}`}
+                type="button" key={item.slug} draggable={!blockReason} aria-disabled={Boolean(blockReason)} data-reason={blockReason ?? undefined}
+                onDragStart={(event) => { if (blockReason) event.preventDefault(); else startDrag(event, { kind: "item", slug: item.slug }); }}
+                onDragEnd={finishDrag}
+                onMouseEnter={() => showCatalogPreview("item", item.slug)}
+                onMouseLeave={() => clearCatalogPreview("item", item.slug)}
+                onFocus={() => showCatalogPreview("item", item.slug)}
+                onBlur={() => clearCatalogPreview("item", item.slug)}
+                onClick={() => {
+                  showCatalogPreview("item", item.slug);
+                  if (blockReason) {
+                    setPendingPick(null);
+                    setMessage(blockReason === "PLACE UNIT FIRST" ? "Place a unit before assigning equipment" : `${item.name} has no compatible open slot on the board`);
+                    return;
+                  }
+                  setPendingPick({ kind: "item", slug: item.slug });
+                  setMessage(`${item.name} picked up · tap a compatible unit card`);
+                }}
+              >
+                <span className={styles.archiveIndex}>{index + 1}</span><Image src={item.image} alt="" width={48} height={48} unoptimized={item.image.endsWith(".gif")} /><span className={styles.archiveIdentity}><small>{item.type}</small><strong>{item.name}</strong><em>{item.effects.slice(0, 2).join(" · ")}</em></span><b>{item.cost}G</b>
+              </button>;
+            })}
             {tab === "leaders" && filteredLeaders.map((leader, index) => <button
               className={`${styles.archiveLeader} ${build.leaderSlug === leader.slug ? styles.picked : ""}`}
               type="button" key={leader.slug} draggable
-              onDragStart={(event) => writeDrag(event, { kind: "leader", slug: leader.slug })}
+              onDragStart={(event) => startDrag(event, { kind: "leader", slug: leader.slug })}
+              onDragEnd={finishDrag}
               onMouseEnter={() => showCatalogPreview("leader", leader.slug)}
               onMouseLeave={() => clearCatalogPreview("leader", leader.slug)}
               onFocus={() => showCatalogPreview("leader", leader.slug)}
@@ -553,7 +719,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
       </div>
 
-      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Choose a leader and trial week first. The Board only accepts followers in positions unlocked for that week and stops at the current faction or multiplayer cap. Hover, focus, or tap a record in the Archive to inspect it; drag equipment onto a unit and occupied cells to rearrange them.</p><p>Placement limits were verified against the official live v0.302 game client on 2026-08-20. Public unit cards remain labeled by their own source version; the Builder does not claim strength or legality beyond the rules enforced here.</p></aside></div>
+      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Choose a leader and trial week first. The Board enforces unlocked positions, faction or multiplayer follower caps, one unit per cell, and each verified unit&apos;s Gear and Trinket capacity. Hover, focus, or tap a record in the Archive to inspect it; blocked records show why they cannot be dragged.</p><p>Placement limits were verified against the official live v0.302 game client on 2026-08-20. Public unit cards remain labeled by their own source version; the Builder does not claim strength or legality beyond the rules enforced here.</p></aside></div>
     </section>
   );
 }

@@ -48,9 +48,13 @@ const STORAGE_KEY = "goodly-trials-company-builder-v1";
 const DRAG_TYPE = "application/x-goodly-builder";
 const MODES = ["Theorycraft", "Single-player", "Ranked", "Multiplayer"];
 const SIZES = [3, 4, 5, 6];
+const BOARD_COLUMNS = 6;
+const BOARD_ROWS = 4;
+const BOARD_CELLS = BOARD_COLUMNS * BOARD_ROWS;
+const LEGACY_SLOT_POSITIONS = [9, 10, 14, 15, 20, 21];
 
 function emptySlots(): BuilderSlot[] {
-  return Array.from({ length: 6 }, () => ({ unitSlug: "", itemSlugs: [] }));
+  return Array.from({ length: BOARD_CELLS }, () => ({ unitSlug: "", itemSlugs: [] }));
 }
 
 function emptyBuild(): BuilderState {
@@ -70,16 +74,22 @@ function decodeBuild(value: string): BuilderState | null {
     const bytes = Uint8Array.from(atob(padded), (character) => character.charCodeAt(0));
     const parsed = JSON.parse(new TextDecoder().decode(bytes)) as Partial<BuilderState>;
     const size = SIZES.includes(Number(parsed.size)) ? Number(parsed.size) : 4;
-    const slots = Array.isArray(parsed.slots) ? parsed.slots.slice(0, 6).map((slot) => ({
+    const sourceSlots = Array.isArray(parsed.slots) ? parsed.slots.slice(0, BOARD_CELLS).map((slot) => ({
       unitSlug: typeof slot?.unitSlug === "string" ? slot.unitSlug : "",
       itemSlugs: Array.isArray(slot?.itemSlugs) ? slot.itemSlugs.filter((slug): slug is string => typeof slug === "string").slice(0, 8) : [],
     })) : [];
+    const slots = emptySlots();
+    if (sourceSlots.length <= 6) {
+      sourceSlots.forEach((slot, index) => { slots[LEGACY_SLOT_POSITIONS[index]] = slot; });
+    } else {
+      sourceSlots.forEach((slot, index) => { slots[index] = slot; });
+    }
     return {
       title: typeof parsed.title === "string" ? parsed.title.slice(0, 64) : "Untitled Company",
       mode: MODES.includes(parsed.mode ?? "") ? parsed.mode as string : "Theorycraft",
       size,
       leaderSlug: typeof parsed.leaderSlug === "string" ? parsed.leaderSlug : "",
-      slots: [...slots, ...emptySlots()].slice(0, 6),
+      slots,
       notes: typeof parsed.notes === "string" ? parsed.notes.slice(0, 280) : "",
     };
   } catch {
@@ -157,9 +167,11 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   }, [build, ready]);
 
   const selectedLeader = leaderBySlug.get(build.leaderSlug);
-  const selectedSlots = build.slots.slice(0, build.size);
+  const selectedSlots = build.slots;
+  const filledCount = selectedSlots.filter((slot) => slot.unitSlug).length;
   const inspectedUnit = unitBySlug.get(inspectSlug) ?? unitBySlug.get(build.slots[activeSlot]?.unitSlug ?? "");
   const activeUnit = unitBySlug.get(build.slots[activeSlot]?.unitSlug ?? "");
+  const activeCellLabel = `${String.fromCharCode(65 + Math.floor(activeSlot / BOARD_COLUMNS))}${activeSlot % BOARD_COLUMNS + 1}`;
   const itemCost = selectedSlots.reduce((total, slot) => total + slot.itemSlugs.reduce((sum, slug) => sum + (itemBySlug.get(slug)?.cost ?? 0), 0), 0);
   const queryText = query.trim().toLowerCase();
   const filteredUnits = roster.filter((unit) => (faction === "all" || unit.factionSlug === faction) && (!queryText || `${unit.name} ${unit.faction} ${unit.trait ?? ""}`.toLowerCase().includes(queryText)));
@@ -171,7 +183,11 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   }
 
   function placeUnit(index: number, slug: string) {
-    if (index >= build.size) return;
+    if (index < 0 || index >= BOARD_CELLS) return;
+    if (!build.slots[index]?.unitSlug && filledCount >= build.size) {
+      setMessage(`Company limit reached · raise the unit limit above ${build.size}`);
+      return;
+    }
     updateSlot(index, { unitSlug: slug, itemSlugs: [] });
     setActiveSlot(index);
     setInspectSlug(slug);
@@ -196,7 +212,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   }
 
   function moveBoardSlot(from: number, to: number) {
-    if (from === to || to >= build.size) return;
+    if (from === to || to < 0 || to >= BOARD_CELLS) return;
     setBuild((current) => {
       const slots = [...current.slots];
       [slots[from], slots[to]] = [slots[to], slots[from]];
@@ -207,7 +223,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   }
 
   function handleBoardClick(index: number) {
-    if (index >= build.size) return;
+    if (index < 0 || index >= BOARD_CELLS) return;
     if (pendingPick?.kind === "unit") return placeUnit(index, pendingPick.slug);
     if (pendingPick?.kind === "item") return equipItem(index, pendingPick.slug);
     setActiveSlot(index);
@@ -219,7 +235,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   function handleBoardDrop(index: number, event: DragEvent) {
     event.preventDefault();
     setDropTarget(null);
-    if (index >= build.size) return;
+    if (index < 0 || index >= BOARD_CELLS) return;
     const payload = readDrag(event);
     if (!payload) return;
     if (payload.kind === "unit" && payload.slug) placeUnit(index, payload.slug);
@@ -256,27 +272,55 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     return slot.itemSlugs.map((slug) => itemBySlug.get(slug)).filter((item): item is Item => item !== undefined && itemKind(item) === kind);
   }
 
+  function setUnitLimit(size: number) {
+    if (size < filledCount) {
+      setMessage(`Remove ${filledCount - size} unit${filledCount - size === 1 ? "" : "s"} before lowering the limit`);
+      return;
+    }
+    setBuild((current) => ({ ...current, size }));
+    setMessage(`Unit limit set to ${size}`);
+  }
+
+  function rotateFormationRow(rowIndex: number) {
+    const start = rowIndex * BOARD_COLUMNS;
+    setBuild((current) => {
+      const slots = [...current.slots];
+      const last = slots[start + BOARD_COLUMNS - 1];
+      for (let offset = BOARD_COLUMNS - 1; offset > 0; offset -= 1) slots[start + offset] = slots[start + offset - 1];
+      slots[start] = last;
+      return { ...current, slots };
+    });
+    if (activeSlot >= start && activeSlot < start + BOARD_COLUMNS) setActiveSlot(start + ((activeSlot - start + 1) % BOARD_COLUMNS));
+    setMessage(`Formation row ${rowIndex + 1} shifted right`);
+  }
+
   return (
     <section className={`container ${styles.builder}`} aria-label="Company builder">
       <div className={styles.toolbar}>
         <label className={styles.titleField}><span>Company name</span><input value={build.title} maxLength={64} onChange={(event) => setBuild({ ...build, title: event.target.value })} /></label>
         <label><span>Plan for</span><select value={build.mode} onChange={(event) => setBuild({ ...build, mode: event.target.value })}>{MODES.map((mode) => <option key={mode}>{mode}</option>)}</select></label>
-        <fieldset className={styles.sizePicker}><legend>Active slots</legend><div>{SIZES.map((size) => <button className={build.size === size ? styles.selected : ""} type="button" key={size} onClick={() => { setBuild({ ...build, size }); setActiveSlot((slot) => Math.min(slot, size - 1)); }}>{size}</button>)}</div></fieldset>
+        <fieldset className={styles.sizePicker}><legend>Unit limit</legend><div>{SIZES.map((size) => <button className={build.size === size ? styles.selected : ""} type="button" key={size} onClick={() => setUnitLimit(size)}>{size}</button>)}</div></fieldset>
         <div className={styles.actions}><button type="button" onClick={clearBuild}>Clear</button><button className={styles.copyButton} type="button" onClick={copyLink}>Copy build link</button><span aria-live="polite">{message}</span></div>
       </div>
 
       <div className={styles.workbench}>
         <section className={`${styles.gamePanel} ${styles.boardPanel}`}>
-          <header className={styles.panelHeader}><strong>Board [{selectedSlots.filter((slot) => slot.unitSlug).length}]</strong><span>Drag units into cells · drag equipment onto a unit</span></header>
+          <header className={styles.panelHeader}><strong>Board [{filledCount}/{build.size}]</strong><span>4 formation rows · 6 positions per row</span></header>
           <div className={styles.boardStage}>
-            <button className={styles.leaderDock} type="button" onClick={() => setTab("leaders")} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
-              <span className={styles.dockLabel}>Leader</span>
-              <b>{selectedLeader?.name ?? "+"}</b>
-              <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Drag or choose a leader"}</small>
-            </button>
-            <div className={styles.boardGrid}>
-              {build.slots.map((slot, index) => {
-                const locked = index >= build.size;
+            <div className={styles.boardTopbar}>
+              <button className={styles.leaderDock} type="button" onClick={() => setTab("leaders")} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
+                <span className={styles.dockLabel}>Leader</span>
+                <b>{selectedLeader?.name ?? "+ ASSIGN LEADER"}</b>
+                <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Drag a leader here or open Leaders"}</small>
+              </button>
+              <div className={styles.boardLegend}><span><i /> Empty position</span><span><i /> Occupied card</span><strong>Drag a card to any cell</strong></div>
+            </div>
+            <div className={styles.formationLayout}>
+              <div className={styles.rowControls} aria-label="Formation row controls">
+                {Array.from({ length: BOARD_ROWS }, (_, rowIndex) => <button type="button" key={rowIndex} onClick={() => rotateFormationRow(rowIndex)} title={`Shift formation row ${rowIndex + 1} right`}><b>↻</b><small>ROW {rowIndex + 1}</small></button>)}
+              </div>
+              <div className={styles.boardGrid}>
+                {build.slots.map((slot, index) => {
                 const unit = unitBySlug.get(slot.unitSlug);
                 const gearItems = equipmentFor(slot, "gear");
                 const trinketItems = equipmentFor(slot, "trinkets");
@@ -289,21 +333,21 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                 }, { gear: 0, trinkets: 0 });
                 const warning = unit?.verified && ((unit.gear !== undefined && usage.gear > unit.gear) || (unit.trinkets !== undefined && usage.trinkets > unit.trinkets));
                 return <article
-                  className={`${styles.boardSlot} ${locked ? styles.lockedSlot : ""} ${activeSlot === index ? styles.activeSlot : ""} ${dropTarget === index ? styles.dropSlot : ""}`}
+                  className={`${styles.boardSlot} ${unit ? styles.occupiedSlot : ""} ${activeSlot === index ? styles.activeSlot : ""} ${dropTarget === index ? styles.dropSlot : ""}`}
                   key={index}
-                  draggable={Boolean(unit) && !locked}
+                  draggable={Boolean(unit)}
                   onDragStart={(event) => unit && writeDrag(event, { kind: "slot", from: index })}
-                  onDragOver={(event) => { if (!locked) { event.preventDefault(); setDropTarget(index); } }}
+                  onDragOver={(event) => { event.preventDefault(); setDropTarget(index); }}
                   onDragLeave={() => setDropTarget((current) => current === index ? null : current)}
                   onDrop={(event) => handleBoardDrop(index, event)}
                 >
-                  <button className={styles.boardSlotMain} type="button" disabled={locked} onClick={() => handleBoardClick(index)}>
-                    <span className={styles.slotNumber}>{index + 1}</span>
-                    {locked ? <span className={styles.lockMark}>LOCKED</span> : unit ? <>
+                  <button className={styles.boardSlotMain} type="button" onClick={() => handleBoardClick(index)}>
+                    <span className={styles.slotNumber}>{String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS))}{index % BOARD_COLUMNS + 1}</span>
+                    {unit ? <>
                       <span className={styles.miniTitle}><small>{unit.faction}</small><b>{unit.name}</b></span>
                       <UnitSprite src={unit.image} color="#e8e8e8" large />
                       {unit.stats ? <><div className={styles.miniVitals}><span>ES {unit.stats.es}</span><span>HP {unit.stats.hp}</span><span>MP {unit.stats.mp}</span></div><div className={styles.miniAttrs}><b>{unit.stats.str}</b><b>{unit.stats.agi}</b><b>{unit.stats.int}</b></div></> : <span className={styles.pendingStats}>PUBLIC STATS PENDING</span>}
-                    </> : <><span className={styles.emptyCell}>+</span><b className={styles.emptyText}>{pendingPick ? "PLACE HERE" : "EMPTY SLOT"}</b></>}
+                    </> : <><span className={styles.emptyCell}>+</span><b className={styles.emptyText}>{pendingPick ? "PLACE HERE" : "OPEN"}</b></>}
                   </button>
                   {unit && <div className={styles.loadoutDock}>
                     <div><label>Gear {usage.gear}/{unit.gear ?? "?"}</label><span className={styles.itemSlots}>{gearItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} title={`Drag to transfer or click to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(1, (unit.gear ?? 2) - gearItems.length) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
@@ -312,10 +356,17 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                     {warning && <strong className={styles.slotWarning}>SLOT LIMIT EXCEEDED</strong>}
                   </div>}
                 </article>;
-              })}
+                })}
+              </div>
+              <aside className={styles.formationRail} aria-label="Formation row occupancy">
+                {Array.from({ length: BOARD_ROWS }, (_, rowIndex) => {
+                  const rowCount = build.slots.slice(rowIndex * BOARD_COLUMNS, (rowIndex + 1) * BOARD_COLUMNS).filter((slot) => slot.unitSlug).length;
+                  return <div key={rowIndex}><span>◈</span><b>FORMATION {rowIndex + 1}</b><small>{rowCount} {rowCount === 1 ? "unit" : "units"} positioned</small></div>;
+                })}
+              </aside>
             </div>
           </div>
-          <footer className={styles.boardFooter}><span>{build.mode}</span><span>{selectedSlots.filter((slot) => slot.unitSlug).length}/{build.size} units</span><span>{itemCost}G known item cost</span></footer>
+          <footer className={styles.boardFooter}><span>{build.mode}</span><span>{filledCount}/{build.size} units</span><span>{itemCost}G known item cost</span></footer>
         </section>
 
         <section className={`${styles.gamePanel} ${styles.shopPanel}`}>
@@ -356,7 +407,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </section>
 
         <aside className={`${styles.gamePanel} ${styles.inspectPanel}`}>
-          <header className={styles.panelHeader}><strong>Inspect</strong><span>{activeUnit ? `Board slot ${activeSlot + 1}` : "Archive record"}</span></header>
+          <header className={styles.panelHeader}><strong>Inspect</strong><span>{activeUnit ? `Board ${activeCellLabel}` : "Archive record"}</span></header>
           {inspectedUnit ? <div className={styles.inspectCard}>
             <header><small>{inspectedUnit.faction}</small><h2>{inspectedUnit.name}</h2><span>{inspectedUnit.verified ? "PUBLIC CARD · v0.301" : "ROSTER RECORD"}</span></header>
             <div className={styles.inspectStage}>
@@ -375,7 +426,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </aside>
       </div>
 
-      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Desktop: drag units into Board cells, drag equipment onto a unit, and drag occupied cells to swap them. Touch or keyboard: select a record, then select its destination. Click equipped items to remove them.</p><p>Verified cards use official public v0.301 examples. The Builder does not claim availability, legality, or strength.</p></aside></div>
+      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Desktop: drag units into any Board cell, drag equipment onto a unit, and drag occupied cells to swap them. Use the arrow beside a row to shift all six positions right. Touch or keyboard: select a record, then select its destination. Click equipped items to remove them.</p><p>Verified cards use official public v0.301 examples. The Builder does not claim availability, legality, or strength.</p></aside></div>
     </section>
   );
 }

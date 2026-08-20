@@ -1,9 +1,9 @@
 [
-  { "slug": "beginners-guide", "title": "Goodly Trials Beginner's Guide", "category": "Getting Started", "excerpt": "Understand the twelve-trial road, the shop rhythm, losses, leaders, units, and gear.", "updated": "2026-08-19" },
-  { "slug": "formation-guide", "title": "Formation & Positioning Guide", "category": "Combat & Tactics", "excerpt": "Read Formation, Backline, and Flanking tactics before committing your company.", "updated": "2026-08-19" },
-  { "slug": "stats-explained", "title": "Goodly Trials Stats Explained", "category": "Getting Started", "excerpt": "A field reference for HP, ES, MP, STR, AGI, INT, ATK, CRT, RNG, SPD, AR, and EVA.", "updated": "2026-08-19" },
-  { "slug": "economy-guide", "title": "Shop & Economy Guide", "category": "Getting Started", "excerpt": "Plan purchases, gear requirements, income effects, and multiplayer bids.", "updated": "2026-08-19" },
-  { "slug": "ascendancy-guide", "title": "Ascendancy Guide", "category": "Progression", "excerpt": "Compare Power, Fortitude, and Authority paths without losing sight of primary attributes.", "updated": "2026-08-19" },
-  { "slug": "multiplayer-guide", "title": "Multiplayer Tournament Guide", "category": "Multiplayer", "excerpt": "Learn how live bidding, shared markets, AI seats, combat, and standings work for 2–8 players.", "updated": "2026-08-19" },
-  { "slug": "ranked-guide", "title": "Ranked Ladder Guide", "category": "Progression", "excerpt": "Follow the road from Peasant to Champion and understand when Ranked unlocks.", "updated": "2026-08-19" }
+  { "slug": "beginners-guide", "title": "Goodly Trials Beginner's Guide", "category": "Getting Started", "excerpt": "Understand the twelve-trial road, the shop rhythm, losses, leaders, units, and gear.", "updated": "2026-08-20" },
+  { "slug": "formation-guide", "title": "Formation & Positioning Guide", "category": "Combat & Tactics", "excerpt": "Read Formation, Backline, and Flanking tactics before committing your company.", "updated": "2026-08-20" },
+  { "slug": "stats-explained", "title": "Goodly Trials Stats Explained", "category": "Getting Started", "excerpt": "A field reference for HP, ES, MP, STR, AGI, INT, ATK, CRT, RNG, SPD, AR, and EVA.", "updated": "2026-08-20" },
+  { "slug": "economy-guide", "title": "Shop & Economy Guide", "category": "Getting Started", "excerpt": "Plan purchases, gear requirements, income effects, and multiplayer bids.", "updated": "2026-08-20" },
+  { "slug": "ascendancy-guide", "title": "Ascendancy Guide", "category": "Progression", "excerpt": "Compare Power, Fortitude, and Authority paths without losing sight of primary attributes.", "updated": "2026-08-20" },
+  { "slug": "multiplayer-guide", "title": "Multiplayer Tournament Guide", "category": "Multiplayer", "excerpt": "Learn how live bidding, shared markets, AI seats, combat, and standings work for 2–8 players.", "updated": "2026-08-20" },
+  { "slug": "ranked-guide", "title": "Ranked Ladder Guide", "category": "Progression", "excerpt": "Follow the road from Peasant to Champion and review the unresolved official Soldier-rating discrepancy.", "updated": "2026-08-20" }
 ]

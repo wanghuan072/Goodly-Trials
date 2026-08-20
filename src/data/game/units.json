@@ -16,8 +16,8 @@
     "trait": { "name": "Oracle", "effect": "-2 STR, +1 AGI, +2 INT after each battle.", "cap": "Caps at -4 / +8 / +8" },
     "skills": [{ "name": "Knight's Oath", "effect": "+1 STR to adjacent allies." }],
     "tactic": { "name": "Formation", "effect": "Stays in formation and can reduce damage taken." },
-    "gameVersion": "v0.300",
-    "lastVerified": "2026-08-19",
+    "gameVersion": "v0.301",
+    "lastVerified": "2026-08-20",
     "source": "https://goodlytrials.com/wiki/units"
   },
   {
@@ -37,8 +37,8 @@
     "trait": { "name": "Hoarding", "effect": "+4G income with Trinket, one-handed, two-handed, Shield, or Spell gear on board." },
     "skills": [{ "name": "Rotund", "effect": "Gains ATK equal to 15% of starting HP and has -10% SPD." }],
     "tactic": { "name": "Formation", "effect": "Stays in formation and can reduce damage taken." },
-    "gameVersion": "v0.300",
-    "lastVerified": "2026-08-19",
+    "gameVersion": "v0.301",
+    "lastVerified": "2026-08-20",
     "source": "https://goodlytrials.com/wiki/units"
   },
   {
@@ -58,8 +58,8 @@
     "trait": { "name": "Versatile", "effect": "-1 ALL once, then +1 STR and +1 AGI after each battle.", "cap": "Caps at +10 / +10 / +0" },
     "skills": [{ "name": "Longshot", "effect": "+1 RNG." }],
     "tactic": { "name": "Backline", "effect": "Prefers to stay in the backline." },
-    "gameVersion": "v0.300",
-    "lastVerified": "2026-08-19",
+    "gameVersion": "v0.301",
+    "lastVerified": "2026-08-20",
     "source": "https://goodlytrials.com/wiki/units"
   },
   {
@@ -79,8 +79,8 @@
     "trait": { "name": "Potent", "effect": "+20% spell damage." },
     "skills": [{ "name": "Quick-Witted", "effect": "+2 ES per 1 AGI; -1 STR to adjacent allies." }],
     "tactic": { "name": "Backline", "effect": "Prefers to stay in the backline." },
-    "gameVersion": "v0.300",
-    "lastVerified": "2026-08-19",
+    "gameVersion": "v0.301",
+    "lastVerified": "2026-08-20",
     "source": "https://goodlytrials.com/wiki/units"
   },
   {
@@ -99,8 +99,8 @@
     "trait": { "name": "Magnanimous", "effect": "Receives no hand-gear benefits; adjacent allies receive 50% of those benefits instead." },
     "skills": [{ "name": "Loot", "effect": "Spawns with one random weapon." }, { "name": "Respawn", "effect": "Returns once per battle at a back corner." }],
     "tactic": { "name": "Flanking", "effect": "Can enter combat from behind enemy lines." },
-    "gameVersion": "v0.300",
-    "lastVerified": "2026-08-19",
+    "gameVersion": "v0.301",
+    "lastVerified": "2026-08-20",
     "source": "https://goodlytrials.com/wiki/units"
   },
   {
@@ -118,8 +118,8 @@
     "trait": { "name": "Rampaging", "effect": "+2% ATK per 2 STR." },
     "skills": [{ "name": "Feast", "effect": "When an ally dies, gain +1 ATK and +2 HP." }],
     "tactic": { "name": "Flanking", "effect": "Can enter combat from behind enemy lines." },
-    "gameVersion": "v0.300",
-    "lastVerified": "2026-08-19",
+    "gameVersion": "v0.301",
+    "lastVerified": "2026-08-20",
     "source": "https://goodlytrials.com/wiki/units"
   }
 ]

@@ -1,7 +1,7 @@
 [
   {
     "slug": "goodly-knight-frontline-build",
-    "quickAnswer": "Use Iron Sword of Brawn and Iron Shield of Brawn as an accessible v0.300 starting point, then place the Goodly Knight beside allies that benefit from Knight's Oath.",
+    "quickAnswer": "Use Iron Sword of Brawn and Iron Shield of Brawn as an accessible v0.301 starting point, then place the Goodly Knight beside allies that benefit from Knight's Oath.",
     "loadout": [["Weapon", "Iron Sword of Brawn", "/wiki/items/iron-sword-of-brawn"], ["Shield", "Iron Shield of Brawn", "/wiki/items/iron-shield-of-brawn"], ["Position", "Formation / adjacency", "/guides/formation-guide"], ["Trait", "Oracle", "/wiki/units/goodly-knight"]],
     "sections": [
       { "title": "Why this starting point works", "paragraphs": ["The Goodly Knight begins with enough STR and AGI to meet the Iron Sword requirement and enough STR for the Iron Shield. The pair adds HP, ATK, STR, and armor while preserving the official Formation identity."], "bullets": ["Iron Sword: +2 STR, +3 ATK, +8 HP", "Iron Shield: +2 STR, +1 AR, +10 HP, ranged armor", "Knight's Oath: +1 STR to adjacent allies"] },
@@ -21,7 +21,7 @@
   },
   {
     "slug": "wizard-frostfall-build",
-    "quickAnswer": "The Wizard's 7 INT, 27 MP, and four trinket slots make Frostfall of Lore a verified-requirement spell starting point for v0.300.",
+    "quickAnswer": "The Wizard's 7 INT, 27 MP, and four trinket slots make Frostfall of Lore a verified-requirement spell starting point for v0.301.",
     "loadout": [["Spell", "Frostfall of Lore", "/wiki/items/frostfall-of-lore"], ["Hand gear", "Wand of Wit", "/wiki/items/wand-of-wit"], ["Position", "Backline", "/guides/formation-guide"], ["Trait", "Potent", "/wiki/units/wizard"]],
     "sections": [
       { "title": "Spell fit", "paragraphs": ["Frostfall requires 4 INT, deals spell damage based on INT, and adds more INT. The Wizard exceeds that requirement in the verified baseline and Potent adds spell damage."], "bullets": ["Wizard: 7 INT and 27 MP", "Potent: +20% spell damage", "Frostfall: 2 × INT spell damage and +4 INT"] },

@@ -21,7 +21,6 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
   const build = builds.find((entry) => entry.unitSlug === unit.slug);
   const relatedUnits = units.filter((entry) => entry.slug !== unit.slug && entry.factionSlug === unit.factionSlug).slice(0, 4);
   const relatedUpdates = updates.filter((update) => update.summary.toLowerCase().includes(unit.name.toLowerCase().split(" ").at(-1) ?? "never") || (unit.faction === "Bone Host" && update.version === "v0.300")).slice(0, 3);
-  const isKnightReference = unit.slug === "goodly-knight";
 
   return (
     <main className={`container ${styles.detailShell}`}>
@@ -29,7 +28,7 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
       <div className={styles.detailGrid}>
         <article className={styles.detailMain}>
           <header className={styles.unitHero} style={{ "--unit-accent": unit.accent } as CSSProperties}>
-            <div className={`${styles.unitArt} ${isKnightReference ? styles.knightReference : ""}`}>{!isKnightReference && <UnitSprite src={unit.image} color={unit.accent} large />}</div>
+            <div className={styles.unitArt}><UnitSprite src={unit.image} color={unit.accent} large /></div>
             <div className={styles.heroCopy}>
               <h1>{unit.name}</h1>
               <div className={styles.badges}><span>♜ {unit.faction}</span><span>◈ {unit.tactic.name}</span><span>Patch {unit.gameVersion}</span></div>
@@ -45,8 +44,8 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
           <section className={styles.panel} id="abilities"><h2>Trait: {unit.trait.name}</h2><div className={styles.traitBody}><span>✥</span><div><p>{unit.trait.effect}</p>{unit.trait.cap && <em>{unit.trait.cap}</em>}</div></div><h2 className={styles.subheading}>Skills / Tactics</h2><div className={styles.skillList}>{unit.skills.map((skill) => <div key={skill.name}><span>✦</span><h3>{skill.name}</h3><p>{skill.effect}</p><small>Verified skill</small></div>)}<div><span>♜</span><h3>{unit.tactic.name}</h3><p>{unit.tactic.effect}</p><small>Battlefield tactic</small></div></div></section>
 
           <div className={styles.panelPair}>
-            <section className={`${styles.panel} ${styles.editorial}`} id="items"><h2>Best Item Starting Points</h2><p className={styles.disclaimer}>Editorial pairing based on published requirements and effects.</p><div className={styles.itemTiles}>{recommendedItems.length ? recommendedItems.map((item) => item && <Link key={item.slug} href={`/wiki/items/${item.slug}`}><b>⚔</b><span>{item.name}</span><small>{item.effects.slice(0, 1).join("")}</small></Link>) : <p>No equipment pairing published yet.</p>}</div></section>
-            <section className={`${styles.panel} ${styles.editorial}`} id="formation"><h2>Best Formation / Position</h2><div className={styles.formation}><div className={styles.formationBoard}><i /><i /><i /><i /><i /><i /><i /><i /><i className={styles.activeTile} /><i /><i /><i /></div><p><strong>{unit.tactic.name}:</strong> {unit.tactic.effect} {unit.tactic.name === "Formation" ? "Keep adjacency visible before locking the line." : unit.tactic.name === "Backline" ? "Protect the unit from early contact and confirm range." : "Check opposing corners and avoid assuming a flank is guaranteed."}</p></div></section>
+            <section className={`${styles.panel} ${styles.editorial}`} id="items"><h2>Editorial Item Starting Points</h2><p className={styles.disclaimer}>Independent pairing based on published requirements and effects; not an official or universal best-in-slot claim.</p><div className={styles.itemTiles}>{recommendedItems.length ? recommendedItems.map((item) => item && <Link key={item.slug} href={`/wiki/items/${item.slug}`}><b>⚔</b><span>{item.name}</span><small>{item.effects.slice(0, 1).join("")}</small></Link>) : <p>No equipment pairing published yet.</p>}</div></section>
+            <section className={`${styles.panel} ${styles.editorial}`} id="formation"><h2>Editorial Position Notes</h2><div className={styles.formation}><div className={styles.formationBoard}><i /><i /><i /><i /><i /><i /><i /><i /><i className={styles.activeTile} /><i /><i /><i /></div><p><strong>{unit.tactic.name}:</strong> {unit.tactic.effect} {unit.tactic.name === "Formation" ? "Keep adjacency visible before locking the line." : unit.tactic.name === "Backline" ? "Protect the unit from early contact and confirm range." : "Check opposing corners and avoid assuming a flank is guaranteed."}</p></div></section>
           </div>
 
           <div className={styles.panelPair}>
@@ -58,11 +57,11 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
         </article>
 
         <aside className={styles.sideProfile}>
-          <div className={`${styles.profileArt} ${isKnightReference ? styles.knightProfileReference : ""}`}>{!isKnightReference && <UnitSprite src={unit.image} color={unit.accent} large />}</div>
+          <div className={styles.profileArt}><UnitSprite src={unit.image} color={unit.accent} large /></div>
           <h2>{unit.name}</h2>
           <dl><div><dt>Faction</dt><dd><Link href={`/wiki/factions/${unit.factionSlug}`}>{unit.faction}</Link></dd></div><div><dt>Role</dt><dd>{unit.tactic.name}</dd></div><div><dt>Gear</dt><dd>{unit.gear ?? "Not listed"}</dd></div><div><dt>Trinkets</dt><dd>{unit.trinkets ?? "Not listed"}</dd></div><div><dt>Version</dt><dd>{unit.gameVersion}</dd></div></dl>
           <h3>Key Stats</h3><dl className={styles.keyStats}><div><dt>Health</dt><dd>{unit.stats.hp}</dd></div><div><dt>Attack</dt><dd>{unit.stats.atk}</dd></div><div><dt>Armor</dt><dd>{unit.stats.ar}</dd></div><div><dt>Move</dt><dd>{signed(unit.stats.spd, "%")}</dd></div><div><dt>Range</dt><dd>{unit.stats.rng}</dd></div></dl>
-          <h3>Quick Links</h3><a href="#overview">⚓ Overview</a><a href="#stats">⚔ Full stats</a><a href="#abilities">✦ Skills / tactics</a><a href="#items">▣ Best items</a><a href="#formation">♜ Formation</a>{build && <a href="#build">✥ Synergies</a>}<a href="#patch-history">◈ Patch history</a>
+          <h3>Quick Links</h3><a href="#overview">⚓ Overview</a><a href="#stats">⚔ Full stats</a><a href="#abilities">✦ Skills / tactics</a><a href="#items">▣ Item notes</a><a href="#formation">♜ Position notes</a>{build && <a href="#build">✥ Synergies</a>}<a href="#patch-history">◈ Patch history</a>
           <h3>Primary Source</h3><a href={unit.source} target="_blank" rel="noreferrer">Official units page ↗</a>
         </aside>
       </div>

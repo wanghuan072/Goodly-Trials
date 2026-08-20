@@ -1,3 +1,13 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
-export default function robots(): MetadataRoute.Robots { return { rules: { userAgent: "*", allow: "/", disallow: ["/search"] }, sitemap: `${siteConfig.url}/sitemap.xml`, host: siteConfig.url }; }
+export default function robots(): MetadataRoute.Robots {
+  if (!siteConfig.indexable) {
+    return { rules: { userAgent: "*", disallow: "/" }, host: siteConfig.url };
+  }
+
+  return {
+    rules: { userAgent: "*", allow: "/", disallow: ["/search"] },
+    sitemap: `${siteConfig.url}/sitemap.xml`,
+    host: siteConfig.url,
+  };
+}

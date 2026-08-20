@@ -88,3 +88,18 @@ export type GameUpdate = {
   impact: string;
   source: string;
 };
+
+export type Leader = {
+  slug: string;
+  name: string;
+  epithet: string;
+  faction: string;
+  factionSlug: FactionSlug;
+  gear: number;
+  trinkets: number;
+  stats: Pick<UnitStats, "es" | "hp" | "mp" | "str" | "agi" | "int">;
+  trait: { name: string; effect: string };
+  gameVersion: string;
+  lastVerified: string;
+  source: string;
+};

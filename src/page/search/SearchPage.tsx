@@ -1,13 +1,14 @@
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import mechanicsData from "@/data/game/mechanics.json";
-import { builds, factions, guides, items, units, updates } from "@/lib/data/game-content";
+import { builds, factions, guides, items, leaders, units, updates } from "@/lib/data/game-content";
 import styles from "@/style/page/archive/archive.module.css";
 
 type SearchResult = { type: string; title: string; description: string; href: string };
 const index: SearchResult[] = [
   ...units.map((unit) => ({ type: "Unit", title: unit.name, description: `${unit.faction} · ${unit.trait.name} · ${unit.tactic.name}`, href: `/wiki/units/${unit.slug}` })),
   ...items.map((item) => ({ type: "Item", title: item.name, description: `${item.type} · ${item.effects.join(" · ")}`, href: `/wiki/items/${item.slug}` })),
+  ...leaders.map((leader) => ({ type: "Leader", title: `${leader.name} ${leader.epithet}`.trim(), description: `${leader.faction} · ${leader.trait.name} · ${leader.trait.effect}`, href: "/wiki/leaders" })),
   ...factions.map((faction) => ({ type: "Faction", title: faction.name, description: faction.summary, href: `/wiki/factions/${faction.slug}` })),
   ...guides.map((guide) => ({ type: "Guide", title: guide.title, description: guide.excerpt, href: `/guides/${guide.slug}` })),
   ...builds.map((build) => ({ type: "Build", title: build.title, description: build.summary, href: `/builds/${build.slug}` })),

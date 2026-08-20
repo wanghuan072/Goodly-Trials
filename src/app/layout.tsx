@@ -11,9 +11,9 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   applicationName: siteConfig.name,
   alternates: { canonical: "/" },
-  openGraph: { type: "website", siteName: siteConfig.name, title: "Goodly Trials Wiki – Units, Items, Builds & Guides", description: siteConfig.description, url: "/" },
-  twitter: { card: "summary_large_image", title: "Goodly Trials Wiki – Units, Items, Builds & Guides", description: siteConfig.description },
-  robots: { index: true, follow: true },
+  openGraph: { type: "website", siteName: siteConfig.name, title: "Goodly Trials Wiki – Units, Items, Builds & Guides", description: siteConfig.description, url: "/", images: [{ url: siteConfig.socialImage }] },
+  twitter: { card: "summary_large_image", title: "Goodly Trials Wiki – Units, Items, Builds & Guides", description: siteConfig.description, images: [siteConfig.socialImage] },
+  robots: siteConfig.indexable ? { index: true, follow: true } : { index: false, follow: true },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -8,12 +8,12 @@ type MetadataOptions = {
 };
 
 export function createMetadata(title: string, description: string, path: string, options: MetadataOptions = {}): Metadata {
-  const image = options.image === undefined ? null : options.image;
+  const image = options.image === undefined ? siteConfig.socialImage : options.image;
   return {
     title,
     description,
     alternates: { canonical: path },
-    robots: options.noIndex ? { index: false, follow: true } : { index: true, follow: true },
+    robots: options.noIndex || !siteConfig.indexable ? { index: false, follow: true } : { index: true, follow: true },
     openGraph: {
       type: options.type ?? "website",
       siteName: siteConfig.name,

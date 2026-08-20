@@ -2,7 +2,7 @@
 
 ## Source policy
 
-The initial dataset was verified on 2026-08-19 against the public Goodly Trials site, its mechanics pages, official patch notes, and the Steam application API for app `4985160`.
+The current dataset was verified on 2026-08-20 against the public Goodly Trials site, its mechanics pages, official patch notes, and the Steam application API for app `4985160`.
 
 - Official facts belong in `src/data/game/*.json` and carry `gameVersion`, `lastVerified`, and `source` where the record type supports them.
 - Editorial recommendations must be labeled in the rendered page and must link back to the verified unit and item records used to make the recommendation.
@@ -15,7 +15,7 @@ The initial dataset was verified on 2026-08-19 against the public Goodly Trials 
 - `/guides/` answers player questions.
 - `/builds/` contains versioned editorial recommendations.
 - `/tier-list/` owns ranking methodology and future placements.
-- `/updates/` paraphrases official notes and adds independent archive impact.
+- `/updates/` is a curated impact log that paraphrases selected official notes; the official patch page remains the complete source of record.
 
 Unit pages should not target “best build” as their primary intent. Build pages summarize the recommendation immediately and link back to the factual unit and item records.
 

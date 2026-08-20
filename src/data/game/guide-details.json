@@ -55,10 +55,10 @@
   },
   {
     "slug": "ranked-guide",
-    "quickAnswer": "Finish Training, Fair, and Unfair progression before Ranked. Rating begins at Soldier: 200 and moves with each completed journey.",
+    "quickAnswer": "Finish Training, Fair, and Unfair progression before Ranked. The current official modes page conflicts on the Soldier starting value—200 in prose and 100 in its threshold list—so confirm it in-game.",
     "sections": [
       { "title": "Unlocking Ranked", "paragraphs": ["The official route is Training → Fair → Unfair → Ranked. Fair adds bosses and Deed spending, while Unfair unlocks Old Man and later leader traits."], "bullets": ["Training", "Fair Trial", "Unfair Trial", "Ranked"] },
-      { "title": "Rating thresholds", "paragraphs": ["The official modes guide names eight ladder thresholds."], "bullets": ["Peasant — 0", "Soldier — 100", "Squire — 300", "Knight — 500", "Veteran — 700", "Marshal — 900", "High Marshal — 1,150", "Champion — 1,400"] },
+      { "title": "Rating thresholds", "paragraphs": ["The official modes guide names eight ladder thresholds, but its prose and threshold list disagree on Soldier. The archive preserves the conflict instead of silently resolving it."], "bullets": ["Unresolved source conflict — Soldier is 200 in prose and 100 in the list", "Peasant — 0", "Soldier — 100 (threshold list)", "Squire — 300", "Knight — 500", "Veteran — 700", "Marshal — 900", "High Marshal — 1,150", "Champion — 1,400"] },
       { "title": "Treat the ladder as versioned", "paragraphs": ["Early Access balance can change unit, trait, item, and evaluation behavior. A Ranked guide should always display its game version and separate official thresholds from player strategy."] }
     ]
   }

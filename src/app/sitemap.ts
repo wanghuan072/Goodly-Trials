@@ -6,7 +6,7 @@ import { builds, factions, guides, items, units, updates } from "@/lib/data/game
 const staticRoutes = ["", "/wiki", "/wiki/units", "/wiki/items", "/wiki/factions", "/wiki/traits", "/wiki/ascendancy", "/wiki/leaders", "/wiki/bosses", "/wiki/mechanics", "/guides", "/builds", "/tier-list", "/updates", "/about"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const verified = new Date("2026-08-19T00:00:00Z");
+  const verified = new Date(`${siteConfig.lastVerified}T00:00:00Z`);
   const entries = [
     ...staticRoutes.map((path) => ({ url: `${siteConfig.url}${path}`, lastModified: verified, changeFrequency: path === "/updates" ? "daily" as const : "weekly" as const, priority: path === "" ? 1 : path === "/wiki" ? .9 : .75 })),
     ...units.map((unit) => ({ url: `${siteConfig.url}/wiki/units/${unit.slug}`, lastModified: new Date(`${unit.lastVerified}T00:00:00Z`), changeFrequency: "weekly" as const, priority: .8 })),

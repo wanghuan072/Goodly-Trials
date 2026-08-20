@@ -58,7 +58,7 @@ export default function BuilderPage() {
       <section className={styles.hero}>
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Company Builder" }]} />
-          <p className={styles.eyebrow}>Player workshop · v0.301 source layer</p>
+          <p className={styles.eyebrow}>Player workshop · placement rules verified for v0.302</p>
           <h1>Company Builder</h1>
           <p>Drag a leader, units, and public item examples into a game-inspired board, inspect verified cards, and keep your plan saved on this device. This tool records player ideas—it does not publish a “best” build.</p>
         </div>

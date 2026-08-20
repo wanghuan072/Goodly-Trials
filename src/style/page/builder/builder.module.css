@@ -7,7 +7,7 @@
 
 .builder { --game-bg: #050606; --game-panel: #090a0a; --game-raised: #101111; --game-line: #454642; --game-line-bright: #85867e; --game-text: #d7d7cf; --game-muted: #85867f; --game-red: #ef2b24; --game-green: #32c841; --game-blue: #277ae8; display: grid; gap: 5px; padding-top: 9px; font-family: "Courier New", Consolas, monospace; }
 .toolbar, .notesPanel { border: 1px solid var(--game-line-bright); color: var(--game-text); background: repeating-linear-gradient(135deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px), var(--game-bg); box-shadow: inset 0 0 0 3px #020303; }
-.toolbar { display: grid; grid-template-columns: minmax(220px, 1fr) 155px auto; gap: 8px; align-items: end; padding: 10px; }
+.toolbar { display: grid; grid-template-columns: minmax(220px, 1fr) 150px 112px auto; gap: 8px; align-items: end; padding: 10px; }
 .toolbar label, .sizePicker { display: grid; gap: 4px; margin: 0; padding: 0; border: 0; }
 .toolbar label > span, .sizePicker legend { color: var(--game-muted); font-size: .52rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
 .toolbar input, .toolbar select, .filters input, .filters select, .notesPanel textarea { width: 100%; min-height: 34px; border: 1px solid var(--game-line); outline: 0; color: var(--game-text); background: #020303; font-family: inherit; }
@@ -30,7 +30,12 @@
 .panelHeader span { overflow: hidden; color: #777871; font-size: .47rem; text-overflow: ellipsis; white-space: nowrap; }
 
 .boardPanel { display: flex; min-width: 0; flex-direction: column; }
-.boardStage { position: relative; display: flex; min-height: 774px; flex-direction: column; gap: 7px; padding: 8px; overflow: visible; background: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px), #020303; background-size: 54px 54px; }
+.boardStage { position: relative; display: flex; min-height: 1080px; flex-direction: column; gap: 7px; padding: 8px; overflow: visible; background: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px), #020303; background-size: 54px 54px; }
+.rulesStrip { display: flex; min-height: 34px; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 9px; border: 1px solid #42433f; color: #8f9089; background: #080909; text-transform: uppercase; }
+.rulesStrip strong { color: #d2d2ca; font-size: .47rem; letter-spacing: .05em; }
+.rulesStrip span { font-size: .4rem; text-align: right; }
+.rulesInvalid { border-color: #9d3b34; background: #170807; }
+.rulesInvalid strong { color: #ff9c90; }
 .boardTopbar { display: flex; min-height: 56px; align-items: stretch; justify-content: space-between; gap: 8px; }
 .leaderDock { position: relative; width: min(360px, 48%); min-height: 56px; border: 1px solid var(--game-line); color: var(--game-text); background: #070808; }
 .leaderDock:hover { border-color: #ddd; }
@@ -42,14 +47,16 @@
 .boardLegend span { display: flex; align-items: center; gap: 4px; }
 .boardLegend i { display: block; width: 11px; height: 11px; border: 1px solid #373834; background: #020303; }
 .boardLegend span:nth-child(2) i { border-color: #9b9c94; background: #141515; }
+.boardLegend span:nth-child(3) i { border-color: #3a3b38; background: repeating-linear-gradient(135deg, #111212 0 2px, #050606 2px 4px); }
 .boardLegend strong { width: 100%; color: #b8b9b1; font-size: .43rem; text-align: right; }
-.formationLayout { display: grid; min-height: 690px; flex: 1; grid-template-columns: 40px minmax(0, 1fr) 108px; gap: 6px; }
-.rowControls, .formationRail { display: grid; min-height: 0; grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 5px; }
+.formationLayout { display: grid; min-height: 950px; flex: 1; grid-template-columns: 40px minmax(0, 1fr) 108px; gap: 6px; }
+.rowControls, .formationRail { display: grid; min-height: 0; grid-template-rows: repeat(6, minmax(0, 1fr)); gap: 5px; }
 .rowControls button { display: grid; min-height: 0; place-items: center; align-content: center; gap: 5px; padding: 3px; border: 1px solid #343532; color: #74756f; background: repeating-linear-gradient(135deg, #0d0e0e 0 2px, #070808 2px 4px); font-family: inherit; cursor: pointer; }
 .rowControls button:hover, .rowControls button:focus-visible { border-color: #d7d7cf; color: #fff; outline: 0; }
+.rowControls button:disabled { border-color: #242522; color: #30312e; background: #050606; cursor: not-allowed; }
 .rowControls b { font-size: .85rem; }
 .rowControls small { font-size: .32rem; letter-spacing: .06em; writing-mode: vertical-rl; }
-.boardGrid { display: grid; width: 100%; min-width: 0; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(158px, auto)); gap: 5px; padding: 7px; border: 7px solid #191a19; outline: 1px solid #3f403d; background: #0a0b0b; }
+.boardGrid { display: grid; width: 100%; min-width: 0; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(150px, auto)); gap: 5px; padding: 7px; border: 7px solid #191a19; outline: 1px solid #3f403d; background: #0a0b0b; }
 .boardSlot { position: relative; display: flex; min-width: 0; min-height: 158px; flex-direction: column; overflow: hidden; border: 1px solid #30312f; background: repeating-linear-gradient(135deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px), #020303; transition: border-color .12s ease, box-shadow .12s ease, background-color .12s ease; }
 .boardSlot[draggable="true"] { cursor: grab; }
 .removeUnitButton, .removeLeaderButton { position: absolute; z-index: 7; display: grid; width: 18px; height: 18px; place-items: center; padding: 0; border: 1px solid #6d3935; color: #f0b0a8; background: #190b0a; font-family: inherit; font-size: .55rem; line-height: 1; cursor: pointer; }
@@ -60,6 +67,11 @@
 .activeSlot { border-color: #e7e7df; box-shadow: inset 0 0 0 2px #060707; }
 .dropSlot { border-color: #fff; box-shadow: inset 0 0 0 3px rgba(255,255,255,.22), 0 0 16px rgba(255,255,255,.13); }
 .dropSlot::after { position: absolute; z-index: 5; inset: 5px; display: grid; place-items: center; border: 1px dashed #d9d9d1; color: #fff; background: rgba(2, 3, 3, .78); content: "DROP HERE"; font-size: .52rem; font-weight: 700; letter-spacing: .12em; pointer-events: none; }
+.lockedSlot { border-color: #222320; background: repeating-linear-gradient(135deg, rgba(255,255,255,.018) 0 2px, transparent 2px 6px), #050606; }
+.lockedSlot:not(.occupiedSlot) .boardSlotMain { cursor: not-allowed; }
+.lockedCell { display: grid; width: 44px; height: 58px; place-items: center; align-content: center; gap: 5px; border: 1px solid #292a27; color: #353632; background: #070808; }
+.lockedCell b { font-size: .72rem; }
+.lockedCell small { font-size: .3rem; letter-spacing: .08em; }
 .boardSlotMain { position: relative; display: flex; min-height: 0; flex: 1; align-items: center; flex-direction: column; justify-content: end; padding: 18px 3px 3px; overflow: hidden; border: 0; color: inherit; background: transparent; font-family: inherit; cursor: pointer; }
 .slotNumber { position: absolute; top: 4px; left: 4px; color: #6f706a; font-size: .36rem; }
 .boardSlotMain > :global([class*="sprite"]) { width: 42px; height: 50px; background: linear-gradient(#f4f4ed, #888982); filter: grayscale(1) contrast(1.25) drop-shadow(0 4px 3px #000); }
@@ -91,10 +103,11 @@
 .formationRail span { color: #d6d6ce; font-size: .65rem; }
 .formationRail b { color: #a7a8a0; font-size: .35rem; letter-spacing: .04em; }
 .formationRail small { color: #686963; font-size: .3rem; line-height: 1.3; }
+.formationRail .lockedRail { border-color: #242522; opacity: .52; }
 .boardFooter { display: grid; min-height: 32px; grid-template-columns: repeat(3, 1fr); align-items: center; border-top: 1px solid var(--game-line-bright); background: repeating-linear-gradient(135deg, #151616 0 2px, #0b0c0c 2px 4px); }
 .boardFooter span { padding: 4px 8px; border-right: 1px solid #343532; color: #898a83; font-size: .46rem; text-align: center; text-transform: uppercase; }
 
-.shopPanel { display: flex; height: 838px; min-height: 0; flex-direction: column; }
+.shopPanel { display: flex; height: 1144px; min-height: 0; flex-direction: column; }
 .tabs { display: grid; grid-template-columns: repeat(3, 1fr); padding: 5px 5px 0; }
 .tabs button { min-width: 0; }
 .filters { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 5px; border-bottom: 1px solid #353633; }
@@ -161,7 +174,7 @@
 .pendingPanel { grid-column: 2 / -1; display: grid; min-height: 220px; align-content: center; gap: 8px; padding: 18px; color: #74756f; text-align: center; }
 .pendingPanel strong { color: #aaaBA4; font-size: .6rem; letter-spacing: .1em; }
 .pendingPanel p { font-size: .48rem; line-height: 1.5; }
-.hoverInspect { position: absolute; z-index: 30; top: 72px; right: 14px; width: 305px; max-height: 675px; overflow: hidden; border-color: #d8d8d0; box-shadow: 0 10px 30px rgba(0,0,0,.78), 0 0 0 2px #020303; pointer-events: none; }
+.hoverInspect { position: absolute; z-index: 30; top: 112px; right: 14px; width: 305px; max-height: 675px; overflow: hidden; border-color: #d8d8d0; box-shadow: 0 10px 30px rgba(0,0,0,.78), 0 0 0 2px #020303; pointer-events: none; }
 .hoverInspect .inspectCard { display: flex; min-height: 0; flex-direction: column; padding: 7px; }
 .hoverInspect .inspectCard > header { display: block; padding: 7px 4px; }
 .hoverInspect .inspectStage { display: grid; width: auto; min-height: 125px; grid-template-columns: 1fr 92px 1fr; margin: 0; }
@@ -201,7 +214,7 @@
 .notesPanel aside p { margin-top: 6px; color: #7f8079; font-size: .48rem; line-height: 1.5; }
 
 @media (max-width: 1160px) {
-  .toolbar { grid-template-columns: 1fr 155px auto; }
+  .toolbar { grid-template-columns: 1fr 155px 112px; }
   .actions { grid-column: 1 / -1; grid-template-columns: auto auto 1fr; }
   .actions span { grid-column: auto; align-self: center; text-align: left; }
   .workbench { grid-template-columns: minmax(0, 1fr) 280px; }
@@ -223,7 +236,7 @@
   .titleField, .actions { grid-column: 1 / -1; }
   .boardStage { height: auto; min-height: 0; overflow-x: auto; }
   .boardTopbar, .formationLayout { min-width: 760px; }
-  .formationLayout { min-height: 690px; }
+  .formationLayout { min-height: 950px; }
   .hoverInspect { position: fixed; top: 76px; right: 12px; left: 12px; width: auto; max-height: calc(100vh - 100px); }
   .notesPanel { grid-template-columns: 1fr; }
   .notesPanel aside { padding: 10px 0 0; border-top: 1px solid #3d3e3a; border-left: 0; }

@@ -31,7 +31,13 @@ const roster: BuilderRosterUnit[] = factions.flatMap((faction) =>
       trinkets: verified?.trinkets,
       stats: verified?.stats,
       trait: verified?.trait.name,
+      traitEffect: verified?.trait.effect,
       tactic: verified?.tactic.name,
+      tacticEffect: verified?.tactic.effect,
+      skills: verified?.skills,
+      quote: verified?.quote,
+      recovery: verified?.recovery,
+      manaRegen: verified?.manaRegen,
     };
   }),
 );
@@ -54,7 +60,7 @@ export default function BuilderPage() {
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Company Builder" }]} />
           <p className={styles.eyebrow}>Player workshop · v0.301 source layer</p>
           <h1>Company Builder</h1>
-          <p>Choose a leader, arrange a company, attach public item examples, and share your own plan. This tool records player ideas—it does not publish a “best” build.</p>
+          <p>Drag a leader, units, and public item examples into a game-inspired board, inspect verified cards, and share your own plan. This tool records player ideas—it does not publish a “best” build.</p>
         </div>
       </section>
       <BuilderClient roster={roster} leaders={builderLeaders} items={items} />

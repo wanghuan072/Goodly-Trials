@@ -81,7 +81,7 @@ export default function HomePage() {
         </section>
 
         <section className={styles.threeColumns}>
-          <div className={styles.frame}><PanelTitle href="/builds" link="View all builds">Editorial Starter Builds</PanelTitle><div className={styles.linkList}>{builds.map((build) => <Link key={build.slug} href={`/builds/${build.slug}`}><span className={styles.listIcon}>♜</span><div><h3>{build.title}</h3><p>{build.summary}</p></div><small>{build.difficulty}</small></Link>)}</div></div>
+          <div className={styles.frame}><PanelTitle href="/builds" link="View all builds">Editorial Starter Builds</PanelTitle><div className={styles.linkList}>{builds.map((build) => <Link key={build.slug} href={`/builds#${build.slug}`}><span className={styles.listIcon}>♜</span><div><h3>{build.title}</h3><p>{build.summary}</p></div><small>{build.difficulty}</small></Link>)}</div></div>
           <div className={styles.frame}><PanelTitle href="/guides" link="View all guides">Player Guides</PanelTitle><div className={styles.linkList}>{guides.slice(0, 4).map((guide) => <Link key={guide.slug} href={`/guides/${guide.slug}`}><span className={styles.listIcon}>✥</span><div><h3>{guide.title}</h3><p>{guide.excerpt}</p></div></Link>)}</div></div>
           <div className={styles.frame}><PanelTitle href="/updates" link="View selected notes">Recent Verified Updates</PanelTitle><div className={styles.linkList}>{updates.slice(0, 4).map((update) => <Link key={update.slug} href={`/updates/${update.slug}`}><span className={styles.listIcon}>◈</span><div><h3>{update.version} · {update.title}</h3><p>{update.date}</p></div></Link>)}</div></div>
         </section>

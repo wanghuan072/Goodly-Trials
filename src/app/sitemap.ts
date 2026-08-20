@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import mechanicsData from "@/data/game/mechanics.json";
 import { siteConfig } from "@/config/site";
-import { builds, factions, guides, items, units, updates } from "@/lib/data/game-content";
+import { factions, guides, items, units, updates } from "@/lib/data/game-content";
 
 const staticRoutes = ["", "/wiki", "/wiki/units", "/wiki/items", "/wiki/factions", "/wiki/traits", "/wiki/ascendancy", "/wiki/leaders", "/wiki/bosses", "/wiki/mechanics", "/guides", "/builder", "/builds", "/tier-list", "/updates", "/about"];
 
@@ -14,7 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...factions.map((faction) => ({ url: `${siteConfig.url}/wiki/factions/${faction.slug}`, lastModified: verified, changeFrequency: "weekly" as const, priority: .76 })),
     ...mechanicsData.map((entry) => ({ url: `${siteConfig.url}/wiki/mechanics/${entry.slug}`, lastModified: verified, changeFrequency: "monthly" as const, priority: .7 })),
     ...guides.map((guide) => ({ url: `${siteConfig.url}/guides/${guide.slug}`, lastModified: new Date(`${guide.updated}T00:00:00Z`), changeFrequency: "monthly" as const, priority: .72 })),
-    ...builds.map((build) => ({ url: `${siteConfig.url}/builds/${build.slug}`, lastModified: verified, changeFrequency: "weekly" as const, priority: .68 })),
     ...updates.map((update) => ({ url: `${siteConfig.url}/updates/${update.slug}`, lastModified: new Date(`${update.date}T00:00:00Z`), changeFrequency: "monthly" as const, priority: .66 })),
   ];
   return entries;

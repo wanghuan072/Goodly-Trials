@@ -11,7 +11,7 @@ const index: SearchResult[] = [
   ...leaders.map((leader) => ({ type: "Leader", title: `${leader.name} ${leader.epithet}`.trim(), description: `${leader.faction} · ${leader.trait.name} · ${leader.trait.effect}`, href: "/wiki/leaders" })),
   ...factions.map((faction) => ({ type: "Faction", title: faction.name, description: faction.summary, href: `/wiki/factions/${faction.slug}` })),
   ...guides.map((guide) => ({ type: "Guide", title: guide.title, description: guide.excerpt, href: `/guides/${guide.slug}` })),
-  ...builds.map((build) => ({ type: "Build", title: build.title, description: build.summary, href: `/builds/${build.slug}` })),
+  ...builds.map((build) => ({ type: "Build", title: build.title, description: build.summary, href: `/builds#${build.slug}` })),
   ...updates.map((update) => ({ type: "Update", title: `${update.version} · ${update.title}`, description: update.summary, href: `/updates/${update.slug}` })),
   ...mechanicsData.map((entry) => ({ type: "Mechanic", title: entry.title, description: entry.summary, href: `/wiki/mechanics/${entry.slug}` })),
 ];

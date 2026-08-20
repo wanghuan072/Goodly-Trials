@@ -1,9 +1,136 @@
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
-import { builds } from "@/lib/data/game-content";
+import UnitSprite from "@/components/content/UnitSprite";
+import { siteConfig } from "@/config/site";
+import { activeBoardCells, BOARD_CELLS, BOARD_COLUMNS } from "@/lib/builder/board-rules";
+import { builds, items, leaders, units } from "@/lib/data/game-content";
+import JsonLd from "@/seo/JsonLd";
 import { createMetadata } from "@/seo/metadata";
-import styles from "@/style/page/archive/archive.module.css";
+import type { Build, Item, Unit } from "@/types/content";
+import ApplyBuildButton from "./ApplyBuildButton";
+import styles from "@/style/page/builds/builds.module.css";
 
-export const metadata = createMetadata("Goodly Trials Builds", "Versioned Goodly Trials build notes that separate verified stats and requirements from editorial recommendations.", "/builds");
-export default function BuildsPage() { return <main><section className={styles.hero}><Image className={styles.heroImage} src="/images/game/screenshot-2.webp" alt="Goodly Trials scout report comparing two units before battle" fill preload sizes="100vw" /><div className={styles.heroShade} /><div className={`container ${styles.heroContent}`}><Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Builds" }]} /><p className={styles.eyebrow}>Editorial field notes · v0.301</p><h1>Goodly Trials Builds</h1><p>Fast answers first, evidence second. Every build names its version and links the verified unit and item records used to make the case.</p></div></section><section className="container section"><div className={styles.quickAnswer}><b>Editorial policy</b><p>These are transparent starting points, not official developer recommendations or permanent “best builds.” Random traits, shop rolls, modes, and patches can change the result.</p></div><div className={styles.entryList}>{builds.map((build) => <Link className={styles.entryRow} href={`/builds/${build.slug}`} key={build.slug}><span>{build.faction} · {build.difficulty}</span><div><h2>{build.title}</h2><p>{build.summary}</p></div><b>{build.version} →</b></Link>)}</div></section></main>; }
+export const metadata = createMetadata(
+  "Goodly Trials Team Builds & Company Presets",
+  "Browse editable Goodly Trials team builds with formation previews, verified units, equipment plans, strengths, weaknesses, and one-click Builder loading.",
+  "/builds",
+);
+
+const unitBySlug = new Map(units.map((unit) => [unit.slug, unit]));
+const itemBySlug = new Map(items.map((item) => [item.slug, item]));
+const leaderBySlug = new Map(leaders.map((leader) => [leader.slug, leader]));
+
+function BoardPreview({ build }: { build: Build }) {
+  const activeCells = activeBoardCells(build.week);
+  const placements = new Map(build.placements.map((placement) => [placement.slot, placement]));
+
+  return (
+    <div className={styles.boardPreview} role="img" aria-label={`${build.title} week ${build.week} formation preview`}>
+      {Array.from({ length: BOARD_CELLS }, (_, index) => {
+        const placement = placements.get(index);
+        const unit = placement ? unitBySlug.get(placement.unitSlug) : undefined;
+        const row = String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS));
+        const column = index % BOARD_COLUMNS + 1;
+        return (
+          <span className={`${styles.boardCell} ${activeCells.has(index) ? styles.activeCell : styles.lockedCell} ${unit ? styles.filledCell : ""}`} key={index} title={unit ? `${row}${column} · ${unit.name}` : `${row}${column}`}>
+            <small>{row}{column}</small>
+            {unit && <><UnitSprite src={unit.image} color={unit.accent} /><b>{unit.name}</b></>}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function MemberCard({ unit, itemSlugs }: { unit: Unit; itemSlugs: string[] }) {
+  const loadout = itemSlugs.map((slug) => itemBySlug.get(slug)).filter((item): item is Item => item !== undefined);
+  return (
+    <li className={styles.memberCard}>
+      <UnitSprite src={unit.image} color={unit.accent} />
+      <div><small>{unit.tactic.name}</small><strong>{unit.name}</strong><span>{unit.trait.name}</span></div>
+      <span className={styles.memberItems}>
+        {loadout.length ? loadout.map((item) => <Image key={item.slug} src={item.image} alt={item.name} title={item.name} width={28} height={28} unoptimized={item.image.endsWith(".gif")} />) : <em>No preset items</em>}
+      </span>
+    </li>
+  );
+}
+
+function BuildCard({ build }: { build: Build }) {
+  const leader = leaderBySlug.get(build.leaderSlug);
+  const memberEntries = build.placements.map((placement) => ({ placement, unit: unitBySlug.get(placement.unitSlug) })).filter((entry): entry is { placement: Build["placements"][number]; unit: Unit } => entry.unit !== undefined);
+  const itemCost = build.placements.reduce((total, placement) => total + placement.itemSlugs.reduce((subtotal, slug) => subtotal + (itemBySlug.get(slug)?.cost ?? 0), 0), 0);
+
+  return (
+    <article className={styles.buildCard} id={build.slug}>
+      <header className={styles.buildHeader}>
+        <div className={styles.buildIndex}><span>{String(builds.indexOf(build) + 1).padStart(2, "0")}</span><small>Preset</small></div>
+        <div><p>{build.faction} · {build.difficulty}</p><h2>{build.title}</h2><span>{build.summary}</span></div>
+        <dl><div><dt>Mode</dt><dd>{build.mode}</dd></div><div><dt>Week</dt><dd>{build.week}</dd></div><div><dt>Followers</dt><dd>{memberEntries.length}</dd></div><div><dt>Known item cost</dt><dd>{itemCost}G</dd></div></dl>
+      </header>
+
+      <div className={styles.buildBody}>
+        <section className={styles.previewPanel} aria-label={`${build.title} company preview`}>
+          <div className={styles.leaderBar}><span>{leader?.name.slice(0, 1) ?? "?"}</span><div><small>{leader?.faction ?? build.faction} leader</small><strong>{leader?.name ?? "Leader unavailable"}</strong><em>{leader?.trait.name ?? "Public data pending"}</em></div></div>
+          <BoardPreview build={build} />
+          <p><strong>Best for</strong>{build.bestFor}</p>
+        </section>
+
+        <section className={styles.buildAnalysis}>
+          <div className={styles.analysisColumns}>
+            <div className={styles.strengths}><h3><span>+</span> Strengths</h3><ul>{build.strengths.map((strength) => <li key={strength}>{strength}</li>)}</ul></div>
+            <div className={styles.weaknesses}><h3><span>−</span> Weaknesses</h3><ul>{build.weaknesses.map((weakness) => <li key={weakness}>{weakness}</li>)}</ul></div>
+          </div>
+          <div className={styles.rosterBlock}><h3>Company roster & preset equipment</h3><ul>{memberEntries.map(({ placement, unit }) => <MemberCard key={`${placement.slot}-${unit.slug}`} unit={unit} itemSlugs={placement.itemSlugs} />)}</ul></div>
+        </section>
+      </div>
+
+      <footer className={styles.buildFooter}>
+        <p><strong>Planning note:</strong> {build.planningNote}<span>{build.version} · editorial preset · review against the live game</span></p>
+        <div><small>Applying this preset replaces the current local Builder draft.</small><ApplyBuildButton build={build} /></div>
+      </footer>
+    </article>
+  );
+}
+
+export default function BuildsPage() {
+  return (
+    <main className={styles.page}>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "Goodly Trials team builds and company presets",
+        description: "Editable Goodly Trials formation presets with visible strengths, weaknesses, rosters, and equipment plans.",
+        numberOfItems: builds.length,
+        itemListElement: builds.map((build, index) => ({ "@type": "ListItem", position: index + 1, name: build.title, url: `${siteConfig.url}/builds#${build.slug}` })),
+      }} />
+      <section className={styles.hero}>
+        <Image className={styles.heroImage} src="/images/game/screenshot-1.webp" alt="Goodly Trials formation board with unit cards, shop records, and an inspection panel" fill preload sizes="100vw" />
+        <div className={styles.heroShade} />
+        <div className={`container ${styles.heroContent}`}>
+          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Builds" }]} />
+          <p className={styles.eyebrow}>Editable company library · v0.302 placement rules</p>
+          <h1>Goodly Trials Team Builds</h1>
+          <p>Start from a complete formation instead of a single-unit note. Every preset shows its board, roster, equipment goals, strengths, and weaknesses—and can be opened directly in the Company Builder.</p>
+          <div className={styles.heroActions}><a href="#team-builds">Browse {builds.length} presets</a><Link href="/builder">Start an empty company</Link></div>
+        </div>
+      </section>
+
+      <section className={`container ${styles.libraryIntro}`}>
+        <div><p className={styles.eyebrow}>From library to workbench</p><h2>Choose a starting point, then make it yours.</h2></div>
+        <p>These are transparent editorial templates, not official developer builds or permanent meta claims. The one-click action loads the visible leader, week, units, positions, compatible public item examples, and planning note into the Builder, where every part remains movable or removable.</p>
+        <dl><div><dt>{builds.length}</dt><dd>editable presets</dd></div><div><dt>{units.length}</dt><dd>complete unit cards</dd></div><div><dt>{items.length}</dt><dd>public item examples</dd></div></dl>
+      </section>
+
+      <section className={`container ${styles.buildLibrary}`} id="team-builds" aria-label="Goodly Trials team build presets">
+        {builds.map((build) => <BuildCard build={build} key={build.slug} />)}
+      </section>
+
+      <aside className={`container ${styles.disclosure}`}>
+        <strong>How to read these presets</strong>
+        <p>Placement limits use the verified v0.302 Builder rules layer. Public unit and item cards retain their own source versions. Pros and cons are editorial interpretations of those records; no preset claims a measured win rate, guaranteed shop roll, or combat simulation result.</p>
+        <Link href="/builder">Build your own company →</Link>
+      </aside>
+    </main>
+  );
+}

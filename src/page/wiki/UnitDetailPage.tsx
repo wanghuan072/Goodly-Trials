@@ -49,7 +49,7 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
           </div>
 
           <div className={styles.panelPair}>
-            {build && <section className={`${styles.panel} ${styles.editorial}`} id="build"><h2>Synergies</h2><div className={styles.relatedGrid}><Link href={`/builds/${build.slug}`}><b>{build.title}</b><span>{build.summary}</span></Link>{relatedUnits.slice(0, 2).map((entry) => <Link key={entry.slug} href={`/wiki/units/${entry.slug}`}><b>{entry.name}</b><span>{entry.trait.name} · {entry.tactic.name}</span></Link>)}</div></section>}
+            {build && <section className={`${styles.panel} ${styles.editorial}`} id="build"><h2>Synergies</h2><div className={styles.relatedGrid}><Link href={`/builds#${build.slug}`}><b>{build.title}</b><span>{build.summary}</span></Link>{relatedUnits.slice(0, 2).map((entry) => <Link key={entry.slug} href={`/wiki/units/${entry.slug}`}><b>{entry.name}</b><span>{entry.trait.name} · {entry.tactic.name}</span></Link>)}</div></section>}
             <section className={styles.panel} id="patch-history"><h2>Patch History</h2>{relatedUpdates.length ? relatedUpdates.map((update) => <div className={styles.patchRow} key={update.slug}><Link href={`/updates/${update.slug}`}>{update.version}</Link><span>{update.date}</span><p>{update.summary}</p></div>) : <p>No unit-specific change is captured in the current public sample. Last verified {unit.lastVerified}.</p>}</section>
           </div>
 

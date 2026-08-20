@@ -171,6 +171,27 @@
 .hoverInspect .inspectText { display: block; margin: 0; padding: 3px 2px 8px; border: 0; }
 .hoverInspect .inspectCard blockquote { display: block; margin: 0; padding: 8px 4px; }
 .hoverInspect .pendingPanel { display: grid; min-height: 180px; padding: 18px; }
+.catalogInspect { display: flex; min-height: 300px; flex-direction: column; padding: 10px; background: linear-gradient(145deg, #101111, #070808 58%, #0c0d0d); }
+.catalogInspect > header { padding: 8px 5px 11px; border-bottom: 1px solid #484945; text-align: center; text-transform: uppercase; }
+.catalogInspect > header small { color: #82837c; font-size: .42rem; letter-spacing: .13em; }
+.catalogInspect > header h2 { margin-top: 5px; color: #ededE6; font-family: inherit; font-size: .8rem; letter-spacing: .07em; }
+.catalogInspect > header span { display: block; margin-top: 5px; color: #60615c; font-size: .39rem; }
+.itemInspectStage { display: grid; grid-template-columns: 105px 1fr; align-items: center; gap: 14px; padding: 14px 8px; border-bottom: 1px solid #484945; }
+.itemInspectStage > img { width: 96px; height: 96px; object-fit: contain; image-rendering: pixelated; filter: grayscale(.25) contrast(1.2) drop-shadow(0 5px 5px #000); }
+.itemInspectStage > div { display: grid; gap: 6px; }
+.itemInspectStage small { color: #767771; font-size: .39rem; letter-spacing: .1em; }
+.itemInspectStage strong { color: #ededE6; font-size: 1rem; }
+.itemInspectStage span { color: #a6a79f; font-size: .42rem; line-height: 1.45; }
+.leaderInspectStage { display: grid; min-height: 105px; place-items: center; align-content: center; gap: 7px; border-bottom: 1px solid #484945; }
+.leaderInspectStage .leaderGlyph { width: 58px; height: 58px; font-size: 1.15rem; }
+.leaderInspectStage > strong { color: #777871; font-size: .4rem; letter-spacing: .12em; text-transform: uppercase; }
+.catalogInspect .resources { width: 100%; border-bottom: 1px solid #484945; }
+.catalogInspect .attributes { width: 100%; }
+.catalogEffects { padding: 12px 5px; text-align: center; }
+.catalogEffects h3 { color: #696a64; font-family: inherit; font-size: .42rem; letter-spacing: .13em; text-transform: uppercase; }
+.catalogEffects p { margin-top: 7px; color: #c0c1b9; font-size: .45rem; line-height: 1.5; }
+.catalogEffects strong { color: #eeeeE7; }
+.catalogInspect > footer { margin-top: auto; padding: 8px 5px 2px; border-top: 3px double #444541; color: #696a64; font-size: .37rem; text-align: center; }
 
 .notesPanel { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; padding: 10px; }
 .notesPanel label { display: grid; gap: 5px; }

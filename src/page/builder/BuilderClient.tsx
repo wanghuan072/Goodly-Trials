@@ -40,6 +40,7 @@ export type BuilderLeader = {
 type BuilderSlot = { unitSlug: string; itemSlugs: string[] };
 type BuilderState = { title: string; mode: string; leaderSlug: string; slots: BuilderSlot[]; notes: string };
 type CatalogTab = "units" | "items" | "leaders";
+type CatalogPreview = { kind: "unit" | "item" | "leader"; slug: string } | null;
 type PendingPick = { kind: "unit" | "item"; slug: string } | null;
 type DragPayload = { kind: "unit" | "item" | "leader" | "slot"; slug?: string; from?: number };
 type EquipmentKind = "gear" | "trinkets" | "consumable";
@@ -136,6 +137,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const [pendingPick, setPendingPick] = useState<PendingPick>(null);
   const [dropTarget, setDropTarget] = useState<number | null>(null);
   const [hoveredSlot, setHoveredSlot] = useState<number | null>(null);
+  const [catalogPreview, setCatalogPreview] = useState<CatalogPreview>(null);
 
   const unitBySlug = useMemo(() => new Map(roster.map((unit) => [unit.slug, unit])), [roster]);
   const itemBySlug = useMemo(() => new Map(items.map((item) => [item.slug, item])), [items]);
@@ -165,12 +167,24 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const selectedSlots = build.slots;
   const filledCount = selectedSlots.filter((slot) => slot.unitSlug).length;
   const hoveredUnit = hoveredSlot === null ? undefined : unitBySlug.get(build.slots[hoveredSlot]?.unitSlug ?? "");
+  const previewUnit = hoveredUnit ?? (catalogPreview?.kind === "unit" ? unitBySlug.get(catalogPreview.slug) : undefined);
+  const previewItem = catalogPreview?.kind === "item" ? itemBySlug.get(catalogPreview.slug) : undefined;
+  const previewLeader = catalogPreview?.kind === "leader" ? leaderBySlug.get(catalogPreview.slug) : undefined;
   const hoveredCellLabel = hoveredSlot === null ? "" : `${String.fromCharCode(65 + Math.floor(hoveredSlot / BOARD_COLUMNS))}${hoveredSlot % BOARD_COLUMNS + 1}`;
   const itemCost = selectedSlots.reduce((total, slot) => total + slot.itemSlugs.reduce((sum, slug) => sum + (itemBySlug.get(slug)?.cost ?? 0), 0), 0);
   const queryText = query.trim().toLowerCase();
   const filteredUnits = roster.filter((unit) => (faction === "all" || unit.factionSlug === faction) && (!queryText || `${unit.name} ${unit.faction} ${unit.trait ?? ""}`.toLowerCase().includes(queryText)));
   const filteredItems = items.filter((item) => !queryText || `${item.name} ${item.type} ${item.effects.join(" ")}`.toLowerCase().includes(queryText));
   const filteredLeaders = leaders.filter((leader) => (faction === "all" || leader.factionSlug === faction) && (!queryText || `${leader.name} ${leader.epithet} ${leader.faction} ${leader.trait.name}`.toLowerCase().includes(queryText)));
+
+  function showCatalogPreview(kind: Exclude<CatalogPreview, null>["kind"], slug: string) {
+    setHoveredSlot(null);
+    setCatalogPreview({ kind, slug });
+  }
+
+  function clearCatalogPreview(kind: Exclude<CatalogPreview, null>["kind"], slug: string) {
+    setCatalogPreview((current) => current?.kind === kind && current.slug === slug ? null : current);
+  }
 
   function updateSlot(index: number, next: BuilderSlot) {
     setBuild((current) => ({ ...current, slots: current.slots.map((slot, slotIndex) => slotIndex === index ? next : slot) }));
@@ -181,6 +195,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     updateSlot(index, { unitSlug: slug, itemSlugs: [] });
     setActiveSlot(index);
     setHoveredSlot(index);
+    setCatalogPreview(null);
     setPendingPick(null);
     setMessage(`${unitBySlug.get(slug)?.name ?? "Unit"} placed in board slot ${index + 1}`);
   }
@@ -198,6 +213,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     });
     setActiveSlot(index);
     setHoveredSlot(index);
+    setCatalogPreview(null);
     setPendingPick(null);
     setMessage(`${itemBySlug.get(slug)?.name ?? "Item"} equipped on slot ${index + 1}`);
   }
@@ -211,6 +227,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     });
     setActiveSlot(to);
     setHoveredSlot(to);
+    setCatalogPreview(null);
     setMessage(`Board slots ${from + 1} and ${to + 1} swapped`);
   }
 
@@ -221,6 +238,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     setActiveSlot(index);
     const unit = unitBySlug.get(build.slots[index].unitSlug);
     setHoveredSlot(unit ? index : null);
+    setCatalogPreview(null);
     setMessage(unit ? `${unit.name} selected · drag equipment here` : `Slot ${index + 1} selected · choose or drag a unit`);
   }
 
@@ -336,10 +354,10 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                   key={index}
                   draggable={Boolean(unit)}
                   onDragStart={(event) => unit && writeDrag(event, { kind: "slot", from: index })}
-                  onMouseEnter={() => { if (unit) setHoveredSlot(index); }}
+                  onMouseEnter={() => { if (unit) { setCatalogPreview(null); setHoveredSlot(index); } }}
                   onDragOver={(event) => { event.preventDefault(); setDropTarget(index); }}
                   onMouseLeave={() => { setDropTarget((current) => current === index ? null : current); setHoveredSlot((current) => current === index ? null : current); }}
-                  onFocusCapture={() => { if (unit) setHoveredSlot(index); }}
+                  onFocusCapture={() => { if (unit) { setCatalogPreview(null); setHoveredSlot(index); } }}
                   onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setHoveredSlot((current) => current === index ? null : current); }}
                   onDrop={(event) => handleBoardDrop(index, event)}
                 >
@@ -368,22 +386,44 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                 })}
               </aside>
             </div>
-            {hoveredUnit && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
-              <header className={styles.panelHeader}><strong>Inspect · {hoveredCellLabel}</strong><span>Hover detail</span></header>
+            {previewUnit && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
+              <header className={styles.panelHeader}><strong>Inspect · {hoveredUnit ? hoveredCellLabel : "Unit"}</strong><span>{hoveredUnit ? "Board hover" : "Archive hover"}</span></header>
               <div className={styles.inspectCard}>
-                <header><small>{hoveredUnit.faction}</small><h2>{hoveredUnit.name}</h2><span>{hoveredUnit.verified ? "PUBLIC CARD · v0.301" : "ROSTER RECORD"}</span></header>
+                <header><small>{previewUnit.faction}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? "PUBLIC CARD · v0.301" : "ROSTER RECORD"}</span></header>
                 <div className={styles.inspectStage}>
-                  <div className={styles.slotPreview}><small>GEAR: {hoveredUnit.gear ?? "?"}</small><span>{Array.from({ length: hoveredUnit.gear ?? 2 }, (_, index) => <i key={index} />)}</span></div>
-                  <UnitSprite src={hoveredUnit.image} color="#eeeeee" large />
-                  <div className={styles.slotPreview}><small>TRINKETS: {hoveredUnit.trinkets ?? "?"}</small><span>{Array.from({ length: hoveredUnit.trinkets ?? 1 }, (_, index) => <i key={index} />)}</span></div>
+                  <div className={styles.slotPreview}><small>GEAR: {previewUnit.gear ?? "?"}</small><span>{Array.from({ length: previewUnit.gear ?? 2 }, (_, index) => <i key={index} />)}</span></div>
+                  <UnitSprite src={previewUnit.image} color="#eeeeee" large />
+                  <div className={styles.slotPreview}><small>TRINKETS: {previewUnit.trinkets ?? "?"}</small><span>{Array.from({ length: previewUnit.trinkets ?? 1 }, (_, index) => <i key={index} />)}</span></div>
                 </div>
-                {hoveredUnit.stats ? <>
-                  <div className={styles.resources}><ResourceBar label="ES" value={hoveredUnit.stats.es} suffix="+0/s" maximum={45} /><ResourceBar label="HP" value={hoveredUnit.stats.hp} suffix={hoveredUnit.recovery} maximum={40} /><ResourceBar label="MP" value={hoveredUnit.stats.mp} suffix={hoveredUnit.manaRegen} maximum={35} /></div>
-                  <div className={styles.attributes}><div><span>STR</span><b>{hoveredUnit.stats.str}</b></div><div><span>AGI</span><b>{hoveredUnit.stats.agi}</b></div><div><span>INT</span><b>{hoveredUnit.stats.int}</b></div></div>
-                  <div className={styles.combatStats}><span><b>ATK</b>{hoveredUnit.stats.atk}</span><span><b>CRT</b>{hoveredUnit.stats.crt}%</span><span><b>RNG</b>{hoveredUnit.stats.rng}</span><span><b>SPD</b>{hoveredUnit.stats.spd > 0 ? "+" : ""}{hoveredUnit.stats.spd}%</span><span><b>AR</b>{hoveredUnit.stats.ar}</span><span><b>EVA</b>{hoveredUnit.stats.eva}%</span></div>
-                  <section className={styles.inspectText}><h3>Trait</h3><p><strong>{hoveredUnit.trait}</strong> — {hoveredUnit.traitEffect}</p><h3>Skills</h3>{hoveredUnit.skills?.map((skill) => <p key={skill.name}><strong>{skill.name}</strong> — {skill.effect}</p>)}<h3>Tactics</h3><p><strong>{hoveredUnit.tactic}</strong> — {hoveredUnit.tacticEffect}</p></section>
-                  {hoveredUnit.quote && <blockquote>“{hoveredUnit.quote}”</blockquote>}
+                {previewUnit.stats ? <>
+                  <div className={styles.resources}><ResourceBar label="ES" value={previewUnit.stats.es} suffix="+0/s" maximum={45} /><ResourceBar label="HP" value={previewUnit.stats.hp} suffix={previewUnit.recovery} maximum={40} /><ResourceBar label="MP" value={previewUnit.stats.mp} suffix={previewUnit.manaRegen} maximum={35} /></div>
+                  <div className={styles.attributes}><div><span>STR</span><b>{previewUnit.stats.str}</b></div><div><span>AGI</span><b>{previewUnit.stats.agi}</b></div><div><span>INT</span><b>{previewUnit.stats.int}</b></div></div>
+                  <div className={styles.combatStats}><span><b>ATK</b>{previewUnit.stats.atk}</span><span><b>CRT</b>{previewUnit.stats.crt}%</span><span><b>RNG</b>{previewUnit.stats.rng}</span><span><b>SPD</b>{previewUnit.stats.spd > 0 ? "+" : ""}{previewUnit.stats.spd}%</span><span><b>AR</b>{previewUnit.stats.ar}</span><span><b>EVA</b>{previewUnit.stats.eva}%</span></div>
+                  <section className={styles.inspectText}><h3>Trait</h3><p><strong>{previewUnit.trait}</strong> — {previewUnit.traitEffect}</p><h3>Skills</h3>{previewUnit.skills?.map((skill) => <p key={skill.name}><strong>{skill.name}</strong> — {skill.effect}</p>)}<h3>Tactics</h3><p><strong>{previewUnit.tactic}</strong> — {previewUnit.tacticEffect}</p></section>
+                  {previewUnit.quote && <blockquote>“{previewUnit.quote}”</blockquote>}
                 </> : <div className={styles.pendingPanel}><strong>PUBLIC STATS PENDING</strong><p>The official roster confirms this name and artwork, but a complete public card is not available in the verified source layer.</p></div>}
+              </div>
+            </aside>}
+            {previewItem && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
+              <header className={styles.panelHeader}><strong>Inspect · Item</strong><span>Archive hover</span></header>
+              <div className={styles.catalogInspect}>
+                <header><small>{previewItem.type}</small><h2>{previewItem.name}</h2><span>{previewItem.gameVersion}</span></header>
+                <div className={styles.itemInspectStage}>
+                  <Image src={previewItem.image} alt="" width={96} height={96} unoptimized={previewItem.image.endsWith(".gif")} />
+                  <div><small>SHOP COST</small><strong>{previewItem.cost}G</strong><span>{previewItem.requirements ? `REQUIRES ${previewItem.requirements}` : "NO REQUIREMENT LISTED"}</span></div>
+                </div>
+                <section className={styles.catalogEffects}><h3>Effects</h3>{previewItem.effects.map((effect) => <p key={effect}>{effect}</p>)}</section>
+                <footer>VERIFIED {previewItem.lastVerified}</footer>
+              </div>
+            </aside>}
+            {previewLeader && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
+              <header className={styles.panelHeader}><strong>Inspect · Leader</strong><span>Archive hover</span></header>
+              <div className={styles.catalogInspect}>
+                <header><small>{previewLeader.faction}</small><h2>{previewLeader.name}</h2><span>{previewLeader.epithet}</span></header>
+                <div className={styles.leaderInspectStage}><span className={styles.leaderGlyph}>{previewLeader.name.slice(0, 1)}</span><strong>Company Leader</strong></div>
+                <div className={styles.resources}><ResourceBar label="ES" value={previewLeader.stats.es} maximum={45} /><ResourceBar label="HP" value={previewLeader.stats.hp} maximum={40} /><ResourceBar label="MP" value={previewLeader.stats.mp} maximum={35} /></div>
+                <div className={styles.attributes}><div><span>STR</span><b>{previewLeader.stats.str}</b></div><div><span>AGI</span><b>{previewLeader.stats.agi}</b></div><div><span>INT</span><b>{previewLeader.stats.int}</b></div></div>
+                <section className={styles.catalogEffects}><h3>Leader Trait</h3><p><strong>{previewLeader.trait.name}</strong> — {previewLeader.trait.effect}</p></section>
               </div>
             </aside>}
           </div>
@@ -391,15 +431,19 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </section>
 
         <section className={`${styles.gamePanel} ${styles.shopPanel}`}>
-          <header className={styles.panelHeader}><strong>Archive [{tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length}]</strong><span>Drag a card to the board · scroll for more</span></header>
-          <div className={styles.tabs} role="tablist" aria-label="Builder archive">{(["units", "items", "leaders"] as CatalogTab[]).map((catalogTab) => <button role="tab" aria-selected={tab === catalogTab} className={tab === catalogTab ? styles.selected : ""} type="button" key={catalogTab} onClick={() => { setTab(catalogTab); setQuery(""); setPendingPick(null); }}>{catalogTab}</button>)}</div>
+          <header className={styles.panelHeader}><strong>Archive [{tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length}]</strong><span>Hover to inspect · drag to the board</span></header>
+          <div className={styles.tabs} role="tablist" aria-label="Builder archive">{(["units", "items", "leaders"] as CatalogTab[]).map((catalogTab) => <button role="tab" aria-selected={tab === catalogTab} className={tab === catalogTab ? styles.selected : ""} type="button" key={catalogTab} onClick={() => { setTab(catalogTab); setQuery(""); setPendingPick(null); setCatalogPreview(null); }}>{catalogTab}</button>)}</div>
           <div className={styles.filters}><input aria-label="Search archive" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Search ${tab}…`} />{tab !== "items" && <select aria-label="Filter by faction" value={faction} onChange={(event) => setFaction(event.target.value)}><option value="all">All factions</option><option value="goodly-folk">Goodly Folk</option><option value="bone-host">Bone Host</option><option value="belowborn">Belowborn</option></select>}</div>
           <div className={styles.archiveList} role="tabpanel">
             {tab === "units" && filteredUnits.map((unit, index) => <button
               className={`${styles.archiveUnit} ${pendingPick?.kind === "unit" && pendingPick.slug === unit.slug ? styles.picked : ""}`}
               type="button" key={unit.slug} draggable
               onDragStart={(event) => writeDrag(event, { kind: "unit", slug: unit.slug })}
-              onClick={() => { setPendingPick({ kind: "unit", slug: unit.slug }); setMessage(`${unit.name} picked up · tap a board cell`); }}
+              onMouseEnter={() => showCatalogPreview("unit", unit.slug)}
+              onMouseLeave={() => clearCatalogPreview("unit", unit.slug)}
+              onFocus={() => showCatalogPreview("unit", unit.slug)}
+              onBlur={() => clearCatalogPreview("unit", unit.slug)}
+              onClick={() => { showCatalogPreview("unit", unit.slug); setPendingPick({ kind: "unit", slug: unit.slug }); setMessage(`${unit.name} picked up · tap a board cell`); }}
             >
               <span className={styles.archiveIndex}>{index + 1}</span>
               <UnitSprite src={unit.image} color="#e6e6e6" />
@@ -410,7 +454,11 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               className={`${styles.archiveItem} ${pendingPick?.kind === "item" && pendingPick.slug === item.slug ? styles.picked : ""}`}
               type="button" key={item.slug} draggable
               onDragStart={(event) => writeDrag(event, { kind: "item", slug: item.slug })}
-              onClick={() => { setPendingPick({ kind: "item", slug: item.slug }); setMessage(`${item.name} picked up · tap a unit card`); }}
+              onMouseEnter={() => showCatalogPreview("item", item.slug)}
+              onMouseLeave={() => clearCatalogPreview("item", item.slug)}
+              onFocus={() => showCatalogPreview("item", item.slug)}
+              onBlur={() => clearCatalogPreview("item", item.slug)}
+              onClick={() => { showCatalogPreview("item", item.slug); setPendingPick({ kind: "item", slug: item.slug }); setMessage(`${item.name} picked up · tap a unit card`); }}
             >
               <span className={styles.archiveIndex}>{index + 1}</span><Image src={item.image} alt="" width={48} height={48} unoptimized={item.image.endsWith(".gif")} /><span className={styles.archiveIdentity}><small>{item.type}</small><strong>{item.name}</strong><em>{item.effects.slice(0, 2).join(" · ")}</em></span><b>{item.cost}G</b>
             </button>)}
@@ -418,7 +466,11 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               className={`${styles.archiveLeader} ${build.leaderSlug === leader.slug ? styles.picked : ""}`}
               type="button" key={leader.slug} draggable
               onDragStart={(event) => writeDrag(event, { kind: "leader", slug: leader.slug })}
-              onClick={() => { setBuild({ ...build, leaderSlug: build.leaderSlug === leader.slug ? "" : leader.slug }); setMessage(build.leaderSlug === leader.slug ? "Leader removed" : `${leader.name} assigned`); }}
+              onMouseEnter={() => showCatalogPreview("leader", leader.slug)}
+              onMouseLeave={() => clearCatalogPreview("leader", leader.slug)}
+              onFocus={() => showCatalogPreview("leader", leader.slug)}
+              onBlur={() => clearCatalogPreview("leader", leader.slug)}
+              onClick={() => { showCatalogPreview("leader", leader.slug); setBuild({ ...build, leaderSlug: build.leaderSlug === leader.slug ? "" : leader.slug }); setMessage(build.leaderSlug === leader.slug ? "Leader removed" : `${leader.name} assigned`); }}
             >
               <span className={styles.archiveIndex}>{index + 1}</span><span className={styles.leaderGlyph}>{leader.name.slice(0, 1)}</span><span className={styles.archiveIdentity}><small>{leader.faction}</small><strong>{leader.name}</strong><em>{leader.trait.name} · {leader.trait.effect}</em></span>
             </button>)}
@@ -427,7 +479,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
       </div>
 
-      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Hover, focus, or tap a placed unit to inspect its detailed card. Drag units into any Board cell, drag equipment onto a unit, and drag occupied cells to swap them. Use × to remove a unit, leader, or equipped item. Use the arrow beside a row to shift all six positions right.</p><p>Verified cards use official public v0.301 examples. The Builder does not claim availability, legality, or strength.</p></aside></div>
+      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Hover, focus, or tap a Board card or Archive record to inspect its verified details. Drag units into any Board cell, drag equipment onto a unit, and drag occupied cells to swap them. Use × to remove a unit, leader, or equipped item. Use the arrow beside a row to shift all six positions right.</p><p>Verified cards use official public v0.301 examples. The Builder does not claim availability, legality, or strength.</p></aside></div>
     </section>
   );
 }

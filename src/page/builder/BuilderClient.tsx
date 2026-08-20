@@ -550,7 +550,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   }
 
   return (
-    <section className={`container ${styles.builder}`} aria-label="Company builder" onDragOver={trackDragPosition}>
+    <section id="company-builder" className={`container ${styles.builder}`} aria-label="Company builder" onDragOver={trackDragPosition}>
       <div className={styles.toolbar}>
         <label className={styles.titleField}><span>Company name</span><input value={build.title} maxLength={64} onChange={(event) => setBuild({ ...build, title: event.target.value })} /></label>
         <div className={styles.planControls} aria-label="Company rules">

@@ -5,7 +5,7 @@
 .heroContent > p:last-child { max-width: 720px; margin-top: 12px; color: #a8a8a1; font-family: "Courier New", Consolas, monospace; font-size: .76rem; }
 .eyebrow { margin-bottom: 9px; color: #9d9d96; font-family: "Courier New", Consolas, monospace; font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
 
-.builder { --game-bg: #050606; --game-panel: #090a0a; --game-raised: #101111; --game-line: #454642; --game-line-bright: #85867e; --game-text: #d7d7cf; --game-muted: #85867f; --game-red: #ef2b24; --game-green: #32c841; --game-blue: #277ae8; display: grid; gap: 5px; padding-top: 9px; font-family: "Courier New", Consolas, monospace; }
+.builder { --game-bg: #050606; --game-panel: #090a0a; --game-raised: #101111; --game-line: #454642; --game-line-bright: #85867e; --game-text: #d7d7cf; --game-muted: #85867f; --game-red: #ef2b24; --game-green: #32c841; --game-blue: #277ae8; display: grid; gap: 5px; padding-top: 9px; scroll-margin-top: 82px; font-family: "Courier New", Consolas, monospace; }
 .toolbar, .notesPanel { border: 1px solid var(--game-line-bright); color: var(--game-text); background: repeating-linear-gradient(135deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px), var(--game-bg); box-shadow: inset 0 0 0 3px #020303; }
 .toolbar { display: grid; grid-template-columns: minmax(240px, 1.05fr) minmax(270px, .9fr) minmax(300px, 1.2fr); gap: 10px; align-items: stretch; padding: 10px; }
 .toolbar label { display: grid; align-content: center; gap: 4px; margin: 0; padding: 0; border: 0; }
@@ -228,6 +228,48 @@
 .notesPanel aside { padding-left: 15px; border-left: 1px solid #3d3e3a; }
 .notesPanel aside p { margin-top: 6px; color: #7f8079; font-size: .48rem; line-height: 1.5; }
 
+.builderGuide { margin-top: 34px; padding-top: 42px; border-top: 1px solid #4b3a24; }
+.guideIntro { display: grid; grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr); align-items: end; gap: 42px; }
+.guideEyebrow { margin-bottom: 8px; color: var(--gold); font-family: "Courier New", Consolas, monospace; font-size: .61rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+.guideIntro h2, .howTo h2, .guideColumns h2, .builderFaq h2 { font-size: clamp(1.55rem, 3vw, 2.25rem); }
+.guideIntro > p, .howTo > header > p:last-child { color: var(--text-muted); font-size: .92rem; line-height: 1.75; }
+.advantageGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-top: 28px; border: 1px solid #49351e; background: #49351e; }
+.advantageGrid article { position: relative; min-height: 220px; padding: 28px 24px 25px; background: radial-gradient(circle at 100% 0, rgba(184,135,62,.08), transparent 15rem), repeating-linear-gradient(135deg, rgba(255,255,255,.012) 0 1px, transparent 1px 5px), #100d09; }
+.advantageGrid article > span { display: block; margin-bottom: 32px; color: #735632; font-family: "Courier New", Consolas, monospace; font-size: .72rem; letter-spacing: .12em; }
+.advantageGrid h3 { color: #dbc28f; font-size: 1.06rem; line-height: 1.3; }
+.advantageGrid p { margin-top: 12px; color: #9b8967; font-size: .79rem; line-height: 1.7; }
+.gameReference { margin: 34px 0 0; overflow: hidden; border: 1px solid #615033; background: #050505; box-shadow: var(--shadow-deep); }
+.gameReference img { display: block; width: 100%; height: auto; opacity: .88; }
+.gameReference figcaption { padding: 13px 16px; border-top: 1px solid #403722; color: #8f7d5e; background: #0d0b08; font-size: .72rem; line-height: 1.6; }
+.gameReference figcaption strong { color: #c5aa74; }
+.howTo { display: grid; grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr); gap: 52px; padding: 54px 0 48px; border-bottom: 1px solid #3b2d1c; }
+.howTo > header { align-self: start; position: sticky; top: 84px; }
+.howTo > header > p:last-child { margin-top: 14px; }
+.howTo ol { counter-reset: builder-step; border-top: 1px solid #4a3923; }
+.howTo li { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 18px; padding: 22px 0; scroll-margin-top: 90px; border-bottom: 1px solid #34291b; }
+.howTo li > span { color: #a47b42; font-family: "Courier New", Consolas, monospace; font-size: .72rem; font-weight: 700; letter-spacing: .1em; }
+.howTo li h3 { color: #d9bf8a; font-size: 1rem; }
+.howTo li p { margin-top: 8px; color: #968465; font-size: .8rem; line-height: 1.7; }
+.startLink { grid-column: 2; justify-self: start; padding-bottom: 3px; border-bottom: 1px solid #7d5b2f; color: #d0a85e; font-family: "Courier New", Consolas, monospace; font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.startLink:hover, .startLink:focus-visible { border-color: #e0bd73; color: #f1d28f; outline: 0; }
+.guideColumns { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 42px; border: 1px solid #49351e; background: #49351e; }
+.guideColumns > div, .guideColumns > aside { padding: 32px; background: #100d09; }
+.guideColumns > aside { background: radial-gradient(circle at 100% 0, rgba(125,47,32,.16), transparent 18rem), #0d0b08; }
+.guideColumns h2 { max-width: 480px; font-size: 1.45rem; }
+.guideColumns ul { display: grid; gap: 13px; margin-top: 22px; }
+.guideColumns li { position: relative; padding-left: 18px; color: #958365; font-size: .79rem; line-height: 1.65; }
+.guideColumns li::before { position: absolute; top: .58em; left: 0; width: 5px; height: 5px; background: #a67738; content: ""; transform: rotate(45deg); }
+.guideColumns li strong { color: #c7ad79; }
+.guideColumns aside > p:not(.guideEyebrow) { margin-top: 18px; color: #958365; font-size: .82rem; line-height: 1.75; }
+.builderFaq { padding: 52px 0 18px; }
+.builderFaq > header { max-width: 620px; }
+.builderFaq > div { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 24px; border: 1px solid #49351e; background: #49351e; }
+.builderFaq article { padding: 25px 27px; background: #0e0c09; }
+.builderFaq h3 { color: #ceb37c; font-size: 1rem; line-height: 1.35; }
+.builderFaq article p { margin-top: 10px; color: #938061; font-size: .8rem; line-height: 1.7; }
+.builderFaq a { color: #d1a555; border-bottom: 1px solid #59421f; }
+.builderFaq a:hover, .builderFaq a:focus-visible { color: #f0cd83; border-color: #c89748; outline: 0; }
+
 @media (max-width: 1160px) {
   .toolbar { grid-template-columns: minmax(0, 1fr) 280px; }
   .toolbarStatus { grid-column: 1 / -1; padding-top: 8px; padding-left: 0; border-top: 1px solid #393a36; border-left: 0; }
@@ -243,6 +285,7 @@
   .inspectCard { grid-template-columns: 220px minmax(0, 1fr); grid-template-rows: auto auto auto auto auto auto; }
   .inspectText { grid-column: 1 / -1; grid-row: 5; margin-top: 8px; padding-top: 8px; border-top: 1px solid #484945; border-left: 0; }
   .inspectCard blockquote { grid-row: 6; }
+  .advantageGrid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 760px) {
   .hero, .heroContent { min-height: 270px; }
@@ -257,12 +300,23 @@
   .hoverInspect { position: fixed; top: 76px; right: 12px; left: 12px; width: auto; max-height: calc(100vh - 100px); }
   .notesPanel { grid-template-columns: 1fr; }
   .notesPanel aside { padding: 10px 0 0; border-top: 1px solid #3d3e3a; border-left: 0; }
+  .builderGuide { margin-top: 26px; padding-top: 32px; }
+  .guideIntro, .howTo, .guideColumns { grid-template-columns: 1fr; gap: 22px; }
+  .guideIntro > p, .howTo > header > p:last-child { font-size: .86rem; }
+  .howTo > header { position: static; }
+  .startLink { grid-column: 1; }
+  .builderFaq > div { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .inspectCard { display: flex; min-height: 0; flex-direction: column; }
   .inspectStage { width: 100%; max-width: 320px; margin-inline: auto; }
   .resources, .attributes, .combatStats, .inspectText, .inspectCard blockquote, .pendingPanel { width: 100%; }
   .inspectText { margin-top: 8px; }
+  .advantageGrid { grid-template-columns: 1fr; }
+  .advantageGrid article { min-height: 0; padding: 24px 20px; }
+  .advantageGrid article > span { margin-bottom: 20px; }
+  .gameReference figcaption { font-size: .68rem; }
+  .guideColumns > div, .guideColumns > aside, .builderFaq article { padding: 23px 20px; }
 }
 @media (max-width: 480px) {
   .planControls { grid-template-columns: minmax(0, 1fr) 105px; }

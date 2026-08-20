@@ -20,6 +20,11 @@
 .actions { display: grid; grid-template-columns: auto auto; gap: 4px; }
 .actions .copyButton { border-color: #c4c4bd; color: #fff; background: #292a29; }
 .actions span { grid-column: 1 / -1; min-height: 10px; color: var(--game-muted); font-size: .48rem; text-align: right; }
+.carryBar { position: sticky; z-index: 45; top: 8px; display: grid; min-height: 40px; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px 14px; padding: 7px 9px; border: 1px solid #e1e1d9; color: #d9d9d1; background: repeating-linear-gradient(135deg, #252625 0 2px, #171818 2px 4px); box-shadow: 0 8px 24px rgba(0,0,0,.68); text-transform: uppercase; }
+.carryBar strong { color: #fff; font-size: .55rem; letter-spacing: .06em; }
+.carryBar span { color: #a6a79f; font-size: .45rem; }
+.carryBar button { min-height: 26px; padding: 4px 8px; border: 1px solid #7b4a44; color: #f2b5ad; background: #210d0b; font-family: inherit; font-size: .45rem; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+.dragScrollGuide { position: fixed; z-index: 80; bottom: 20px; left: 50%; padding: 8px 12px; transform: translateX(-50%); border: 1px solid #d7d7cf; color: #fff; background: rgba(9,10,10,.94); box-shadow: 0 8px 26px #000; font-size: .48rem; font-weight: 700; letter-spacing: .06em; pointer-events: none; text-align: center; text-transform: uppercase; }
 
 .workbench { display: grid; grid-template-columns: minmax(0, 2.8fr) minmax(270px, .92fr); gap: 5px; align-items: stretch; }
 .gamePanel { position: relative; min-width: 0; overflow: hidden; border: 1px solid var(--game-line-bright); color: var(--game-text); background: var(--game-bg); box-shadow: inset 0 0 0 2px #020303; }
@@ -30,7 +35,7 @@
 .panelHeader span { overflow: hidden; color: #777871; font-size: .47rem; text-overflow: ellipsis; white-space: nowrap; }
 
 .boardPanel { display: flex; min-width: 0; flex-direction: column; }
-.boardStage { position: relative; display: flex; min-height: 1080px; flex-direction: column; gap: 7px; padding: 8px; overflow: visible; background: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px), #020303; background-size: 54px 54px; }
+.boardStage { position: relative; display: flex; min-height: 930px; flex-direction: column; gap: 7px; padding: 8px; overflow: visible; background: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px), #020303; background-size: 54px 54px; }
 .rulesStrip { display: flex; min-height: 34px; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 9px; border: 1px solid #42433f; color: #8f9089; background: #080909; text-transform: uppercase; }
 .rulesStrip strong { color: #d2d2ca; font-size: .47rem; letter-spacing: .05em; }
 .rulesStrip span { font-size: .4rem; text-align: right; }
@@ -49,15 +54,15 @@
 .boardLegend span:nth-child(2) i { border-color: #9b9c94; background: #141515; }
 .boardLegend span:nth-child(3) i { border-color: #3a3b38; background: repeating-linear-gradient(135deg, #111212 0 2px, #050606 2px 4px); }
 .boardLegend strong { width: 100%; color: #b8b9b1; font-size: .43rem; text-align: right; }
-.formationLayout { display: grid; min-height: 950px; flex: 1; grid-template-columns: 40px minmax(0, 1fr) 108px; gap: 6px; }
+.formationLayout { display: grid; min-height: 810px; flex: 1; grid-template-columns: 40px minmax(0, 1fr) 108px; gap: 6px; }
 .rowControls, .formationRail { display: grid; min-height: 0; grid-template-rows: repeat(6, minmax(0, 1fr)); gap: 5px; }
 .rowControls button { display: grid; min-height: 0; place-items: center; align-content: center; gap: 5px; padding: 3px; border: 1px solid #343532; color: #74756f; background: repeating-linear-gradient(135deg, #0d0e0e 0 2px, #070808 2px 4px); font-family: inherit; cursor: pointer; }
 .rowControls button:hover, .rowControls button:focus-visible { border-color: #d7d7cf; color: #fff; outline: 0; }
 .rowControls button:disabled { border-color: #242522; color: #30312e; background: #050606; cursor: not-allowed; }
 .rowControls b { font-size: .85rem; }
 .rowControls small { font-size: .32rem; letter-spacing: .06em; writing-mode: vertical-rl; }
-.boardGrid { display: grid; width: 100%; min-width: 0; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(150px, auto)); gap: 5px; padding: 7px; border: 7px solid #191a19; outline: 1px solid #3f403d; background: #0a0b0b; }
-.boardSlot { position: relative; display: flex; min-width: 0; min-height: 158px; flex-direction: column; overflow: hidden; border: 1px solid #30312f; background: repeating-linear-gradient(135deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px), #020303; transition: border-color .12s ease, box-shadow .12s ease, background-color .12s ease; }
+.boardGrid { display: grid; width: 100%; min-width: 0; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(126px, auto)); gap: 5px; padding: 7px; border: 7px solid #191a19; outline: 1px solid #3f403d; background: #0a0b0b; }
+.boardSlot { position: relative; display: flex; min-width: 0; min-height: 126px; flex-direction: column; overflow: hidden; border: 1px solid #30312f; background: repeating-linear-gradient(135deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px), #020303; transition: border-color .12s ease, box-shadow .12s ease, background-color .12s ease; }
 .boardSlot[draggable="true"] { cursor: grab; }
 .removeUnitButton, .removeLeaderButton { position: absolute; z-index: 7; display: grid; width: 18px; height: 18px; place-items: center; padding: 0; border: 1px solid #6d3935; color: #f0b0a8; background: #190b0a; font-family: inherit; font-size: .55rem; line-height: 1; cursor: pointer; }
 .removeUnitButton { top: 3px; right: 3px; }
@@ -107,11 +112,14 @@
 .boardFooter { display: grid; min-height: 32px; grid-template-columns: repeat(3, 1fr); align-items: center; border-top: 1px solid var(--game-line-bright); background: repeating-linear-gradient(135deg, #151616 0 2px, #0b0c0c 2px 4px); }
 .boardFooter span { padding: 4px 8px; border-right: 1px solid #343532; color: #898a83; font-size: .46rem; text-align: center; text-transform: uppercase; }
 
-.shopPanel { display: flex; height: 1144px; min-height: 0; flex-direction: column; }
+.shopPanel { display: flex; height: 994px; min-height: 0; flex-direction: column; }
 .tabs { display: grid; grid-template-columns: repeat(3, 1fr); padding: 5px 5px 0; }
 .tabs button { min-width: 0; }
 .filters { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 5px; border-bottom: 1px solid #353633; }
 .filters input { min-height: 31px; padding: 5px 7px; font-size: .56rem; }
+.archiveHelp { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px; border-bottom: 1px solid #353633; color: #777871; background: #090a0a; font-size: .4rem; text-transform: uppercase; }
+.archiveHelp strong { color: #c7c8c0; white-space: nowrap; }
+.archiveHelp span { text-align: right; }
 .archiveList { display: grid; min-height: 0; flex: 1; grid-template-columns: 1fr; align-content: start; gap: 5px; overflow-y: scroll; padding: 5px 6px 9px; scrollbar-color: #74756f #090a0a; scrollbar-gutter: stable; scrollbar-width: thin; }
 .archiveList::-webkit-scrollbar { width: 8px; }
 .archiveList::-webkit-scrollbar-track { border-left: 1px solid #2d2e2b; background: #090a0a; }
@@ -240,7 +248,9 @@
   .titleField, .actions { grid-column: 1 / -1; }
   .boardStage { height: auto; min-height: 0; overflow-x: auto; }
   .boardTopbar, .formationLayout { min-width: 760px; }
-  .formationLayout { min-height: 950px; }
+  .formationLayout { min-height: 810px; }
+  .carryBar { grid-template-columns: 1fr auto; }
+  .carryBar span { grid-column: 1 / -1; grid-row: 2; }
   .hoverInspect { position: fixed; top: 76px; right: 12px; left: 12px; width: auto; max-height: calc(100vh - 100px); }
   .notesPanel { grid-template-columns: 1fr; }
   .notesPanel aside { padding: 10px 0 0; border-top: 1px solid #3d3e3a; border-left: 0; }

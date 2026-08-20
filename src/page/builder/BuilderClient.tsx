@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState, type DragEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import UnitSprite from "@/components/content/UnitSprite";
 import { activeBoardCells, BOARD_CELLS, BOARD_COLUMNS, BOARD_ROWS, followerCapLabel, followerLimitForRules, MAX_TRIAL_WEEK } from "@/lib/builder/board-rules";
 import type { FactionSlug, Item, UnitStats } from "@/types/content";
@@ -137,6 +137,8 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const [dropTarget, setDropTarget] = useState<number | null>(null);
   const [draggingPayload, setDraggingPayload] = useState<DragPayload | null>(null);
   const [catalogPreview, setCatalogPreview] = useState<CatalogPreview>(null);
+  const dragPointerY = useRef<number | null>(null);
+  const dragScrollFrame = useRef<number | null>(null);
 
   const unitBySlug = useMemo(() => new Map(roster.map((unit) => [unit.slug, unit])), [roster]);
   const itemBySlug = useMemo(() => new Map(items.map((item) => [item.slug, item])), [items]);
@@ -162,6 +164,10 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     window.localStorage.setItem(STORAGE_KEY, encoded);
   }, [build, ready]);
 
+  useEffect(() => () => {
+    if (dragScrollFrame.current !== null) window.cancelAnimationFrame(dragScrollFrame.current);
+  }, []);
+
   const selectedLeader = leaderBySlug.get(build.leaderSlug);
   const selectedSlots = build.slots;
   const filledCount = selectedSlots.filter((slot) => slot.unitSlug).length;
@@ -179,6 +185,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const previewUnit = catalogPreview?.kind === "unit" ? unitBySlug.get(catalogPreview.slug) : undefined;
   const previewItem = catalogPreview?.kind === "item" ? itemBySlug.get(catalogPreview.slug) : undefined;
   const previewLeader = catalogPreview?.kind === "leader" ? leaderBySlug.get(catalogPreview.slug) : undefined;
+  const pendingLabel = pendingPick?.kind === "unit" ? unitBySlug.get(pendingPick.slug)?.name : pendingPick?.kind === "item" ? itemBySlug.get(pendingPick.slug)?.name : undefined;
   const itemCost = selectedSlots.reduce((total, slot) => total + slot.itemSlugs.reduce((sum, slug) => sum + (itemBySlug.get(slug)?.cost ?? 0), 0), 0);
   const queryText = query.trim().toLowerCase();
   const filteredUnits = roster.filter((unit) => (faction === "all" || unit.factionSlug === faction) && (!queryText || `${unit.name} ${unit.faction} ${unit.trait ?? ""}`.toLowerCase().includes(queryText)));
@@ -197,12 +204,39 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     setDraggingPayload(payload);
     setDropTarget(null);
     setPendingPick(null);
+    dragPointerY.current = event.clientY;
+    if (dragScrollFrame.current === null) dragScrollFrame.current = window.requestAnimationFrame(runDragAutoScroll);
     writeDrag(event, payload);
   }
 
   function finishDrag() {
     setDraggingPayload(null);
     setDropTarget(null);
+    dragPointerY.current = null;
+    if (dragScrollFrame.current !== null) {
+      window.cancelAnimationFrame(dragScrollFrame.current);
+      dragScrollFrame.current = null;
+    }
+  }
+
+  function runDragAutoScroll() {
+    const pointerY = dragPointerY.current;
+    if (pointerY === null) {
+      dragScrollFrame.current = null;
+      return;
+    }
+    const viewportHeight = window.innerHeight;
+    const edgeZone = Math.min(150, Math.max(90, viewportHeight * 0.18));
+    let scrollAmount = 0;
+    if (pointerY < edgeZone) scrollAmount = -Math.ceil(4 + (edgeZone - pointerY) / edgeZone * 18);
+    if (pointerY > viewportHeight - edgeZone) scrollAmount = Math.ceil(4 + (pointerY - (viewportHeight - edgeZone)) / edgeZone * 18);
+    if (scrollAmount !== 0) window.scrollBy(0, scrollAmount);
+    dragScrollFrame.current = window.requestAnimationFrame(runDragAutoScroll);
+  }
+
+  function trackDragPosition(event: DragEvent<HTMLElement>) {
+    dragPointerY.current = event.clientY;
+    if (dragScrollFrame.current === null) dragScrollFrame.current = window.requestAnimationFrame(runDragAutoScroll);
   }
 
   function slotUsage(slot: BuilderSlot) {
@@ -517,13 +551,20 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   }
 
   return (
-    <section className={`container ${styles.builder}`} aria-label="Company builder">
+    <section className={`container ${styles.builder}`} aria-label="Company builder" onDragOver={trackDragPosition}>
       <div className={styles.toolbar}>
         <label className={styles.titleField}><span>Company name</span><input value={build.title} maxLength={64} onChange={(event) => setBuild({ ...build, title: event.target.value })} /></label>
         <label><span>Plan for</span><select value={build.mode} onChange={(event) => changeMode(event.target.value)}>{MODES.map((mode) => <option key={mode}>{mode}</option>)}</select></label>
         <label><span>Trial week</span><select value={build.week} onChange={(event) => changeWeek(Number(event.target.value))}>{Array.from({ length: MAX_TRIAL_WEEK }, (_, index) => index + 1).map((week) => <option value={week} key={week}>Week {week}</option>)}</select></label>
         <div className={styles.actions}><button type="button" onClick={clearBuild}>Clear</button><button className={styles.copyButton} type="button" onClick={copyLink}>Copy page link</button><span aria-live="polite">{message}</span></div>
       </div>
+
+      {pendingPick && <div className={styles.carryBar} role="status">
+        <strong>Carrying · {pendingLabel ?? (pendingPick.kind === "unit" ? "Unit" : "Item")}</strong>
+        <span>Scroll normally, then click a valid {pendingPick.kind === "unit" ? "empty board cell" : "unit card"} to place it.</span>
+        <button type="button" onClick={() => { setPendingPick(null); setMessage("Carry cancelled"); }}>Cancel</button>
+      </div>}
+      {draggingPayload && <div className={styles.dragScrollGuide} aria-hidden="true">Move to the top or bottom edge to auto-scroll</div>}
 
       <div className={styles.workbench}>
         <section className={`${styles.gamePanel} ${styles.boardPanel}`}>
@@ -644,9 +685,10 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </section>
 
         <section className={`${styles.gamePanel} ${styles.shopPanel}`}>
-          <header className={styles.panelHeader}><strong>Archive [{tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length}]</strong><span>{tab === "units" && selectedLeader ? `${filledCount}/${followerLimit} followers · faction rules active` : "Hover to inspect · valid records can be dragged"}</span></header>
+          <header className={styles.panelHeader}><strong>Archive [{tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length}]</strong><span>{tab === "units" && selectedLeader ? `${filledCount}/${followerLimit} followers · drag or click to carry` : "Hover to inspect · drag or click to carry"}</span></header>
           <div className={styles.tabs} role="tablist" aria-label="Builder archive">{(["units", "items", "leaders"] as CatalogTab[]).map((catalogTab) => <button role="tab" aria-selected={tab === catalogTab} className={tab === catalogTab ? styles.selected : ""} type="button" key={catalogTab} onClick={() => { setTab(catalogTab); setQuery(""); setPendingPick(null); setCatalogPreview(null); }}>{catalogTab}</button>)}</div>
           <div className={styles.filters}><input aria-label="Search archive" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Search ${tab}…`} />{tab !== "items" && <select aria-label="Filter by faction" value={faction} onChange={(event) => setFaction(event.target.value)}><option value="all">All factions</option><option value="goodly-folk">Goodly Folk</option><option value="bone-host">Bone Host</option><option value="belowborn">Belowborn</option></select>}</div>
+          <div className={styles.archiveHelp}><strong>Long move?</strong><span>Click a record, scroll normally, then click its target.</span></div>
           <div className={styles.archiveList} role="tabpanel">
             {tab === "units" && filteredUnits.map((unit, index) => {
               const blockReason = unitArchiveBlockReason(unit);

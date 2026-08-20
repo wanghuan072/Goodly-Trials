@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import UnitSprite from "@/components/content/UnitSprite";
+import { siteConfig } from "@/config/site";
 import { activeBoardCells, BOARD_CELLS, BOARD_COLUMNS, BOARD_ROWS, followerCapLabel, followerLimitForRules, MAX_TRIAL_WEEK } from "@/lib/builder/board-rules";
 import { BUILDER_PRESET_KEY, BUILDER_STORAGE_KEY, type BuilderPlanState } from "@/lib/builder/presets";
 import type { FactionSlug, Item, UnitStats } from "@/types/content";
@@ -661,7 +662,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
             {previewUnit && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
               <header className={styles.panelHeader}><strong>Inspect · Unit</strong><span>Archive hover</span></header>
               <div className={styles.inspectCard}>
-                <header><small>{previewUnit.faction}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? "PUBLIC CARD · v0.301" : "ROSTER RECORD"}</span></header>
+                <header><small>{previewUnit.faction}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? `PUBLIC CARD · ${siteConfig.currentVersion}` : "ROSTER RECORD"}</span></header>
                 <div className={styles.inspectStage}>
                   <div className={styles.slotPreview}><small>GEAR: {previewUnit.gear ?? "?"}</small><span>{Array.from({ length: previewUnit.gear ?? 2 }, (_, index) => <i key={index} />)}</span></div>
                   <UnitSprite src={previewUnit.image} color="#eeeeee" large />

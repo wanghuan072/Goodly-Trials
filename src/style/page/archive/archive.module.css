@@ -37,6 +37,7 @@
 .portalGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .portalCard { min-height: 210px; padding: 24px; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, #261c13, #100d0a); }
 .portalCard > span { color: var(--gold); font-size: 1.6rem; }
+.portalCard > small { display: block; margin-top: 14px; color: var(--text-muted); font-size: .56rem; letter-spacing: .1em; text-transform: uppercase; }
 .portalCard h2 { margin-top: 14px; font-size: 1.45rem; }
 .portalCard p { margin-top: 10px; color: var(--text-muted); font-size: .82rem; }
 .portalCard b { display: block; margin-top: 22px; color: var(--gold-bright); font-family: var(--font-display); font-size: .7rem; text-transform: uppercase; }
@@ -58,5 +59,50 @@
 .quickAnswer b { color: var(--gold-bright); font-family: var(--font-display); }
 .quickAnswer p { margin-top: 8px; color: var(--parchment-dark); }
 .badge { display: inline-block; margin-right: 8px; padding: 4px 8px; border: 1px solid var(--border-bronze); color: var(--gold); font-size: .67rem; letter-spacing: .06em; text-transform: uppercase; }
-@media (max-width: 1024px) { .contentGrid { grid-template-columns: 1fr; } .sidebar { position: static; } .portalGrid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 768px) { .hero, .heroContent { min-height: 240px; } .heroContent { padding-inline: 12px; } .portalGrid { grid-template-columns: 1fr; } .entryRow { grid-template-columns: 1fr auto; } .entryRow > span { grid-column: 1 / -1; } .entryRow p { display: none; } .statExplain { grid-template-columns: 1fr 1fr; } }
+.wikiShell { display: grid; gap: 48px; }
+.wikiStatus { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 18px 20px; border: 1px solid #6f8d59; background: linear-gradient(90deg, rgba(45,65,34,.58), rgba(14,12,8,.98)); box-shadow: inset 0 0 0 3px rgba(6,8,4,.7); }
+.wikiStatusMark { padding: 6px 8px; border: 1px solid #8fba6f; color: #b8dd9c; font-size: .62rem; font-weight: 800; letter-spacing: .12em; }
+.wikiStatus b { color: var(--parchment); font-family: var(--font-display); font-size: .78rem; text-transform: uppercase; }
+.wikiStatus p { margin-top: 5px; color: var(--text-muted); font-size: .65rem; }
+.wikiStatusActions { display: grid; min-width: 158px; gap: 5px; }
+.wikiStatusActions a { padding: 7px 9px; border: 1px solid rgba(143,186,111,.35); color: #c8e7b2; font-size: .62rem; text-align: center; }
+.wikiSearch { display: grid; gap: 8px; padding: 20px; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, #20170f, #0d0a07); box-shadow: inset 0 0 0 3px #080604; }
+.wikiSearch > label { color: var(--gold-bright); font-family: var(--font-display); font-size: .86rem; text-transform: uppercase; }
+.wikiSearch > div { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; border: 1px solid var(--gold); background: #080604; }
+.wikiSearch > div > span { padding-left: 14px; color: var(--gold); font-size: 1.2rem; }
+.wikiSearch input { min-width: 0; padding: 14px 12px; border: 0; outline: 0; background: transparent; color: var(--parchment); font: inherit; font-size: .78rem; }
+.wikiSearch button { align-self: stretch; padding: 0 18px; border: 0; border-left: 1px solid var(--gold); background: #2b1c10; color: var(--gold-bright); font-family: var(--font-display); font-size: .68rem; cursor: pointer; text-transform: uppercase; }
+.wikiSearch > p { color: var(--text-muted); font-size: .59rem; }
+.wikiSearch > p a { color: var(--gold-bright); }
+.wikiSectionHeader { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border-bronze); }
+.wikiSectionHeader p { color: var(--gold); font-size: .58rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.wikiSectionHeader h2 { margin-top: 5px; font-size: clamp(1.2rem, 2.4vw, 1.65rem); }
+.wikiSectionHeader > a, .wikiSectionHeader > span { color: var(--gold-bright); font-size: .62rem; }
+.wikiQuickGrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.wikiQuickCard { display: grid; min-height: 188px; align-content: start; padding: 16px; border: 1px solid var(--border-soft); background: #100d0a; transition: border-color .15s ease, transform .15s ease; }
+.wikiQuickCard:hover { border-color: var(--gold); transform: translateY(-2px); }
+.wikiQuickCard > span { color: var(--gold); font-size: .58rem; letter-spacing: .12em; }
+.wikiQuickCard h3 { margin-top: 18px; font-size: .88rem; }
+.wikiQuickCard p { margin-top: 8px; color: var(--text-muted); font-size: .61rem; }
+.wikiQuickCard b { align-self: end; margin-top: 18px; color: var(--gold-bright); font-size: .59rem; text-transform: uppercase; }
+.wikiCoverage { padding: 20px; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, rgba(35,25,16,.96), rgba(10,8,6,.99)); box-shadow: inset 0 0 0 3px #080604; }
+.wikiCoverageGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.wikiCoverageGrid > div { display: grid; align-content: start; min-height: 136px; padding: 14px; border: 1px solid var(--border-soft); background: #0b0805; }
+.wikiCoverageGrid strong { color: var(--gold-bright); font-family: var(--font-display); font-size: 1.7rem; }
+.wikiCoverageGrid span { margin-top: 4px; color: var(--parchment); font-size: .62rem; font-weight: 700; text-transform: uppercase; }
+.wikiCoverageGrid p { margin-top: 10px; color: var(--text-muted); font-size: .59rem; }
+.secondaryPortalGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.secondaryPortalCard { min-height: 150px; padding: 17px; border: 1px solid var(--border-soft); background: #100d0a; }
+.secondaryPortalCard small { color: var(--gold); font-size: .54rem; letter-spacing: .1em; text-transform: uppercase; }
+.secondaryPortalCard h3 { margin-top: 12px; font-size: 1rem; }
+.secondaryPortalCard p { margin-top: 8px; color: var(--text-muted); font-size: .62rem; }
+.secondaryPortalCard b { display: block; margin-top: 14px; color: var(--gold-bright); font-size: .58rem; text-transform: uppercase; }
+.pendingPanel { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px; align-items: center; margin-top: 8px; padding: 16px 18px; border: 1px dashed #665e54; background: #0c0a08; }
+.pendingPanel > span { color: #82796e; font-size: 1.55rem; }
+.pendingPanel small { color: #968c80; font-size: .53rem; letter-spacing: .1em; }
+.pendingPanel h3 { margin-top: 4px; color: var(--text-main); font-size: .88rem; }
+.pendingPanel p { margin-top: 4px; color: var(--text-muted); font-size: .6rem; }
+.pendingPanel a { color: var(--gold-bright); font-size: .6rem; white-space: nowrap; }
+@media (max-width: 1100px) { .wikiQuickGrid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1024px) { .contentGrid { grid-template-columns: 1fr; } .sidebar { position: static; } .portalGrid { grid-template-columns: 1fr 1fr; } .wikiCoverageGrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) { .hero, .heroContent { min-height: 240px; } .heroContent { padding-inline: 12px; } .portalGrid, .secondaryPortalGrid, .wikiQuickGrid, .wikiCoverageGrid { grid-template-columns: 1fr; } .wikiStatus, .pendingPanel { grid-template-columns: auto 1fr; } .wikiStatusActions, .pendingPanel > a { grid-column: 1 / -1; } .wikiStatusActions { grid-template-columns: 1fr 1fr; } .wikiSectionHeader { align-items: start; flex-direction: column; } .wikiSearch > div { grid-template-columns: auto minmax(0, 1fr); } .wikiSearch button { grid-column: 1 / -1; min-height: 40px; border-top: 1px solid var(--gold); border-left: 0; } .entryRow { grid-template-columns: 1fr auto; } .entryRow > span { grid-column: 1 / -1; } .entryRow p { display: none; } .statExplain { grid-template-columns: 1fr 1fr; } }

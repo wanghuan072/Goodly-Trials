@@ -11,10 +11,10 @@ export const siteConfig = {
   patchNotesUrl: "https://goodlytrials.com/patch-notes",
   playUrl: "https://play.goodlytrials.com/",
   steamUrl: "https://store.steampowered.com/app/4985160/Goodly_Trials/",
-  socialImage: "/images/social/goodly-trials-wiki-v0301.png",
-  currentVersion: "v0.301",
+  socialImage: "/images/social/goodly-trials-wiki-v0303.png",
+  currentVersion: "v0.303",
   lastVerified: "2026-08-20",
-  accessStatus: "Invite-only browser beta; Steam release is still marked Coming soon",
+  accessStatus: "Open browser beta; Steam lists Early Access for August 18, 2026",
 } as const;
 
 export const primaryNavigation = [
@@ -30,10 +30,9 @@ export const primaryNavigation = [
 export const wikiNavigation = [
   { href: "/wiki/units", label: "Units" },
   { href: "/wiki/items", label: "Items" },
+  { href: "/wiki/leaders", label: "Leaders" },
+  { href: "/wiki/mechanics", label: "Mechanics" },
   { href: "/wiki/factions", label: "Factions" },
   { href: "/wiki/traits", label: "Traits" },
   { href: "/wiki/ascendancy", label: "Ascendancy" },
-  { href: "/wiki/leaders", label: "Leaders" },
-  { href: "/wiki/bosses", label: "Bosses" },
-  { href: "/wiki/mechanics", label: "Mechanics" },
 ] as const;

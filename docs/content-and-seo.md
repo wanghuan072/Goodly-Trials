@@ -2,12 +2,14 @@
 
 ## Source policy
 
-The current dataset was verified on 2026-08-20 against the public Goodly Trials site, its mechanics pages, official patch notes, and the Steam application API for app `4985160`.
+The current public site status and patch archive were verified on 2026-08-20 against Goodly Trials v0.303, its mechanics pages, official patch notes, and the Steam application API for app `4985160`.
 
 - Official facts belong in `src/data/game/*.json` and carry `gameVersion`, `lastVerified`, and `source` where the record type supports them.
 - Editorial recommendations must be labeled in the rendered page and must link back to the verified unit and item records used to make the recommendation.
 - UI references and asset filenames do not prove stats, abilities, release status, or ranking.
 - Do not create thin detail pages for roster names that lack an auditable public card.
+- State coverage at every database entrance: the current public source exposes six complete unit examples and twelve item examples, while the Steam description says the game contains a much larger playable roster.
+- Keep incomplete encounter indexes such as Bosses out of the sitemap and mark them `noindex` until an auditable roster supports useful standalone pages.
 
 ## URL and intent boundaries
 

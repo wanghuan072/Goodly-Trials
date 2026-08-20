@@ -3,7 +3,7 @@ import mechanicsData from "@/data/game/mechanics.json";
 import { siteConfig } from "@/config/site";
 import { factions, guides, items, units, updates } from "@/lib/data/game-content";
 
-const staticRoutes = ["", "/wiki", "/wiki/units", "/wiki/items", "/wiki/factions", "/wiki/traits", "/wiki/ascendancy", "/wiki/leaders", "/wiki/bosses", "/wiki/mechanics", "/guides", "/builder", "/builds", "/tier-list", "/updates", "/about"];
+const staticRoutes = ["", "/wiki", "/wiki/units", "/wiki/items", "/wiki/factions", "/wiki/traits", "/wiki/ascendancy", "/wiki/leaders", "/wiki/mechanics", "/guides", "/builder", "/builds", "/tier-list", "/updates", "/about"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const verified = new Date(`${siteConfig.lastVerified}T00:00:00Z`);

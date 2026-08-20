@@ -13,8 +13,8 @@ const archiveLinks = [
   { href: "/wiki/items", symbol: "⚔", title: "Items", copy: "Weapons, shields, spells" },
   { href: "/wiki/factions", symbol: "⚑", title: "Factions", copy: "Three public companies" },
   { href: "/wiki/traits", symbol: "✦", title: "Traits", copy: "6 public-card traits" },
-  { href: "/wiki/ascendancy", symbol: "✥", title: "Ascendancy", copy: "Character progression" },
-  { href: "/wiki/bosses", symbol: "☠", title: "Bosses", copy: "Status verified; roster pending" },
+  { href: "/wiki/leaders", symbol: "♛", title: "Leaders", copy: "Seven featured cards" },
+  { href: "/wiki/mechanics", symbol: "⌘", title: "Mechanics", copy: "Stats, placement, modes" },
 ];
 
 const mechanics = [
@@ -36,7 +36,7 @@ export default function HomePage() {
           <p className={styles.kicker}>Verified public data · {siteConfig.currentVersion}</p>
           <h1>Goodly Trials <span>Wiki</span></h1>
           <p className={styles.lede}>An independent archive of public unit cards, items, leaders, mechanics, patch context, and clearly labeled editorial guides.</p>
-          <p className={styles.accessStatus}>Current access: invite-only browser beta · Steam: Coming soon</p>
+          <p className={styles.accessStatus}>Current access: {siteConfig.accessStatus}</p>
           <div className={styles.heroActions}><Link className="button button-primary" href="/builder">Build a Company</Link><Link className="button button-ghost" href="/wiki">Explore Wiki</Link><Link className="button button-ghost" href="/guides/beginners-guide">Beginner&apos;s Guide</Link></div>
           <dl className={styles.heroFacts}>
             <div><dt>{units.length}</dt><dd>public unit cards</dd></div><div><dt>{leaders.length}</dt><dd>featured leaders</dd></div><div><dt>{items.length}</dt><dd>public item examples</dd></div><div><dt>{siteConfig.currentVersion}</dt><dd>verified patch</dd></div>

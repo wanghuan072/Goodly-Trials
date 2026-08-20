@@ -6,7 +6,7 @@ import styles from "@/style/page/builder/builder.module.css";
 
 export const metadata = createMetadata(
   "Goodly Trials Company Builder",
-  "Create a player-authored Goodly Trials company, equip public item examples, add notes, and share the plan with a link.",
+  "Create a player-authored Goodly Trials company, equip public item examples, add notes, and keep the plan saved on your device.",
   "/builder",
 );
 
@@ -60,7 +60,7 @@ export default function BuilderPage() {
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Company Builder" }]} />
           <p className={styles.eyebrow}>Player workshop · v0.301 source layer</p>
           <h1>Company Builder</h1>
-          <p>Drag a leader, units, and public item examples into a game-inspired board, inspect verified cards, and share your own plan. This tool records player ideas—it does not publish a “best” build.</p>
+          <p>Drag a leader, units, and public item examples into a game-inspired board, inspect verified cards, and keep your plan saved on this device. This tool records player ideas—it does not publish a “best” build.</p>
         </div>
       </section>
       <BuilderClient roster={roster} leaders={builderLeaders} items={items} />

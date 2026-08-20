@@ -38,7 +38,7 @@ export type BuilderLeader = {
 };
 
 type BuilderSlot = { unitSlug: string; itemSlugs: string[] };
-type BuilderState = { title: string; mode: string; size: number; leaderSlug: string; slots: BuilderSlot[]; notes: string };
+type BuilderState = { title: string; mode: string; leaderSlug: string; slots: BuilderSlot[]; notes: string };
 type CatalogTab = "units" | "items" | "leaders";
 type PendingPick = { kind: "unit" | "item"; slug: string } | null;
 type DragPayload = { kind: "unit" | "item" | "leader" | "slot"; slug?: string; from?: number };
@@ -47,7 +47,6 @@ type EquipmentKind = "gear" | "trinkets" | "consumable";
 const STORAGE_KEY = "goodly-trials-company-builder-v1";
 const DRAG_TYPE = "application/x-goodly-builder";
 const MODES = ["Theorycraft", "Single-player", "Ranked", "Multiplayer"];
-const SIZES = [3, 4, 5, 6];
 const BOARD_COLUMNS = 6;
 const BOARD_ROWS = 4;
 const BOARD_CELLS = BOARD_COLUMNS * BOARD_ROWS;
@@ -58,7 +57,7 @@ function emptySlots(): BuilderSlot[] {
 }
 
 function emptyBuild(): BuilderState {
-  return { title: "Untitled Company", mode: "Theorycraft", size: 4, leaderSlug: "", slots: emptySlots(), notes: "" };
+  return { title: "Untitled Company", mode: "Theorycraft", leaderSlug: "", slots: emptySlots(), notes: "" };
 }
 
 function encodeBuild(build: BuilderState) {
@@ -73,7 +72,6 @@ function decodeBuild(value: string): BuilderState | null {
     const padded = value.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
     const bytes = Uint8Array.from(atob(padded), (character) => character.charCodeAt(0));
     const parsed = JSON.parse(new TextDecoder().decode(bytes)) as Partial<BuilderState>;
-    const size = SIZES.includes(Number(parsed.size)) ? Number(parsed.size) : 4;
     const sourceSlots = Array.isArray(parsed.slots) ? parsed.slots.slice(0, BOARD_CELLS).map((slot) => ({
       unitSlug: typeof slot?.unitSlug === "string" ? slot.unitSlug : "",
       itemSlugs: Array.isArray(slot?.itemSlugs) ? slot.itemSlugs.filter((slug): slug is string => typeof slug === "string").slice(0, 8) : [],
@@ -87,7 +85,6 @@ function decodeBuild(value: string): BuilderState | null {
     return {
       title: typeof parsed.title === "string" ? parsed.title.slice(0, 64) : "Untitled Company",
       mode: MODES.includes(parsed.mode ?? "") ? parsed.mode as string : "Theorycraft",
-      size,
       leaderSlug: typeof parsed.leaderSlug === "string" ? parsed.leaderSlug : "",
       slots,
       notes: typeof parsed.notes === "string" ? parsed.notes.slice(0, 280) : "",
@@ -147,14 +144,15 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   useEffect(() => {
     const restore = window.setTimeout(() => {
       const hashValue = window.location.hash.startsWith("#b=") ? window.location.hash.slice(3) : "";
-      const shared = hashValue ? decodeBuild(hashValue) : null;
-      const saved = !shared ? decodeBuild(window.localStorage.getItem(STORAGE_KEY) ?? "") : null;
-      const next = shared ?? saved ?? emptyBuild();
+      const imported = hashValue ? decodeBuild(hashValue) : null;
+      const saved = !imported ? decodeBuild(window.localStorage.getItem(STORAGE_KEY) ?? "") : null;
+      const next = imported ?? saved ?? emptyBuild();
       setBuild(next);
       const firstUnit = next.slots.find((slot) => unitBySlug.has(slot.unitSlug));
       if (firstUnit) setInspectSlug(firstUnit.unitSlug);
+      if (window.location.hash || window.location.search) window.history.replaceState(null, "", window.location.pathname);
       setReady(true);
-      setMessage(shared ? "Shared company loaded" : saved ? "Local company restored" : "Drag a unit into the board");
+      setMessage(imported ? "Company imported and saved on this device" : saved ? "Local company restored" : "Drag a unit into the board");
     }, 0);
     return () => window.clearTimeout(restore);
   }, [unitBySlug]);
@@ -163,7 +161,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     if (!ready) return;
     const encoded = encodeBuild(build);
     window.localStorage.setItem(STORAGE_KEY, encoded);
-    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}#b=${encoded}`);
   }, [build, ready]);
 
   const selectedLeader = leaderBySlug.get(build.leaderSlug);
@@ -184,10 +181,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
   function placeUnit(index: number, slug: string) {
     if (index < 0 || index >= BOARD_CELLS) return;
-    if (!build.slots[index]?.unitSlug && filledCount >= build.size) {
-      setMessage(`Company limit reached · raise the unit limit above ${build.size}`);
-      return;
-    }
     updateSlot(index, { unitSlug: slug, itemSlugs: [] });
     setActiveSlot(index);
     setInspectSlug(slug);
@@ -253,8 +246,8 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(window.location.href);
-      setMessage("Share link copied");
+      await navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}`);
+      setMessage("Clean page link copied · this company stays saved on your device");
     } catch {
       setMessage("Copy was blocked · copy the page URL from your browser");
     }
@@ -270,15 +263,6 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
   function equipmentFor(slot: BuilderSlot, kind: EquipmentKind) {
     return slot.itemSlugs.map((slug) => itemBySlug.get(slug)).filter((item): item is Item => item !== undefined && itemKind(item) === kind);
-  }
-
-  function setUnitLimit(size: number) {
-    if (size < filledCount) {
-      setMessage(`Remove ${filledCount - size} unit${filledCount - size === 1 ? "" : "s"} before lowering the limit`);
-      return;
-    }
-    setBuild((current) => ({ ...current, size }));
-    setMessage(`Unit limit set to ${size}`);
   }
 
   function rotateFormationRow(rowIndex: number) {
@@ -299,13 +283,12 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       <div className={styles.toolbar}>
         <label className={styles.titleField}><span>Company name</span><input value={build.title} maxLength={64} onChange={(event) => setBuild({ ...build, title: event.target.value })} /></label>
         <label><span>Plan for</span><select value={build.mode} onChange={(event) => setBuild({ ...build, mode: event.target.value })}>{MODES.map((mode) => <option key={mode}>{mode}</option>)}</select></label>
-        <fieldset className={styles.sizePicker}><legend>Unit limit</legend><div>{SIZES.map((size) => <button className={build.size === size ? styles.selected : ""} type="button" key={size} onClick={() => setUnitLimit(size)}>{size}</button>)}</div></fieldset>
-        <div className={styles.actions}><button type="button" onClick={clearBuild}>Clear</button><button className={styles.copyButton} type="button" onClick={copyLink}>Copy build link</button><span aria-live="polite">{message}</span></div>
+        <div className={styles.actions}><button type="button" onClick={clearBuild}>Clear</button><button className={styles.copyButton} type="button" onClick={copyLink}>Copy page link</button><span aria-live="polite">{message}</span></div>
       </div>
 
       <div className={styles.workbench}>
         <section className={`${styles.gamePanel} ${styles.boardPanel}`}>
-          <header className={styles.panelHeader}><strong>Board [{filledCount}/{build.size}]</strong><span>4 formation rows · 6 positions per row</span></header>
+          <header className={styles.panelHeader}><strong>Board [{filledCount}]</strong><span>All 24 positions accept units</span></header>
           <div className={styles.boardStage}>
             <div className={styles.boardTopbar}>
               <button className={styles.leaderDock} type="button" onClick={() => setTab("leaders")} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
@@ -366,7 +349,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               </aside>
             </div>
           </div>
-          <footer className={styles.boardFooter}><span>{build.mode}</span><span>{filledCount}/{build.size} units</span><span>{itemCost}G known item cost</span></footer>
+          <footer className={styles.boardFooter}><span>{build.mode}</span><span>{filledCount}/24 positions occupied</span><span>{itemCost}G known item cost</span></footer>
         </section>
 
         <section className={`${styles.gamePanel} ${styles.shopPanel}`}>

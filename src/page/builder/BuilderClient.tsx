@@ -261,6 +261,19 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     setMessage("Company cleared");
   }
 
+  function removeUnit(index: number) {
+    const unitName = unitBySlug.get(build.slots[index]?.unitSlug ?? "")?.name ?? "Unit";
+    updateSlot(index, { unitSlug: "", itemSlugs: [] });
+    setPendingPick(null);
+    setMessage(`${unitName} removed from ${String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS))}${index % BOARD_COLUMNS + 1}`);
+  }
+
+  function removeLeader() {
+    if (!selectedLeader) return;
+    setBuild((current) => ({ ...current, leaderSlug: "" }));
+    setMessage(`${selectedLeader.name} removed from the leader slot`);
+  }
+
   function equipmentFor(slot: BuilderSlot, kind: EquipmentKind) {
     return slot.itemSlugs.map((slug) => itemBySlug.get(slug)).filter((item): item is Item => item !== undefined && itemKind(item) === kind);
   }
@@ -291,11 +304,14 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
           <header className={styles.panelHeader}><strong>Board [{filledCount}]</strong><span>All 24 positions accept units</span></header>
           <div className={styles.boardStage}>
             <div className={styles.boardTopbar}>
-              <button className={styles.leaderDock} type="button" onClick={() => setTab("leaders")} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
-                <span className={styles.dockLabel}>Leader</span>
-                <b>{selectedLeader?.name ?? "+ ASSIGN LEADER"}</b>
-                <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Drag a leader here or open Leaders"}</small>
-              </button>
+              <div className={styles.leaderDock} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
+                <button className={styles.leaderDockMain} type="button" onClick={() => setTab("leaders")}>
+                  <span className={styles.dockLabel}>Leader</span>
+                  <b>{selectedLeader?.name ?? "+ ASSIGN LEADER"}</b>
+                  <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Drag a leader here or open Leaders"}</small>
+                </button>
+                {selectedLeader && <button className={styles.removeLeaderButton} type="button" onClick={removeLeader} aria-label={`Remove ${selectedLeader.name} as leader`} title="Remove leader">×</button>}
+              </div>
               <div className={styles.boardLegend}><span><i /> Empty position</span><span><i /> Occupied card</span><strong>Drag a card to any cell</strong></div>
             </div>
             <div className={styles.formationLayout}>
@@ -324,6 +340,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                   onDragLeave={() => setDropTarget((current) => current === index ? null : current)}
                   onDrop={(event) => handleBoardDrop(index, event)}
                 >
+                  {unit && <button className={styles.removeUnitButton} type="button" draggable={false} onClick={(event) => { event.stopPropagation(); removeUnit(index); }} aria-label={`Remove ${unit.name} from ${String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS))}${index % BOARD_COLUMNS + 1}`} title="Remove unit">×</button>}
                   <button className={styles.boardSlotMain} type="button" onClick={() => handleBoardClick(index)}>
                     <span className={styles.slotNumber}>{String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS))}{index % BOARD_COLUMNS + 1}</span>
                     {unit ? <>
@@ -333,9 +350,9 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                     </> : <><span className={styles.emptyCell}>+</span><b className={styles.emptyText}>{pendingPick ? "PLACE HERE" : "OPEN"}</b></>}
                   </button>
                   {unit && <div className={styles.loadoutDock}>
-                    <div><label>Gear {usage.gear}/{unit.gear ?? "?"}</label><span className={styles.itemSlots}>{gearItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} title={`Drag to transfer or click to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(1, (unit.gear ?? 2) - gearItems.length) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
-                    <div><label>Trinkets {usage.trinkets}/{unit.trinkets ?? "?"}</label><span className={styles.itemSlots}>{trinketItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} title={`Drag to transfer or click to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(1, (unit.trinkets ?? 1) - trinketItems.length) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
-                    {consumables.length > 0 && <div className={styles.consumables}><label>Use</label><span className={styles.itemSlots}>{consumables.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })}><Image src={item.image} alt="" width={24} height={24} /></button>)}</span></div>}
+                    <div><label>Gear {usage.gear}/{unit.gear ?? "?"}</label><span className={styles.itemSlots}>{gearItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(1, (unit.gear ?? 2) - gearItems.length) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
+                    <div><label>Trinkets {usage.trinkets}/{unit.trinkets ?? "?"}</label><span className={styles.itemSlots}>{trinketItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(1, (unit.trinkets ?? 1) - trinketItems.length) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
+                    {consumables.length > 0 && <div className={styles.consumables}><label>Use</label><span className={styles.itemSlots}>{consumables.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); writeDrag(event, { kind: "item", slug: item.slug, from: index }); }} onClick={() => updateSlot(index, { ...slot, itemSlugs: slot.itemSlugs.filter((slug) => slug !== item.slug) })} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} /></button>)}</span></div>}
                     {warning && <strong className={styles.slotWarning}>SLOT LIMIT EXCEEDED</strong>}
                   </div>}
                 </article>;
@@ -409,7 +426,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </aside>
       </div>
 
-      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Desktop: drag units into any Board cell, drag equipment onto a unit, and drag occupied cells to swap them. Use the arrow beside a row to shift all six positions right. Touch or keyboard: select a record, then select its destination. Click equipped items to remove them.</p><p>Verified cards use official public v0.301 examples. The Builder does not claim availability, legality, or strength.</p></aside></div>
+      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Desktop: drag units into any Board cell, drag equipment onto a unit, and drag occupied cells to swap them. Use × to remove a unit, leader, or equipped item. Use the arrow beside a row to shift all six positions right. Touch or keyboard: select a record, then select its destination.</p><p>Verified cards use official public v0.301 examples. The Builder does not claim availability, legality, or strength.</p></aside></div>
     </section>
   );
 }

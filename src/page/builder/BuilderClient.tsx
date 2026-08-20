@@ -135,7 +135,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const [message, setMessage] = useState("Drag a unit into the board");
   const [pendingPick, setPendingPick] = useState<PendingPick>(null);
   const [dropTarget, setDropTarget] = useState<number | null>(null);
-  const [inspectSlug, setInspectSlug] = useState(roster.find((unit) => unit.verified)?.slug ?? roster[0]?.slug ?? "");
+  const [hoveredSlot, setHoveredSlot] = useState<number | null>(null);
 
   const unitBySlug = useMemo(() => new Map(roster.map((unit) => [unit.slug, unit])), [roster]);
   const itemBySlug = useMemo(() => new Map(items.map((item) => [item.slug, item])), [items]);
@@ -148,14 +148,12 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       const saved = !imported ? decodeBuild(window.localStorage.getItem(STORAGE_KEY) ?? "") : null;
       const next = imported ?? saved ?? emptyBuild();
       setBuild(next);
-      const firstUnit = next.slots.find((slot) => unitBySlug.has(slot.unitSlug));
-      if (firstUnit) setInspectSlug(firstUnit.unitSlug);
       if (window.location.hash || window.location.search) window.history.replaceState(null, "", window.location.pathname);
       setReady(true);
       setMessage(imported ? "Company imported and saved on this device" : saved ? "Local company restored" : "Drag a unit into the board");
     }, 0);
     return () => window.clearTimeout(restore);
-  }, [unitBySlug]);
+  }, []);
 
   useEffect(() => {
     if (!ready) return;
@@ -166,9 +164,8 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const selectedLeader = leaderBySlug.get(build.leaderSlug);
   const selectedSlots = build.slots;
   const filledCount = selectedSlots.filter((slot) => slot.unitSlug).length;
-  const inspectedUnit = unitBySlug.get(inspectSlug) ?? unitBySlug.get(build.slots[activeSlot]?.unitSlug ?? "");
-  const activeUnit = unitBySlug.get(build.slots[activeSlot]?.unitSlug ?? "");
-  const activeCellLabel = `${String.fromCharCode(65 + Math.floor(activeSlot / BOARD_COLUMNS))}${activeSlot % BOARD_COLUMNS + 1}`;
+  const hoveredUnit = hoveredSlot === null ? undefined : unitBySlug.get(build.slots[hoveredSlot]?.unitSlug ?? "");
+  const hoveredCellLabel = hoveredSlot === null ? "" : `${String.fromCharCode(65 + Math.floor(hoveredSlot / BOARD_COLUMNS))}${hoveredSlot % BOARD_COLUMNS + 1}`;
   const itemCost = selectedSlots.reduce((total, slot) => total + slot.itemSlugs.reduce((sum, slug) => sum + (itemBySlug.get(slug)?.cost ?? 0), 0), 0);
   const queryText = query.trim().toLowerCase();
   const filteredUnits = roster.filter((unit) => (faction === "all" || unit.factionSlug === faction) && (!queryText || `${unit.name} ${unit.faction} ${unit.trait ?? ""}`.toLowerCase().includes(queryText)));
@@ -183,7 +180,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     if (index < 0 || index >= BOARD_CELLS) return;
     updateSlot(index, { unitSlug: slug, itemSlugs: [] });
     setActiveSlot(index);
-    setInspectSlug(slug);
+    setHoveredSlot(index);
     setPendingPick(null);
     setMessage(`${unitBySlug.get(slug)?.name ?? "Unit"} placed in board slot ${index + 1}`);
   }
@@ -200,6 +197,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       return { ...current, slots };
     });
     setActiveSlot(index);
+    setHoveredSlot(index);
     setPendingPick(null);
     setMessage(`${itemBySlug.get(slug)?.name ?? "Item"} equipped on slot ${index + 1}`);
   }
@@ -212,6 +210,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       return { ...current, slots };
     });
     setActiveSlot(to);
+    setHoveredSlot(to);
     setMessage(`Board slots ${from + 1} and ${to + 1} swapped`);
   }
 
@@ -221,7 +220,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     if (pendingPick?.kind === "item") return equipItem(index, pendingPick.slug);
     setActiveSlot(index);
     const unit = unitBySlug.get(build.slots[index].unitSlug);
-    if (unit) setInspectSlug(unit.slug);
+    setHoveredSlot(unit ? index : null);
     setMessage(unit ? `${unit.name} selected · drag equipment here` : `Slot ${index + 1} selected · choose or drag a unit`);
   }
 
@@ -264,6 +263,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   function removeUnit(index: number) {
     const unitName = unitBySlug.get(build.slots[index]?.unitSlug ?? "")?.name ?? "Unit";
     updateSlot(index, { unitSlug: "", itemSlugs: [] });
+    setHoveredSlot((current) => current === index ? null : current);
     setPendingPick(null);
     setMessage(`${unitName} removed from ${String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS))}${index % BOARD_COLUMNS + 1}`);
   }
@@ -336,8 +336,11 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                   key={index}
                   draggable={Boolean(unit)}
                   onDragStart={(event) => unit && writeDrag(event, { kind: "slot", from: index })}
+                  onMouseEnter={() => { if (unit) setHoveredSlot(index); }}
                   onDragOver={(event) => { event.preventDefault(); setDropTarget(index); }}
-                  onDragLeave={() => setDropTarget((current) => current === index ? null : current)}
+                  onMouseLeave={() => { setDropTarget((current) => current === index ? null : current); setHoveredSlot((current) => current === index ? null : current); }}
+                  onFocusCapture={() => { if (unit) setHoveredSlot(index); }}
+                  onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setHoveredSlot((current) => current === index ? null : current); }}
                   onDrop={(event) => handleBoardDrop(index, event)}
                 >
                   {unit && <button className={styles.removeUnitButton} type="button" draggable={false} onClick={(event) => { event.stopPropagation(); removeUnit(index); }} aria-label={`Remove ${unit.name} from ${String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS))}${index % BOARD_COLUMNS + 1}`} title="Remove unit">×</button>}
@@ -365,6 +368,24 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                 })}
               </aside>
             </div>
+            {hoveredUnit && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
+              <header className={styles.panelHeader}><strong>Inspect · {hoveredCellLabel}</strong><span>Hover detail</span></header>
+              <div className={styles.inspectCard}>
+                <header><small>{hoveredUnit.faction}</small><h2>{hoveredUnit.name}</h2><span>{hoveredUnit.verified ? "PUBLIC CARD · v0.301" : "ROSTER RECORD"}</span></header>
+                <div className={styles.inspectStage}>
+                  <div className={styles.slotPreview}><small>GEAR: {hoveredUnit.gear ?? "?"}</small><span>{Array.from({ length: hoveredUnit.gear ?? 2 }, (_, index) => <i key={index} />)}</span></div>
+                  <UnitSprite src={hoveredUnit.image} color="#eeeeee" large />
+                  <div className={styles.slotPreview}><small>TRINKETS: {hoveredUnit.trinkets ?? "?"}</small><span>{Array.from({ length: hoveredUnit.trinkets ?? 1 }, (_, index) => <i key={index} />)}</span></div>
+                </div>
+                {hoveredUnit.stats ? <>
+                  <div className={styles.resources}><ResourceBar label="ES" value={hoveredUnit.stats.es} suffix="+0/s" maximum={45} /><ResourceBar label="HP" value={hoveredUnit.stats.hp} suffix={hoveredUnit.recovery} maximum={40} /><ResourceBar label="MP" value={hoveredUnit.stats.mp} suffix={hoveredUnit.manaRegen} maximum={35} /></div>
+                  <div className={styles.attributes}><div><span>STR</span><b>{hoveredUnit.stats.str}</b></div><div><span>AGI</span><b>{hoveredUnit.stats.agi}</b></div><div><span>INT</span><b>{hoveredUnit.stats.int}</b></div></div>
+                  <div className={styles.combatStats}><span><b>ATK</b>{hoveredUnit.stats.atk}</span><span><b>CRT</b>{hoveredUnit.stats.crt}%</span><span><b>RNG</b>{hoveredUnit.stats.rng}</span><span><b>SPD</b>{hoveredUnit.stats.spd > 0 ? "+" : ""}{hoveredUnit.stats.spd}%</span><span><b>AR</b>{hoveredUnit.stats.ar}</span><span><b>EVA</b>{hoveredUnit.stats.eva}%</span></div>
+                  <section className={styles.inspectText}><h3>Trait</h3><p><strong>{hoveredUnit.trait}</strong> — {hoveredUnit.traitEffect}</p><h3>Skills</h3>{hoveredUnit.skills?.map((skill) => <p key={skill.name}><strong>{skill.name}</strong> — {skill.effect}</p>)}<h3>Tactics</h3><p><strong>{hoveredUnit.tactic}</strong> — {hoveredUnit.tacticEffect}</p></section>
+                  {hoveredUnit.quote && <blockquote>“{hoveredUnit.quote}”</blockquote>}
+                </> : <div className={styles.pendingPanel}><strong>PUBLIC STATS PENDING</strong><p>The official roster confirms this name and artwork, but a complete public card is not available in the verified source layer.</p></div>}
+              </div>
+            </aside>}
           </div>
           <footer className={styles.boardFooter}><span>{build.mode}</span><span>{filledCount}/24 positions occupied</span><span>{itemCost}G known item cost</span></footer>
         </section>
@@ -378,9 +399,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               className={`${styles.archiveUnit} ${pendingPick?.kind === "unit" && pendingPick.slug === unit.slug ? styles.picked : ""}`}
               type="button" key={unit.slug} draggable
               onDragStart={(event) => writeDrag(event, { kind: "unit", slug: unit.slug })}
-              onMouseEnter={() => setInspectSlug(unit.slug)}
-              onFocus={() => setInspectSlug(unit.slug)}
-              onClick={() => { setInspectSlug(unit.slug); setPendingPick({ kind: "unit", slug: unit.slug }); setMessage(`${unit.name} picked up · tap a board cell`); }}
+              onClick={() => { setPendingPick({ kind: "unit", slug: unit.slug }); setMessage(`${unit.name} picked up · tap a board cell`); }}
             >
               <span className={styles.archiveIndex}>{index + 1}</span>
               <UnitSprite src={unit.image} color="#e6e6e6" />
@@ -406,27 +425,9 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
           </div>
         </section>
 
-        <aside className={`${styles.gamePanel} ${styles.inspectPanel}`}>
-          <header className={styles.panelHeader}><strong>Inspect</strong><span>{activeUnit ? `Board ${activeCellLabel}` : "Archive record"}</span></header>
-          {inspectedUnit ? <div className={styles.inspectCard}>
-            <header><small>{inspectedUnit.faction}</small><h2>{inspectedUnit.name}</h2><span>{inspectedUnit.verified ? "PUBLIC CARD · v0.301" : "ROSTER RECORD"}</span></header>
-            <div className={styles.inspectStage}>
-              <div className={styles.slotPreview}><small>GEAR: {inspectedUnit.gear ?? "?"}</small><span>{Array.from({ length: inspectedUnit.gear ?? 2 }, (_, index) => <i key={index} />)}</span></div>
-              <UnitSprite src={inspectedUnit.image} color="#eeeeee" large />
-              <div className={styles.slotPreview}><small>TRINKETS: {inspectedUnit.trinkets ?? "?"}</small><span>{Array.from({ length: inspectedUnit.trinkets ?? 1 }, (_, index) => <i key={index} />)}</span></div>
-            </div>
-            {inspectedUnit.stats ? <>
-              <div className={styles.resources}><ResourceBar label="ES" value={inspectedUnit.stats.es} suffix="+0/s" maximum={45} /><ResourceBar label="HP" value={inspectedUnit.stats.hp} suffix={inspectedUnit.recovery} maximum={40} /><ResourceBar label="MP" value={inspectedUnit.stats.mp} suffix={inspectedUnit.manaRegen} maximum={35} /></div>
-              <div className={styles.attributes}><div><span>STR</span><b>{inspectedUnit.stats.str}</b></div><div><span>AGI</span><b>{inspectedUnit.stats.agi}</b></div><div><span>INT</span><b>{inspectedUnit.stats.int}</b></div></div>
-              <div className={styles.combatStats}><span><b>ATK</b>{inspectedUnit.stats.atk}</span><span><b>CRT</b>{inspectedUnit.stats.crt}%</span><span><b>RNG</b>{inspectedUnit.stats.rng}</span><span><b>SPD</b>{inspectedUnit.stats.spd > 0 ? "+" : ""}{inspectedUnit.stats.spd}%</span><span><b>AR</b>{inspectedUnit.stats.ar}</span><span><b>EVA</b>{inspectedUnit.stats.eva}%</span></div>
-              <section className={styles.inspectText}><h3>Trait</h3><p><strong>{inspectedUnit.trait}</strong> — {inspectedUnit.traitEffect}</p><h3>Skills</h3>{inspectedUnit.skills?.map((skill) => <p key={skill.name}><strong>{skill.name}</strong> — {skill.effect}</p>)}<h3>Tactics</h3><p><strong>{inspectedUnit.tactic}</strong> — {inspectedUnit.tacticEffect}</p></section>
-              {inspectedUnit.quote && <blockquote>“{inspectedUnit.quote}”</blockquote>}
-            </> : <div className={styles.pendingPanel}><strong>PUBLIC STATS PENDING</strong><p>The official roster confirms this name and artwork, but a complete public card is not available in the verified source layer.</p></div>}
-          </div> : <div className={styles.pendingPanel}><strong>NO UNIT SELECTED</strong><p>Hover a unit record or select a board slot to inspect it.</p></div>}
-        </aside>
       </div>
 
-      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Desktop: drag units into any Board cell, drag equipment onto a unit, and drag occupied cells to swap them. Use × to remove a unit, leader, or equipped item. Use the arrow beside a row to shift all six positions right. Touch or keyboard: select a record, then select its destination.</p><p>Verified cards use official public v0.301 examples. The Builder does not claim availability, legality, or strength.</p></aside></div>
+      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Hover, focus, or tap a placed unit to inspect its detailed card. Drag units into any Board cell, drag equipment onto a unit, and drag occupied cells to swap them. Use × to remove a unit, leader, or equipped item. Use the arrow beside a row to shift all six positions right.</p><p>Verified cards use official public v0.301 examples. The Builder does not claim availability, legality, or strength.</p></aside></div>
     </section>
   );
 }

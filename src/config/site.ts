@@ -21,6 +21,7 @@ export const primaryNavigation = [
   { href: "/", label: "Home" },
   { href: "/wiki", label: "Wiki" },
   { href: "/guides", label: "Guides" },
+  { href: "/builder", label: "Builder" },
   { href: "/builds", label: "Builds" },
   { href: "/tier-list", label: "Tier List" },
   { href: "/updates", label: "Updates" },

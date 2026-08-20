@@ -37,7 +37,7 @@ export default function HomePage() {
           <h1>Goodly Trials <span>Wiki</span></h1>
           <p className={styles.lede}>An independent archive of public unit cards, items, leaders, mechanics, patch context, and clearly labeled editorial guides.</p>
           <p className={styles.accessStatus}>Current access: invite-only browser beta · Steam: Coming soon</p>
-          <div className={styles.heroActions}><Link className="button button-primary" href="/wiki">Explore Wiki</Link><Link className="button button-ghost" href="/guides/beginners-guide">Beginner&apos;s Guide</Link></div>
+          <div className={styles.heroActions}><Link className="button button-primary" href="/builder">Build a Company</Link><Link className="button button-ghost" href="/wiki">Explore Wiki</Link><Link className="button button-ghost" href="/guides/beginners-guide">Beginner&apos;s Guide</Link></div>
           <dl className={styles.heroFacts}>
             <div><dt>{units.length}</dt><dd>public unit cards</dd></div><div><dt>{leaders.length}</dt><dd>featured leaders</dd></div><div><dt>{items.length}</dt><dd>public item examples</dd></div><div><dt>{siteConfig.currentVersion}</dt><dd>verified patch</dd></div>
           </dl>

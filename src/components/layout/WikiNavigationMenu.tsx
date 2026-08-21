@@ -21,7 +21,7 @@ export default function WikiNavigationMenu({ links }: { links: readonly WikiLink
   }, []);
 
   return <div className={styles.wikiMenu} ref={menuRef} onMouseLeave={() => setOpen(false)}>
-    <button type="button" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen((current) => !current)}>Wiki</button>
+    <button type="button" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen((current) => !current)}>Wiki<span className={styles.wikiMenuArrow} aria-hidden="true">▾</span></button>
     {open && <div role="menu" aria-label="Wiki navigation">{links.map((link) => <Link role="menuitem" key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}</Link>)}</div>}
   </div>;
 }

@@ -28,6 +28,7 @@ export const primaryNavigation = [
 ] as const;
 
 export const wikiNavigation = [
+  { href: "/wiki/list", label: "Wiki List" },
   { href: "/wiki/units", label: "Units" },
   { href: "/wiki/items", label: "Items" },
   { href: "/wiki/leaders", label: "Leaders" },

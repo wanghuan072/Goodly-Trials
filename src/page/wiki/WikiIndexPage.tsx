@@ -61,6 +61,7 @@ export default function WikiIndexPage() {
         <aside className={styles.archiveNav} aria-label="Wiki categories">
           <p className={styles.navLabel}>Archive index</p>
           <Link className={styles.activeNav} href="/wiki"><span>⌂</span> Overview</Link>
+          <Link href="/wiki/list"><span>☷</span> Wiki list<small>All verified records</small></Link>
           {archiveSections.map((section) => <Link href={section.href} key={section.href}><span>{section.icon}</span>{section.title}<small>{section.count}</small></Link>)}
           <div className={styles.navDivider} />
           <p className={styles.navLabel}>Player tools</p>
@@ -73,7 +74,7 @@ export default function WikiIndexPage() {
           <div className={styles.archiveStatus}>
             <span>LIVE</span>
             <p><b>{siteConfig.currentVersion} public reference</b><br />Last checked {siteConfig.lastVerified}. Counts describe the auditable sample, not an assumed full game database.</p>
-            <Link href="/about">Source policy →</Link>
+            <Link href="/wiki/list">All records →</Link>
           </div>
 
           <form className={styles.search} action="/search" role="search">

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { primaryNavigation, wikiNavigation } from "@/config/site";
+import WikiNavigationMenu from "@/components/layout/WikiNavigationMenu";
 import styles from "@/style/layout/app-header.module.css";
 
 function SearchForm() {
@@ -22,12 +23,7 @@ export default function AppHeader() {
           <span><b>Goodly<br />Trials</b><small>Wiki</small></span>
         </Link>
         <nav className={styles.desktopNav} aria-label="Primary navigation">
-          {primaryNavigation.map((item) => item.label === "Wiki" ? (
-            <details className={styles.wikiMenu} key={item.href}>
-              <summary>Wiki</summary>
-              <div>{wikiNavigation.map((link) => <Link key={link.href} href={link.href}>{link.label}</Link>)}</div>
-            </details>
-          ) : <Link key={item.href} href={item.href}>{item.label}</Link>)}
+          {primaryNavigation.map((item) => item.label === "Wiki" ? <WikiNavigationMenu key={item.href} links={wikiNavigation} /> : <Link key={item.href} href={item.href}>{item.label}</Link>)}
         </nav>
         <div className={styles.desktopSearch}><SearchForm /></div>
         <details className={styles.mobileMenu}>

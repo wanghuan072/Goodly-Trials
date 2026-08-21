@@ -6,11 +6,11 @@
 .brand b { color: var(--parchment); font-family: var(--font-display); font-size: 1.08rem; letter-spacing: .06em; line-height: .82; text-transform: uppercase; }
 .brand small { margin-top: 5px; color: var(--gold); font-size: .55rem; letter-spacing: .24em; text-align: center; text-transform: uppercase; }
 .desktopNav { display: flex; align-items: center; gap: 24px; }
-.desktopNav > a, .wikiMenu > summary { padding: 21px 0 19px; border-bottom: 2px solid transparent; color: var(--parchment-dark); font-family: var(--font-display); font-size: .82rem; letter-spacing: .07em; cursor: pointer; list-style: none; }
-.desktopNav > a:hover, .wikiMenu > summary:hover { border-color: var(--gold); color: var(--gold-bright); }
+.desktopNav > a, .wikiMenu > button { padding: 21px 0 19px; border: 0; border-bottom: 2px solid transparent; color: var(--parchment-dark); background: transparent; font-family: var(--font-display); font-size: .82rem; letter-spacing: .07em; cursor: pointer; }
+.desktopNav > a:hover, .wikiMenu > button:hover, .wikiMenu > button[aria-expanded="true"] { border-color: var(--gold); color: var(--gold-bright); }
 .wikiMenu { position: relative; }
-.wikiMenu > summary::-webkit-details-marker { display: none; }
-.wikiMenu > summary::after { content: "⌄"; margin-left: 6px; }
+.wikiMenu > button::after { content: "⌄"; margin-left: 6px; }
+.wikiMenu > button[aria-expanded="true"]::after { content: "⌃"; }
 .wikiMenu > div { position: absolute; top: 54px; left: -18px; display: grid; width: 160px; padding: 9px; border: 1px solid var(--border-bronze); background: #0c0906; box-shadow: 0 18px 36px rgba(0,0,0,.65), inset 0 0 0 3px #171008; }
 .wikiMenu > div a { padding: 9px 12px; color: var(--text-muted); }
 .wikiMenu > div a:hover { color: var(--gold-bright); background: #21180f; }

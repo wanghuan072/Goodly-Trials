@@ -17,6 +17,7 @@ export const updates = updatesData as GameUpdate[];
 
 export const getUnit = (slug: string) => units.find((unit) => unit.slug === slug);
 export const getItem = (slug: string) => items.find((item) => item.slug === slug);
+export const getLeader = (slug: string) => leaders.find((leader) => leader.slug === slug);
 export const getFaction = (slug: string) => factions.find((faction) => faction.slug === slug);
 export const getGuide = (slug: string) => guides.find((guide) => guide.slug === slug);
 export const getBuild = (slug: string) => builds.find((build) => build.slug === slug);

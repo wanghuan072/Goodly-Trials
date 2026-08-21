@@ -73,6 +73,10 @@
 .keyStats dd { color: var(--gold-bright) !important; }
 
 .itemHero { display: grid; min-height: 250px; grid-template-columns: 220px 1fr; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, #211810, #0c0a08); box-shadow: inset 0 0 0 3px #080604; }
+.leaderHero { min-height: 250px; padding: 22px; border: 1px solid var(--border-bronze); background: radial-gradient(circle at 86% 16%, rgba(131,93,43,.25), transparent 30%), linear-gradient(135deg, #241a11, #0b0906); box-shadow: inset 0 0 0 3px #080604; }
+.recordKicker { color: var(--gold); font-size: .56rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.leaderHero h1 { margin-top: 8px; font-size: clamp(2rem, 4vw, 3.1rem); text-transform: uppercase; }
+.epithet { margin-top: 3px; color: var(--gold); font-family: var(--font-display); font-size: .85rem; }
 .itemVisual { display: grid; place-items: center; border-right: 1px solid var(--border-soft); background: radial-gradient(circle, #3a2a19, #0d0b08 66%); }
 .itemVisual img { width: 96px; height: 96px; object-fit: contain; image-rendering: pixelated; transform: scale(2); }
 .itemCopy { padding: 28px; }

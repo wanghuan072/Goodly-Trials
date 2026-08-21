@@ -1,1 +1,1 @@
-export { default, metadata } from "@/page/wiki/WikiPage";
+export { default, metadata } from "@/page/wiki/WikiIndexPage";

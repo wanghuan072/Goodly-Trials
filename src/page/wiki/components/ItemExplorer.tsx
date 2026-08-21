@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import ItemCard from "@/components/content/ItemCard";
+import Image from "next/image";
+import Link from "next/link";
 import type { Item } from "@/types/content";
 import styles from "@/style/page/wiki/explorer.module.css";
 
@@ -26,7 +27,13 @@ export default function ItemExplorer({ items }: { items: Item[] }) {
         <label>Sort by<select value={sort} onChange={(event) => setSort(event.target.value)}><option value="name">Name A–Z</option><option value="cost-low">Cost low to high</option><option value="cost-high">Cost high to low</option></select></label>
       </div>
       <p className={styles.resultCount} aria-live="polite">{visibleItems.length} verified item{visibleItems.length === 1 ? "" : "s"}</p>
-      {visibleItems.length ? <div className={styles.itemGrid}>{visibleItems.map((item) => <ItemCard key={item.slug} item={item} />)}</div> : <div className={styles.empty}>No verified items match these filters.</div>}
+      {visibleItems.length ? <div className={styles.recordList} aria-label="Verified item records">{visibleItems.map((item) => <Link className={styles.itemRecord} key={item.slug} href={`/wiki/items/${item.slug}`}>
+        <span className={styles.itemArt}><Image src={item.image} alt="" width={54} height={54} unoptimized={item.image.endsWith(".gif")} /></span>
+        <span className={styles.recordTitle}><small>{item.type} · {item.gameVersion}</small><b>{item.name}</b><em>{item.effects.slice(0, 2).join(" · ")}</em></span>
+        <span className={styles.itemRequirement}><small>Requirement</small>{item.requirements ?? "None listed"}</span>
+        <span className={styles.itemCost}><small>Cost</small>{item.cost}G</span>
+        <span className={styles.openRecord}>Open record →</span>
+      </Link>)}</div> : <div className={styles.empty}>No verified items match these filters.</div>}
     </div>
   );
 }

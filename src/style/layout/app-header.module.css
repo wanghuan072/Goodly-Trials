@@ -1,4 +1,4 @@
-.header { position: sticky; z-index: 100; top: 0; border-bottom: 1px solid var(--border-bronze); background: rgba(9,10,9,.96); box-shadow: 0 10px 28px rgba(0,0,0,.56), inset 0 -1px rgba(239,201,120,.07); backdrop-filter: blur(14px); }
+.header { position: sticky; z-index: 100; top: 0; border-bottom: 1px solid var(--border-bronze); background: rgba(3,4,4,.97); box-shadow: 0 10px 28px rgba(0,0,0,.64), inset 0 -1px rgba(241,241,236,.08); backdrop-filter: blur(14px); }
 .inner { display: flex; min-height: 68px; align-items: center; gap: 22px; }
 .brand { display: flex; min-width: 215px; align-items: center; gap: 9px; }
 .brand img { width: 46px; height: 46px; }
@@ -8,14 +8,14 @@
 .desktopNav { display: flex; align-items: center; gap: 25px; }
 .desktopNav > a, .wikiMenuTrigger { position: relative; padding: 23px 0 20px; border-bottom: 2px solid transparent; color: var(--parchment-dark); background: transparent; font-family: var(--font-display); font-size: 13px; font-weight: 600; letter-spacing: .075em; cursor: pointer; text-transform: uppercase; }
 .wikiMenuTrigger { display: inline-flex; align-items: center; gap: 6px; line-height: 1; }
-.desktopNav > a:hover, .wikiMenuTrigger:hover, .wikiMenuTrigger[aria-expanded="true"], .desktopNav > .activeLink, .wikiMenuTrigger.activeLink { border-color: var(--gold-bright); color: #fff0c8; }
+.desktopNav > a:hover, .wikiMenuTrigger:hover, .wikiMenuTrigger[aria-expanded="true"], .desktopNav > .activeLink, .wikiMenuTrigger.activeLink { border-color: var(--accent-red); color: var(--gold-bright); }
 .wikiMenu { position: relative; }
 .wikiMenuArrow { display: block; color: currentColor; font-family: Arial, sans-serif; font-size: 0.875rem; line-height: 1; transform: translateY(1px); }
-.wikiMenu > div { position: absolute; top: 66px; left: -18px; display: grid; width: 220px; padding: 10px; border: 1px solid var(--border-bronze); background: #11100d; box-shadow: 0 22px 46px rgba(0,0,0,.72), inset 0 0 0 3px #080806; }
+.wikiMenu > div { position: absolute; top: 66px; left: -18px; display: grid; width: 220px; padding: 10px; border: 1px solid var(--border-bronze); background: #0c0d0d; box-shadow: 0 22px 46px rgba(0,0,0,.72), inset 0 0 0 3px #030404; }
 .wikiMenu > div a { min-height: 40px; padding: 9px 12px; color: var(--text-muted); font-size: 14px; }
-.wikiMenu > div a:hover { color: var(--gold-bright); background: #211b12; }
+.wikiMenu > div a:hover { color: var(--gold-bright); background: #1a1b1a; box-shadow: inset 3px 0 var(--accent-red); }
 .desktopSearch { margin-left: auto; }
-.search { display: flex; width: 270px; height: 40px; border: 1px solid var(--border-bronze); border-radius: 0; background: #080907; box-shadow: inset 0 0 0 2px #12110e; }
+.search { display: flex; width: 270px; height: 40px; border: 1px solid var(--border-bronze); border-radius: 0; background: #050606; box-shadow: inset 0 0 0 2px #101111; }
 .search input { min-width: 0; flex: 1; border: 0; outline: 0; color: var(--text-main); background: transparent; padding-inline: 12px; font-size: 14px; }
 .search button { width: 40px; border: 0; color: var(--gold); background: transparent; cursor: pointer; font-size: 1.2rem; }
 .mobileMenu { display: none; margin-left: auto; }
@@ -30,12 +30,12 @@
   .brand small { font-size: 0.75rem; }
   .desktopNav { display: none; }
   .mobileMenu { display: block; }
-  .mobileMenuButton { display: grid; width: 44px; height: 44px; place-content: center; gap: 5px; padding: 0; border: 1px solid var(--border-bronze); color: inherit; background: #11100d; }
+  .mobileMenuButton { display: grid; width: 44px; height: 44px; place-content: center; gap: 5px; padding: 0; border: 1px solid var(--border-bronze); color: inherit; background: #101111; }
   .mobileMenuButton span { width: 20px; height: 1px; background: var(--gold-bright); transition: transform .18s ease, opacity .18s ease; }
   .mobileMenuButton[aria-expanded="true"] span:first-child { transform: translateY(6px) rotate(45deg); }
   .mobileMenuButton[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .mobileMenuButton[aria-expanded="true"] span:last-child { transform: translateY(-6px) rotate(-45deg); }
-  .mobileMenu > nav { position: fixed; z-index: 101; top: 68px; right: 0; bottom: auto; left: 0; display: grid; height: calc(100dvh - 68px); align-content: start; overflow: auto; overscroll-behavior: contain; padding: 20px 22px 32px; border-bottom: 1px solid var(--border-bronze); background: linear-gradient(180deg, rgba(18,16,12,.995), rgba(9,10,9,.995)); box-shadow: var(--shadow-deep); }
+  .mobileMenu > nav { position: fixed; z-index: 101; top: 68px; right: 0; bottom: auto; left: 0; display: grid; height: calc(100dvh - 68px); align-content: start; overflow: auto; overscroll-behavior: contain; padding: 20px 22px 32px; border-bottom: 1px solid var(--border-bronze); background: linear-gradient(180deg, rgba(18,19,19,.995), rgba(3,4,4,.995)); box-shadow: var(--shadow-deep); }
   .mobileMenu > nav > a { min-height: 48px; padding: 13px 6px; border-bottom: 1px solid var(--border-soft); color: var(--parchment); font-family: var(--font-display); font-weight: 600; letter-spacing: .04em; }
   .mobileMenu > nav > .activeMobileLink { color: var(--gold-bright); box-shadow: inset 3px 0 var(--accent-red); padding-left: 14px; }
   .mobileWiki { display: grid; grid-template-columns: 1fr 1fr; margin: 10px 0 18px; }

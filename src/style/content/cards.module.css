@@ -5,7 +5,7 @@
   overflow: hidden;
   flex-direction: column;
   border: 1px solid var(--border-bronze);
-  background: linear-gradient(145deg, rgba(34,28,19,.98), rgba(11,10,8,.99));
+  background: linear-gradient(145deg, rgba(24,25,24,.98), rgba(7,8,8,.99));
   box-shadow: var(--frame-inset);
   transition: transform .2s ease, border-color .2s ease;
 }
@@ -17,7 +17,7 @@
   overflow: hidden;
   place-items: end center;
   border-bottom: 1px solid var(--border-soft);
-  background: radial-gradient(circle at 50% 75%, #3a2d1e, #0c0a07 68%);
+  background: radial-gradient(circle at 50% 75%, #2b2d2a, #070808 68%);
 }
 .cardVisual::after {
   position: absolute;
@@ -30,7 +30,7 @@
 }
 .cardGlow { position: absolute; bottom: -40px; width: 180px; height: 120px; opacity: .12; filter: blur(35px); }
 .cardBody { padding: 12px 10px 13px; text-align: center; }
-.eyebrow { color: var(--gold); font-size: 0.75rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+.eyebrow { color: var(--accent-red); font-size: 0.75rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
 .cardBody h3, .itemCard h3 { margin-top: 5px; font-size: 0.95rem; text-transform: uppercase; }
 .statLine { display: flex; justify-content: center; gap: 8px; margin-top: 8px; color: var(--text-muted); font-size: 0.75rem; }
 .statLine b { color: var(--gold-bright); font-size: 0.75rem; }

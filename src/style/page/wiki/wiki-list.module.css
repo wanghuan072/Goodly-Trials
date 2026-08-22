@@ -1,14 +1,14 @@
 .filters { display: grid; grid-template-columns: minmax(240px, .9fr) minmax(0, 1.8fr); gap: 14px; padding: 16px; border: 1px solid var(--border-bronze); background: var(--bg-panel); box-shadow: var(--frame-inset); }
 .filters label, .filters legend { color: var(--gold); font-size: 0.75rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
-.filters input { width: 100%; height: 42px; margin-top: 7px; padding-inline: 11px; border: 1px solid var(--border-bronze); outline: 0; color: var(--text-main); background: #070805; font-size: 15px; }
-.filters input:focus { border-color: var(--gold-bright); box-shadow: 0 0 0 2px rgba(215,164,77,.12); }
+.filters input { width: 100%; height: 42px; margin-top: 7px; padding-inline: 11px; border: 1px solid var(--border-bronze); outline: 0; color: var(--text-main); background: #050606; font-size: 14px; }
+.filters input:focus { border-color: var(--gold-bright); box-shadow: 0 0 0 2px rgba(241,241,236,.12); }
 .filters fieldset { display: flex; flex-wrap: wrap; align-content: end; gap: 5px; margin: 0; padding: 0; border: 0; }
 .filters legend { width: 100%; margin-bottom: 6px; }
-.filters button { min-height: 38px; padding: 8px 11px; border: 1px solid var(--border-soft); color: var(--text-muted); background: #15130f; cursor: pointer; font-size: 0.8125rem; }
-.filters button[aria-pressed="true"] { border-color: var(--accent-red); color: var(--gold-bright); background: #1c1210; }
+.filters button { min-height: 38px; padding: 8px 11px; border: 1px solid var(--border-soft); color: var(--text-muted); background: #151616; cursor: pointer; font-size: 0.8125rem; }
+.filters button[aria-pressed="true"] { border-color: var(--accent-red); color: var(--gold-bright); background: #20100f; box-shadow: inset 3px 0 var(--accent-red); }
 .count { margin: 14px 0 8px; color: var(--text-muted); font-size: 0.8125rem; }
 .list { border: 1px solid var(--border-bronze); background: #080808; }
-.row { display: grid; grid-template-columns: 98px minmax(0, 1fr) auto; gap: 16px; align-items: center; min-height: 92px; padding: 14px 16px; border-bottom: 1px solid var(--border-soft); background: linear-gradient(90deg, #15130f, #0a0a08); transition: background .15s ease, box-shadow .15s ease; }
+.row { display: grid; grid-template-columns: 98px minmax(0, 1fr) auto; gap: 16px; align-items: center; min-height: 92px; padding: 14px 16px; border-bottom: 1px solid var(--border-soft); background: linear-gradient(90deg, #151616, #090a0a); transition: background .15s ease, box-shadow .15s ease; }
 .row:last-child { border-bottom: 0; }
 .row:hover { background: linear-gradient(90deg, #1c1c1c, #101010); box-shadow: inset 3px 0 0 var(--accent-red); }
 .kind { justify-self: start; padding: 5px 7px; border: 1px solid var(--border-bronze); color: var(--gold); background: #0a0a0a; font-size: 0.75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
@@ -22,7 +22,7 @@
 .categoryHeader h2 { margin-top: 5px; font-size: clamp(1.35rem, 2.5vw, 1.8rem); }
 .categoryHeader > span { position: absolute; right: 0; bottom: 12px; color: var(--gold-bright); font-size: 0.75rem; }
 .categoryList { border: 1px solid var(--border-bronze); background: #080806; }
-.categoryRow { display: grid; grid-template-columns: 60px minmax(0, 1fr) auto; gap: 16px; align-items: center; min-height: 112px; padding: 16px 18px; border-bottom: 1px solid var(--border-soft); background: linear-gradient(90deg, #15130f, #0a0a08); transition: background .15s ease, box-shadow .15s ease; }
+.categoryRow { display: grid; grid-template-columns: 60px minmax(0, 1fr) auto; gap: 16px; align-items: center; min-height: 112px; padding: 16px 18px; border-bottom: 1px solid var(--border-soft); background: linear-gradient(90deg, #151616, #090a0a); transition: background .15s ease, box-shadow .15s ease; }
 .categoryRow:last-child { border-bottom: 0; }
 .categoryRow:hover { background: linear-gradient(90deg, #1c1c1c, #101010); box-shadow: inset 3px 0 0 var(--accent-red); }
 .categoryRow > span { display: grid; width: 48px; height: 48px; place-items: center; border: 1px solid var(--border-bronze); color: var(--gold); background: #0a0a0a; font-size: 1.35rem; }

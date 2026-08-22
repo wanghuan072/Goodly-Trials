@@ -48,7 +48,7 @@ export type Item = {
   slug: string;
   name: string;
   type: string;
-  image?: string;
+  image: string;
   requirements?: string;
   effects: string[];
   cost?: number;

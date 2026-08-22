@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ItemCard from "@/components/content/ItemCard";
-import HeroIntel from "@/components/content/HeroIntel";
+import HeroVideo from "@/page/home/HeroVideo";
 import UnitCard from "@/components/content/UnitCard";
 import UnitSprite from "@/components/content/UnitSprite";
 import {
@@ -10,7 +10,6 @@ import {
   factions,
   guides,
   items,
-  leaders,
   units,
   updates,
 } from "@/lib/data/game-content";
@@ -122,17 +121,7 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <HeroIntel
-            className="hero-intel-home"
-            eyebrow="Archive loadout"
-            title="Plan with the cards in front of you"
-            items={[
-              { value: units.length, label: "Unit cards" },
-              { value: leaders.length, label: "Leader cards" },
-              { value: items.length, label: "Gear records" },
-              { value: factions.length, label: "Factions" },
-            ]}
-          />
+          <HeroVideo />
         </div>
       </section>
 

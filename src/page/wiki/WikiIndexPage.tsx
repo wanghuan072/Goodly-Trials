@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import HeroIntel from "@/components/content/HeroIntel";
 import JsonLd from "@/seo/JsonLd";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import {
@@ -44,7 +45,7 @@ const archiveSections = [
     href: "/wiki/leaders",
     count: `${leaders.length} featured cards`,
     description:
-      "See the leader cards currently shown in the game material, including their starting stats, slots, and traits.",
+      "Compare leader cards by starting stats, equipment slots, and traits.",
     label: "Leaders",
   },
   {
@@ -60,9 +61,9 @@ const archiveSections = [
     icon: "F",
     title: "Factions",
     href: "/wiki/factions",
-    count: `${factions.length} public factions`,
+    count: `${factions.length} factions`,
     description:
-      "See the faction identities, roster names, and the unit cards currently available to inspect.",
+      "See faction identities, roster names, and connected unit cards.",
     label: "Reference",
   },
 ];
@@ -97,8 +98,8 @@ export default function WikiIndexPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/hero-battlefield-v2.webp"
-          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
+          src="/images/game/screenshot-5.webp"
+          alt="Goodly Trials combat log and unit stat interface"
           fill
           sizes="100vw"
           priority
@@ -109,34 +110,15 @@ export default function WikiIndexPage() {
             items={[{ label: "Home", href: "/" }, { label: "Wiki" }]}
           />
           <div className={styles.heroCopy}>
-            <p className={styles.eyebrow}>
-              Player wiki · latest published patch {siteConfig.latestPatchVersion}
-            </p>
+            <p className={styles.eyebrow}>Player wiki · connected game archive</p>
             <h1>The Goodly Trials Archive</h1>
             <p>
               Pick the part of the game you want to check, then open the card,
-              item, leader, trait, or faction page you need. Each page shows
-              whether it contains a full card, a roster name, or a player tip.
+              item, leader, trait, or faction page you need. Move from broad
+              comparisons to the exact record that supports your next choice.
             </p>
           </div>
-          <dl className={styles.heroStats}>
-            <div>
-              <dt>Unit cards</dt>
-              <dd>{units.length}</dd>
-            </div>
-            <div>
-              <dt>Gear examples</dt>
-              <dd>{items.length}</dd>
-            </div>
-            <div>
-              <dt>Leader cards</dt>
-              <dd>{leaders.length}</dd>
-            </div>
-            <div>
-              <dt>Factions</dt>
-              <dd>{factions.length}</dd>
-            </div>
-          </dl>
+          <HeroIntel className="hero-intel-inline" eyebrow="Archive index" title="Open the record you need" items={[{ value: units.length, label: "Units" }, { value: items.length, label: "Gear" }, { value: leaders.length, label: "Leaders" }, { value: factions.length, label: "Factions" }]} />
         </div>
       </section>
 
@@ -167,17 +149,6 @@ export default function WikiIndexPage() {
         </aside>
 
         <div className={styles.archiveContent}>
-          <div className={styles.archiveStatus}>
-            <span>LIVE</span>
-            <p>
-              <b>Latest published patch {siteConfig.latestPatchVersion}</b>
-              <br />
-              Last checked {siteConfig.lastVerified}. Counts show what is
-              currently displayed here, not the game&apos;s complete roster.
-            </p>
-            <span>{archiveSections.length} Wiki sections</span>
-          </div>
-
           <form className={styles.search} action="/search" role="search">
             <label htmlFor="wiki-search">Search the wiki</label>
             <div>

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import { siteConfig } from "@/config/site";
-import { BOARD_RULES_CHECKED, BOARD_RULES_VERSION } from "@/lib/builder/board-rules";
 import { factions, items, leaders, units } from "@/lib/data/game-content";
 import JsonLd from "@/seo/JsonLd";
 import { createMetadata } from "@/seo/metadata";
@@ -123,17 +123,18 @@ export default function BuilderPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/hero-battlefield-v2.webp"
-          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
+          src="/images/game/screenshot-1.webp"
+          alt="Goodly Trials formation board with unit cards and the roster archive"
           fill
           sizes="100vw"
         />
         <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Company Builder" }]} />
-          <p className={styles.eyebrow}>Player planner · board rules last verified for {BOARD_RULES_VERSION}</p>
+          <p className={styles.eyebrow}>Player planner · formation and loadout workspace</p>
           <h1>Company Builder</h1>
           <p>Choose a leader, arrange the units available to you, and try equipment on a game-inspired board before your next run. Your notes stay in this browser so you can keep adjusting the plan.</p>
+          <HeroIntel eyebrow="Builder workflow" title="Assemble the company" items={[{ value: "01", label: "Choose leader" }, { value: "02", label: "Place followers" }, { value: "03", label: "Assign gear" }, { value: "04", label: "Save notes" }]} />
         </div>
       </section>
       <BuilderClient roster={roster} leaders={builderLeaders} items={items} />
@@ -205,7 +206,6 @@ export default function BuilderPage() {
               </li>
             ))}
           </ol>
-          <a className={styles.startLink} href="#company-builder">Return to the Company Builder ↑</a>
         </section>
 
         <section className={styles.guideColumns}>
@@ -223,8 +223,8 @@ export default function BuilderPage() {
           <aside>
             <p className={styles.guideEyebrow}>Important scope</p>
             <h2>What the planner does—and does not verify</h2>
-            <p>Placement limits were last checked against {BOARD_RULES_VERSION} on {BOARD_RULES_CHECKED}. Individual cards keep the version documented on that card, and incomplete cards remain marked as pending.</p>
-            <p>This is an independent planning tool. It does not simulate combat, publish rankings, or prove a company will be legal outside the checks displayed here.</p>
+            <p>The planner checks active cells, follower limits, faction requirements, occupied positions, and known equipment capacity while you work.</p>
+            <p>It organizes a company draft; it does not simulate combat, publish rankings, or predict match results.</p>
           </aside>
         </section>
 

@@ -1,17 +1,28 @@
+import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import { leaders } from "@/lib/data/game-content";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
 export const metadata = createMetadata(
   "Goodly Trials Leaders – Starting Stats, Slots & Traits",
-  "Check the Goodly Trials leader cards currently available, including starting stats, gear slots, trinket slots, and traits.",
+  "Check Goodly Trials leader cards, including starting stats, gear slots, trinket slots, and traits.",
   "/wiki/leaders",
 );
 export default function LeadersPage() {
   return (
     <main>
       <section className={styles.hero}>
+        <Image
+          className={styles.heroImage}
+          src="/images/game/steam-background.webp"
+          alt="Goodly Trials leaders overlooking a dark battlefield"
+          fill
+          preload
+          sizes="100vw"
+        />
+        <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb
             items={[
@@ -20,28 +31,26 @@ export default function LeadersPage() {
               { label: "Leaders" },
             ]}
           />
-          <p className={styles.eyebrow}>
-            Leader cards currently shown · v0.301
-          </p>
+          <p className={styles.eyebrow}>Leader archive · traits and starting cards</p>
           <h1>Company Leaders</h1>
           <p>
-            Check the leader cards currently available here, then open one for
+            Compare leader cards, then open one for
             starting stats, gear and trinket slots, and the trait text shown on
             the card.
           </p>
+          <HeroIntel
+            eyebrow="Command desk"
+            title="Choose a leader"
+            items={[
+              { label: "Leader cards", value: leaders.length },
+              { label: "Compare", value: "Stats" },
+              { label: "Review", value: "Traits" },
+              { label: "Plan", value: "Slots" },
+            ]}
+          />
         </div>
       </section>
       <section className="container section">
-        <div className={styles.quickAnswer}>
-          <b>
-            What this page currently shows
-          </b>
-          <p>
-            These featured cards were last shown in v0.301 material. Each detail
-            page keeps that card version visible rather than presenting it as a
-            confirmed v0.303 loadout.
-          </p>
-        </div>
         <div className={styles.portalGrid}>
           {leaders.map((leader) => (
             <Link
@@ -78,12 +87,10 @@ export default function LeadersPage() {
           ))}
         </div>
         <section className={styles.sectionBlock}>
-          <h2>Other leader names</h2>
+          <h2>More leaders to meet</h2>
           <p>
             Official progression and patch material also names Pip, Who Trades
-            Toys; Skit, Friendly Skeleton; Rex, The Abused; and Old Man. Their
-            current complete cards are not exposed in the same public homepage
-            set, so their missing stats are not guessed here.
+            Toys; Skit, Friendly Skeleton; Rex, The Abused; and Old Man.
           </p>
           <p>
             See the selected{" "}

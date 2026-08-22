@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import UnitSprite from "@/components/content/UnitSprite";
 import UnitExplorer from "@/page/wiki/components/UnitExplorer";
 import { factions, units } from "@/lib/data/game-content";
@@ -19,8 +20,8 @@ export default function UnitsPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/hero-battlefield-v2.webp"
-          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
+          src="/images/game/screenshot-2.webp"
+          alt="Goodly Trials units assembled across a tactical battlefield"
           fill
           preload
           sizes="100vw"
@@ -37,10 +38,20 @@ export default function UnitsPage() {
           <p className={styles.eyebrow}>Unit cards · stats, traits, and tactics</p>
           <h1>Units &amp; Tactics</h1>
           <p>
-            Compare the cards currently shown here before you buy, equip, or
+            Compare unit cards before you buy, equip, or
             place a unit. Filter by faction, tactic, and core attributes, then
             open a card when you need the full details.
           </p>
+          <HeroIntel
+            eyebrow="Roster desk"
+            title="Choose by role"
+            items={[
+              { label: "Unit cards", value: units.length },
+              { label: "Factions", value: factions.length },
+              { label: "Compare", value: "Stats" },
+              { label: "Plan", value: "Tactics" },
+            ]}
+          />
         </div>
       </section>
       <section className="container section">
@@ -71,11 +82,6 @@ export default function UnitsPage() {
                   <p>Define the rolled advantages that distinguish recruits.</p>
                 </div>
               </div>
-              <p>
-                This list includes the complete cards currently available to
-                inspect. Other roster names stay name-only until their card
-                details are visible in the game material.
-              </p>
             </div>
           </div>
           <aside className={styles.sidebar}>

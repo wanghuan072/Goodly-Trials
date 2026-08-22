@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import ItemExplorer from "@/page/wiki/components/ItemExplorer";
-import { siteConfig } from "@/config/site";
 import { items } from "@/lib/data/game-content";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
@@ -17,13 +17,23 @@ export default function ItemsPage() {
   return (
     <main>
       <section className={styles.hero}>
-        <Image className={styles.heroImage} src="/images/game/hero-battlefield-v2.webp" alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield" fill preload sizes="100vw" />
+        <Image className={styles.heroImage} src="/images/game/screenshot-6.webp" alt="Goodly Trials equipment and item interface" fill preload sizes="100vw" />
         <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Gear" }]} />
-          <p className={styles.eyebrow}>Gear and items · latest patch context {siteConfig.latestPatchVersion}</p>
+          <p className={styles.eyebrow}>Gear archive · costs, requirements, and effects</p>
           <h1>Gear Archive</h1>
           <p>Check what an item costs, which attributes it needs, and where it fits before you spend a shop turn on it. Use the type filters to compare weapons, shields, trinkets, spells, and potions.</p>
+          <HeroIntel
+            eyebrow="Quartermaster"
+            title="Prepare the loadout"
+            items={[
+              { label: "Gear records", value: items.length },
+              { label: "Weapons", value: "Hands" },
+              { label: "Magic", value: "Spells" },
+              { label: "Utility", value: "Trinkets" },
+            ]}
+          />
         </div>
       </section>
       <section className="container section">

@@ -1,7 +1,9 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import EntityLinks from "@/components/content/EntityLinks";
+import HeroIntel from "@/components/content/HeroIntel";
 import JsonLd from "@/seo/JsonLd";
 import { siteConfig } from "@/config/site";
 import type { Guide } from "@/types/content";
@@ -38,7 +40,10 @@ export default function GuideDetailPage({
           mainEntityOfPage: `${siteConfig.url}/guides/${guide.slug}`,
         }}
       />
-      <section className={styles.hero}>
+      <section
+        className={styles.hero}
+        style={{ "--hero-image": `url("${detail.media?.[0]?.src ?? "/images/game/screenshot-7.webp"}")` } as CSSProperties}
+      >
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb
             items={[
@@ -47,11 +52,10 @@ export default function GuideDetailPage({
               { label: guide.title },
             ]}
           />
-          <p className={styles.eyebrow}>
-            {guide.category} · Updated {guide.updated}
-          </p>
+          <p className={styles.eyebrow}>{guide.category} · Player guide</p>
           <h1>{guide.title}</h1>
           <p>{guide.excerpt}</p>
+          <HeroIntel eyebrow="Field notes" title="Use this guide" items={[{ value: detail.sections.length, label: "Sections" }, { value: "Read", label: "Understand" }, { value: "Plan", label: "Adapt" }, { value: "Play", label: "Test" }]} />
         </div>
       </section>
       <section className={`container section ${styles.contentGrid}`}>
@@ -103,12 +107,6 @@ export default function GuideDetailPage({
                 ))}
             </div>
           ))}
-          <h2>Before you use this guide</h2>
-          <p>
-            This guide uses the game rules and cards currently shown for v0.301.
-            The card values are kept separate from player advice, and the guide
-            should be checked again after balance changes.
-          </p>
         </article>
         <aside className={styles.sidebar}>
           <h2>On this page</h2>

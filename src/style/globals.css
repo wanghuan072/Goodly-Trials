@@ -266,6 +266,73 @@ a {
   font-size: var(--text-xs);
   text-transform: uppercase;
 }
+.hero-intel {
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  display: grid;
+  width: min(320px, 30%);
+  overflow: hidden;
+  transform: translateY(-50%);
+  border: 1px solid rgba(241, 241, 236, 0.3);
+  color: var(--text-main);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 5px, rgba(255, 255, 255, 0.024) 5px 6px),
+    rgba(5, 6, 6, 0.88);
+  box-shadow: inset 3px 0 var(--accent-red), inset 0 0 0 3px rgba(0, 0, 0, 0.72);
+}
+.hero-intel header {
+  display: grid;
+  gap: 3px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.hero-intel header span {
+  color: var(--accent-red);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.hero-intel header strong {
+  color: var(--parchment);
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.hero-intel dl {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0;
+}
+.hero-intel dl div {
+  min-width: 0;
+  padding: 11px 13px;
+  border-top: 1px solid var(--border-subtle);
+}
+.hero-intel dl div:nth-child(even) { border-left: 1px solid var(--border-soft); }
+.hero-intel dt {
+  overflow: hidden;
+  color: var(--gold-bright);
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hero-intel dd {
+  margin: 2px 0 0;
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.hero-intel-inline,
+.hero-intel-home {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: min(340px, 100%);
+  justify-self: end;
+  transform: none;
+}
 ::selection {
   color: #fff;
   background: var(--accent-red);
@@ -297,5 +364,15 @@ a {
     align-items: start;
     flex-direction: column;
     gap: 10px;
+  }
+  .hero-intel,
+  .hero-intel-inline,
+  .hero-intel-home {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    margin-top: 18px;
+    transform: none;
   }
 }

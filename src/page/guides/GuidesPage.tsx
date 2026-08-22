@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import { guides } from "@/lib/data/game-content";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
@@ -17,13 +18,23 @@ export default function GuidesPage() {
   return (
     <main>
       <section className={styles.hero}>
-        <Image className={styles.heroImage} src="/images/game/hero-battlefield-v2.webp" alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield" fill preload sizes="100vw" />
+        <Image className={styles.heroImage} src="/images/game/screenshot-7.webp" alt="Goodly Trials party navigating a tactical encounter" fill preload sizes="100vw" />
         <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Guides" }]} />
           <p className={styles.eyebrow}>Player guides · shop, board, and game modes</p>
           <h1>Player Guides</h1>
           <p>Start with the question in front of you: what to buy, where to place a unit, how a mode works, or why a build needs changing. These guides point you back to the relevant cards when the answer depends on the details.</p>
+          <HeroIntel
+            eyebrow="Field manual"
+            title="Learn by objective"
+            items={[
+              { label: "Guides", value: guides.length },
+              { label: "Prepare", value: "Shop" },
+              { label: "Position", value: "Board" },
+              { label: "Master", value: "Modes" },
+            ]}
+          />
         </div>
       </section>
       <section className="container section">

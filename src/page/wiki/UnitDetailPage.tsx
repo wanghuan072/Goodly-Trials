@@ -69,7 +69,6 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
               <div className={styles.badges}>
                 <span>♜ {unit.faction}</span>
                 <span>◈ {unit.tactic.name}</span>
-                <span>Patch {unit.gameVersion}</span>
               </div>
               <p className={styles.summary}>
                 <EntityLinks>{unit.summary}</EntityLinks>
@@ -145,10 +144,6 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
                 </tbody>
               </table>
             </div>
-            <p>
-              Baseline public-card values for {unit.gameVersion}; traits,
-              equipment, leaders, and in-run progression can alter the result.
-            </p>
           </section>
 
           <section className={styles.panel} id="abilities">
@@ -180,7 +175,7 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
                   <p>
                     <EntityLinks>{skill.effect}</EntityLinks>
                   </p>
-                  <small>Verified skill</small>
+                  <small>Unit skill</small>
                 </div>
               ))}
               <div>
@@ -360,10 +355,6 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
             <div>
               <dt>Trinkets</dt>
               <dd>{unit.trinkets ?? "Not listed"}</dd>
-            </div>
-            <div>
-              <dt>Version</dt>
-              <dd>{unit.gameVersion}</dd>
             </div>
           </dl>
           <h3>Key Stats</h3>

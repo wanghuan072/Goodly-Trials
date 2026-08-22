@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import UnitSprite from "@/components/content/UnitSprite";
-import { siteConfig } from "@/config/site";
 import { factions } from "@/lib/data/game-content";
 import { createMetadata } from "@/seo/metadata";
 import archive from "@/style/page/archive/archive.module.css";
@@ -18,13 +18,23 @@ export default function FactionsPage() {
   return (
     <main>
       <section className={archive.hero}>
-        <Image className={archive.heroImage} src="/images/game/hero-battlefield-v2.webp" alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield" fill preload sizes="100vw" />
+        <Image className={archive.heroImage} src="/images/game/screenshot-9.webp" alt="Goodly Trials faction units preparing for battle" fill preload sizes="100vw" />
         <div className={archive.heroShade} />
         <div className={`container ${archive.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Factions" }]} />
-          <p className={archive.eyebrow}>Factions and roster context · latest patch {siteConfig.latestPatchVersion}</p>
+          <p className={archive.eyebrow}>Faction archive · rosters and company identities</p>
           <h1>Factions &amp; Rosters</h1>
-          <p>See how Goodly Folk, Bone Host, and Belowborn differ, which roster names are currently visible, and which units have full cards you can inspect before building a company.</p>
+          <p>See how Goodly Folk, Bone Host, and Belowborn differ, explore their rosters, and inspect the unit cards you need before building a company.</p>
+          <HeroIntel
+            eyebrow="Company registry"
+            title="Know your allegiance"
+            items={[
+              { label: "Factions", value: factions.length },
+              { label: "Browse", value: "Rosters" },
+              { label: "Compare", value: "Playstyle" },
+              { label: "Inspect", value: "Units" },
+            ]}
+          />
         </div>
       </section>
       <section className="container section">
@@ -34,7 +44,7 @@ export default function FactionsPage() {
         <section className={archive.sectionBlock}>
           <h2>How factions shape a company</h2>
           <p>Faction identity is more useful than a simple damage label. Goodly Folk support nearby allies, Bone Host units return or feed on deaths, and Belowborn combine dwarven economy with heavier deep recruits. Open a faction page to see the roster context, then open a unit card when you need stats or tactics.</p>
-          <div className={detail.relatedGrid}>{factions.map((faction) => <Link href={`/wiki/factions/${faction.slug}`} key={faction.slug}><b>{faction.name}</b><span>{faction.roster.length} roster names shown here</span></Link>)}</div>
+          <div className={detail.relatedGrid}>{factions.map((faction) => <Link href={`/wiki/factions/${faction.slug}`} key={faction.slug}><b>{faction.name}</b><span>Explore roster and playstyle</span></Link>)}</div>
         </section>
       </section>
     </main>

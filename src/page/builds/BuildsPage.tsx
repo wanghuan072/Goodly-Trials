@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import UnitSprite from "@/components/content/UnitSprite";
 import EntityLinks from "@/components/content/EntityLinks";
 import { siteConfig } from "@/config/site";
@@ -8,7 +9,6 @@ import {
   activeBoardCells,
   BOARD_CELLS,
   BOARD_COLUMNS,
-  BOARD_RULES_VERSION,
 } from "@/lib/builder/board-rules";
 import { builds, items, leaders, units } from "@/lib/data/game-content";
 import JsonLd from "@/seo/JsonLd";
@@ -238,9 +238,7 @@ function BuildCard({ build }: { build: Build }) {
         <p>
           <strong>Planning note:</strong>{" "}
           <EntityLinks>{build.planningNote}</EntityLinks>
-          <span>
-            {build.version} · player build · check against the live game
-          </span>
+          <span>Editable company preset</span>
         </p>
         <div>
           <small>
@@ -275,8 +273,8 @@ export default function BuildsPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/hero-battlefield-v2.webp"
-          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
+          src="/images/game/screenshot-8.webp"
+          alt="Goodly Trials reward and company progression screen"
           fill
           preload
           sizes="100vw"
@@ -287,20 +285,15 @@ export default function BuildsPage() {
             <Breadcrumb
               items={[{ label: "Home", href: "/" }, { label: "Builds" }]}
             />
-            <p className={styles.eyebrow}>
-              Editable starting ideas · board rules last verified for {BOARD_RULES_VERSION}
-            </p>
+            <p className={styles.eyebrow}>Editable starting ideas · formation library</p>
             <h1>Company Builds</h1>
             <p>
               Start with a complete formation instead of a loose unit idea. Each
               build shows a board, roster, gear goals, strengths, and trade-offs,
               then opens in the Builder so you can change it for your own run.
             </p>
-            <div className={styles.heroActions}>
-              <a href="#team-builds">Browse {builds.length} presets</a>
-              <Link href="/builder">Start an empty company</Link>
-            </div>
           </div>
+          <HeroIntel className="hero-intel-inline" eyebrow="Build anatomy" title="Start complete, then revise" items={[{ value: "L", label: "Leader" }, { value: "6×6", label: "Formation" }, { value: "G", label: "Gear plan" }, { value: "↻", label: "Editable" }]} />
         </div>
       </section>
 
@@ -345,8 +338,7 @@ export default function BuildsPage() {
       <aside className={`container ${styles.disclosure}`}>
         <strong>How to use these builds</strong>
         <p>
-          Placement limits use the Builder&apos;s rules last verified for {BOARD_RULES_VERSION}. Unit and gear cards
-          keep the game version shown on their own pages. Strengths and
+          Each preset can be opened in the Builder and changed freely. Strengths and
           weaknesses explain the idea behind each setup; no build promises a win,
           a shop roll, or a combat result.
         </p>

@@ -1,5 +1,7 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import { siteConfig } from "@/config/site";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
@@ -13,12 +15,13 @@ export const metadata = createMetadata(
 export default function AboutPage() {
   return (
     <main>
-      <section className={styles.hero}>
+      <section className={styles.hero} style={{ "--hero-image": 'url("/images/game/steam-header.webp")' } as CSSProperties}>
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About" }]} />
           <p className={styles.eyebrow}>About this player guide</p>
           <h1>About Goodly Trials Wiki</h1>
           <p>This is a fan-made site for checking game cards, planning formations, and keeping up with changes that can affect a run.</p>
+          <HeroIntel eyebrow="Player resource" title="Built around decisions" items={[{ value: "Wiki", label: "Compare cards" }, { value: "Builder", label: "Plan a company" }, { value: "Guides", label: "Learn systems" }, { value: "Updates", label: "Track changes" }]} />
         </div>
       </section>
       <section className={`container section ${styles.prose}`}>
@@ -28,14 +31,11 @@ export default function AboutPage() {
         </div>
 
         <h2>What you can use this site for</h2>
-        <p>Use the Wiki to inspect unit, gear, leader, trait, and faction information that is currently available. Use Guides to understand a game decision, Builds to begin with an editable idea, and the Builder to lay out a company before you play.</p>
+        <p>Use the Wiki to inspect units, gear, leaders, traits, and factions. Use Guides to understand a game decision, Builds to begin with an editable idea, and the Builder to lay out a company before you play.</p>
 
         <h2>How game details are handled</h2>
-        <p>Numbers, card text, names, and patch changes are shown with the game version or check date available to the site. When a public card is incomplete, the page says so instead of filling the gap with guessed stats, abilities, or unlocks.</p>
+        <p>Numbers, card text, names, and patch changes are organized around the decisions players make: what to recruit, what to equip, where to place a unit, and how to adjust a company.</p>
         <p>Builds and formation notes are player suggestions. They are useful for comparing a plan with the cards on the board, but they are not official recommendations and cannot predict a match result.</p>
-
-        <h2>Keeping pages current</h2>
-        <p>The latest published patch listed here is {siteConfig.latestPatchVersion}, checked on {siteConfig.lastVerified}. Unit cards, gear cards, and board rules keep their own documented version, because a later patch number does not prove every individual record changed. Check the version shown beside the detail you are using before relying on an older note.</p>
 
         <h2>Official game links</h2>
         <p><a href={siteConfig.officialUrl} target="_blank" rel="noreferrer">Goodly Trials website ↗</a><br /><a href={siteConfig.playUrl} target="_blank" rel="noreferrer">Goodly Trials play portal ↗</a><br /><a href={siteConfig.steamUrl} target="_blank" rel="noreferrer">Goodly Trials on Steam ↗</a><br /><a href={siteConfig.patchNotesUrl} target="_blank" rel="noreferrer">Official patch notes ↗</a></p>

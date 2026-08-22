@@ -1,10 +1,10 @@
 .page { padding-bottom: 34px; }
-.hero { position: relative; min-height: 0; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: #050505; }
+.hero { position: relative; min-height: 320px; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: #050505; }
 .heroImage { object-fit: cover; object-position: center; filter: brightness(.8) contrast(1.08) saturate(.72); image-rendering: pixelated; }
 .heroShade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,5,5,.7), rgba(5,5,5,.28) 55%, rgba(5,5,5,.22)); }
-.heroContent { position: relative; z-index: 1; display: flex; min-height: 210px; align-items: flex-start; flex-direction: column; justify-content: center; width: 100%; padding: 22px 24px; border-left: 3px solid var(--accent-red); background: linear-gradient(90deg, rgba(3,4,4,.58), transparent 66%); }
-.heroContent h1 { color: var(--parchment); font-family: var(--font-heading); font-size: clamp(1.45rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
-.heroContent > p:last-child { max-width: 720px; margin-top: 8px; color: var(--text-muted); font-family: var(--font-body); font-size: 14px; line-height: 1.5; }
+.heroContent { position: relative; z-index: 1; display: flex; min-height: 320px; align-items: flex-start; flex-direction: column; justify-content: center; width: 100%; padding: 30px 24px; border-left: 3px solid var(--accent-red); background: linear-gradient(90deg, rgba(3,4,4,.58), transparent 66%); }
+.heroContent h1 { max-width: min(24ch, calc(100% - 360px)); color: var(--parchment); font-family: var(--font-heading); font-size: clamp(2rem, 3.2vw, 2.75rem); font-weight: 700; line-height: 1.04; letter-spacing: .03em; text-transform: uppercase; }
+.heroContent > p:last-of-type { max-width: min(66ch, calc(100% - 360px)); margin-top: 10px; color: var(--text-muted); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
 .eyebrow { margin-bottom: 6px; color: var(--accent-red); font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 
 .builder { --game-bg: #070808; --game-panel: #111212; --game-raised: #1a1b1a; --game-line: #3f413e; --game-line-bright: #696b67; --game-text: #f0f0eb; --game-muted: #a3a59f; --game-red: #c33c35; --game-green: #4f8856; --game-blue: #496f95; display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr); gap: 10px; padding-top: 14px; scroll-margin-top: 86px; font-family: var(--font-display); }
@@ -261,8 +261,6 @@
 .howTo li > span { color: var(--accent-red); font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: .1em; }
 .howTo li h3 { color: var(--parchment); font-size: 1rem; }
 .howTo li p { margin-top: 8px; color: var(--text-muted); font-size: 0.875rem; line-height: 1.7; }
-.startLink { grid-column: 2; justify-self: start; padding-bottom: 3px; border-bottom: 1px solid var(--accent-red); color: var(--gold-bright); font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.startLink:hover, .startLink:focus-visible { border-color: var(--gold-bright); color: var(--parchment); outline: 0; }
 .guideColumns { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 42px; border: 1px solid var(--border-soft); background: var(--border-soft); }
 .guideColumns > div, .guideColumns > aside { padding: 32px; background: #0b0c0c; }
 .guideColumns > aside { background: radial-gradient(circle at 100% 0, rgba(207,70,61,.12), transparent 18rem), #090a0a; }
@@ -302,6 +300,9 @@
 }
 @media (max-width: 768px) {
   .hero, .heroContent { min-height: 0; }
+  .heroContent { padding: 28px 18px; }
+  .heroContent h1 { max-width: 100%; font-size: clamp(2rem, 10vw, 2.6rem); }
+  .heroContent > p:last-of-type { max-width: 100%; }
   .toolbar { grid-template-columns: 1fr; }
   .titleField, .planControls, .toolbarStatus { grid-column: auto; }
   .planControls { padding-top: 8px; padding-left: 0; border-top: 1px solid #393a36; border-left: 0; }
@@ -321,7 +322,6 @@
   .guideIntro, .howTo, .guideColumns { grid-template-columns: 1fr; gap: 22px; }
   .guideIntro > p, .howTo > header > p:last-child { font-size: 0.875rem; }
   .howTo > header { position: static; }
-  .startLink { grid-column: 1; }
   .builderFaq > div { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {

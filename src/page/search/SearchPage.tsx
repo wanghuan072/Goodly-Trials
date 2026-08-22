@@ -1,5 +1,7 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import {
   builds,
   factions,
@@ -80,7 +82,7 @@ export default function SearchPage({ query }: { query: string }) {
     : [];
   return (
     <main>
-      <section className={styles.hero}>
+      <section className={styles.hero} style={{ "--hero-image": 'url("/images/game/steam-background.webp")' } as CSSProperties}>
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb
             items={[{ label: "Home", href: "/" }, { label: "Search" }]}
@@ -91,6 +93,7 @@ export default function SearchPage({ query }: { query: string }) {
             Search the cards, gear, leaders, traits, factions, guides, builds,
             and patch notes collected on this site.
           </p>
+          <HeroIntel eyebrow="Archive search" title="Search across the site" items={[{ value: units.length, label: "Units" }, { value: items.length, label: "Gear" }, { value: guides.length, label: "Guides" }, { value: builds.length, label: "Builds" }]} />
         </div>
       </section>
       <section className="container section">
@@ -142,9 +145,8 @@ export default function SearchPage({ query }: { query: string }) {
           <div className={styles.sectionBlock}>
             <h2>No match yet</h2>
             <p>
-              Try a faction, trait, gear type, stat abbreviation, or patch
-              version. Some roster names are shown without full card details,
-              so a search may not yet return every name mentioned in the game.
+              Try a faction, trait, gear type, stat abbreviation, guide topic,
+              or patch version.
             </p>
           </div>
         )}

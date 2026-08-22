@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
-import { siteConfig } from "@/config/site";
+import HeroIntel from "@/components/content/HeroIntel";
 import { getUnit, traits } from "@/lib/data/game-content";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
@@ -24,6 +25,15 @@ export default function TraitsPage() {
   return (
     <main>
       <section className={styles.hero}>
+        <Image
+          className={styles.heroImage}
+          src="/images/game/screenshot-3.webp"
+          alt="Goodly Trials combat effects and unit traits in action"
+          fill
+          preload
+          sizes="100vw"
+        />
+        <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb
             items={[
@@ -33,7 +43,7 @@ export default function TraitsPage() {
             ]}
           />
           <p className={styles.eyebrow}>
-            Traits on documented unit cards · latest patch {siteConfig.latestPatchVersion}
+            Trait archive · effects, caps, and card context
           </p>
           <h1>Traits &amp; Effects</h1>
           <p>
@@ -41,6 +51,16 @@ export default function TraitsPage() {
             see its listed effect, cap, unit, faction, and tactic without
             opening a separate page that would add no useful detail.
           </p>
+          <HeroIntel
+            eyebrow="Effect ledger"
+            title="Read every modifier"
+            items={[
+              { label: "Traits", value: traits.length },
+              { label: "Compare", value: "Effects" },
+              { label: "Check", value: "Caps" },
+              { label: "Open", value: "Unit card" },
+            ]}
+          />
         </div>
       </section>
       <section className="container section">

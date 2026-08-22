@@ -1,20 +1,15 @@
 .page { padding-bottom: 52px; }
-.hero { position: relative; min-height: 380px; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: #080807; }
+.hero { position: relative; min-height: 320px; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: #080807; }
 .heroImage { object-fit: cover; object-position: center; filter: brightness(.84) contrast(1.08) saturate(.72); image-rendering: pixelated; }
 .heroShade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,4,4,.82) 0%, rgba(5,6,6,.4) 52%, rgba(5,6,6,.22) 100%), linear-gradient(0deg, #030404 0%, transparent 48%); }
-.heroInner { position: relative; z-index: 1; display: grid; width: 100%; min-height: 420px; grid-template-columns: minmax(0, 680px) minmax(260px, 1fr); align-items: center; gap: 32px; padding-block: 32px; }
+.heroInner { position: relative; z-index: 1; display: grid; width: 100%; min-height: 320px; grid-template-columns: minmax(0, 680px) minmax(260px, 1fr); align-items: center; gap: 32px; padding-block: 26px; }
 .heroCopy { min-width: 0; padding: 24px; border-left: 3px solid var(--accent-red); background: linear-gradient(90deg, rgba(3,4,4,.54), transparent); }
 .eyebrow { color: var(--accent-red); font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
-.heroCopy h1, .heroContent h1 { max-width: 16ch; margin-top: 12px; font-size: clamp(2.1rem, 4vw, 3.2rem); text-transform: uppercase; }
+.heroCopy h1, .heroContent h1 { max-width: 24ch; margin-top: 12px; font-size: clamp(2rem, 3.2vw, 2.75rem); line-height: 1.04; text-transform: uppercase; }
 .heroCopy > p:not(.eyebrow), .heroContent > p:not(.eyebrow) { max-width: 62ch; margin-top: 16px; color: var(--text-muted); font-size: 15px; line-height: 1.65; }
 .heroStage { position: relative; min-width: 0; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--gold-bright); background: #080704; box-shadow: var(--shadow-deep), var(--frame-inset); }
 .heroStageImage { object-fit: cover; object-position: center top; }
 .heroStage figcaption { position: absolute; right: 0; bottom: 0; left: 0; z-index: 1; padding: 8px 12px; color: var(--parchment); background: linear-gradient(transparent, rgba(8,6,4,.88)); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-.heroActions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-.heroActions a { min-height: 40px; padding: 10px 16px; border: 1px solid var(--border-bronze); color: var(--parchment-dark); background: rgba(12,13,13,.9); font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-.heroActions a:first-child { border-color: var(--gold-bright); background: #202221; box-shadow: inset 3px 0 var(--accent-red); }
-.heroActions a:hover, .heroActions a:focus-visible { border-color: var(--gold-bright); color: var(--gold-bright); outline: 0; }
-
 .libraryIntro { display: grid; grid-template-columns: minmax(250px, .8fr) minmax(0, 1.2fr); gap: 24px 44px; padding: 42px 0 34px; border-bottom: 1px solid var(--border-soft); }
 .libraryIntro h2 { max-width: 460px; margin-top: 7px; font-size: clamp(1.55rem, 3vw, 2.3rem); }
 .libraryIntro > p { color: var(--text-muted); font-size: 0.875rem; line-height: 1.75; }
@@ -103,7 +98,8 @@
 }
 @media (max-width: 768px) {
   .hero, .heroInner { min-height: 0; }
-  .heroInner { grid-template-columns: 1fr; }
+  .heroInner { grid-template-columns: 1fr; padding-block: 28px; }
+  .heroCopy { padding-inline: 18px; }
   .libraryIntro { grid-template-columns: 1fr; }
   .libraryIntro dl { grid-column: auto; }
   .buildBody { grid-template-columns: 1fr; }
@@ -113,7 +109,7 @@
   .disclosure { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
-  .heroContent h1 { font-size: 2.25rem; }
+  .heroContent h1 { font-size: clamp(2rem, 10vw, 2.6rem); }
   .libraryIntro dl { grid-template-columns: 1fr; }
   .buildHeader { grid-template-columns: 48px minmax(0, 1fr); }
   .buildHeader dl { grid-template-columns: 1fr 1fr; }

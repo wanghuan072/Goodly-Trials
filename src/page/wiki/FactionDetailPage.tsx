@@ -3,7 +3,6 @@ import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import UnitCard from "@/components/content/UnitCard";
 import UnitSprite from "@/components/content/UnitSprite";
-import { siteConfig } from "@/config/site";
 import { builds, factions, units } from "@/lib/data/game-content";
 import type { Faction } from "@/types/content";
 import styles from "@/style/page/wiki/detail.module.css";
@@ -15,7 +14,6 @@ export default function FactionDetailPage({ faction }: { faction: Faction }) {
   const factionBuilds = builds.filter(
     (build) => build.faction === faction.name,
   );
-  const rosterOnly = verifiedUnits.length === 0;
   return (
     <main className={`container ${styles.detailShell}`}>
       <Breadcrumb
@@ -38,9 +36,6 @@ export default function FactionDetailPage({ faction }: { faction: Faction }) {
           <h1>{faction.name}</h1>
           <div className={styles.badges}>
             <span>Faction</span>
-            <span>Latest patch {siteConfig.latestPatchVersion}</span>
-            {rosterOnly && <span>Roster coverage only</span>}
-            <span>Checked {siteConfig.lastVerified}</span>
           </div>
           <p className={styles.summary}>{faction.summary}</p>
           <p className={styles.quote}>{faction.playstyle}</p>
@@ -56,12 +51,8 @@ export default function FactionDetailPage({ faction }: { faction: Faction }) {
             </p>
           </section>
           <section className={styles.panel}>
-            <h2>{rosterOnly ? "Confirmed roster; full cards pending" : "Roster names shown in the game material"}</h2>
-            <p>
-              {rosterOnly
-                ? "The roster names below are confirmed in public game material, but complete public cards for this faction have not been documented. They intentionally remain names rather than empty detail links."
-                : "These names appear in the current game material. A full unit card is linked only when its stats and abilities can be checked."}
-            </p>
+            <h2>Faction roster</h2>
+            <p>Browse the named members of this faction and open a linked unit to inspect its stats, traits, and tactics.</p>
             <div className={styles.relatedGrid}>
               {faction.roster.map((name) => {
                 const unit = units.find((entry) => entry.name === name);
@@ -81,9 +72,8 @@ export default function FactionDetailPage({ faction }: { faction: Faction }) {
                   </Link>
                 ) : (
                   <div className={styles.feature} key={name}>
-                    <small>Confirmed roster name</small>
+                    <small>Roster member</small>
                     <h3>{name}</h3>
-                    <p>Full unit-card details are not publicly documented yet.</p>
                   </div>
                 );
               })}
@@ -104,8 +94,8 @@ export default function FactionDetailPage({ faction }: { faction: Faction }) {
             <section className={`${styles.panel} ${styles.editorial}`}>
               <h2>Build and formation ideas</h2>
               <p>
-                Player ideas, not official rankings. Each build labels the
-                board-rule version used by the Builder.
+                Use these editable starting points to compare roles, spacing,
+                equipment goals, and formation choices.
               </p>
               {factionBuilds.map((build) => (
                 <div key={build.slug}>
@@ -137,10 +127,6 @@ export default function FactionDetailPage({ faction }: { faction: Faction }) {
             <div>
               <dt>Unit cards available</dt>
               <dd>{verifiedUnits.length}</dd>
-            </div>
-            <div>
-              <dt>Coverage</dt>
-              <dd>{rosterOnly ? "Roster only" : "Roster + cards"}</dd>
             </div>
           </dl>
           {verifiedUnits.length > 0 && <><h3>Units in this faction</h3>

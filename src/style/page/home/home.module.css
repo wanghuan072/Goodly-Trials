@@ -58,7 +58,7 @@
 }
 .hero h1 {
   max-width: none;
-  font-size: clamp(2.7rem, 4.7vw, 4rem);
+  font-size: clamp(2.35rem, 3.55vw, 3rem);
   line-height: .94;
   text-transform: uppercase;
   text-shadow: 0 4px 24px rgba(0,0,0,.86);
@@ -76,29 +76,7 @@
   font-size: 1rem;
   line-height: 1.65;
 }
-.accessStatus {
-  margin-top: 10px;
-  padding: 6px 9px;
-  border: 1px solid rgba(196,42,34,.45);
-  color: var(--gold-bright);
-  background: rgba(5,5,5,.74);
-  font-size: 0.75rem;
-  letter-spacing: .05em;
-  text-transform: uppercase;
-}
 .heroActions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-.heroFacts {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-top: 18px;
-  border: 1px solid rgba(241,241,236,.22);
-  background: rgba(3,4,4,.72);
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,.035);
-}
-.heroFacts div { min-width: 0; padding: 10px 12px; }
-.heroFacts div + div { border-left: 1px solid rgba(241,241,236,.18); }
-.heroFacts dt { color: var(--gold-bright); font-family: var(--font-display); font-size: 1.12rem; }
-.heroFacts dd { margin: 0; color: var(--text-muted); font-size: 0.75rem; letter-spacing: .08em; text-transform: uppercase; }
 .heroStage {
   position: relative;
   min-width: 0;
@@ -388,11 +366,7 @@
 @media (max-width: 768px) {
   .hero, .heroInner { min-height: 0; }
   .heroInner { gap: 28px; padding: 32px 0 24px; }
-  .hero h1 { font-size: clamp(2.35rem, 12vw, 3rem); }
-  .heroFacts { grid-template-columns: 1fr 1fr; }
-  .heroFacts div { padding: 9px 11px !important; border: 0 !important; }
-  .heroFacts div:nth-child(even) { border-left: 1px solid rgba(236,234,228,.18) !important; }
-  .heroFacts div:nth-child(n+3) { border-top: 1px solid rgba(236,234,228,.18) !important; }
+  .hero h1 { font-size: clamp(2.1rem, 10vw, 2.7rem); }
   .heroSearch nav { display: none; }
   .heroActions { align-items: stretch; flex-direction: column; }
   .heroActions a { width: 100%; }

@@ -62,7 +62,6 @@ export default function ItemDetailPage({ item }: { item: Item }) {
           <div className={styles.badges}>
             <span>{item.cost === undefined ? "Cost not published" : `${item.cost}G`}</span>
             {item.requirements && <span>Requires {item.requirements}</span>}
-            <span>{item.gameVersion}</span>
           </div>
           <div className={styles.effectList}>
             {item.effects.map((effect) => (
@@ -78,8 +77,8 @@ export default function ItemDetailPage({ item }: { item: Item }) {
           <section className={styles.panel}>
             <h2>Overview</h2>
             <p>
-              {item.name} is a {item.type.toLowerCase()} item shown in the
-              Goodly Trials item guide for {item.gameVersion}. Its price is {item.cost === undefined ? "not published in the official patch note" : `${item.cost}G`}
+              {item.name} is a {item.type.toLowerCase()} item in Goodly Trials.
+              Its price is {item.cost === undefined ? "not listed" : `${item.cost}G`}
               {item.requirements
                 ? ` and its listed requirement is ${item.requirements}`
                 : " with no requirement shown on the item page"}
@@ -94,7 +93,6 @@ export default function ItemDetailPage({ item }: { item: Item }) {
                   <th>Type</th>
                   <th>Requirement</th>
                   <th>Cost</th>
-                  <th>Version</th>
                 </tr>
               </thead>
               <tbody>
@@ -102,7 +100,6 @@ export default function ItemDetailPage({ item }: { item: Item }) {
                   <td>{item.type}</td>
                   <td>{item.requirements ?? "Not listed"}</td>
                   <td>{item.cost === undefined ? "Not published" : `${item.cost}G`}</td>
-                  <td>{item.gameVersion}</td>
                 </tr>
               </tbody>
             </table>
@@ -144,9 +141,7 @@ export default function ItemDetailPage({ item }: { item: Item }) {
                 {relatedBuilds.map((build) => (
                   <Link key={build.slug} href={`/builds#${build.slug}`}>
                     <b>{build.title}</b>
-                    <span>
-                      {build.version} · {build.difficulty}
-                    </span>
+                    <span>{build.difficulty} · Editable preset</span>
                   </Link>
                 ))}
               </div>
@@ -182,14 +177,6 @@ export default function ItemDetailPage({ item }: { item: Item }) {
             <div>
               <dt>Cost</dt>
               <dd>{item.cost === undefined ? "Not published" : `${item.cost}G`}</dd>
-            </div>
-            <div>
-              <dt>Version</dt>
-              <dd>{item.gameVersion}</dd>
-            </div>
-            <div>
-              <dt>Checked</dt>
-              <dd>{item.lastVerified}</dd>
             </div>
           </dl>
           <h3>Explore</h3>

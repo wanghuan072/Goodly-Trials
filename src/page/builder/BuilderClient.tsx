@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import UnitSprite from "@/components/content/UnitSprite";
-import { activeBoardCells, BOARD_CELLS, BOARD_COLUMNS, BOARD_ROWS, BOARD_RULES_VERSION, followerCapLabel, followerLimitForRules, MAX_TRIAL_WEEK } from "@/lib/builder/board-rules";
+import { activeBoardCells, BOARD_CELLS, BOARD_COLUMNS, BOARD_ROWS, followerCapLabel, followerLimitForRules, MAX_TRIAL_WEEK } from "@/lib/builder/board-rules";
 import { itemKind, itemSlotUse, type EquipmentKind } from "@/lib/builder/equipment-rules";
 import { BUILDER_PRESET_KEY, BUILDER_STORAGE_KEY, type BuilderPlanState } from "@/lib/builder/presets";
 import type { FactionSlug, Item, UnitStats } from "@/types/content";
@@ -587,7 +587,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
       <div className={styles.workbench}>
         <section className={`${styles.gamePanel} ${styles.boardPanel}`}>
-          <header className={styles.panelHeader}><strong>Board [{filledCount}/{followerLimit}]</strong><span>Placement rules last verified · {BOARD_RULES_VERSION}</span></header>
+          <header className={styles.panelHeader}><strong>Board [{filledCount}/{followerLimit}]</strong><span>Drag from Archive · select a cell to inspect</span></header>
           <div className={styles.boardStage}>
             <div className={`${styles.rulesStrip} ${rulesInvalid ? styles.rulesInvalid : ""}`}><strong>{selectedLeader ? rulesSummary : "Leader required"}</strong><span>Week {build.week} · {availableCells.size} active cells · leader occupies one combatant slot</span></div>
             <div className={styles.boardViewport} tabIndex={0} role="region" aria-label="Formation board. Scroll horizontally on smaller screens.">
@@ -668,7 +668,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
             {previewUnit && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
               <header className={styles.panelHeader}><strong>Inspect · Unit</strong><span>Archive hover</span></header>
               <div className={styles.inspectCard}>
-                <header><small>{previewUnit.faction}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? `UNIT CARD · ${previewUnit.gameVersion ?? "VERSION NOT LISTED"}` : "ROSTER NAME · CARD DETAILS PENDING"}</span></header>
+                <header><small>{previewUnit.faction}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? "UNIT CARD" : "ROSTER MEMBER"}</span></header>
                 <div className={styles.inspectStage}>
                   <div className={styles.slotPreview}><small>GEAR: {previewUnit.gear ?? "?"}</small><span>{Array.from({ length: previewUnit.gear ?? 2 }, (_, index) => <i key={index} />)}</span></div>
                   <UnitSprite src={previewUnit.image} color="#eeeeee" large />
@@ -680,19 +680,19 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                   <div className={styles.combatStats}><span><b>ATK</b>{previewUnit.stats.atk}</span><span><b>CRT</b>{previewUnit.stats.crt}%</span><span><b>RNG</b>{previewUnit.stats.rng}</span><span><b>SPD</b>{previewUnit.stats.spd > 0 ? "+" : ""}{previewUnit.stats.spd}%</span><span><b>AR</b>{previewUnit.stats.ar}</span><span><b>EVA</b>{previewUnit.stats.eva}%</span></div>
                   <section className={styles.inspectText}><h3>Trait</h3><p><strong>{previewUnit.trait}</strong> — {previewUnit.traitEffect}</p><h3>Skills</h3>{previewUnit.skills?.map((skill) => <p key={skill.name}><strong>{skill.name}</strong> — {skill.effect}</p>)}<h3>Tactics</h3><p><strong>{previewUnit.tactic}</strong> — {previewUnit.tacticEffect}</p></section>
                   {previewUnit.quote && <blockquote>“{previewUnit.quote}”</blockquote>}
-                </> : <div className={styles.pendingPanel}><strong>PUBLIC STATS PENDING</strong><p>The official roster confirms this name and artwork, but a complete public card is not available in the verified source layer.</p></div>}
+                </> : <div className={styles.pendingPanel}><strong>ROSTER MEMBER</strong><p>Use this record to plan the formation while its equipment controls remain unavailable.</p></div>}
               </div>
             </aside>}
             {previewItem && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
               <header className={styles.panelHeader}><strong>Inspect · Item</strong><span>Archive hover</span></header>
               <div className={styles.catalogInspect}>
-                <header><small>{previewItem.type}</small><h2>{previewItem.name}</h2><span>{previewItem.gameVersion}</span></header>
+                <header><small>{previewItem.type}</small><h2>{previewItem.name}</h2><span>GEAR RECORD</span></header>
                 <div className={styles.itemInspectStage}>
                   <Image src={previewItem.image} alt="" width={96} height={96} unoptimized={previewItem.image.endsWith(".gif") || previewItem.image.startsWith("http")} />
                   <div><small>SHOP COST</small><strong>{previewItem.cost === undefined ? "NOT PUBLISHED" : `${previewItem.cost}G`}</strong><span>{previewItem.requirements ? `REQUIRES ${previewItem.requirements}` : "NO REQUIREMENT LISTED"}</span></div>
                 </div>
                 <section className={styles.catalogEffects}><h3>Effects</h3>{previewItem.effects.map((effect) => <p key={effect}>{effect}</p>)}</section>
-                <footer>VERIFIED {previewItem.lastVerified}</footer>
+                <footer>ARCHIVE RECORD</footer>
               </div>
             </aside>}
             {previewLeader && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
@@ -739,8 +739,8 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               >
                 <span className={styles.archiveIndex}>{index + 1}</span>
                 <UnitSprite src={unit.image} color="#e6e6e6" />
-                <span className={styles.archiveIdentity}><small>{unit.faction}</small><strong>{unit.name}</strong><em>{unit.verified ? `${unit.trait} · ${unit.tactic}` : "Roster name verified · public stats pending"}</em></span>
-                {unit.stats ? <span className={styles.archiveStats}><i>HP {unit.stats.hp}</i><i>STR {unit.stats.str}</i><i>AGI {unit.stats.agi}</i><i>INT {unit.stats.int}</i></span> : <span className={styles.unverifiedTag}>NAME ONLY</span>}
+                <span className={styles.archiveIdentity}><small>{unit.faction}</small><strong>{unit.name}</strong><em>{unit.verified ? `${unit.trait} · ${unit.tactic}` : "Roster member"}</em></span>
+                {unit.stats ? <span className={styles.archiveStats}><i>HP {unit.stats.hp}</i><i>STR {unit.stats.str}</i><i>AGI {unit.stats.agi}</i><i>INT {unit.stats.int}</i></span> : <span className={styles.unverifiedTag}>ROSTER</span>}
               </button>;
             })}
             {tab === "items" && filteredItems.map((item, index) => {
@@ -786,7 +786,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
       </div>
 
-      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Choose a leader and trial week first. The Board enforces unlocked positions, faction or multiplayer follower caps, one unit per cell, and each verified unit&apos;s Gear and Trinket capacity. Hover, focus, or tap a record in the Archive to inspect it; blocked records show why they cannot be dragged.</p><p>Placement limits were last verified against the official {BOARD_RULES_VERSION} game client on 2026-08-20. Public unit cards keep their own source version; the Builder does not claim a later card update it cannot verify.</p></aside></div>
+      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Choose a leader and trial week first. The Board enforces unlocked positions, faction or multiplayer follower caps, one unit per cell, and each unit&apos;s Gear and Trinket capacity. Hover, focus, or tap a record in the Archive to inspect it; blocked records show why they cannot be dragged.</p></aside></div>
     </section>
   );
 }

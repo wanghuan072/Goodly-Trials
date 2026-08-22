@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import EntityLinks from "@/components/content/EntityLinks";
+import HeroIntel from "@/components/content/HeroIntel";
 import { updates } from "@/lib/data/game-content";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
@@ -15,8 +16,8 @@ export default function UpdatesPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/hero-battlefield-v2.webp"
-          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
+          src="/images/game/screenshot-4.webp"
+          alt="Goodly Trials battle scene used for the update archive"
           fill
           preload
           sizes="100vw"
@@ -35,6 +36,16 @@ export default function UpdatesPage() {
             this site. Each note links to the official patch page and to the
             related units, gear, leaders, or builds when those pages exist.
           </p>
+          <HeroIntel
+            eyebrow="Change log"
+            title="Track what matters"
+            items={[
+              { label: "Patch notes", value: updates.length },
+              { label: "Review", value: "Units" },
+              { label: "Review", value: "Gear" },
+              { label: "Adapt", value: "Builds" },
+            ]}
+          />
         </div>
       </section>
       <section className="container section">

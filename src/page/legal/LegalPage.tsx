@@ -1,4 +1,6 @@
+import type { CSSProperties } from "react";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import HeroIntel from "@/components/content/HeroIntel";
 import { siteConfig } from "@/config/site";
 import { createMetadata } from "@/seo/metadata";
 import { pageTdk } from "@/seo/tdk";
@@ -56,6 +58,14 @@ const content: Record<LegalPageKey, { title: string; eyebrow: string; sections: 
   },
 };
 
+const legalHeroImages: Record<LegalPageKey, string> = {
+  "privacy-policy": "/images/game/screenshot-2.webp",
+  "terms-of-service": "/images/game/screenshot-3.webp",
+  copyright: "/images/game/screenshot-4.webp",
+  "about-us": "/images/game/screenshot-6.webp",
+  "contact-us": "/images/game/screenshot-8.webp",
+};
+
 export function legalMetadata(key: LegalPageKey) {
   const path = `/legal/${key}`;
   const tdk = pageTdk[path as keyof typeof pageTdk];
@@ -66,12 +76,13 @@ export default function LegalPage({ page }: { page: LegalPageKey }) {
   const document = content[page];
   return (
     <main>
-      <section className={styles.hero}>
+      <section className={styles.hero} style={{ "--hero-image": `url("${legalHeroImages[page]}")` } as CSSProperties}>
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Legal" }, { label: document.title }]} />
           <p className={styles.eyebrow}>{document.eyebrow}</p>
           <h1>{document.title}</h1>
           <p>Information for visitors to {siteConfig.name}, an independent Goodly Trials fan resource.</p>
+          <HeroIntel eyebrow="Site record" title={document.title} items={[{ value: document.sections.length, label: "Sections" }, { value: "Clear", label: "Language" }, { value: "Open", label: "Access" }, { value: "Fan-made", label: "Status" }]} />
         </div>
       </section>
       <article className={`container section ${styles.prose}`}>

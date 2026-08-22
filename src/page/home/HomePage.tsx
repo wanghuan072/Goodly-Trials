@@ -2,9 +2,9 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ItemCard from "@/components/content/ItemCard";
+import HeroIntel from "@/components/content/HeroIntel";
 import UnitCard from "@/components/content/UnitCard";
 import UnitSprite from "@/components/content/UnitSprite";
-import { siteConfig } from "@/config/site";
 import {
   builds,
   factions,
@@ -21,7 +21,7 @@ const archiveLinks = [
     href: "/wiki/units",
     symbol: "U",
     title: "Units",
-    copy: "Verified cards and tactics",
+    copy: "Cards, stats, and tactics",
   },
   {
     href: "/wiki/gear",
@@ -39,7 +39,7 @@ const archiveLinks = [
     href: "/wiki/traits",
     symbol: "T",
     title: "Traits",
-    copy: "6 public-card traits",
+    copy: "Unit traits and effects",
   },
   {
     href: "/wiki/leaders",
@@ -98,9 +98,7 @@ export default function HomePage() {
         <div className={styles.heroVeil} />
         <div className={`container ${styles.heroInner}`}>
           <div className={styles.heroCopy}>
-            <p className={styles.kicker}>
-              Player guide · latest published patch {siteConfig.latestPatchVersion}
-            </p>
+            <p className={styles.kicker}>Player guide · company planning archive</p>
             <h1>
               Goodly Trials <span>Plan Your Next Battle</span>
             </h1>
@@ -108,9 +106,6 @@ export default function HomePage() {
               Check units and gear, sketch a formation, and head into your next
               run with a plan you can actually change. Start with the cards,
               builds, guides, and patch changes that matter to your company.
-            </p>
-            <p className={styles.accessStatus}>
-              Last checked {siteConfig.lastVerified} · latest patch {siteConfig.latestPatchVersion}
             </p>
             <div className={styles.heroActions}>
               <Link className="button button-primary" href="/builder">
@@ -126,25 +121,18 @@ export default function HomePage() {
                 Beginner&apos;s Guide
               </Link>
             </div>
-            <dl className={styles.heroFacts}>
-              <div>
-                <dt>{units.length}</dt>
-                <dd>unit cards</dd>
-              </div>
-              <div>
-                <dt>{leaders.length}</dt>
-                <dd>leader cards</dd>
-              </div>
-              <div>
-                <dt>{items.length}</dt>
-                <dd>gear examples</dd>
-              </div>
-              <div>
-                <dt>{siteConfig.latestPatchVersion}</dt>
-                <dd>current game version</dd>
-              </div>
-            </dl>
           </div>
+          <HeroIntel
+            className="hero-intel-home"
+            eyebrow="Archive loadout"
+            title="Plan with the cards in front of you"
+            items={[
+              { value: units.length, label: "Unit cards" },
+              { value: leaders.length, label: "Leader cards" },
+              { value: items.length, label: "Gear records" },
+              { value: factions.length, label: "Factions" },
+            ]}
+          />
         </div>
       </section>
 
@@ -372,7 +360,7 @@ export default function HomePage() {
               <div><h3>Is this an official site?</h3><p>No. It is an independent player guide that links back to the official game pages.</p></div>
               <div><h3>Can a build guarantee a win?</h3><p>No. Builds are editable starting points; the live board, shop, and opponents still decide the run.</p></div>
               <div><h3>What does the Builder check?</h3><p>It checks the selected week, active cells, follower limits, and known equipment capacity.</p></div>
-              <div><h3>Why are some cards missing?</h3><p>Only information that can be checked in the public game material is shown in detail.</p></div>
+              <div><h3>Where should I begin?</h3><p>Choose a leader, compare the unit roles you need, then test the spacing in the Builder.</p></div>
             </div>
           </article>
         </section>
@@ -383,9 +371,9 @@ export default function HomePage() {
             <h2>Use the game data to make your own call.</h2>
           </div>
           <p>
-            Card values and update details show the version and check date.
-            Builds and positioning notes are player suggestions, so you can see
-            the idea without mistaking it for an official answer.
+            Compare the cards, effects, and formation rules first. Then treat
+            builds and positioning notes as editable starting points for your
+            own company.
           </p>
           <Link className="button button-ghost" href="/about">
             Read how it works

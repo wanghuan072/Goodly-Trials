@@ -1,9 +1,11 @@
-import type { FactionSlug } from "@/types/content";
+import type { FactionSlug } from "../../types/content";
 
 export const BOARD_COLUMNS = 6;
 export const BOARD_ROWS = 6;
 export const BOARD_CELLS = BOARD_COLUMNS * BOARD_ROWS;
 export const MAX_TRIAL_WEEK = 12;
+export const BOARD_RULES_VERSION = "v0.302";
+export const BOARD_RULES_CHECKED = "2026-08-20";
 
 const MAX_ACTIVE_COMBATANTS = 17;
 const MULTIPLAYER_COMBATANT_CAP = 12;
@@ -15,7 +17,7 @@ export const FACTION_FOLLOWER_CAPS: Record<FactionSlug, number> = {
 };
 
 /**
- * Current live-game v0.302 rules, verified 2026-08-20 against the official
+ * Board rules last verified for v0.302 on 2026-08-20 against the official
  * play.goodlytrials.com client bundle. The board starts at 2x3 and alternates
  * adding a column and a row until it reaches 6x6.
  */

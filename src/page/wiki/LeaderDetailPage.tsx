@@ -24,10 +24,10 @@ export default function LeaderDetailPage({ leader }: { leader: Leader }) {
         <section className={`${styles.panel} ${styles.editorial}`}><h2>Related records</h2><p className={styles.disclaimer}>Links below are archive navigation, not a claim that these leaders are interchangeable or equally strong.</p><div className={styles.relatedGrid}>{relatedLeaders.map((entry) => <Link href={`/wiki/leaders/${entry.slug}`} key={entry.slug}><b>{entry.name}</b><span>{entry.trait.name} · {entry.gameVersion}</span></Link>)}{faction && <Link href={`/wiki/factions/${faction.slug}`}><b>{faction.name}</b><span>Faction overview and public roster context.</span></Link>}</div></section>
       </article>
       <aside className={styles.sideProfile}>
-        <h2>Leader record</h2>
+        <h2>Leader card</h2>
         <dl><div><dt>Faction</dt><dd><Link href={`/wiki/factions/${leader.factionSlug}`}>{leader.faction}</Link></dd></div><div><dt>Trait</dt><dd>{leader.trait.name}</dd></div><div><dt>Gear slots</dt><dd>{leader.gear}</dd></div><div><dt>Trinket slots</dt><dd>{leader.trinkets}</dd></div><div><dt>Card version</dt><dd>{leader.gameVersion}</dd></div><div><dt>Verified</dt><dd>{leader.lastVerified}</dd></div></dl>
         <h3>Explore</h3><Link href="/wiki/leaders">All leaders</Link><Link href={`/wiki/factions/${leader.factionSlug}`}>{leader.faction}</Link><Link href="/updates">Patch notes</Link>
-        <h3>Primary source</h3><a href={leader.source} target="_blank" rel="noreferrer">Official leader cards ↗</a>
+        <h3>Official game page</h3><a href={leader.source} target="_blank" rel="noreferrer">Official leader cards ↗</a>
       </aside>
     </div>
   </main>;

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import { siteConfig } from "@/config/site";
+import { BOARD_RULES_CHECKED, BOARD_RULES_VERSION } from "@/lib/builder/board-rules";
 import { factions, items, leaders, units } from "@/lib/data/game-content";
 import JsonLd from "@/seo/JsonLd";
 import { createMetadata } from "@/seo/metadata";
@@ -9,8 +10,8 @@ import BuilderClient, { type BuilderLeader, type BuilderRosterUnit } from "./Bui
 import styles from "@/style/page/builder/builder.module.css";
 
 export const metadata = createMetadata(
-  "Goodly Trials Company Builder & Formation Planner",
-  "Plan a Goodly Trials company with a game-inspired formation board. Choose a leader, place units, assign verified item examples, and save notes locally.",
+  "Goodly Trials Builder – Team Builder & Formation Planner",
+  "Plan a Goodly Trials company with a game-inspired formation board. Choose a leader, place units, try gear, and save notes on this device.",
   "/builder",
 );
 
@@ -21,19 +22,19 @@ const builderSteps = [
   },
   {
     title: "Choose a company leader",
-    text: "Open Leaders in the Archive and drag a leader to the leader slot, or click the leader once. In non-multiplayer modes, the Archive then narrows to followers from that leader’s faction.",
+    text: "Open Leaders in the card list and drag a leader to the leader slot, or click the leader once. In non-multiplayer modes, the list then narrows to followers from that leader’s faction.",
   },
   {
     title: "Place followers on active cells",
-    text: "Drag units from the Archive onto open cells. For a long move, click a unit, scroll normally, and click the target cell. Locked records explain whether a leader, faction match, open cell, or roster space is required.",
+    text: "Drag units from the card list onto open cells. For a long move, click a unit, scroll normally, and click the target cell. Locked cards explain whether a leader, faction match, open cell, or roster space is required.",
   },
   {
     title: "Assign gear and trinkets",
-    text: "Switch to Items and drag a verified public item example onto a compatible unit card. Equipment is limited by that unit’s known Gear and Trinket capacity, and equipped items can be moved or removed.",
+    text: "Switch to Gear and drag an item onto a compatible unit card. Equipment is limited by that unit’s known Gear and Trinket capacity, and equipped items can be moved or removed.",
   },
   {
     title: "Inspect, adjust, and record the plan",
-    text: "Hover or focus an Archive record to review its available details, move units between cells, rotate an active formation row when useful, and add notes. The current plan saves automatically on this device.",
+    text: "Hover or focus a card to review its available details, move units between cells, rotate an active formation row when useful, and add notes. The current plan saves automatically on this device.",
   },
 ] as const;
 
@@ -58,6 +59,7 @@ const roster: BuilderRosterUnit[] = factions.flatMap((faction) =>
       trinkets: verified?.trinkets,
       stats: verified?.stats,
       trait: verified?.trait.name,
+      gameVersion: verified?.gameVersion,
       traitEffect: verified?.trait.effect,
       tactic: verified?.tactic.name,
       tacticEffect: verified?.tactic.effect,
@@ -90,7 +92,7 @@ export default function BuilderPage() {
             "@id": `${siteConfig.url}/builder#application`,
             name: "Goodly Trials Company Builder",
             url: `${siteConfig.url}/builder`,
-            description: "A free browser-based Goodly Trials formation planner for choosing a leader, positioning units, assigning verified public item examples, and recording player notes.",
+            description: "A free browser-based Goodly Trials formation planner for choosing a leader, positioning units, trying gear, and recording player notes.",
             applicationCategory: "GameApplication",
             operatingSystem: "Any",
             browserRequirements: "Requires a modern web browser with JavaScript enabled",
@@ -119,11 +121,19 @@ export default function BuilderPage() {
         ],
       }} />
       <section className={styles.hero}>
+        <Image
+          className={styles.heroImage}
+          src="/images/game/screenshot-1.webp"
+          alt="Official Goodly Trials formation board with unit cards, shop, and inspect panel"
+          fill
+          sizes="100vw"
+        />
+        <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Company Builder" }]} />
-          <p className={styles.eyebrow}>Player workshop · placement rules verified for v0.302</p>
+          <p className={styles.eyebrow}>Player planner · board rules last verified for {BOARD_RULES_VERSION}</p>
           <h1>Company Builder</h1>
-          <p>Plan a Goodly Trials formation before your next run. Choose a leader, arrange faction units on a game-inspired board, assign verified public item examples, and keep your notes saved on this device.</p>
+          <p>Choose a leader, arrange the units available to you, and try equipment on a game-inspired board before your next run. Your notes stay in this browser so you can keep adjusting the plan.</p>
         </div>
       </section>
       <BuilderClient roster={roster} leaders={builderLeaders} items={items} />
@@ -150,13 +160,13 @@ export default function BuilderPage() {
           </article>
           <article>
             <span>03</span>
-            <h3>Verified records stay separate from assumptions</h3>
-            <p>Available public leader, unit, and item details are shown inside the planner. Incomplete records remain clearly labeled instead of being filled with invented statistics or effects.</p>
+            <h3>Cards and guesses stay separate</h3>
+            <p>Leader, unit, and gear details that can be checked are shown inside the planner. When a card is incomplete, the missing information stays clearly marked.</p>
           </article>
           <article>
             <span>04</span>
             <h3>Drag when convenient; click for long moves</h3>
-            <p>Desktop players can drag records directly. If the destination is farther down the board, click a record to carry it, scroll normally, then click the target—no precision drag across the whole page is required.</p>
+            <p>Desktop players can drag cards directly. If the destination is farther down the board, click a card to carry it, scroll normally, then click the target—no precision drag across the whole page is required.</p>
           </article>
           <article>
             <span>05</span>
@@ -178,14 +188,14 @@ export default function BuilderPage() {
             height={1080}
             sizes="(max-width: 768px) 100vw, 1180px"
           />
-          <figcaption><strong>Why position matters:</strong> the official public game screenshot shows how formation, unit cards, equipment, and inspection data share one decision space. Our builder follows that planning workflow while remaining an independent pre-run tool.</figcaption>
+          <figcaption><strong>Why position matters:</strong> the game screen puts formation, unit cards, gear, and inspection details in the same decision space. This Builder follows that planning flow before you take the idea into a match.</figcaption>
         </figure>
 
         <section className={styles.howTo} aria-labelledby="builder-how-to">
           <header>
             <p className={styles.guideEyebrow}>Five-step workflow</p>
             <h2 id="builder-how-to">How to use the Goodly Trials Company Builder</h2>
-            <p>Start with the rules, then work from leader to followers and equipment. This order prevents most blocked placements and keeps the Archive relevant to the company you are building.</p>
+            <p>Start with the rules, then work from leader to followers and equipment. This order prevents most blocked placements and keeps the card list relevant to the company you are building.</p>
           </header>
           <ol>
             {builderSteps.map((step, index) => (
@@ -204,7 +214,7 @@ export default function BuilderPage() {
             <h2>Make the board easier to work with</h2>
             <ul>
               <li><strong>Choose the week before filling the board.</strong> Changing it later may alter which positions are active.</li>
-              <li><strong>Use Archive hover details before placing.</strong> The board itself stays clear while the source list provides inspection data.</li>
+              <li><strong>Check card details before placing.</strong> The board stays clear while the list gives you the information you need.</li>
               <li><strong>Use click-to-carry for distant cells.</strong> It is the reliable alternative when a long drag would require scrolling.</li>
               <li><strong>Remove with the × control.</strong> Units, leaders, and equipped items can all be cleared without resetting the entire company.</li>
               <li><strong>Record uncertainties in Player notes.</strong> Treat the board as a draft that can be checked against the live game.</li>
@@ -213,8 +223,8 @@ export default function BuilderPage() {
           <aside>
             <p className={styles.guideEyebrow}>Important scope</p>
             <h2>What the planner does—and does not verify</h2>
-            <p>Placement limits are based on the project’s verified v0.302 rules layer. Individual public cards may retain their own source-version label, and records without complete public data remain marked as pending.</p>
-            <p>This is an independent player tool. It records formation ideas but does not simulate combat, publish a tier ranking, or claim that a company is legal beyond the checks displayed by the builder.</p>
+            <p>Placement limits were last checked against {BOARD_RULES_VERSION} on {BOARD_RULES_CHECKED}. Individual cards keep the version documented on that card, and incomplete cards remain marked as pending.</p>
+            <p>This is an independent planning tool. It does not simulate combat, publish rankings, or prove a company will be legal outside the checks displayed here.</p>
           </aside>
         </section>
 
@@ -222,9 +232,9 @@ export default function BuilderPage() {
           <header><p className={styles.guideEyebrow}>Common questions</p><h2 id="builder-faq-title">Goodly Trials Builder FAQ</h2></header>
           <div>
             <article><h3>Why can’t I place a unit in every cell?</h3><p>Available cells depend on the selected trial week. A cell can also reject a drop when it is occupied or when the company has reached its current follower limit.</p></article>
-            <article><h3>Why is a unit or item blocked in the Archive?</h3><p>The record may require a leader, a matching faction, an open follower slot, a unit already on the board, or compatible Gear or Trinket capacity. The disabled record displays its current reason.</p></article>
+            <article><h3>Why is a unit or item blocked in the list?</h3><p>It may require a leader, a matching faction, an open follower slot, a unit already on the board, or compatible Gear or Trinket capacity. The disabled card shows why.</p></article>
             <article><h3>Does the Builder save or share my formation?</h3><p>The plan saves automatically in the current browser on this device. It is not published as a public build and is not transferred automatically to another browser or device.</p></article>
-            <article><h3>Where can I check the underlying game records?</h3><p>Use the <Link href="/wiki/units">unit archive</Link>, <Link href="/wiki/items">item archive</Link>, <Link href="/wiki/mechanics">mechanics archive</Link>, and <Link href="/guides/formation-guide">formation guide</Link> for the source-aware records and explanations behind the planner.</p></article>
+            <article><h3>Where can I check the game details?</h3><p>Use the <Link href="/wiki/units">unit pages</Link>, <Link href="/wiki/gear">gear pages</Link>, and <Link href="/guides">player guides</Link> when you want to check the cards behind a plan.</p></article>
           </div>
         </section>
       </article>

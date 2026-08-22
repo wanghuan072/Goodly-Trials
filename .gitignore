@@ -21,6 +21,12 @@
 /build
 /dist
 /.wrangler
+/.vinext
+
+# local agent tooling and deployment archives
+/.agents
+/.cursor
+/.site-*.tgz
 
 # misc
 .DS_Store

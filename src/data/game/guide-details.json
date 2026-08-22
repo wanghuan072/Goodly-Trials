@@ -1,65 +1,255 @@
 [
   {
     "slug": "beginners-guide",
-    "quickAnswer": "Survive twelve trials by repeating a deliberate Shop → Place → Equip → Battle → Plan rhythm. Three battles without a win end the journey.",
+    "quickAnswer": "Start with a leader, read the available Unit and Gear records, then repeat Shop → Place → Equip → Battle → Plan. Three battles without a win end the current journey, so each purchase and position should have a stated job.",
     "sections": [
-      { "title": "Start with the road", "paragraphs": ["Draft a leader and a defining trait, then build a company one market at a time. Training leads into Fair, Unfair, and eventually Ranked."], "bullets": ["Inspect requirements before buying gear", "Read unit trait, skills, and tactic together", "Place for range and adjacency before committing", "Use each result to plan the next shop"] },
-      { "title": "Read a unit card", "paragraphs": ["Vitals show HP, ES, and MP. Attributes show STR, AGI, and INT. Combat values show attack, critical chance, range, speed, armor, and evasion. Gear slots, traits, skills, and tactics explain how that baseline changes."], "bullets": ["A high number without a usable position may be wasted", "Rolled traits can change a familiar recruit", "Primary attributes can lead toward Ascendancy"] },
-      { "title": "Avoid early mistakes", "paragraphs": ["Do not buy an item before confirming its requirement and available slot. Do not treat Backline, Formation, and Flanking as cosmetic tags. Do not assume an old build remains current through Early Access patches."], "bullets": ["Check cost and requirement", "Check open hand or trinket slots", "Check version freshness", "Re-read the opposing line"] }
+      {
+        "title": "What a first run asks you to do",
+        "paragraphs": [
+          "The public game flow is a repeating decision loop: inspect the shop, place a company, equip compatible Gear, then let combat resolve before planning again. The important beginner skill is not memorising a fixed build; it is checking whether the next choice has a legal slot, a useful position, and a clear purpose.",
+          "Training leads into Fair Trial, then Unfair Trial and Ranked. The current public rules state that three battles without a win end a journey. Treat the road as a sequence of small revisions rather than a promise that one opening arrangement will remain correct."
+        ],
+        "bullets": [
+          "Choose a Leader before assuming which faction records belong together.",
+          "Open a Unit record before treating its visible stat line as its whole role.",
+          "Use the current game version on a record before carrying an old claim into a new run."
+        ]
+      },
+      {
+        "title": "Read the card before buying or placing",
+        "paragraphs": [
+          "A public Unit card combines resources, attributes, combat values, a Trait, skills, a tactic, and Gear or Trinket capacity. HP, ES, and MP answer different survival or casting questions; STR, AGI, and INT are attributes; ATK, CRT, RNG, SPD, AR, and EVA describe combat behavior. None of those values alone proves that a unit belongs in a particular cell.",
+          "For a concrete check, compare the Goodly Knight's Formation tactic and adjacent-ally skill with the Archer's Backline tactic and range. Then inspect an item such as Iron Sword of Brawn or Feather Charm of Reflex for its requirement and slot type before calling it a fit. This is a data check, not a best-in-slot claim."
+        ],
+        "bullets": [
+          "Trait and skill text can change the value of the same stat line.",
+          "A Gear or Trinket can only help if the bearer has the required attribute and an available compatible slot.",
+          "Use the linked card record when a term affects a concrete decision; do not rely on a shortened tooltip or memory."
+        ]
+      },
+      {
+        "title": "Make one decision at each step",
+        "paragraphs": [
+          "At the shop, first confirm the item's requirement and the intended bearer's capacity. At placement, first read the tactic, range, and adjacent effects. At equipment, verify that the item actually occupies the slot you think it does. After combat, revise the board from the observed result instead of assuming a loss means one stat must be raised.",
+          "The Company Builder is useful as a planning surface because it exposes leader choice, open cells, unit cards, and known equipment capacity together. It is not a combat simulator or a proof that a company will win; use it to make a decision legible before testing it in the game."
+        ],
+        "bullets": [
+          "Shop: requirement, cost, and intended bearer.",
+          "Place: tactic, range, adjacency, and the opposing line.",
+          "Equip: hand or Trinket capacity, then the published effect.",
+          "Plan: record what changed and check the next active board cells."
+        ]
+      },
+      {
+        "title": "Spend from verified constraints",
+        "paragraphs": [
+          "An item is a real option only after its published requirement, cost, effect, and intended slot all line up. One-handed Gear leaves another hand available; two-handed equipment consumes both hands; Trinkets use their own capacity; spell tomes spend MP; and potions change a companion once without occupying a slot. Check the Gear record instead of inferring a slot rule from the icon alone.",
+          "Some public effects mention income or scaling, but an example is not a universal economy rule. Feather Charm of Reflex and Ruby Charm of Wit list income bonuses, while Portly Knight's Hoarding Trait refers to several equipment types on the board. The relevant card and item records explain the exact published wording."
+        ],
+        "bullets": [
+          "Confirm the attribute requirement before treating a shop item as usable.",
+          "Reserve the correct Gear or Trinket slot before buying for a later bearer.",
+          "Separate a listed effect from an assumption about shop availability or value."
+        ]
+      },
+      {
+        "title": "Avoid the common early assumptions",
+        "paragraphs": [
+          "Do not turn a public card sample into a complete roster, a fixed tier list, or a guaranteed shop sequence. Rolled attributes, mode rules, item availability, and later patches can change what is practical. This archive links to exact records when they exist and leaves missing data unpublished rather than filling the gap with plausible-looking advice.",
+          "For positioning questions, continue to the Formation & Positioning Guide. For a ready-made but editable starting layout, use Builds and then change it in the Company Builder rather than copying it as an unquestioned answer."
+        ],
+        "bullets": [
+          "A low-HP unit is not automatically a backline unit; read its tactic and range.",
+          "A named item is not automatically usable by every unit.",
+          "An editorial build is a starting hypothesis, not official strategy or a measured win-rate claim."
+        ]
+      }
+    ],
+    "media": [
+      {
+        "afterSection": 1,
+        "src": "/images/game/screenshot-7.webp",
+        "alt": "Goodly Trials leader training screen showing a leader card and attribute explanations",
+        "caption": "Official training reference: a run begins with a leader, while attributes and card text supply the context for later company decisions."
+      },
+      {
+        "afterSection": 2,
+        "src": "/images/game/screenshot-5.webp",
+        "alt": "Goodly Trials combat log, troop statistics, and inspected unit card",
+        "caption": "Official game interface reference: combat observations and the inspected card give more useful context than a single visible stat."
+      },
+      {
+        "afterSection": 4,
+        "src": "/images/game/screenshot-1.webp",
+        "alt": "Goodly Trials board, shop, stash, unit cards, and inspect panel shown together",
+        "caption": "Official game interface reference: board positions, shop choices, equipment and the inspect panel appear in the same decision space."
+      }
     ]
   },
   {
     "slug": "formation-guide",
-    "quickAnswer": "Place for tactic, range, adjacency, and the enemy line. Good placement makes verified skills connect before auto-battle takes control.",
+    "quickAnswer": "Place a unit for its published tactic, range, adjacency effects, and the opposing line—not only for its largest number. Formation, Backline, and Flanking describe different battlefield behavior, so read the source card before locking a cell.",
     "sections": [
-      { "title": "Formation, Backline, and Flanking", "paragraphs": ["The current public cards use three tactic labels. Formation units stay in line and can reduce damage, Backline units prefer the rear, and Flanking units can enter behind enemies."], "bullets": ["Goodly Knight and Portly Knight — Formation", "Archer and Wizard — Backline", "Skeleton Child and Skeleton Dog — Flanking"] },
-      { "title": "Build around adjacency", "paragraphs": ["Goodly Knight adds STR to adjacent allies. Skeleton Child can pass half of hand-gear benefits to adjacent allies. Move either unit and the value map changes."], "bullets": ["Identify every adjacent effect", "Choose the beneficiary before equipping", "Do not leave support touching an irrelevant target"] },
-      { "title": "Inspect the opposing line", "paragraphs": ["Range, formation, flanking, adjacency, and opposing-line shape are all named by the official game description as meaningful. Use the available inspection view before locking placement."] }
+      {
+        "title": "Start with the tactic on the card",
+        "paragraphs": [
+          "The current public card sample exposes three tactic labels. Formation units stay in formation and can reduce damage taken; Backline units prefer the rear; Flanking units can enter combat from behind enemy lines. These are behavior labels, not universal promises of safety, damage, or target access.",
+          "Goodly Knight and Portly Knight are the verified Formation examples in this archive. Archer and Wizard are verified Backline examples. Skeleton Child and Skeleton Dog are verified Flanking examples. Open each Unit record to see the related Trait, skill, range, and capacity before assigning a role."
+        ],
+        "bullets": [
+          "Formation: keep the line readable and check which ally is next to whom.",
+          "Backline: check range and protection before assuming the rear is safe.",
+          "Flanking: check the enemy board and survivability; rear entry does not guarantee a useful target."
+        ]
+      },
+      {
+        "title": "Use rows to control who absorbs pressure",
+        "paragraphs": [
+          "The official advanced-training screen demonstrates that row placement changes which friendly unit is selected by enemies. A front unit can absorb the pressure for a unit placed behind it; moving the pair into separate rows can make both receive attacks. Read that visual as a placement lesson, not as a universal damage formula for every encounter.",
+          "Before confirming a board, inspect the opposing line, identify which row is exposed, and decide which unit you expect to take contact first. Then compare that expectation with the unit's HP, ES, AR, range, and tactic on its own record."
+        ],
+        "bullets": [
+          "Decide which unit should meet contact first.",
+          "Keep a ranged or support unit behind the protection only when its tactic and range support that plan.",
+          "Re-check the plan when the opposing line or active cells change."
+        ]
+      },
+      {
+        "title": "Check range and target selection together",
+        "paragraphs": [
+          "RNG is the public card's attack distance, but range only matters together with the line, tactic, movement, and available target. The Archer's verified card lists RNG 3, while the Wizard's public card has a Backline tactic but a different card profile. Read the full record before using a generic ranged or caster label as a placement rule.",
+          "The combat log and inspection view are useful after a battle because they let you compare your intended target access with the observed board. A unit that looked protected at placement can still become exposed when the opposing line, movement, or adjacent support changes."
+        ],
+        "bullets": [
+          "Read RNG beside the tactic rather than in isolation.",
+          "Check whether the intended target is actually reachable from the selected row.",
+          "Use the inspection record to separate a placement mistake from a guess about a stat."
+        ]
+      },
+      {
+        "title": "Protect adjacency value",
+        "paragraphs": [
+          "Some verified skills and Traits refer to adjacent allies. Goodly Knight's Knight's Oath grants STR to adjacent allies. Skeleton Child passes half of hand-gear benefits to adjacent allies while receiving none of those hand-gear benefits itself. Moving either unit can therefore change the value of the same equipment purchase without changing the item.",
+          "Choose the intended beneficiary before equipping. If an adjacent effect has no useful neighbor, reposition first instead of treating the printed bonus as automatically active. The card links are the source for the exact effect and any listed limitation."
+        ],
+        "bullets": [
+          "Name the ally meant to receive the adjacent benefit.",
+          "Check whether the two units remain adjacent after a tactic changes their movement.",
+          "Revisit the pair when adding or removing Gear."
+        ]
+      },
+      {
+        "title": "Treat a flank as a board question",
+        "paragraphs": [
+          "Flanking means a unit can enter combat from behind enemy lines in the current public card wording. It does not identify a guaranteed target, a safe return path, or a successful kill. Skeleton Child and Skeleton Dog both carry the verified Flanking tactic, but their other card text and the opposing board still determine whether the entry is useful.",
+          "Before forcing a flank, inspect rear-space availability, enemy range, and whether the unit can survive long enough for its Trait or skill to matter. Do not weaken the rest of a formation merely to create a rear entry that has no confirmed target."
+        ],
+        "bullets": [
+          "Identify the exposed target before depending on a flank.",
+          "Check whether the rear space is contested or covered.",
+          "Compare the flanker’s survival resources with the expected contact."
+        ]
+      },
+      {
+        "title": "Turn the idea into an editable board",
+        "paragraphs": [
+          "Use Builds only as visible starting arrangements: they show a board, roster, equipment goals, strengths, and weaknesses, then open in the Company Builder for revision. A build is not an official composition and does not prove a win rate, but it gives you a concrete hypothesis to inspect.",
+          "For a long move in the Builder, select a record to carry it, scroll normally, and choose a valid target cell. Keep the actual game and source cards as the final authority when a public card, live board, or newer patch conflicts with a planning assumption."
+        ],
+        "bullets": [
+          "Start with one role per cell, not an abstract strongest unit.",
+          "Use the Builder to test legal positions and known capacity.",
+          "After a result, revise the relationship between tactic, row, range, and adjacency."
+        ]
+      }
+    ],
+    "media": [
+      {
+        "afterSection": 2,
+        "src": "/images/game/screenshot-6.webp",
+        "alt": "Goodly Trials advanced training diagrams comparing frontliner targeting and shared damage across rows",
+        "caption": "Official advanced-training reference: the diagrams show why changing rows changes which friendly unit receives enemy attention."
+      },
+      {
+        "afterSection": 3,
+        "src": "/images/game/screenshot-5.webp",
+        "alt": "Goodly Trials combat log, troop statistics, and inspected unit card with Backline tactic",
+        "caption": "Official game interface reference: inspect card values and combat observations together when checking range, targeting, and survival assumptions."
+      },
+      {
+        "afterSection": 6,
+        "src": "/images/game/screenshot-1.webp",
+        "alt": "Goodly Trials formation board with unit cards, shop list, equipment stash, and inspect panel",
+        "caption": "Official game interface reference: use the board, shop and inspect information together before committing a formation."
+      }
     ]
   },
   {
-    "slug": "stats-explained",
-    "quickAnswer": "Use vitals to judge resources, attributes to judge scaling, and combat values to judge battlefield behavior. Then read trait, skill, tactic, and gear together.",
+    "slug": "game-modes-progression-guide",
+    "quickAnswer": "The public route runs from Training through Fair Trial and Unfair Trial to Ranked, while multiplayer is a separate 2–8 company tournament with shared markets and standings. Keep each rule tied to its mode and source version.",
     "sections": [
-      { "title": "Vitals", "paragraphs": ["HP determines when a unit falls. ES absorbs damage first and regenerates. MP powers spell tomes."], "bullets": ["HP — survival", "ES — regenerating shield", "MP — spell resource"] },
-      { "title": "Attributes", "paragraphs": ["STR, AGI, and INT feed different families of derived stats, while a primary attribute may also feed attack and Ascendancy progression."], "bullets": ["STR — HP, armor, recovery", "AGI — speed and evasion", "INT — MP, regeneration, energy shield"] },
-      { "title": "Combat values", "paragraphs": ["ATK is damage before armor, CRT is double-damage chance, RNG is attack distance, SPD is action and movement speed, AR reduces damage, and EVA can avoid a hit before armor or energy shield applies."] }
-    ]
-  },
-  {
-    "slug": "economy-guide",
-    "quickAnswer": "Spend only after checking requirements, slots, and the next placement. In multiplayer, remember that the shop is shared and contested purchases become live bids.",
-    "sections": [
-      { "title": "Single-player shopping", "paragraphs": ["The road cycles through shopping, placement, equipment, combat, and planning. A purchase has value only if the company can equip it and the formation can use it."], "bullets": ["Check item requirement", "Check gear or trinket capacity", "Compare immediate power with future scaling", "Keep enough flexibility for the next market"] },
-      { "title": "Income effects", "paragraphs": ["Some public items and traits add income. Feather Charm of Reflex and Ruby Charm of Wit list income bonuses, while Portly Knight's Hoarding trait rewards several equipment types being on the board."], "bullets": ["Income text is part of the item or trait effect", "Requirements can delay the purchase's practical value", "Do not turn an income example into a universal economy rule"] },
-      { "title": "Multiplayer bidding", "paragraphs": ["In a tournament, 2–8 players share markets. Contested items open at list price; players raise or pass. Mixed-faction lobbies can also put units up for bid."] }
-    ]
-  },
-  {
-    "slug": "ascendancy-guide",
-    "quickAnswer": "Raise a primary attribute far enough to Ascend once, then choose a Power, Fortitude, or Authority outcome that fits the unit's real board job.",
-    "sections": [
-      { "title": "Three paths", "paragraphs": ["Power converts attributes toward attack, Fortitude converts them toward defense and recovery, and Authority converts them toward resource or tempo values."], "bullets": ["Power — damage-oriented conversions", "Fortitude — armor, evasion, ES, or recovery", "Authority — HP, speed, MP, and regeneration"] },
-      { "title": "Verified examples", "paragraphs": ["The public units guide shows Crushing, Elusive, Revelatory, and Momentous as four example Ascendancies."], "bullets": ["Crushing — third hit can stun", "Elusive — heals on evade", "Revelatory — can spend extra MP to restore a spell cooldown", "Momentous — repeated attacks on one target gain ATK"] },
-      { "title": "Avoid automatic recommendations", "paragraphs": ["An Ascendancy label alone does not prove the best choice. Position, gear, target access, mode, and current patch all affect the recommendation."] }
-    ]
-  },
-  {
-    "slug": "multiplayer-guide",
-    "quickAnswer": "A Goodly Trials multiplayer tournament seats 2–8 human or AI companies, shares markets, resolves live bids, locks formations, and tracks a season table.",
-    "sections": [
-      { "title": "Set up the tournament", "paragraphs": ["The host seats humans and AI and chooses how often every pair meets. That choice determines the shape of the season before the first bid."], "bullets": ["2–8 companies", "Humans and AI can share the table", "The host controls meeting frequency"] },
-      { "title": "Bid in the shared market", "paragraphs": ["Players act one decision at a time. Contested items start at list price, and rivals either raise or pass. Mixed-faction lobbies can also auction units."], "bullets": ["Plan a maximum price before bidding", "Remember that denial also costs resources", "Keep formation needs ahead of collection instinct"] },
-      { "title": "Lock, fight, and read standings", "paragraphs": ["Companies prepare independently, then fight across a turn-based league. Standings continue through the season until one champion remains."] }
-    ]
-  },
-  {
-    "slug": "ranked-guide",
-    "quickAnswer": "Finish Training, Fair, and Unfair progression before Ranked. The current official modes page conflicts on the Soldier starting value—200 in prose and 100 in its threshold list—so confirm it in-game.",
-    "sections": [
-      { "title": "Unlocking Ranked", "paragraphs": ["The official route is Training → Fair → Unfair → Ranked. Fair adds bosses and Deed spending, while Unfair unlocks Old Man and later leader traits."], "bullets": ["Training", "Fair Trial", "Unfair Trial", "Ranked"] },
-      { "title": "Rating thresholds", "paragraphs": ["The official modes guide names eight ladder thresholds, but its prose and threshold list disagree on Soldier. The archive preserves the conflict instead of silently resolving it."], "bullets": ["Unresolved source conflict — Soldier is 200 in prose and 100 in the list", "Peasant — 0", "Soldier — 100 (threshold list)", "Squire — 300", "Knight — 500", "Veteran — 700", "Marshal — 900", "High Marshal — 1,150", "Champion — 1,400"] },
-      { "title": "Treat the ladder as versioned", "paragraphs": ["Early Access balance can change unit, trait, item, and evaluation behavior. A Ranked guide should always display its game version and separate official thresholds from player strategy."] }
+      {
+        "title": "Read the single-player route as a sequence",
+        "paragraphs": [
+          "The official route is Training → Fair Trial → Unfair Trial → Ranked. The current public rules state that three battles without a win end a journey. Fair is identified as the point that unlocks boss battles and Deed spending; Unfair is identified with Old Man and later leader-trait unlocks.",
+          "These are verified route and unlock statements, not evidence that a particular unit, item, or formation is mandatory. Use the Beginner's Guide for the practical decision loop and the Unit, Gear, and Faction records to inspect the data behind a plan."
+        ],
+        "bullets": [
+          "Training → Fair Trial → Unfair Trial → Ranked.",
+          "Three battles without a win end the current journey.",
+          "Fair is the published unlock point for boss battles and Deed spending."
+        ]
+      },
+      {
+        "title": "Treat the Ranked threshold as unresolved",
+        "paragraphs": [
+          "The current official modes page contains a source conflict: its prose says Ranked begins at Soldier: 200, while its threshold list says Soldier: 100. The archive records both statements and does not select one without a newer official or in-game confirmation.",
+          "The same threshold list names Peasant 0, Squire 300, Knight 500, Veteran 700, Marshal 900, High Marshal 1,150, and Champion 1,400. Those values should be read as a versioned public reference rather than a performance ranking or a prediction of which company will climb fastest."
+        ],
+        "bullets": [
+          "Soldier: 200 in prose; 100 in the published threshold list.",
+          "Label a Ranked claim with its game version and source.",
+          "Verify the live game when a public source conflicts with itself."
+        ]
+      },
+      {
+        "title": "Multiplayer is a shared-market tournament",
+        "paragraphs": [
+          "The public multiplayer description supports 2–8 companies, with humans and AI able to share the table. A host chooses how often companies meet; players bid in a shared market, prepare their lines, fight, and follow standings until one champion remains.",
+          "Contested items open at list price and players raise or pass. Mixed-faction lobbies can also auction units. These rules change the meaning of a purchase: an item can be a fit for your company, a contested bid, or both, so do not carry a single-player shopping assumption into a multiplayer claim."
+        ],
+        "bullets": [
+          "2–8 companies; humans and AI can share a tournament.",
+          "Shared markets make contested purchases live bids.",
+          "The host's meeting frequency shapes the season before the first battle."
+        ]
+      },
+      {
+        "title": "Use Deed and faction screens as progression context",
+        "paragraphs": [
+          "The official Deed Shop interface shows a progression surface for earning Deeds through a journey and spending them on rewards. It supports the published statement that progression can unlock later content, but it does not by itself prove every reward, cost, or complete faction roster in the current build.",
+          "When a progression screen names a faction or unit, open the Factions and Units archives for the portion of that record that is publicly auditable. Keep name-only artwork, complete public cards, and editorial build ideas as separate layers."
+        ],
+        "bullets": [
+          "Use the progression screen as a source for what it visibly states.",
+          "Do not infer a complete unlock catalogue from one screen.",
+          "Open the linked record before treating an unlock as a full stat or ability card."
+        ]
+      }
+    ],
+    "media": [
+      {
+        "afterSection": 1,
+        "src": "/images/game/screenshot-9.webp",
+        "alt": "Goodly Trials Deed Shop screen showing journey rewards and faction unlock cards",
+        "caption": "Official progression interface reference: the Deed Shop connects journey rewards with later unlock context, without exposing a complete current database by itself."
+      },
+      {
+        "afterSection": 3,
+        "src": "/images/game/screenshot-1.webp",
+        "alt": "Goodly Trials board, shop, stash, and inspect panel shown together",
+        "caption": "Official game interface reference: regardless of mode, market decisions, board placement, equipment and inspection remain connected decisions."
+      }
     ]
   }
 ]

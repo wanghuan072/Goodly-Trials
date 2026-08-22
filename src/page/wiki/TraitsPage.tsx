@@ -1,12 +1,117 @@
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import { siteConfig } from "@/config/site";
-import { units } from "@/lib/data/game-content";
+import { getUnit, traits } from "@/lib/data/game-content";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
 
-export const metadata = createMetadata("Goodly Trials Traits", "Verified Goodly Trials unit traits, effects, source units, and version freshness for the current public build.", "/wiki/traits");
+export const metadata = createMetadata(
+  "Goodly Trials Traits – Effects, Caps & Unit Cards",
+  "Check Goodly Trials trait effects, listed caps, and the unit cards that carry them.",
+  "/wiki/traits",
+);
+
+function tacticGuide(tactic: string) {
+  return tactic === "Flanking"
+    ? { href: "/guides/formation-guide", label: "Flanking" }
+    : {
+        href: "/guides/formation-guide",
+        label: tactic === "Backline" ? "Formation & Backline" : "Formation",
+      };
+}
 
 export default function TraitsPage() {
-  return <main><section className={styles.hero}><div className={`container ${styles.heroContent}`}><Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Traits" }]} /><p className={styles.eyebrow}>Verified identities · {siteConfig.currentVersion}</p><h1>Goodly Trials Traits</h1><p>Traits ask for a different place or purpose. This first index includes only effects shown on public official unit cards.</p></div></section><section className="container section"><div className={styles.portalGrid}>{units.map((unit) => <Link className={styles.portalCard} key={unit.slug} href={`/wiki/units/${unit.slug}`}><span>✦</span><h2>{unit.trait.name}</h2><p>{unit.trait.effect}</p><b>On {unit.name} →</b></Link>)}</div><section className={styles.sectionBlock}><h2>Traits are not roles</h2><p>A trait can alter growth, income, spell damage, equipment value, or death interactions. It should be read beside a unit&apos;s skills, tactic, stats, and equipment slots—not converted into an unsupported fixed role.</p></section></section></main>;
+  return (
+    <main>
+      <section className={styles.hero}>
+        <div className={`container ${styles.heroContent}`}>
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Wiki", href: "/wiki" },
+              { label: "Traits" },
+            ]}
+          />
+          <p className={styles.eyebrow}>
+            Traits on documented unit cards · latest patch {siteConfig.latestPatchVersion}
+          </p>
+          <h1>Traits &amp; Effects</h1>
+          <p>
+            Compare every trait shown on the unit cards in one place. You can
+            see its listed effect, cap, unit, faction, and tactic without
+            opening a separate page that would add no useful detail.
+          </p>
+        </div>
+      </section>
+      <section className="container section">
+        <div className={styles.portalGrid}>
+          {traits.map((trait) => {
+            const unit = getUnit(trait.unitSlug);
+            const tactic = tacticGuide(unit?.tactic.name ?? "Formation");
+            return (
+              <article
+                className={styles.portalCard}
+                id={trait.slug}
+                key={trait.slug}
+              >
+                <span>✦</span>
+                <small>
+                  Unit ·{" "}
+                  <Link
+                    className="entityLink"
+                    href={`/wiki/units/${trait.unitSlug}`}
+                  >
+                    {trait.unitName}
+                  </Link>
+                </small>
+                <h2>{trait.name}</h2>
+                <p>{trait.effect}</p>
+                {trait.cap && (
+                  <p>
+                    <strong>Listed cap:</strong> {trait.cap}
+                  </p>
+                )}
+                {unit && (
+                  <>
+                    <p>
+                      <strong>Card context:</strong> HP {unit.stats.hp} · ATK{" "}
+                      {unit.stats.atk} · AR {unit.stats.ar} · RNG{" "}
+                      {unit.stats.rng}
+                      <br />
+                      Gear {unit.gear ?? "not listed"} · Trinkets{" "}
+                      {unit.trinkets ?? "not listed"}
+                    </p>
+                    <p>
+                      <Link
+                        className="entityLink"
+                        href={`/wiki/factions/${unit.factionSlug}`}
+                      >
+                        {unit.faction}
+                      </Link>{" "}
+                      ·{" "}
+                      <Link className="entityLink" href={tactic.href}>
+                        {tactic.label}
+                      </Link>
+                    </p>
+                  </>
+                )}
+                <Link href={`/wiki/units/${trait.unitSlug}`}>
+                  <b>View unit card →</b>
+                </Link>
+              </article>
+            );
+          })}
+        </div>
+        <section className={styles.sectionBlock}>
+          <h2>Traits are not roles</h2>
+          <p>
+            A trait can alter growth, income, spell damage, equipment value, or
+            death interactions. It should be read beside a unit&apos;s skills,
+            tactic, stats, and equipment slots—not converted into an unsupported
+            fixed role.
+          </p>
+        </section>
+      </section>
+    </main>
+  );
 }

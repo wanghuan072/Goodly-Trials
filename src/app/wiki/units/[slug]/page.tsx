@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: PageProps<"/wiki/units/[slug]
   const { slug } = await params;
   const unit = getUnit(slug);
   if (!unit) return {};
-  return createMetadata(`${unit.name} – Stats, Trait & Tactics`, `${unit.name} stats, ${unit.trait.name} trait, ${unit.tactic.name} tactic, item notes, and source history for ${unit.gameVersion}.`, `/wiki/units/${unit.slug}`, { image: new URL(unit.image, siteConfig.url).toString() });
+  return createMetadata(unit.tdk.title, unit.tdk.description, `/wiki/units/${unit.slug}`, { image: new URL(unit.image, siteConfig.url).toString(), keywords: unit.tdk.keywords });
 }
 
 export default async function Page({ params }: PageProps<"/wiki/units/[slug]">) {

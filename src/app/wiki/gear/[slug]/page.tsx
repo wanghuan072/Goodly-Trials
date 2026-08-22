@@ -7,14 +7,15 @@ import { createMetadata } from "@/seo/metadata";
 
 export function generateStaticParams() { return items.map((item) => ({ slug: item.slug })); }
 
-export async function generateMetadata({ params }: PageProps<"/wiki/items/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/wiki/gear/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const item = getItem(slug);
   if (!item) return {};
-  return createMetadata(`${item.name} – Effects, Cost & Unit Fit`, `${item.name} requirements, effects, ${item.cost}G cost, editorial unit fit, and verified source data for ${item.gameVersion}.`, `/wiki/items/${item.slug}`, { image: new URL(item.image, siteConfig.url).toString() });
+  const image = item.image.startsWith("http") ? item.image : new URL(item.image, siteConfig.url).toString();
+  return createMetadata(item.tdk.title, item.tdk.description, `/wiki/gear/${item.slug}`, { image, keywords: item.tdk.keywords });
 }
 
-export default async function Page({ params }: PageProps<"/wiki/items/[slug]">) {
+export default async function Page({ params }: PageProps<"/wiki/gear/[slug]">) {
   const { slug } = await params;
   const item = getItem(slug);
   if (!item) notFound();

@@ -1,12 +1,144 @@
+import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
+import EntityLinks from "@/components/content/EntityLinks";
 import JsonLd from "@/seo/JsonLd";
 import { siteConfig } from "@/config/site";
 import type { Guide } from "@/types/content";
 import styles from "@/style/page/archive/archive.module.css";
 
-type GuideDetail = { quickAnswer: string; sections: { title: string; paragraphs: string[]; bullets?: string[] }[] };
+type GuideDetail = {
+  quickAnswer: string;
+  sections: { title: string; paragraphs: string[]; bullets?: string[] }[];
+  media?: {
+    afterSection: number;
+    src: string;
+    alt: string;
+    caption: string;
+  }[];
+};
 
-export default function GuideDetailPage({ guide, detail }: { guide: Guide; detail: GuideDetail }) {
-  return <main><JsonLd data={{ "@context": "https://schema.org", "@type": "Article", headline: guide.title, description: guide.excerpt, dateModified: guide.updated, author: { "@type": "Organization", name: siteConfig.name }, mainEntityOfPage: `${siteConfig.url}/guides/${guide.slug}` }} /><section className={styles.hero}><div className={`container ${styles.heroContent}`}><Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Guides", href: "/guides" }, { label: guide.title }]} /><p className={styles.eyebrow}>{guide.category} · Updated {guide.updated}</p><h1>{guide.title}</h1><p>{guide.excerpt}</p></div></section><section className={`container section ${styles.contentGrid}`}><article className={`${styles.mainColumn} ${styles.prose}`}><div className={styles.quickAnswer}><b>Quick answer</b><p>{detail.quickAnswer}</p></div>{detail.sections.map((section, index) => <section id={`section-${index + 1}`} key={section.title}><h2>{section.title}</h2>{section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}</section>)}<h2>Version & source note</h2><p>This guide is an independent interpretation of official public mechanics for v0.301. It distinguishes quoted game values from strategy judgment and should be reviewed after balance changes.</p></article><aside className={styles.sidebar}><h2>On this page</h2>{detail.sections.map((section, index) => <a key={section.title} href={`#section-${index + 1}`}>{section.title}</a>)}<h3>Related archives</h3><Link href="/wiki/units">Units</Link><Link href="/wiki/items">Items</Link><Link href="/wiki/mechanics">Mechanics</Link><Link href="/updates">Updates</Link><h3>Primary sources</h3><a href="https://goodlytrials.com/wiki" target="_blank" rel="noreferrer">Official mechanics ↗</a><a href="https://goodlytrials.com/wiki/modes" target="_blank" rel="noreferrer">Official modes ↗</a></aside></section></main>;
+export default function GuideDetailPage({
+  guide,
+  detail,
+}: {
+  guide: Guide;
+  detail: GuideDetail;
+}) {
+  return (
+    <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: guide.title,
+          description: guide.excerpt,
+          dateModified: guide.updated,
+          author: { "@type": "Organization", name: siteConfig.name },
+          mainEntityOfPage: `${siteConfig.url}/guides/${guide.slug}`,
+        }}
+      />
+      <section className={styles.hero}>
+        <div className={`container ${styles.heroContent}`}>
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Guides", href: "/guides" },
+              { label: guide.title },
+            ]}
+          />
+          <p className={styles.eyebrow}>
+            {guide.category} · Updated {guide.updated}
+          </p>
+          <h1>{guide.title}</h1>
+          <p>{guide.excerpt}</p>
+        </div>
+      </section>
+      <section className={`container section ${styles.contentGrid}`}>
+        <article className={`${styles.mainColumn} ${styles.prose}`}>
+          <div className={styles.quickAnswer}>
+            <b>Start here</b>
+            <p>
+              <EntityLinks currentHref={`/guides/${guide.slug}`}>
+                {detail.quickAnswer}
+              </EntityLinks>
+            </p>
+          </div>
+          {detail.sections.map((section, index) => (
+            <div key={section.title}>
+              <section id={`section-${index + 1}`}>
+                <h2>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>
+                    <EntityLinks currentHref={`/guides/${guide.slug}`}>
+                      {paragraph}
+                    </EntityLinks>
+                  </p>
+                ))}
+                {section.bullets && (
+                  <ul>
+                    {section.bullets.map((item) => (
+                      <li key={item}>
+                        <EntityLinks currentHref={`/guides/${guide.slug}`}>
+                          {item}
+                        </EntityLinks>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+              {detail.media
+                ?.filter((media) => media.afterSection === index + 1)
+                .map((media) => (
+                  <figure className={styles.guideFigure} key={media.src}>
+                    <Image
+                      src={media.src}
+                      alt={media.alt}
+                      width={1920}
+                      height={1080}
+                      sizes="(max-width: 1024px) 100vw, 820px"
+                    />
+                    <figcaption>{media.caption}</figcaption>
+                  </figure>
+                ))}
+            </div>
+          ))}
+          <h2>Before you use this guide</h2>
+          <p>
+            This guide uses the game rules and cards currently shown for v0.301.
+            The card values are kept separate from player advice, and the guide
+            should be checked again after balance changes.
+          </p>
+        </article>
+        <aside className={styles.sidebar}>
+          <h2>On this page</h2>
+          {detail.sections.map((section, index) => (
+            <a key={section.title} href={`#section-${index + 1}`}>
+              {section.title}
+            </a>
+          ))}
+          <h3>Keep exploring</h3>
+          <Link href="/wiki/units">Units</Link>
+          <Link href="/wiki/gear">Gear</Link>
+          <Link href="/guides">All gameplay guides</Link>
+          <Link href="/updates">Updates</Link>
+          <h3>Official game links</h3>
+          <a
+            href="https://goodlytrials.com/wiki"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Official mechanics ↗
+          </a>
+          <a
+            href="https://goodlytrials.com/wiki/modes"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Official modes ↗
+          </a>
+        </aside>
+      </section>
+    </main>
+  );
 }

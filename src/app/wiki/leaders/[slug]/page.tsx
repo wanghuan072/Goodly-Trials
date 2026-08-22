@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: PageProps<"/wiki/leaders/[slu
   const { slug } = await params;
   const leader = getLeader(slug);
   if (!leader) return {};
-  return createMetadata(`${leader.name} – Leader Stats & Trait`, `${leader.name} leader-card stats, ${leader.trait.name} trait, equipment slots, and source history for ${leader.gameVersion}.`, `/wiki/leaders/${leader.slug}`, { image: null });
+  return createMetadata(leader.tdk.title, leader.tdk.description, `/wiki/leaders/${leader.slug}`, { image: null, keywords: leader.tdk.keywords });
 }
 
 export default async function Page({ params }: PageProps<"/wiki/leaders/[slug]">) {

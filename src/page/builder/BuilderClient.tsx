@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import UnitSprite from "@/components/content/UnitSprite";
-import { siteConfig } from "@/config/site";
-import { activeBoardCells, BOARD_CELLS, BOARD_COLUMNS, BOARD_ROWS, followerCapLabel, followerLimitForRules, MAX_TRIAL_WEEK } from "@/lib/builder/board-rules";
+import { activeBoardCells, BOARD_CELLS, BOARD_COLUMNS, BOARD_ROWS, BOARD_RULES_VERSION, followerCapLabel, followerLimitForRules, MAX_TRIAL_WEEK } from "@/lib/builder/board-rules";
+import { itemKind, itemSlotUse, type EquipmentKind } from "@/lib/builder/equipment-rules";
 import { BUILDER_PRESET_KEY, BUILDER_STORAGE_KEY, type BuilderPlanState } from "@/lib/builder/presets";
 import type { FactionSlug, Item, UnitStats } from "@/types/content";
 import styles from "@/style/page/builder/builder.module.css";
@@ -17,6 +17,7 @@ export type BuilderRosterUnit = {
   accent: string;
   image: string;
   verified: boolean;
+  gameVersion?: string;
   gear?: number;
   trinkets?: number;
   stats?: UnitStats;
@@ -46,7 +47,6 @@ type CatalogTab = "units" | "items" | "leaders";
 type CatalogPreview = { kind: "unit" | "item" | "leader"; slug: string } | null;
 type PendingPick = { kind: "unit" | "item"; slug: string } | null;
 type DragPayload = { kind: "unit" | "item" | "leader" | "slot"; slug?: string; from?: number };
-type EquipmentKind = "gear" | "trinkets" | "consumable";
 
 const DRAG_TYPE = "application/x-goodly-builder";
 const MODES = ["Theorycraft", "Single-player", "Ranked", "Multiplayer"];
@@ -106,17 +106,6 @@ function decodePreset(value: string): BuilderState | null {
   }
 }
 
-function itemSlotUse(item: Item) {
-  if (item.type.startsWith("Potion")) return { gear: 0, trinkets: 0 };
-  if (item.type.startsWith("Trinket") || item.type.startsWith("Spell")) return { gear: 0, trinkets: 1 };
-  return { gear: item.type.startsWith("Two-handed") ? 2 : 1, trinkets: 0 };
-}
-
-function itemKind(item: Item): EquipmentKind {
-  if (item.type.startsWith("Potion")) return "consumable";
-  return item.type.startsWith("Trinket") || item.type.startsWith("Spell") ? "trinkets" : "gear";
-}
-
 function writeDrag(event: DragEvent, payload: DragPayload) {
   const encoded = JSON.stringify(payload);
   event.dataTransfer.effectAllowed = payload.kind === "slot" || payload.from !== undefined ? "move" : "copy";
@@ -149,6 +138,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const [dropTarget, setDropTarget] = useState<number | null>(null);
   const [draggingPayload, setDraggingPayload] = useState<DragPayload | null>(null);
   const [catalogPreview, setCatalogPreview] = useState<CatalogPreview>(null);
+  const [confirmClear, setConfirmClear] = useState(false);
   const dragPointerY = useRef<number | null>(null);
   const dragScrollFrame = useRef<number | null>(null);
 
@@ -288,7 +278,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
   function unitPlacementError(index: number, slug: string) {
     const unit = unitBySlug.get(slug);
-    if (!unit) return "That unit is not available in the verified roster";
+    if (!unit) return "That unit is not available in the current roster list";
     if (index < 0 || index >= BOARD_CELLS || !availableCells.has(index)) return `That position is not available in week ${build.week}`;
     if (!selectedLeader) return "Assign a leader before placing followers";
     if (build.mode !== "Multiplayer" && unit.factionSlug !== selectedLeader.factionSlug) return `${unit.name} cannot join a ${selectedLeader.faction} company`;
@@ -302,7 +292,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     const slot = build.slots[index];
     const unit = slot ? unitBySlug.get(slot.unitSlug) : undefined;
     if (!availableCells.has(index)) return `That position is not available in week ${build.week}`;
-    if (!item) return "That item is not available in the verified archive";
+    if (!item) return "That item is not available in the current gear list";
     if (!unit) return "Place a unit in that board slot first";
 
     const existingIndex = build.slots.findIndex((candidate) => candidate.itemSlugs.includes(slug));
@@ -311,7 +301,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
     const required = itemSlotUse(item);
     if (required.gear === 0 && required.trinkets === 0) return null;
-    if (!unit.verified || unit.gear === undefined || unit.trinkets === undefined) return `${unit.name} has no verified public equipment capacity`;
+    if (!unit.verified || unit.gear === undefined || unit.trinkets === undefined) return `${unit.name} does not have enough equipment details shown yet`;
 
     const usage = slotUsage(slot);
     const capacity = slotCapacity(slot, unit);
@@ -520,7 +510,17 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     setTab("leaders");
     setFaction("all");
     setQuery("");
+    setConfirmClear(false);
     setMessage("Company cleared · choose a leader to begin");
+  }
+
+  function requestClearBuild() {
+    if (confirmClear) {
+      clearBuild();
+      return;
+    }
+    setConfirmClear(true);
+    setMessage("Clear this saved company? Press Confirm clear to continue");
   }
 
   function removeUnit(index: number) {
@@ -574,7 +574,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </div>
         <div className={styles.toolbarStatus}>
           <div><span>Current action</span><strong aria-live="polite">{message}</strong><small>Changes save automatically on this device</small></div>
-          <button className={styles.clearButton} type="button" onClick={clearBuild}>Clear company</button>
+          <button className={`${styles.clearButton} ${confirmClear ? styles.confirmClear : ""}`} type="button" onBlur={() => setConfirmClear(false)} onClick={requestClearBuild}>{confirmClear ? "Confirm clear" : "Clear company"}</button>
         </div>
       </div>
 
@@ -587,29 +587,31 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
       <div className={styles.workbench}>
         <section className={`${styles.gamePanel} ${styles.boardPanel}`}>
-          <header className={styles.panelHeader}><strong>Board [{filledCount}/{followerLimit}]</strong><span>Official placement rules · v0.302</span></header>
+          <header className={styles.panelHeader}><strong>Board [{filledCount}/{followerLimit}]</strong><span>Placement rules last verified · {BOARD_RULES_VERSION}</span></header>
           <div className={styles.boardStage}>
             <div className={`${styles.rulesStrip} ${rulesInvalid ? styles.rulesInvalid : ""}`}><strong>{selectedLeader ? rulesSummary : "Leader required"}</strong><span>Week {build.week} · {availableCells.size} active cells · leader occupies one combatant slot</span></div>
-            <div className={styles.boardTopbar}>
-              <div className={styles.leaderDock} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
-                <button className={styles.leaderDockMain} type="button" onClick={() => setTab("leaders")}>
-                  <span className={styles.dockLabel}>Leader</span>
-                  <b>{selectedLeader?.name ?? "+ ASSIGN LEADER"}</b>
-                  <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Drag a leader here or open Leaders"}</small>
-                </button>
-                {selectedLeader && <button className={styles.removeLeaderButton} type="button" onClick={removeLeader} aria-label={`Remove ${selectedLeader.name} as leader`} title="Remove leader">×</button>}
-              </div>
-              <div className={styles.boardLegend}><span><i /> Open</span><span><i /> Occupied</span><span><i /> Locked</span><strong>Only active cells within the follower cap accept units</strong></div>
-            </div>
-            <div className={styles.formationLayout}>
-              <div className={styles.rowControls} aria-label="Formation row controls">
-                {Array.from({ length: BOARD_ROWS }, (_, rowIndex) => {
-                  const rowIsAvailable = Array.from({ length: BOARD_COLUMNS }, (_, column) => rowIndex * BOARD_COLUMNS + column).some((index) => availableCells.has(index));
-                  return <button type="button" key={rowIndex} disabled={!rowIsAvailable} onClick={() => rotateFormationRow(rowIndex)} title={rowIsAvailable ? `Shift active cells in formation row ${rowIndex + 1} right` : `Row ${rowIndex + 1} is locked in week ${build.week}`}><b>↻</b><small>ROW {rowIndex + 1}</small></button>;
-                })}
-              </div>
-              <div className={styles.boardGrid}>
-                {build.slots.map((slot, index) => {
+            <div className={styles.boardViewport} tabIndex={0} role="region" aria-label="Formation board. Scroll horizontally on smaller screens.">
+              <div className={styles.boardCanvas}>
+                <div className={styles.boardTopbar}>
+                  <div className={styles.leaderDock} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
+                    <button className={styles.leaderDockMain} type="button" onClick={() => setTab("leaders")}>
+                      <span className={styles.dockLabel}>Leader</span>
+                      <b>{selectedLeader?.name ?? "+ ASSIGN LEADER"}</b>
+                      <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Drag a leader here or open Leaders"}</small>
+                    </button>
+                    {selectedLeader && <button className={styles.removeLeaderButton} type="button" onClick={removeLeader} aria-label={`Remove ${selectedLeader.name} as leader`} title="Remove leader">×</button>}
+                  </div>
+                  <div className={styles.boardLegend}><span><i /> Open</span><span><i /> Occupied</span><span><i /> Locked</span><strong>Only active cells within the follower cap accept units</strong></div>
+                </div>
+                <div className={styles.formationLayout}>
+                  <div className={styles.rowControls} aria-label="Formation row controls">
+                    {Array.from({ length: BOARD_ROWS }, (_, rowIndex) => {
+                      const rowIsAvailable = Array.from({ length: BOARD_COLUMNS }, (_, column) => rowIndex * BOARD_COLUMNS + column).some((index) => availableCells.has(index));
+                      return <button type="button" key={rowIndex} disabled={!rowIsAvailable} onClick={() => rotateFormationRow(rowIndex)} title={rowIsAvailable ? `Shift active cells in formation row ${rowIndex + 1} right` : `Row ${rowIndex + 1} is locked in week ${build.week}`}><b>↻</b><small>ROW {rowIndex + 1}</small></button>;
+                    })}
+                  </div>
+                  <div className={styles.boardGrid}>
+                    {build.slots.map((slot, index) => {
                 const unit = unitBySlug.get(slot.unitSlug);
                 const cellAvailable = availableCells.has(index);
                 const gearItems = equipmentFor(slot, "gear");
@@ -644,25 +646,27 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                     </> : cellAvailable ? <><span className={styles.emptyCell}>+</span><b className={styles.emptyText}>{pendingPick ? "PLACE HERE" : "OPEN"}</b></> : <span className={styles.lockedCell}><b>×</b><small>LOCKED</small></span>}
                   </button>
                   {unit && <div className={styles.loadoutDock}>
-                    <div><label>Gear {usage.gear}/{unit.gear === undefined ? "?" : capacity.gear}</label><span className={styles.itemSlots}>{gearItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); startDrag(event, { kind: "item", slug: item.slug, from: index }); }} onDragEnd={finishDrag} onClick={() => removeItem(index, item.slug)} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(0, capacity.gear - usage.gear) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
-                    <div><label>Trinkets {usage.trinkets}/{unit.trinkets === undefined ? "?" : capacity.trinkets}</label><span className={styles.itemSlots}>{trinketItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); startDrag(event, { kind: "item", slug: item.slug, from: index }); }} onDragEnd={finishDrag} onClick={() => removeItem(index, item.slug)} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif")} /></button>)}{Array.from({ length: Math.max(0, capacity.trinkets - usage.trinkets) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
-                    {consumables.length > 0 && <div className={styles.consumables}><label>Use</label><span className={styles.itemSlots}>{consumables.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); startDrag(event, { kind: "item", slug: item.slug, from: index }); }} onDragEnd={finishDrag} onClick={() => removeItem(index, item.slug)} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} /></button>)}</span></div>}
+                    <div><label>Gear {usage.gear}/{unit.gear === undefined ? "?" : capacity.gear}</label><span className={styles.itemSlots}>{gearItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); startDrag(event, { kind: "item", slug: item.slug, from: index }); }} onDragEnd={finishDrag} onClick={() => removeItem(index, item.slug)} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif") || item.image.startsWith("http")} /></button>)}{Array.from({ length: Math.max(0, capacity.gear - usage.gear) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
+                    <div><label>Trinkets {usage.trinkets}/{unit.trinkets === undefined ? "?" : capacity.trinkets}</label><span className={styles.itemSlots}>{trinketItems.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); startDrag(event, { kind: "item", slug: item.slug, from: index }); }} onDragEnd={finishDrag} onClick={() => removeItem(index, item.slug)} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif") || item.image.startsWith("http")} /></button>)}{Array.from({ length: Math.max(0, capacity.trinkets - usage.trinkets) }, (_, emptyIndex) => <i key={emptyIndex} />)}</span></div>
+                    {consumables.length > 0 && <div className={styles.consumables}><label>Use</label><span className={styles.itemSlots}>{consumables.map((item) => <button key={item.slug} type="button" draggable onDragStart={(event) => { event.stopPropagation(); startDrag(event, { kind: "item", slug: item.slug, from: index }); }} onDragEnd={finishDrag} onClick={() => removeItem(index, item.slug)} aria-label={`Remove ${item.name}`} title={`Drag to transfer or click × to remove ${item.name}`}><Image src={item.image} alt="" width={24} height={24} unoptimized={item.image.endsWith(".gif") || item.image.startsWith("http")} /></button>)}</span></div>}
                   </div>}
                 </article>;
-                })}
+                    })}
+                  </div>
+                  <aside className={styles.formationRail} aria-label="Formation row occupancy">
+                    {Array.from({ length: BOARD_ROWS }, (_, rowIndex) => {
+                      const rowCount = build.slots.slice(rowIndex * BOARD_COLUMNS, (rowIndex + 1) * BOARD_COLUMNS).filter((slot) => slot.unitSlug).length;
+                      const rowIsAvailable = Array.from({ length: BOARD_COLUMNS }, (_, column) => rowIndex * BOARD_COLUMNS + column).some((index) => availableCells.has(index));
+                      return <div className={rowIsAvailable ? "" : styles.lockedRail} key={rowIndex}><span>◈</span><b>FORMATION {rowIndex + 1}</b><small>{rowIsAvailable ? `${rowCount} ${rowCount === 1 ? "unit" : "units"} positioned` : `Locked · week ${build.week}`}</small></div>;
+                    })}
+                  </aside>
+                </div>
               </div>
-              <aside className={styles.formationRail} aria-label="Formation row occupancy">
-                {Array.from({ length: BOARD_ROWS }, (_, rowIndex) => {
-                  const rowCount = build.slots.slice(rowIndex * BOARD_COLUMNS, (rowIndex + 1) * BOARD_COLUMNS).filter((slot) => slot.unitSlug).length;
-                  const rowIsAvailable = Array.from({ length: BOARD_COLUMNS }, (_, column) => rowIndex * BOARD_COLUMNS + column).some((index) => availableCells.has(index));
-                  return <div className={rowIsAvailable ? "" : styles.lockedRail} key={rowIndex}><span>◈</span><b>FORMATION {rowIndex + 1}</b><small>{rowIsAvailable ? `${rowCount} ${rowCount === 1 ? "unit" : "units"} positioned` : `Locked · week ${build.week}`}</small></div>;
-                })}
-              </aside>
             </div>
             {previewUnit && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
               <header className={styles.panelHeader}><strong>Inspect · Unit</strong><span>Archive hover</span></header>
               <div className={styles.inspectCard}>
-                <header><small>{previewUnit.faction}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? `PUBLIC CARD · ${siteConfig.currentVersion}` : "ROSTER RECORD"}</span></header>
+                <header><small>{previewUnit.faction}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? `UNIT CARD · ${previewUnit.gameVersion ?? "VERSION NOT LISTED"}` : "ROSTER NAME · CARD DETAILS PENDING"}</span></header>
                 <div className={styles.inspectStage}>
                   <div className={styles.slotPreview}><small>GEAR: {previewUnit.gear ?? "?"}</small><span>{Array.from({ length: previewUnit.gear ?? 2 }, (_, index) => <i key={index} />)}</span></div>
                   <UnitSprite src={previewUnit.image} color="#eeeeee" large />
@@ -682,8 +686,8 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               <div className={styles.catalogInspect}>
                 <header><small>{previewItem.type}</small><h2>{previewItem.name}</h2><span>{previewItem.gameVersion}</span></header>
                 <div className={styles.itemInspectStage}>
-                  <Image src={previewItem.image} alt="" width={96} height={96} unoptimized={previewItem.image.endsWith(".gif")} />
-                  <div><small>SHOP COST</small><strong>{previewItem.cost}G</strong><span>{previewItem.requirements ? `REQUIRES ${previewItem.requirements}` : "NO REQUIREMENT LISTED"}</span></div>
+                  <Image src={previewItem.image} alt="" width={96} height={96} unoptimized={previewItem.image.endsWith(".gif") || previewItem.image.startsWith("http")} />
+                  <div><small>SHOP COST</small><strong>{previewItem.cost === undefined ? "NOT PUBLISHED" : `${previewItem.cost}G`}</strong><span>{previewItem.requirements ? `REQUIRES ${previewItem.requirements}` : "NO REQUIREMENT LISTED"}</span></div>
                 </div>
                 <section className={styles.catalogEffects}><h3>Effects</h3>{previewItem.effects.map((effect) => <p key={effect}>{effect}</p>)}</section>
                 <footer>VERIFIED {previewItem.lastVerified}</footer>
@@ -759,7 +763,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                   setMessage(`${item.name} picked up · tap a compatible unit card`);
                 }}
               >
-                <span className={styles.archiveIndex}>{index + 1}</span><Image src={item.image} alt="" width={48} height={48} unoptimized={item.image.endsWith(".gif")} /><span className={styles.archiveIdentity}><small>{item.type}</small><strong>{item.name}</strong><em>{item.effects.slice(0, 2).join(" · ")}</em></span><b>{item.cost}G</b>
+                <span className={styles.archiveIndex}>{index + 1}</span><Image src={item.image} alt="" width={48} height={48} unoptimized={item.image.endsWith(".gif") || item.image.startsWith("http")} /><span className={styles.archiveIdentity}><small>{item.type}</small><strong>{item.name}</strong><em>{item.effects.slice(0, 2).join(" · ")}</em></span><b>{item.cost === undefined ? "—" : `${item.cost}G`}</b>
               </button>;
             })}
             {tab === "leaders" && filteredLeaders.map((leader, index) => <button
@@ -780,7 +784,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
       </div>
 
-      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Choose a leader and trial week first. The Board enforces unlocked positions, faction or multiplayer follower caps, one unit per cell, and each verified unit&apos;s Gear and Trinket capacity. Hover, focus, or tap a record in the Archive to inspect it; blocked records show why they cannot be dragged.</p><p>Placement limits were verified against the official live v0.302 game client on 2026-08-20. Public unit cards remain labeled by their own source version; the Builder does not claim strength or legality beyond the rules enforced here.</p></aside></div>
+      <div className={styles.notesPanel}><label><span>Player notes</span><textarea value={build.notes} maxLength={280} onChange={(event) => setBuild({ ...build, notes: event.target.value })} placeholder="Record positioning, shopping priorities, trait assumptions, or questions for other players…" /></label><aside><strong>Builder controls</strong><p>Choose a leader and trial week first. The Board enforces unlocked positions, faction or multiplayer follower caps, one unit per cell, and each verified unit&apos;s Gear and Trinket capacity. Hover, focus, or tap a record in the Archive to inspect it; blocked records show why they cannot be dragged.</p><p>Placement limits were last verified against the official {BOARD_RULES_VERSION} game client on 2026-08-20. Public unit cards keep their own source version; the Builder does not claim a later card update it cannot verify.</p></aside></div>
     </section>
   );
 }

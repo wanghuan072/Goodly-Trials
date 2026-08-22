@@ -1,5 +1,11 @@
 export type FactionSlug = "goodly-folk" | "bone-host" | "belowborn";
 
+export type ContentTdk = {
+  title: string;
+  description: string;
+  keywords: string[];
+};
+
 export type UnitStats = {
   es: number;
   hp: number;
@@ -35,6 +41,7 @@ export type Unit = {
   gameVersion: string;
   lastVerified: string;
   source: string;
+  tdk: ContentTdk;
 };
 
 export type Item = {
@@ -44,10 +51,25 @@ export type Item = {
   image: string;
   requirements?: string;
   effects: string[];
-  cost: number;
+  cost?: number;
   gameVersion: string;
   lastVerified: string;
   source: string;
+  tdk: ContentTdk;
+};
+
+export type Trait = {
+  slug: string;
+  name: string;
+  effect: string;
+  cap?: string;
+  unitSlug: string;
+  unitName: string;
+  faction: string;
+  gameVersion: string;
+  lastVerified: string;
+  source: string;
+  tdk: ContentTdk;
 };
 
 export type Faction = {
@@ -58,6 +80,7 @@ export type Faction = {
   summary: string;
   playstyle: string;
   roster: string[];
+  tdk: ContentTdk;
 };
 
 export type Guide = {
@@ -66,6 +89,7 @@ export type Guide = {
   category: string;
   excerpt: string;
   updated: string;
+  tdk: ContentTdk;
 };
 
 export type Build = {
@@ -110,4 +134,5 @@ export type Leader = {
   gameVersion: string;
   lastVerified: string;
   source: string;
+  tdk: ContentTdk;
 };

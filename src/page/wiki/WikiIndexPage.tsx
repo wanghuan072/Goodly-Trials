@@ -97,8 +97,8 @@ export default function WikiIndexPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-5.webp"
-          alt="Goodly Trials combat log and unit stat interface"
+          src="/images/game/hero-battlefield-v2.webp"
+          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
           fill
           sizes="100vw"
           priority

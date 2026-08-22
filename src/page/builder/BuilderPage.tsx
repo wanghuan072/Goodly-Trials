@@ -123,8 +123,8 @@ export default function BuilderPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-1.webp"
-          alt="Official Goodly Trials formation board with unit cards, shop, and inspect panel"
+          src="/images/game/hero-battlefield-v2.webp"
+          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
           fill
           sizes="100vw"
         />

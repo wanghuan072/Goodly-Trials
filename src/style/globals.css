@@ -30,8 +30,8 @@
   --text-dark: #070808;
   --font-display: var(--font-pixel), "Courier New", monospace;
   --font-heading: var(--font-pixel), "Courier New", monospace;
-  --font-body: var(--font-mono), Consolas, monospace;
-  --font-prose: var(--font-crimson), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-pixel), "Courier New", monospace;
+  --font-prose: var(--font-pixel), "Courier New", monospace;
   --shadow-deep: 0 22px 52px rgba(0, 0, 0, 0.62);
   --space-1: 4px;
   --space-2: 8px;

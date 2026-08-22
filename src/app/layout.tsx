@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Crimson_Pro, Pixelify_Sans, Space_Mono } from "next/font/google";
+import { Pixelify_Sans } from "next/font/google";
 import AppFooter from "@/components/layout/AppFooter";
 import AppHeader from "@/components/layout/AppHeader";
 import { siteConfig } from "@/config/site";
@@ -11,20 +11,6 @@ const pixel = Pixelify_Sans({
   subsets: ["latin"],
   variable: "--font-pixel",
   weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const mono = Space_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "700"],
-  display: "swap",
-});
-
-const crimson = Crimson_Pro({
-  subsets: ["latin"],
-  variable: "--font-crimson",
-  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -44,5 +30,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  return <html lang="en" className={`${pixel.variable} ${mono.variable} ${crimson.variable}`}><body><JsonLd data={{ "@context": "https://schema.org", "@graph": [{ "@type": "WebSite", "@id": `${siteConfig.url}/#website`, url: siteConfig.url, name: siteConfig.name, description: siteConfig.description, inLanguage: "en", potentialAction: { "@type": "SearchAction", target: `${siteConfig.url}/search?q={search_term_string}`, "query-input": "required name=search_term_string" } }, { "@type": "WebPage", "@id": `${siteConfig.url}/#webpage`, url: siteConfig.url, name: pageTdk["/"].title, description: pageTdk["/"].description, isPartOf: { "@id": `${siteConfig.url}/#website` }, inLanguage: "en" }, { "@type": "VideoGame", "@id": `${siteConfig.url}/#game`, name: "Goodly Trials", url: siteConfig.officialUrl, description: "A turn-based strategy game with roguelike and auto-battler elements.", genre: ["Turn-based strategy", "Roguelike", "Auto battler"], playMode: ["SinglePlayer", "MultiPlayer"], publisher: { "@type": "Organization", name: "Osborn Design Works" } }] }} /><a className="skip-link" href="#main-content">Skip to content</a><AppHeader /><div id="main-content">{children}</div><AppFooter /></body></html>;
+  return <html lang="en" className={pixel.variable}><body><JsonLd data={{ "@context": "https://schema.org", "@graph": [{ "@type": "WebSite", "@id": `${siteConfig.url}/#website`, url: siteConfig.url, name: siteConfig.name, description: siteConfig.description, inLanguage: "en", potentialAction: { "@type": "SearchAction", target: `${siteConfig.url}/search?q={search_term_string}`, "query-input": "required name=search_term_string" } }, { "@type": "WebPage", "@id": `${siteConfig.url}/#webpage`, url: siteConfig.url, name: pageTdk["/"].title, description: pageTdk["/"].description, isPartOf: { "@id": `${siteConfig.url}/#website` }, inLanguage: "en" }, { "@type": "VideoGame", "@id": `${siteConfig.url}/#game`, name: "Goodly Trials", url: siteConfig.officialUrl, description: "A turn-based strategy game with roguelike and auto-battler elements.", genre: ["Turn-based strategy", "Roguelike", "Auto battler"], playMode: ["SinglePlayer", "MultiPlayer"], publisher: { "@type": "Organization", name: "Osborn Design Works" } }] }} /><a className="skip-link" href="#main-content">Skip to content</a><AppHeader /><div id="main-content">{children}</div><AppFooter /></body></html>;
 }

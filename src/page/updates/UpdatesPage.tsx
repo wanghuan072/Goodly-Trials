@@ -15,8 +15,8 @@ export default function UpdatesPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-4.webp"
-          alt="Goodly Trials battlefield after combat"
+          src="/images/game/hero-battlefield-v2.webp"
+          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
           fill
           preload
           sizes="100vw"

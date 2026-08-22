@@ -89,8 +89,8 @@ export default function HomePage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-3.webp"
-          alt="Official Goodly Trials combat screenshot showing a company on the tactical battlefield"
+          src="/images/game/hero-battlefield-v2.webp"
+          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
           fill
           preload
           sizes="100vw"
@@ -145,17 +145,6 @@ export default function HomePage() {
               </div>
             </dl>
           </div>
-          <figure className={styles.heroStage}>
-            <Image
-              className={styles.heroStageImage}
-              src="/images/game/screenshot-8.webp"
-              alt="Official Goodly Trials Vows screen with gothic title art and reward tracks"
-              fill
-              preload
-              sizes="(max-width: 1024px) 100vw, 52vw"
-            />
-            <figcaption>Official game art · Vows &amp; rewards</figcaption>
-          </figure>
         </div>
       </section>
 

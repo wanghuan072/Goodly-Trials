@@ -1,8 +1,8 @@
 .hero { position: relative; min-height: 330px; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: #050606; }
-.heroImage { object-fit: cover; object-position: center 30%; filter: brightness(.7) contrast(1.08); }
+.heroImage { object-fit: cover; object-position: center; filter: brightness(.84) contrast(1.08) saturate(.72); image-rendering: pixelated; }
 .heroShade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,4,4,.82), rgba(5,6,6,.42) 52%, rgba(5,6,6,.2) 100%); }
 .heroInner { position: relative; z-index: 1; display: grid; width: 100%; min-height: 330px; grid-template-rows: auto 1fr auto; padding-block: 24px 0; }
-.heroCopy { align-self: center; max-width: 62ch; padding: 0; }
+.heroCopy { align-self: center; max-width: 62ch; padding: 22px 24px; border-left: 3px solid var(--accent-red); background: linear-gradient(90deg, rgba(3,4,4,.52), transparent); }
 .eyebrow, .sectionHeader p, .navLabel { color: var(--accent-red); font-size: 0.75rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
 .heroCopy h1 { max-width: 13ch; margin-top: 10px; font-size: clamp(2.5rem, 5vw, 4rem); line-height: .98; text-transform: uppercase; }
 .heroCopy > p:last-child { max-width: 590px; margin-top: 12px; color: var(--parchment); font-size: 0.875rem; line-height: 1.65; }

@@ -275,8 +275,8 @@ export default function BuildsPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-1.webp"
-          alt="Goodly Trials formation board with unit cards, shop records, and an inspection panel"
+          src="/images/game/hero-battlefield-v2.webp"
+          alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield"
           fill
           preload
           sizes="100vw"
@@ -301,16 +301,6 @@ export default function BuildsPage() {
               <Link href="/builder">Start an empty company</Link>
             </div>
           </div>
-          <figure className={styles.heroStage}>
-            <Image
-              className={styles.heroStageImage}
-              src="/images/game/screenshot-1.webp"
-              alt="Official Goodly Trials formation board with unit cards and inspect panel"
-              fill
-              sizes="(max-width: 1024px) 100vw, 560px"
-            />
-            <figcaption>Official game board · formation and inspect</figcaption>
-          </figure>
         </div>
       </section>
 

@@ -17,7 +17,7 @@ export default function GuidesPage() {
   return (
     <main>
       <section className={styles.hero}>
-        <Image className={styles.heroImage} src="/images/game/screenshot-7.webp" alt="Goodly Trials leader training interface" fill preload sizes="100vw" />
+        <Image className={styles.heroImage} src="/images/game/hero-battlefield-v2.webp" alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield" fill preload sizes="100vw" />
         <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Guides" }]} />

@@ -18,7 +18,7 @@ export default function FactionsPage() {
   return (
     <main>
       <section className={archive.hero}>
-        <Image className={archive.heroImage} src="/images/game/screenshot-9.webp" alt="Goodly Trials Deed Shop showing faction reward tracks" fill preload sizes="100vw" />
+        <Image className={archive.heroImage} src="/images/game/hero-battlefield-v2.webp" alt="Pixel-art company facing enemy formations across a moonlit tactical battlefield" fill preload sizes="100vw" />
         <div className={archive.heroShade} />
         <div className={`container ${archive.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Factions" }]} />

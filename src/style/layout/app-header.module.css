@@ -10,7 +10,7 @@
 .wikiMenuTrigger { display: inline-flex; align-items: center; gap: 6px; line-height: 1; }
 .desktopNav > a:hover, .wikiMenuTrigger:hover, .wikiMenuTrigger[aria-expanded="true"], .desktopNav > .activeLink, .wikiMenuTrigger.activeLink { border-color: var(--accent-red); color: var(--gold-bright); }
 .wikiMenu { position: relative; }
-.wikiMenuArrow { display: block; color: currentColor; font-family: Arial, sans-serif; font-size: 0.875rem; line-height: 1; transform: translateY(1px); }
+.wikiMenuArrow { display: block; color: currentColor; font-family: inherit; font-size: 0.875rem; line-height: 1; transform: translateY(1px); }
 .wikiMenu > div { position: absolute; top: 66px; left: -18px; display: grid; width: 220px; padding: 10px; border: 1px solid var(--border-bronze); background: #0c0d0d; box-shadow: 0 22px 46px rgba(0,0,0,.72), inset 0 0 0 3px #030404; }
 .wikiMenu > div a { min-height: 40px; padding: 9px 12px; color: var(--text-muted); font-size: 14px; }
 .wikiMenu > div a:hover { color: var(--gold-bright); background: #1a1b1a; box-shadow: inset 3px 0 var(--accent-red); }

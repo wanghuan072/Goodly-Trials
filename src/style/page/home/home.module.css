@@ -1,7 +1,7 @@
 .page { padding-bottom: 14px; }
 .hero {
   position: relative;
-  min-height: 560px;
+  min-height: 470px;
   overflow: hidden;
   border-bottom: 1px solid var(--border-bronze);
   background: #050606;
@@ -34,11 +34,11 @@
   z-index: 2;
   display: grid;
   width: 100%;
-  min-height: 560px;
+  min-height: 470px;
   grid-template-columns: minmax(0, 680px) minmax(260px, 1fr);
   align-items: center;
   gap: 42px;
-  padding-block: 46px;
+  padding-block: 32px;
 }
 .heroCopy {
   min-width: 0;
@@ -354,7 +354,7 @@
 .faqGrid p { margin-top: 4px; color: var(--text-muted); font-size: 14px; line-height: 1.45; }
 
 @media (max-width: 1024px) {
-  .heroInner { grid-template-columns: 1fr; padding-top: 28px; }
+  .heroInner { grid-template-columns: 1fr; padding-block: 28px; }
   .heroStage { max-width: 720px; }
   .heroSearch { grid-template-columns: 1fr; }
   .heroSearch nav { justify-content: center; }

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
-import HeroIntel from "@/components/content/HeroIntel";
 import { guides } from "@/lib/data/game-content";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
@@ -13,8 +12,6 @@ export const metadata = createMetadata(
 );
 
 export default function GuidesPage() {
-  const groups = Map.groupBy(guides, (guide) => guide.category);
-
   return (
     <main>
       <section className={styles.hero}>
@@ -25,33 +22,35 @@ export default function GuidesPage() {
           <p className={styles.eyebrow}>Player guides · shop, board, and game modes</p>
           <h1>Player Guides</h1>
           <p>Start with the question in front of you: what to buy, where to place a unit, how a mode works, or why a build needs changing. These guides point you back to the relevant cards when the answer depends on the details.</p>
-          <HeroIntel
-            eyebrow="Field manual"
-            title="Learn by objective"
-            items={[
-              { label: "Guides", value: guides.length },
-              { label: "Prepare", value: "Shop" },
-              { label: "Position", value: "Board" },
-              { label: "Master", value: "Modes" },
-            ]}
-          />
         </div>
       </section>
       <section className="container section">
-        {Array.from(groups.entries()).map(([category, entries]) => (
-          <section key={category} style={{ marginBottom: 54 }}>
-            <div className="section-heading"><p>Guides for your next run</p><h2>{category}</h2></div>
-            <div className={styles.entryList}>
-              {entries.map((guide) => (
-                <Link className={styles.entryRow} href={`/guides/${guide.slug}`} key={guide.slug}>
-                  <span>{category}</span>
-                  <div><h3>{guide.title}</h3><p>{guide.excerpt}</p></div>
-                  <b>Read guide →</b>
-                </Link>
-              ))}
-            </div>
-          </section>
-        ))}
+        <header className={styles.guideHeading}>
+          <p>Choose a topic</p>
+          <h2>Start where your next decision is</h2>
+        </header>
+        <div className={styles.guideGrid}>
+          {guides.map((guide) => (
+            <article className={styles.guideEntry} key={guide.slug}>
+              <p className={styles.guideCategory}>{guide.category}</p>
+              <Link href={`/guides/${guide.slug}`}>
+                <div className={styles.guideImage}>
+                  <Image
+                    src={guide.image}
+                    alt={guide.imageAlt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+                <div className={styles.guideBody}>
+                  <h3>{guide.title}</h3>
+                  <p>{guide.excerpt}</p>
+                  <span>Read guide →</span>
+                </div>
+              </Link>
+            </article>
+          ))}
+        </div>
       </section>
     </main>
   );

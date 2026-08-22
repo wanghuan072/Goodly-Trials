@@ -8,7 +8,6 @@ import {
   items,
   leaders,
   units,
-  updates,
 } from "@/lib/data/game-content";
 import { siteConfig } from "@/config/site";
 import { createMetadata } from "@/seo/metadata";
@@ -69,8 +68,6 @@ const archiveSections = [
 ];
 
 export default function WikiIndexPage() {
-  const recentEntries = updates.slice(0, 3);
-
   return (
     <main>
       <JsonLd
@@ -190,30 +187,6 @@ export default function WikiIndexPage() {
             ))}
           </div>
 
-          <section className={styles.latestSection}>
-            <header className={styles.sectionHeader}>
-              <div>
-                <p>Patch context</p>
-                <h2>Recent patch changes</h2>
-              </div>
-              <Link href="/updates">All updates →</Link>
-            </header>
-            <div className={styles.latestList}>
-              {recentEntries.map((entry) => (
-                <Link href={`/updates#${entry.slug}`} key={entry.slug}>
-                  <time>{entry.date}</time>
-                  <div>
-                    <small>
-                      {entry.type} · {entry.version}
-                    </small>
-                    <h3>{entry.title}</h3>
-                    <p>{entry.summary}</p>
-                  </div>
-                  <b>Read →</b>
-                </Link>
-              ))}
-            </div>
-          </section>
         </div>
       </section>
     </main>

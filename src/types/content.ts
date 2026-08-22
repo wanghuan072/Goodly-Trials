@@ -87,6 +87,8 @@ export type Guide = {
   slug: string;
   title: string;
   category: string;
+  image: string;
+  imageAlt: string;
   excerpt: string;
   updated: string;
   tdk: ContentTdk;

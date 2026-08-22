@@ -51,6 +51,22 @@
 .entryRow h2, .entryRow h3 { font-size: 1.1rem; }
 .entryRow p { margin-top: 6px; color: var(--text-muted); font-size: 0.94rem; line-height: 1.5; }
 .entryRow > b { color: var(--gold-bright); font-family: var(--font-display); font-size: 0.75rem; }
+.guideHeading { margin-bottom: 16px; padding-bottom: 11px; border-bottom: 1px solid var(--border-bronze); }
+.guideHeading p, .guideCategory { color: var(--accent-red); font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.guideHeading h2 { margin-top: 5px; font-size: clamp(1.35rem, 2.5vw, 1.85rem); }
+.guideGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.guideEntry { min-width: 0; }
+.guideCategory { margin: 0 0 7px 2px; }
+.guideEntry > a { display: flex; height: 100%; flex-direction: column; overflow: hidden; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, #1a1b1b, #090a0a); box-shadow: inset 0 0 0 3px #030404; transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease; }
+.guideEntry > a:hover { border-color: var(--gold-bright); box-shadow: inset 3px 0 var(--accent-red), inset 0 0 0 3px #030404; transform: translateY(-3px); }
+.guideImage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: #060707; }
+.guideImage::after { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(3,4,4,.42)); content: ""; pointer-events: none; }
+.guideImage img { object-fit: cover; filter: brightness(.82) contrast(1.07) saturate(.78); transition: filter .16s ease, transform .2s ease; }
+.guideEntry > a:hover .guideImage img { filter: brightness(.96) contrast(1.06) saturate(.92); transform: scale(1.03); }
+.guideBody { display: flex; flex: 1; flex-direction: column; padding: 17px; }
+.guideBody h3 { color: var(--parchment); font-size: 1.05rem; line-height: 1.25; }
+.guideBody p { margin-top: 9px; color: var(--text-muted); font-size: .875rem; line-height: 1.55; }
+.guideBody span { margin-top: auto; padding-top: 19px; color: var(--gold-bright); font-family: var(--font-display); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; }
 .prose { max-width: 760px; font-family: var(--font-prose); }
 .prose > p { margin-top: 18px; color: var(--text-muted); font-size: 1rem; line-height: 1.72; }
 .prose > h2 { margin-top: 50px; padding-bottom: 12px; border-bottom: 1px solid var(--border-bronze); font-size: 1.8rem; }
@@ -111,5 +127,5 @@
 .pendingPanel p { margin-top: 4px; color: var(--text-muted); font-size: 0.75rem; }
 .pendingPanel a { color: var(--gold-bright); font-size: 0.75rem; white-space: nowrap; }
 @media (max-width: 1024px) { .wikiQuickGrid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 1024px) { .contentGrid { grid-template-columns: 1fr; } .sidebar { position: static; } .portalGrid { grid-template-columns: 1fr 1fr; } .wikiCoverageGrid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 768px) { .hero, .heroContent { min-height: 0; } .heroContent { padding-block: 28px; padding-inline: 18px; } .heroContent h1 { max-width: 100%; font-size: clamp(2rem, 10vw, 2.6rem); } .heroContent > p { max-width: 100%; font-size: .94rem; } .portalGrid, .secondaryPortalGrid, .wikiQuickGrid, .wikiCoverageGrid { grid-template-columns: 1fr; } .wikiStatus, .pendingPanel { grid-template-columns: auto 1fr; } .wikiStatusActions, .pendingPanel > a { grid-column: 1 / -1; } .wikiStatusActions { grid-template-columns: 1fr 1fr; } .wikiSectionHeader { align-items: start; flex-direction: column; } .wikiSearch > div { grid-template-columns: auto minmax(0, 1fr); } .wikiSearch button { grid-column: 1 / -1; min-height: 44px; border-top: 1px solid var(--gold); border-left: 0; } .entryRow { grid-template-columns: 1fr auto; gap: 10px; min-height: 84px; padding: 16px; } .entryRow > span { grid-column: 1 / -1; } .entryRow p { display: none; } .statExplain { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 1024px) { .contentGrid { grid-template-columns: 1fr; } .sidebar { position: static; } .portalGrid { grid-template-columns: 1fr 1fr; } .wikiCoverageGrid { grid-template-columns: 1fr 1fr; } .guideGrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) { .hero, .heroContent { min-height: 0; } .heroContent { padding-block: 28px; padding-inline: 18px; } .heroContent h1 { max-width: 100%; font-size: clamp(2rem, 10vw, 2.6rem); } .heroContent > p { max-width: 100%; font-size: .94rem; } .portalGrid, .secondaryPortalGrid, .wikiQuickGrid, .wikiCoverageGrid, .guideGrid { grid-template-columns: 1fr; } .wikiStatus, .pendingPanel { grid-template-columns: auto 1fr; } .wikiStatusActions, .pendingPanel > a { grid-column: 1 / -1; } .wikiStatusActions { grid-template-columns: 1fr 1fr; } .wikiSectionHeader { align-items: start; flex-direction: column; } .wikiSearch > div { grid-template-columns: auto minmax(0, 1fr); } .wikiSearch button { grid-column: 1 / -1; min-height: 44px; border-top: 1px solid var(--gold); border-left: 0; } .entryRow { grid-template-columns: 1fr auto; gap: 10px; min-height: 84px; padding: 16px; } .entryRow > span { grid-column: 1 / -1; } .entryRow p { display: none; } .statExplain { grid-template-columns: 1fr 1fr; } }

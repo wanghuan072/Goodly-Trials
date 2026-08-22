@@ -640,9 +640,11 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                   <button className={styles.boardSlotMain} type="button" aria-disabled={!cellAvailable && !unit} onClick={() => handleBoardClick(index)}>
                     <span className={styles.slotNumber}>{String.fromCharCode(65 + Math.floor(index / BOARD_COLUMNS))}{index % BOARD_COLUMNS + 1}</span>
                     {unit ? <>
-                      <span className={styles.miniTitle}><small>{unit.faction}</small><b>{unit.name}</b></span>
-                      <UnitSprite src={unit.image} color="#e8e8e8" large />
-                      {unit.stats ? <><div className={styles.miniVitals}><span>ES {unit.stats.es}</span><span>HP {unit.stats.hp}</span><span>MP {unit.stats.mp}</span></div><div className={styles.miniAttrs}><b>{unit.stats.str}</b><b>{unit.stats.agi}</b><b>{unit.stats.int}</b></div></> : <span className={styles.pendingStats}>PUBLIC STATS PENDING</span>}
+                      <span className={styles.unitCardBody}>
+                        <span className={styles.miniTitle}><small>{unit.faction}</small><b>{unit.name}</b></span>
+                        <span className={styles.unitPortrait}><UnitSprite src={unit.image} color={unit.accent} large /></span>
+                        {unit.stats ? <span className={styles.unitStatBlock}><span className={styles.miniVitals}><span>ES {unit.stats.es}</span><span>HP {unit.stats.hp}</span><span>MP {unit.stats.mp}</span></span><span className={styles.miniAttrs}><b title={`STR ${unit.stats.str}`}>{unit.stats.str}</b><b title={`AGI ${unit.stats.agi}`}>{unit.stats.agi}</b><b title={`INT ${unit.stats.int}`}>{unit.stats.int}</b></span></span> : <span className={styles.pendingStats}>PUBLIC STATS PENDING</span>}
+                      </span>
                     </> : cellAvailable ? <><span className={styles.emptyCell}>+</span><b className={styles.emptyText}>{pendingPick ? "PLACE HERE" : "OPEN"}</b></> : <span className={styles.lockedCell}><b>×</b><small>LOCKED</small></span>}
                   </button>
                   {unit && <div className={styles.loadoutDock}>

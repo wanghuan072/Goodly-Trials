@@ -33,7 +33,7 @@
 .carryBar button { min-height: 26px; padding: 4px 8px; border: 1px solid #7b4a44; color: #f2b5ad; background: #210d0b; font-family: inherit; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; cursor: pointer; }
 .dragScrollGuide { position: fixed; z-index: 80; bottom: 20px; left: 50%; padding: 8px 12px; transform: translateX(-50%); border: 1px solid #d7d7cf; color: #fff; background: rgba(9,10,10,.94); box-shadow: 0 8px 26px #000; font-size: 0.75rem; font-weight: 700; letter-spacing: .06em; pointer-events: none; text-align: center; text-transform: uppercase; }
 
-.workbench { display: grid; min-width: 0; height: min(720px, calc(100dvh - 220px)); min-height: 560px; grid-template-columns: minmax(0, 1fr) minmax(300px, .38fr); gap: 10px; align-items: stretch; }
+.workbench { display: grid; min-width: 0; height: min(900px, calc(100dvh - 120px)); min-height: 820px; grid-template-columns: minmax(0, 1fr) minmax(300px, .38fr); gap: 10px; align-items: stretch; }
 .gamePanel { position: relative; min-width: 0; height: 100%; min-height: 0; overflow: hidden; border: 1px solid var(--game-line-bright); color: var(--game-text); background: var(--game-bg); box-shadow: inset 0 0 0 2px #020303; }
 .gamePanel::after { position: absolute; z-index: 0; inset: 32px 0 0; background: repeating-linear-gradient(118deg, rgba(255,255,255,.012) 0 1px, transparent 1px 5px); content: ""; pointer-events: none; }
 .gamePanel > * { position: relative; z-index: 1; }
@@ -50,7 +50,7 @@
 .rulesInvalid strong { color: #ff9c90; }
 .boardViewport { min-width: 0; min-height: 0; flex: 1; overflow: hidden; outline: 0; }
 .boardViewport:focus-visible { outline: var(--focus-ring); outline-offset: -2px; }
-.boardCanvas { display: flex; width: 100%; min-width: 0; min-height: 100%; height: 100%; flex-direction: column; gap: 7px; }
+.boardCanvas { display: flex; width: 100%; min-width: 0; min-height: 750px; height: 100%; flex-direction: column; gap: 7px; }
 .boardTopbar { display: flex; min-height: 44px; align-items: stretch; justify-content: space-between; gap: 8px; }
 .leaderDock { position: relative; width: min(360px, 48%); min-height: 44px; border: 1px solid var(--game-line); color: var(--game-text); background: #070808; }
 .leaderDock:hover { border-color: #ddd; }
@@ -64,14 +64,14 @@
 .boardLegend span:nth-child(2) i { border-color: #9b9c94; background: #141515; }
 .boardLegend span:nth-child(3) i { border-color: #3a3b38; background: repeating-linear-gradient(135deg, #111212 0 2px, #050606 2px 4px); }
 .boardLegend strong { width: 100%; color: #b8b9b1; font-size: 0.75rem; text-align: right; }
-.formationLayout { display: grid; min-width: 0; min-height: 0; flex: 1; grid-template-columns: 44px minmax(0, 1fr) 116px; gap: 7px; }
+.formationLayout { display: grid; min-width: 0; min-height: 670px; flex: 1; grid-template-columns: 44px minmax(0, 1fr) 116px; gap: 7px; }
 .rowControls, .formationRail { display: grid; min-height: 0; grid-template-rows: repeat(6, minmax(0, 1fr)); gap: 5px; }
 .rowControls button { display: grid; min-height: 0; place-items: center; align-content: center; gap: 5px; padding: 4px; border: 1px solid #51442f; color: #aa9d81; background: repeating-linear-gradient(135deg, #17140f 0 2px, #0c0d0a 2px 4px); font-family: inherit; cursor: pointer; }
 .rowControls button:hover, .rowControls button:focus-visible { border-color: #d7d7cf; color: #fff; outline: 0; }
 .rowControls button:disabled { border-color: #242522; color: #30312e; background: #050606; cursor: not-allowed; }
 .rowControls b { font-size: 0.875rem; }
 .rowControls small { font-size: 0.6875rem; letter-spacing: .06em; writing-mode: vertical-rl; }
-.boardGrid { display: grid; width: 100%; min-width: 0; min-height: 0; height: 100%; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(0, 1fr)); gap: 4px; padding: 5px; border: 4px solid #191a19; outline: 1px solid #3f403d; background: #0a0b0b; }
+.boardGrid { display: grid; width: 100%; min-width: 0; min-height: 0; height: 100%; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(104px, 1fr)); gap: 4px; padding: 5px; border: 4px solid #191a19; outline: 1px solid #3f403d; background: #0a0b0b; }
 .boardSlot { position: relative; display: flex; min-width: 0; min-height: 0; flex-direction: column; overflow: hidden; border: 1px solid #30312f; background: repeating-linear-gradient(135deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px), #020303; transition: border-color .12s ease, box-shadow .12s ease, background-color .12s ease; }
 .boardSlot[draggable="true"] { cursor: grab; }
 .removeUnitButton, .removeLeaderButton { position: absolute; z-index: 7; display: grid; width: 18px; height: 18px; place-items: center; padding: 0; border: 1px solid #6d3935; color: #f0b0a8; background: #190b0a; font-family: inherit; font-size: 0.75rem; line-height: 1; cursor: pointer; }
@@ -87,23 +87,27 @@
 .lockedCell { display: grid; width: 36px; height: 46px; place-items: center; align-content: center; gap: 3px; border: 1px solid #292820; color: #59574d; background: #090a08; }
 .lockedCell b { font-size: 0.75rem; }
 .lockedCell small { font-size: 0.6875rem; letter-spacing: .08em; }
-.boardSlotMain { position: relative; display: flex; min-height: 0; flex: 1; align-items: center; flex-direction: column; justify-content: end; padding: 12px 2px 2px; overflow: hidden; border: 0; color: inherit; background: transparent; font-family: inherit; cursor: pointer; }
+.boardSlotMain { position: relative; display: flex; min-height: 70px; flex: 1; align-items: center; flex-direction: column; justify-content: end; padding: 4px 2px 2px; overflow: hidden; border: 0; color: inherit; background: transparent; font-family: inherit; cursor: pointer; }
 .slotNumber { position: absolute; top: 4px; left: 4px; color: #6f706a; font-size: 0.6875rem; }
-.boardSlotMain > :global([class*="sprite"]) { width: 32px; height: 38px; background: linear-gradient(#f4f1e8, #c8c8c0); filter: contrast(1.1) drop-shadow(0 4px 3px #000); }
-.miniTitle { display: grid; width: 100%; margin-bottom: 2px; text-align: center; text-transform: uppercase; }
-.miniTitle small { overflow: hidden; color: #888981; font-size: 0.6875rem; letter-spacing: .05em; text-overflow: ellipsis; white-space: nowrap; }
-.miniTitle b { overflow: hidden; color: #ededE5; font-size: 0.75rem; line-height: 1.15; text-overflow: ellipsis; white-space: nowrap; }
-.miniVitals { display: grid; width: 100%; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 3px; }
-.miniVitals span { padding: 2px 0; border-top: 1px solid #696a64; color: #a9aaa3; font-size: 0.6875rem; text-align: center; }
-.miniAttrs { display: grid; width: 100%; grid-template-columns: repeat(3, 1fr); margin-top: 3px; }
-.miniAttrs b { padding: 2px; color: #fff; font-size: 0.6875rem; text-align: center; }
+.unitCardBody { display: grid; width: 100%; min-height: 70px; grid-template-columns: minmax(36px, 44%) minmax(0, 1fr); grid-template-rows: auto minmax(52px, 1fr); align-items: stretch; gap: 2px 4px; }
+.miniTitle { grid-column: 1 / -1; display: flex; min-width: 0; align-items: baseline; justify-content: center; padding: 0 20px; text-align: center; text-transform: uppercase; }
+.miniTitle small { display: none; }
+.miniTitle b { flex: 1 1 auto; overflow: hidden; color: #f1e5cb; font-size: 0.6875rem; line-height: 1.15; text-overflow: ellipsis; white-space: nowrap; }
+.unitPortrait { position: relative; grid-column: 1; grid-row: 2; display: grid; min-width: 0; place-items: end center; overflow: hidden; border: 1px solid #3b382f; background: radial-gradient(circle at 50% 75%, rgba(205,160,77,.18), transparent 67%), #070805; }
+.unitPortrait::after { position: absolute; right: 5px; bottom: 2px; left: 5px; height: 1px; background: linear-gradient(90deg, transparent, rgba(232,201,139,.48), transparent); content: ""; }
+.unitPortrait > :global([class*="sprite"]) { width: 46px; height: 57px; flex: none; background: linear-gradient(#fff8e8, var(--sprite-color)); filter: contrast(1.14) drop-shadow(0 4px 3px #000); }
+.unitStatBlock { grid-column: 2; grid-row: 2; display: grid; min-width: 0; align-content: center; gap: 3px; }
+.miniVitals { display: grid; min-width: 0; gap: 1px; }
+.miniVitals span { overflow: hidden; padding: 1px 3px; border: 1px solid #353832; color: #c4bda9; background: #090a08; font-size: 0.625rem; line-height: 1.2; text-align: left; text-overflow: ellipsis; white-space: nowrap; }
+.miniAttrs { display: grid; min-width: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; }
+.miniAttrs b { overflow: hidden; padding: 2px 1px; color: #fff; font-size: 0.625rem; text-align: center; text-overflow: ellipsis; }
 .miniAttrs b:nth-child(1) { background: var(--game-red); }
 .miniAttrs b:nth-child(2) { background: var(--game-green); }
 .miniAttrs b:nth-child(3) { background: var(--game-blue); }
 .pendingStats { margin-top: 4px; color: #9b927e; font-size: 0.75rem; text-align: center; }
 .emptyCell { display: grid; width: 28px; height: 40px; margin-bottom: 4px; place-items: center; border: 1px dashed #30312f; color: #4b4c48; font-size: 1rem; }
 .emptyText { color: #77705f; font-size: 0.75rem; letter-spacing: .1em; }
-.loadoutDock { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 2px; border-top: 1px solid #3a3b38; background: #060707; }
+.loadoutDock { display: grid; min-height: 34px; grid-template-columns: 1fr 1fr; gap: 2px; padding: 2px; border-top: 1px solid #3a3b38; background: #060707; }
 .loadoutDock > div { display: grid; min-width: 0; align-items: center; gap: 2px; }
 .loadoutDock label { overflow: hidden; color: #74756f; font-size: 0.6875rem; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
 .itemSlots { display: flex; min-width: 0; flex-wrap: wrap; align-content: flex-start; gap: 2px; overflow: visible; }
@@ -287,6 +291,8 @@
 @media (max-width: 1024px) {
   .workbench { display: flex; flex-direction: column; height: auto; min-height: 0; max-height: none; }
   .boardPanel, .shopPanel { height: auto; min-height: 0; }
+  .boardCanvas { height: auto; }
+  .formationLayout { height: 670px; flex: 0 0 670px; }
   .shopPanel { height: 480px; }
   .archiveList { max-height: 380px; }
   .inspectCard { grid-template-columns: 220px minmax(0, 1fr); grid-template-rows: auto auto auto auto auto auto; }
@@ -304,8 +310,8 @@
   .toolbar input, .toolbar select, .filters input, .filters select, .clearButton, .tabs button { min-height: 44px; }
   .boardStage { height: auto; min-width: 0; min-height: 0; overflow: hidden; }
   .boardViewport { width: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scrollbar-color: var(--gold) #0b0c09; scrollbar-width: thin; }
-  .boardCanvas { width: 760px; min-width: 760px; min-height: 600px; padding-bottom: 5px; }
-  .formationLayout { min-height: 520px; }
+  .boardCanvas { width: 760px; min-width: 760px; min-height: 760px; padding-bottom: 5px; }
+  .formationLayout { min-height: 670px; }
   .carryBar { grid-template-columns: 1fr auto; }
   .carryBar span { grid-column: 1 / -1; grid-row: 2; }
   .hoverInspect { position: fixed; top: 76px; right: 12px; left: 12px; width: auto; max-height: calc(100vh - 100px); }

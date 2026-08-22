@@ -27,8 +27,8 @@ export default function TraitsPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-3.webp"
-          alt="Goodly Trials combat effects and unit traits in action"
+          src="/images/game/hero-traits-v3.webp"
+          alt="Three warriors awakening different powers inside a ruined sanctuary"
           fill
           preload
           sizes="100vw"

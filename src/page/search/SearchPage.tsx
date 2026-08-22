@@ -82,7 +82,7 @@ export default function SearchPage({ query }: { query: string }) {
     : [];
   return (
     <main>
-      <section className={styles.hero} style={{ "--hero-image": 'url("/images/game/steam-background.webp")' } as CSSProperties}>
+      <section className={styles.hero} style={{ "--hero-image": 'url("/images/game/hero-wiki-v3.webp")' } as CSSProperties}>
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb
             items={[{ label: "Home", href: "/" }, { label: "Search" }]}

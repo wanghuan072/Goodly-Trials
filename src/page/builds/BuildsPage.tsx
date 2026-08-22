@@ -273,8 +273,8 @@ export default function BuildsPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-8.webp"
-          alt="Goodly Trials reward and company progression screen"
+          src="/images/game/hero-builds-v3.webp"
+          alt="Adventurers planning a formation around a torchlit campaign table"
           fill
           preload
           sizes="100vw"

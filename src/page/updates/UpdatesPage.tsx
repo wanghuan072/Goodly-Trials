@@ -16,8 +16,8 @@ export default function UpdatesPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-4.webp"
-          alt="Goodly Trials battle scene used for the update archive"
+          src="/images/game/hero-updates-v3.webp"
+          alt="A company rebuilding a bridge and raising its banner after battle"
           fill
           preload
           sizes="100vw"

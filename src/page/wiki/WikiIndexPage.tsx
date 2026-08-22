@@ -98,8 +98,8 @@ export default function WikiIndexPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-5.webp"
-          alt="Goodly Trials combat log and unit stat interface"
+          src="/images/game/hero-wiki-v3.webp"
+          alt="An ancient underground archive filled with relics and chained tomes"
           fill
           sizes="100vw"
           priority

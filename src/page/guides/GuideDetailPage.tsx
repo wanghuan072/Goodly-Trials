@@ -42,7 +42,7 @@ export default function GuideDetailPage({
       />
       <section
         className={styles.hero}
-        style={{ "--hero-image": `url("${detail.media?.[0]?.src ?? "/images/game/screenshot-7.webp"}")` } as CSSProperties}
+        style={{ "--hero-image": 'url("/images/game/hero-guides-v3.webp")' } as CSSProperties}
       >
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb

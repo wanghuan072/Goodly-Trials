@@ -15,7 +15,7 @@ export const metadata = createMetadata(
 export default function AboutPage() {
   return (
     <main>
-      <section className={styles.hero} style={{ "--hero-image": 'url("/images/game/steam-header.webp")' } as CSSProperties}>
+      <section className={styles.hero} style={{ "--hero-image": 'url("/images/game/hero-wiki-v3.webp")' } as CSSProperties}>
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About" }]} />
           <p className={styles.eyebrow}>About this player guide</p>

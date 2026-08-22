@@ -17,7 +17,7 @@ export default function ItemsPage() {
   return (
     <main>
       <section className={styles.hero}>
-        <Image className={styles.heroImage} src="/images/game/screenshot-6.webp" alt="Goodly Trials equipment and item interface" fill preload sizes="100vw" />
+        <Image className={styles.heroImage} src="/images/game/hero-gear-v3.webp" alt="A quartermaster selecting weapons and relics inside a dark fortress armory" fill preload sizes="100vw" />
         <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Gear" }]} />

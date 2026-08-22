@@ -16,8 +16,8 @@ export default function LeadersPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/steam-background.webp"
-          alt="Goodly Trials leaders overlooking a dark battlefield"
+          src="/images/game/hero-leaders-v3.webp"
+          alt="A company leader overlooking a moonlit valley from a fortress battlement"
           fill
           preload
           sizes="100vw"

@@ -20,8 +20,8 @@ export default function UnitsPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/screenshot-2.webp"
-          alt="Goodly Trials units assembled across a tactical battlefield"
+          src="/images/game/hero-units-v3.webp"
+          alt="A varied fellowship assembling beneath the moon before a campaign"
           fill
           preload
           sizes="100vw"

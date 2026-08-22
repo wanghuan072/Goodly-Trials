@@ -59,11 +59,11 @@ const content: Record<LegalPageKey, { title: string; eyebrow: string; sections: 
 };
 
 const legalHeroImages: Record<LegalPageKey, string> = {
-  "privacy-policy": "/images/game/screenshot-2.webp",
-  "terms-of-service": "/images/game/screenshot-3.webp",
-  copyright: "/images/game/screenshot-4.webp",
-  "about-us": "/images/game/screenshot-6.webp",
-  "contact-us": "/images/game/screenshot-8.webp",
+  "privacy-policy": "/images/game/hero-wiki-v3.webp",
+  "terms-of-service": "/images/game/hero-leaders-v3.webp",
+  copyright: "/images/game/hero-gear-v3.webp",
+  "about-us": "/images/game/hero-units-v3.webp",
+  "contact-us": "/images/game/hero-guides-v3.webp",
 };
 
 export function legalMetadata(key: LegalPageKey) {

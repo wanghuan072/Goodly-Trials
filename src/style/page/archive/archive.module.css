@@ -1,0 +1,131 @@
+.hero { position: relative; min-height: 320px; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: linear-gradient(90deg, rgba(3,4,4,.94), rgba(3,4,4,.7) 48%, rgba(3,4,4,.18)), var(--hero-image, url("/images/game/hero-battlefield-v2.webp")) center / cover no-repeat; }
+.heroImage { object-fit: cover; object-position: center; filter: brightness(.84) contrast(1.08) saturate(.72); image-rendering: pixelated; }
+.referenceHeroImage { top: -64px !important; height: calc(100% + 64px) !important; object-position: center top; filter: brightness(.7) contrast(1.08); }
+.heroShade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,4,4,.92), rgba(5,6,6,.62) 52%, rgba(5,6,6,.3) 100%), linear-gradient(0deg, rgba(3,4,4,.94), transparent 55%); }
+.heroContent { position: relative; z-index: 1; display: flex; width: 100%; min-height: 320px; align-items: flex-start; flex-direction: column; justify-content: center; padding: 30px 24px; border-left: 3px solid var(--accent-red); background: linear-gradient(90deg, rgba(3,4,4,.5), transparent 70%); }
+.heroContent h1 { max-width: min(24ch, calc(100% - 360px)); font-size: clamp(2rem, 3.2vw, 2.75rem); line-height: 1.04; text-transform: uppercase; text-shadow: 0 5px 24px rgba(0,0,0,.8); }
+.heroContent > p { max-width: min(66ch, calc(100% - 360px)); margin-top: 12px; color: var(--text-main); font-size: 0.95rem; line-height: 1.6; }
+.eyebrow { margin-bottom: 10px !important; color: var(--accent-red) !important; font-size: 0.75rem !important; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.contentGrid { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 22px; align-items: start; }
+.mainColumn { min-width: 0; }
+.sidebar { position: sticky; top: 88px; padding: 15px; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, #171818, #090a0a); box-shadow: inset 0 0 0 3px #030404, 0 14px 34px rgba(0,0,0,.28); }
+.sidebar h2 { margin-bottom: 8px; padding-bottom: 7px; border-bottom: 1px solid var(--border-soft); color: var(--gold-bright); font-size: 1rem; font-variant: small-caps; }
+.sidebar h3 { margin: 14px 0 6px; color: var(--gold); font-size: 0.75rem; letter-spacing: .1em; text-transform: uppercase; }
+.sidebar a { display: block; min-height: 36px; padding: 8px 3px; border-bottom: 1px solid var(--border-soft); color: var(--text-muted); font-size: 0.82rem; }
+.sidebar a:hover { color: var(--parchment); }
+.sidebarCurrent { display: block; padding: 6px 2px; border-bottom: 1px solid var(--border-soft); color: var(--parchment); font-size: 0.75rem; }
+.sidebarTokens { display: flex; flex-wrap: wrap; gap: 5px; }
+.sidebarTokens span { padding: 5px 6px; border: 1px solid var(--border-soft); color: var(--text-muted); background: #050606; font-size: 0.75rem; }
+.sourceBox { padding: 18px; border-left: 3px solid var(--accent-red); background: #131414; color: var(--text-muted); font-size: 0.875rem; }
+.sourceBox strong { color: var(--parchment); }
+.sourceBox a { color: var(--gold-bright); text-decoration: underline; }
+.sectionBlock { margin-top: 18px; padding: 20px; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, rgba(23,24,24,.98), rgba(7,8,8,.99)); box-shadow: inset 0 0 0 3px #030404; }
+.sectionBlock h2 { padding-bottom: 8px; border-bottom: 1px solid var(--border-soft); font-size: 1.15rem; }
+.sectionBlock h3 { margin-top: 24px; font-size: 1.05rem; }
+.sectionBlock p { margin-top: 10px; color: var(--text-muted); font-size: 15px; line-height: 1.62; }
+.statExplain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.statExplain > div { display: grid; min-height: 90px; grid-template-columns: 38px 1fr; align-content: center; column-gap: 8px; padding: 9px; border: 1px solid var(--border-soft); background: #070808; }
+.statExplain b { grid-row: 1 / 3; color: var(--gold-bright); font-size: 1.5rem; }
+.statExplain h3 { margin: 0; color: var(--gold); font-size: 0.75rem; text-transform: uppercase; }
+.statExplain p { margin-top: 3px; font-size: 0.75rem; line-height: 1.35; }
+.sideUnit { display: grid !important; grid-template-columns: 36px 1fr; align-items: center; gap: 7px; }
+.sideUnit > span:first-child { width: 34px; height: 38px; }
+.sideUnit span { display: grid; }
+.sideUnit b { color: var(--gold-bright); font-size: 0.75rem; font-weight: 500; }
+.sideUnit small { color: var(--text-muted); font-size: 0.75rem; }
+.sectionBlock ul { display: grid; gap: 8px; margin-top: 14px; }
+.sectionBlock li { position: relative; padding-left: 18px; color: var(--text-muted); }
+.sectionBlock li::before { position: absolute; left: 0; color: var(--gold); content: ""; width: 6px; height: 6px; top: .55em; background: var(--gold); }
+.sectionBlock a { color: var(--gold-bright); }
+.portalGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.portalCard { min-height: 210px; padding: 24px; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, #202221, #0b0c0c); }
+.portalCard > span { color: var(--gold); font-size: 1.6rem; }
+.portalCard > small { display: block; margin-top: 14px; color: var(--text-muted); font-size: 0.75rem; letter-spacing: .1em; text-transform: uppercase; }
+.portalCard h2 { margin-top: 14px; font-size: 1.45rem; }
+.portalCard p { margin-top: 10px; color: var(--text-muted); font-size: 0.875rem; }
+.portalCard b { display: block; margin-top: 22px; color: var(--gold-bright); font-family: var(--font-display); font-size: 0.75rem; text-transform: uppercase; }
+.entryList { display: grid; gap: 12px; }
+.entryRow { display: grid; grid-template-columns: 145px 1fr auto; gap: 22px; align-items: center; min-height: 98px; padding: 19px 22px; border: 1px solid var(--border-soft); background: linear-gradient(90deg, #161717, #0a0b0b); transition: border-color .16s ease, background .16s ease, transform .16s ease; }
+.entryRow:hover { border-color: var(--gold-bright); background: linear-gradient(90deg, #222422, #101111); box-shadow: inset 3px 0 var(--accent-red); transform: translateX(2px); }
+.entryRow > span { color: var(--gold); font-size: 0.75rem; letter-spacing: .08em; text-transform: uppercase; }
+.entryRow h2, .entryRow h3 { font-size: 1.1rem; }
+.entryRow p { margin-top: 6px; color: var(--text-muted); font-size: 0.94rem; line-height: 1.5; }
+.entryRow > b { color: var(--gold-bright); font-family: var(--font-display); font-size: 0.75rem; }
+.guideHeading { margin-bottom: 16px; padding-bottom: 11px; border-bottom: 1px solid var(--border-bronze); }
+.guideHeading p, .guideCategory { color: var(--accent-red); font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.guideHeading h2 { margin-top: 5px; font-size: clamp(1.35rem, 2.5vw, 1.85rem); }
+.guideGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.guideEntry { min-width: 0; }
+.guideCategory { margin: 0 0 7px 2px; }
+.guideEntry > a { display: flex; height: 100%; flex-direction: column; overflow: hidden; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, #1a1b1b, #090a0a); box-shadow: inset 0 0 0 3px #030404; transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease; }
+.guideEntry > a:hover { border-color: var(--gold-bright); box-shadow: inset 3px 0 var(--accent-red), inset 0 0 0 3px #030404; transform: translateY(-3px); }
+.guideImage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: #060707; }
+.guideImage::after { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(3,4,4,.42)); content: ""; pointer-events: none; }
+.guideImage img { object-fit: cover; filter: brightness(.82) contrast(1.07) saturate(.78); transition: filter .16s ease, transform .2s ease; }
+.guideEntry > a:hover .guideImage img { filter: brightness(.96) contrast(1.06) saturate(.92); transform: scale(1.03); }
+.guideBody { display: flex; flex: 1; flex-direction: column; padding: 17px; }
+.guideBody h3 { color: var(--parchment); font-size: 1.05rem; line-height: 1.25; }
+.guideBody p { margin-top: 9px; color: var(--text-muted); font-size: .875rem; line-height: 1.55; }
+.guideBody span { margin-top: auto; padding-top: 19px; color: var(--gold-bright); font-family: var(--font-display); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; }
+.prose { max-width: 760px; font-family: var(--font-prose); }
+.prose > p { margin-top: 18px; color: var(--text-muted); font-size: 1rem; line-height: 1.72; }
+.prose > h2 { margin-top: 50px; padding-bottom: 12px; border-bottom: 1px solid var(--border-bronze); font-size: 1.8rem; }
+.prose > h3 { margin-top: 28px; font-size: 1.15rem; }
+.prose ul, .prose ol { display: grid; gap: 9px; margin-top: 16px; }
+.prose li { color: var(--text-muted); }
+.prose ul li { position: relative; padding-left: 18px; }
+.prose ul li::before { position: absolute; left: 0; color: var(--gold); content: ""; width: 6px; height: 6px; top: .55em; background: var(--gold); }
+.quickAnswer { margin-bottom: 32px; padding: 24px; border: 1px solid var(--border-bronze); border-left: 3px solid var(--accent-red); background: #141515; }
+.quickAnswer b { color: var(--gold-bright); font-family: var(--font-display); }
+.quickAnswer p { margin-top: 8px; color: var(--parchment-dark); }
+.guideFigure { margin: 26px 0 36px; border: 1px solid var(--border-bronze); background: #090705; }
+.guideFigure img { display: block; width: 100%; height: auto; }
+.guideFigure figcaption { padding: 10px 12px; border-top: 1px solid var(--border-soft); color: var(--text-muted); font-size: 0.75rem; line-height: 1.5; }
+.badge { display: inline-block; margin-right: 8px; padding: 4px 8px; border: 1px solid var(--border-bronze); color: var(--gold); font-size: 0.75rem; letter-spacing: .06em; text-transform: uppercase; }
+.wikiShell { display: grid; gap: 48px; }
+.wikiStatus { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 18px 20px; border: 1px solid #6f8d59; background: linear-gradient(90deg, rgba(45,65,34,.58), rgba(14,12,8,.98)); box-shadow: inset 0 0 0 3px rgba(6,8,4,.7); }
+.wikiStatusMark { padding: 6px 8px; border: 1px solid #8fba6f; color: #b8dd9c; font-size: 0.75rem; font-weight: 800; letter-spacing: .12em; }
+.wikiStatus b { color: var(--parchment); font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; }
+.wikiStatus p { margin-top: 5px; color: var(--text-muted); font-size: 0.75rem; }
+.wikiStatusActions { display: grid; min-width: 158px; gap: 5px; }
+.wikiStatusActions a { padding: 7px 9px; border: 1px solid rgba(143,186,111,.35); color: #c8e7b2; font-size: 0.75rem; text-align: center; }
+.wikiSearch { display: grid; gap: 8px; padding: 20px; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, #1b1c1b, #090a0a); box-shadow: inset 0 0 0 3px #030404; }
+.wikiSearch > label { color: var(--gold-bright); font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; }
+.wikiSearch > div { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; border: 1px solid var(--border-bronze); background: #050606; }
+.wikiSearch > div > span { padding-left: 14px; color: var(--gold); font-size: 1.2rem; }
+.wikiSearch input { min-width: 0; padding: 14px 12px; border: 0; outline: 0; background: transparent; color: var(--parchment); font: inherit; font-size: 0.875rem; }
+.wikiSearch button { align-self: stretch; padding: 0 18px; border: 0; border-left: 1px solid var(--border-bronze); background: #1a1b1a; color: var(--gold-bright); font-family: var(--font-display); font-size: 0.75rem; cursor: pointer; text-transform: uppercase; }
+.wikiSearch > p { color: var(--text-muted); font-size: 0.75rem; }
+.wikiSearch > p a { color: var(--gold-bright); }
+.wikiSectionHeader { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border-bronze); }
+.wikiSectionHeader p { color: var(--gold); font-size: 0.75rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.wikiSectionHeader h2 { margin-top: 5px; font-size: clamp(1.2rem, 2.4vw, 1.65rem); }
+.wikiSectionHeader > a, .wikiSectionHeader > span { color: var(--gold-bright); font-size: 0.75rem; }
+.wikiQuickGrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.wikiQuickCard { display: grid; min-height: 188px; align-content: start; padding: 16px; border: 1px solid var(--border-soft); background: #0b0c0c; transition: border-color .15s ease, transform .15s ease; }
+.wikiQuickCard:hover { border-color: var(--gold); transform: translateY(-2px); }
+.wikiQuickCard > span { color: var(--gold); font-size: 0.75rem; letter-spacing: .12em; }
+.wikiQuickCard h3 { margin-top: 18px; font-size: .88rem; }
+.wikiQuickCard p { margin-top: 8px; color: var(--text-muted); font-size: 0.75rem; }
+.wikiQuickCard b { align-self: end; margin-top: 18px; color: var(--gold-bright); font-size: 0.75rem; text-transform: uppercase; }
+.wikiCoverage { padding: 20px; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, rgba(27,28,27,.96), rgba(6,7,7,.99)); box-shadow: inset 0 0 0 3px #030404; }
+.wikiCoverageGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.wikiCoverageGrid > div { display: grid; align-content: start; min-height: 136px; padding: 14px; border: 1px solid var(--border-soft); background: #070808; }
+.wikiCoverageGrid strong { color: var(--gold-bright); font-family: var(--font-display); font-size: 1.7rem; }
+.wikiCoverageGrid span { margin-top: 4px; color: var(--parchment); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+.wikiCoverageGrid p { margin-top: 10px; color: var(--text-muted); font-size: 0.75rem; }
+.secondaryPortalGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.secondaryPortalCard { min-height: 150px; padding: 17px; border: 1px solid var(--border-soft); background: #0b0c0c; }
+.secondaryPortalCard small { color: var(--gold); font-size: 0.75rem; letter-spacing: .1em; text-transform: uppercase; }
+.secondaryPortalCard h3 { margin-top: 12px; font-size: 1rem; }
+.secondaryPortalCard p { margin-top: 8px; color: var(--text-muted); font-size: 0.75rem; }
+.secondaryPortalCard b { display: block; margin-top: 14px; color: var(--gold-bright); font-size: 0.75rem; text-transform: uppercase; }
+.pendingPanel { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px; align-items: center; margin-top: 8px; padding: 16px 18px; border: 1px dashed #665e54; background: #0c0a08; }
+.pendingPanel > span { color: #82796e; font-size: 1.55rem; }
+.pendingPanel small { color: #968c80; font-size: 0.75rem; letter-spacing: .1em; }
+.pendingPanel h3 { margin-top: 4px; color: var(--text-main); font-size: .88rem; }
+.pendingPanel p { margin-top: 4px; color: var(--text-muted); font-size: 0.75rem; }
+.pendingPanel a { color: var(--gold-bright); font-size: 0.75rem; white-space: nowrap; }
+@media (max-width: 1024px) { .wikiQuickGrid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1024px) { .contentGrid { grid-template-columns: 1fr; } .sidebar { position: static; } .portalGrid { grid-template-columns: 1fr 1fr; } .wikiCoverageGrid { grid-template-columns: 1fr 1fr; } .guideGrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) { .hero, .heroContent { min-height: 0; } .heroContent { padding-block: 28px; padding-inline: 18px; } .heroContent h1 { max-width: 100%; font-size: clamp(2rem, 10vw, 2.6rem); } .heroContent > p { max-width: 100%; font-size: .94rem; } .portalGrid, .secondaryPortalGrid, .wikiQuickGrid, .wikiCoverageGrid, .guideGrid { grid-template-columns: 1fr; } .wikiStatus, .pendingPanel { grid-template-columns: auto 1fr; } .wikiStatusActions, .pendingPanel > a { grid-column: 1 / -1; } .wikiStatusActions { grid-template-columns: 1fr 1fr; } .wikiSectionHeader { align-items: start; flex-direction: column; } .wikiSearch > div { grid-template-columns: auto minmax(0, 1fr); } .wikiSearch button { grid-column: 1 / -1; min-height: 44px; border-top: 1px solid var(--gold); border-left: 0; } .entryRow { grid-template-columns: 1fr auto; gap: 10px; min-height: 84px; padding: 16px; } .entryRow > span { grid-column: 1 / -1; } .entryRow p { display: none; } .statExplain { grid-template-columns: 1fr 1fr; } }

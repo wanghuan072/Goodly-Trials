@@ -1,0 +1,150 @@
+[
+  {
+    "slug": "goodly-knight-frontline-build",
+    "title": "Oathbound Formation Core",
+    "unitSlug": "goodly-knight",
+    "faction": "Goodly Folk",
+    "difficulty": "Beginner",
+    "version": "Board rules v0.302",
+    "summary": "A four-follower Goodly Folk shell that places two Formation units in front of a verified Archer and Wizard backline.",
+    "mode": "Theorycraft",
+    "week": 4,
+    "leaderSlug": "aldric",
+    "bestFor": "Learning formation spacing, leader-first building, and verified equipment limits.",
+    "strengths": [
+      "Two verified Formation units provide a readable frontline starting point.",
+      "Archer and Wizard keep distinct ranged and spell roles behind the line.",
+      "Every equipped item fits the public Gear or Trinket capacity shown by its bearer."
+    ],
+    "weaknesses": [
+      "The arrangement is an editorial draft and has no published win-rate evidence.",
+      "Wizard has low public HP and can reduce STR for adjacent allies.",
+      "The complete equipment plan represents shopping goals, not a guaranteed shop sequence."
+    ],
+    "planningNote": "Keep the Wizard separated from STR-dependent allies and revise the line after checking the live board.",
+    "placements": [
+      { "slot": 9, "unitSlug": "archer", "itemSlugs": ["feather-charm-of-reflex"] },
+      { "slot": 10, "unitSlug": "wizard", "itemSlugs": ["wand-of-wit", "frostfall-of-lore", "ruby-charm-of-wit"] },
+      { "slot": 15, "unitSlug": "goodly-knight", "itemSlugs": ["iron-sword-of-brawn", "iron-shield-of-brawn"] },
+      { "slot": 16, "unitSlug": "portly-knight", "itemSlugs": ["dignified-shield-of-balance"] }
+    ]
+  },
+  {
+    "slug": "archer-bow-build",
+    "title": "Ranged Cover Line",
+    "unitSlug": "archer",
+    "faction": "Goodly Folk",
+    "difficulty": "Beginner",
+    "version": "Board rules v0.302",
+    "summary": "A compact week-three company that protects the Archer with two verified Formation units and avoids unsupported equipment assumptions.",
+    "mode": "Theorycraft",
+    "week": 3,
+    "leaderSlug": "aldric",
+    "bestFor": "Players who want a small, readable ranged formation before expanding the company.",
+    "strengths": [
+      "Only three follower cells are occupied, so the plan is quick to understand and revise.",
+      "The Archer's verified Backline tactic and Longshot skill support a protected ranged role.",
+      "Feather Charm matches the Archer's public AGI requirement and Trinket capacity."
+    ],
+    "weaknesses": [
+      "The Archer's public card has low HP and no armor.",
+      "A small line can lose coverage when an enemy reaches the backline.",
+      "The two-handed Bow of Grace is deliberately excluded because the public Archer card lists only one Gear slot."
+    ],
+    "planningNote": "Use this as an early board shell; expand only after confirming the next active cells and the live shop.",
+    "placements": [
+      { "slot": 9, "unitSlug": "archer", "itemSlugs": ["feather-charm-of-reflex"] },
+      { "slot": 15, "unitSlug": "goodly-knight", "itemSlugs": ["iron-sword-of-brawn", "iron-shield-of-brawn"] },
+      { "slot": 16, "unitSlug": "portly-knight", "itemSlugs": ["dignified-shield-of-balance"] }
+    ]
+  },
+  {
+    "slug": "wizard-frostfall-build",
+    "title": "Ivo Arcane Reserve",
+    "unitSlug": "wizard",
+    "faction": "Goodly Folk",
+    "difficulty": "Intermediate",
+    "version": "Board rules v0.302",
+    "summary": "An Ivo-led planning shell that uses the Wizard's verified INT, MP, Gear, and Trinket capacity without treating the loadout as permanent best-in-slot.",
+    "mode": "Theorycraft",
+    "week": 4,
+    "leaderSlug": "ivo",
+    "bestFor": "Reviewing a spell-focused shopping plan alongside a durable verified screen.",
+    "strengths": [
+      "Ivo's public leader trait discounts Trinkets by 1G.",
+      "Wizard exceeds the published requirements for Wand, Frostfall, and Ruby Charm.",
+      "Goodly Knight and Portly Knight provide verified Formation bodies in front."
+    ],
+    "weaknesses": [
+      "Wizard's public 10 HP makes poor positioning costly.",
+      "Quick-Witted reduces STR for adjacent allies, so tight grouping can hurt the screen.",
+      "The listed item cost is a planning total, not proof that all items appear in one run."
+    ],
+    "planningNote": "Preserve space around the Wizard and treat the three-item loadout as a purchase priority list.",
+    "placements": [
+      { "slot": 9, "unitSlug": "wizard", "itemSlugs": ["wand-of-wit", "frostfall-of-lore", "ruby-charm-of-wit"] },
+      { "slot": 16, "unitSlug": "goodly-knight", "itemSlugs": ["iron-shield-of-brawn"] },
+      { "slot": 17, "unitSlug": "portly-knight", "itemSlugs": ["dignified-shield-of-balance"] }
+    ]
+  },
+  {
+    "slug": "skeleton-child-support-build",
+    "title": "Bone Host Flank Pair",
+    "unitSlug": "skeleton-child",
+    "faction": "Bone Host",
+    "difficulty": "Intermediate",
+    "version": "Board rules v0.302",
+    "summary": "A compact Young Keth company using the two complete Bone Host cards currently available in the verified archive.",
+    "mode": "Theorycraft",
+    "week": 2,
+    "leaderSlug": "young-keth",
+    "bestFor": "Exploring verified Flanking, Respawn, and ally-death interactions without inventing missing roster data.",
+    "strengths": [
+      "Skeleton Child and Skeleton Dog both have verified public Flanking tactics.",
+      "Respawn and Feast create two different ways to react when the board changes.",
+      "The small week-two layout is easy to move and compare."
+    ],
+    "weaknesses": [
+      "Only two complete Bone Host unit cards are currently available in the source layer.",
+      "No equipment is preloaded because complete public slot capacity is not available for both units.",
+      "Flanking does not guarantee a useful target or safe return position."
+    ],
+    "planningNote": "Treat this as a verified mechanic sketch, then add name-only roster units manually only when you accept the missing public card data.",
+    "placements": [
+      { "slot": 16, "unitSlug": "skeleton-child", "itemSlugs": [] },
+      { "slot": 22, "unitSlug": "skeleton-dog", "itemSlugs": [] }
+    ]
+  },
+  {
+    "slug": "multiplayer-verified-core",
+    "title": "Mixed Verified Field Test",
+    "unitSlug": "skeleton-dog",
+    "faction": "Mixed",
+    "difficulty": "Advanced",
+    "version": "Board rules v0.302",
+    "summary": "A Multiplayer-only test board containing all six complete public unit cards so players can compare roles in one editable company.",
+    "mode": "Multiplayer",
+    "week": 5,
+    "leaderSlug": "ivo",
+    "bestFor": "Comparing every verified unit card and then pruning the board into a focused multiplayer plan.",
+    "strengths": [
+      "Uses all six complete public unit cards currently available in the archive.",
+      "Combines Formation, Backline, and Flanking tactics on one board.",
+      "The Builder can immediately move, remove, or re-equip every placed record."
+    ],
+    "weaknesses": [
+      "Mixed factions are allowed here only because the preset uses Multiplayer rules.",
+      "The board is a comparison workspace, not a tested recommendation or ranked composition.",
+      "Different movement and adjacency behaviors can pull the formation apart."
+    ],
+    "planningNote": "Remove the roles that do not support your intended plan; do not treat six verified records as proof of one coherent meta team.",
+    "placements": [
+      { "slot": 9, "unitSlug": "wizard", "itemSlugs": ["wand-of-wit", "frostfall-of-lore"] },
+      { "slot": 10, "unitSlug": "archer", "itemSlugs": ["feather-charm-of-reflex"] },
+      { "slot": 11, "unitSlug": "skeleton-child", "itemSlugs": [] },
+      { "slot": 16, "unitSlug": "goodly-knight", "itemSlugs": ["iron-sword-of-brawn", "iron-shield-of-brawn"] },
+      { "slot": 17, "unitSlug": "portly-knight", "itemSlugs": ["dignified-shield-of-balance"] },
+      { "slot": 23, "unitSlug": "skeleton-dog", "itemSlugs": [] }
+    ]
+  }
+]

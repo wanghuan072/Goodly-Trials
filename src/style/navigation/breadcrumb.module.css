@@ -1,0 +1,4 @@
+.breadcrumb { margin-bottom: 10px; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; gap: 7px; color: var(--text-faint); font-size: 0.8125rem; }
+.breadcrumb li + li::before { margin-right: 7px; color: var(--gold); content: "›"; }
+.breadcrumb a:hover { color: var(--gold-bright); }

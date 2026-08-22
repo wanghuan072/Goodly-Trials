@@ -20,7 +20,7 @@ export default function GuidesPage() {
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Guides" }]} />
           <p className={styles.eyebrow}>Player guides · shop, board, and game modes</p>
-          <h1>Goodly Trials Guides - Beginner Tips &amp; Strategies</h1>
+          <h1>Goodly Trials Guides - Tactics, Builds &amp; Game Modes</h1>
           <p>Start with the question in front of you: what to buy, where to place a unit, how a mode works, or why a build needs changing. These guides point you back to the relevant cards when the answer depends on the details.</p>
         </div>
       </section>

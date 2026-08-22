@@ -286,7 +286,7 @@ export default function BuildsPage() {
               items={[{ label: "Home", href: "/" }, { label: "Builds" }]}
             />
             <p className={styles.eyebrow}>Editable starting ideas · formation library</p>
-            <h1>Company Builds</h1>
+            <h1>Goodly Trials - Company Builds</h1>
             <p>
               Start with a complete formation instead of a loose unit idea. Each
               build shows a board, roster, gear goals, strengths, and trade-offs,

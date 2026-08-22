@@ -132,7 +132,7 @@ export default function BuilderPage() {
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Company Builder" }]} />
           <p className={styles.eyebrow}>Player planner · formation and loadout workspace</p>
-          <h1>Company Builder</h1>
+          <h1>Goodly Trials - Company Builder</h1>
           <p>Choose a leader, arrange the units available to you, and try equipment on a game-inspired board before your next run. Your notes stay in this browser so you can keep adjusting the plan.</p>
           <HeroIntel eyebrow="Builder workflow" title="Assemble the company" items={[{ value: "01", label: "Choose leader" }, { value: "02", label: "Place followers" }, { value: "03", label: "Assign gear" }, { value: "04", label: "Save notes" }]} />
         </div>

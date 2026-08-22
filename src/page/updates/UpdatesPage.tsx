@@ -30,7 +30,7 @@ export default function UpdatesPage() {
           <p className={styles.eyebrow}>
             Patch notes · changes worth checking before a run
           </p>
-          <h1>Patch Updates</h1>
+          <h1>Goodly Trials - Patch Updates</h1>
           <p>
             See the selected patch changes that affect the cards and builds on
             this site. Each note links to the official patch page and to the

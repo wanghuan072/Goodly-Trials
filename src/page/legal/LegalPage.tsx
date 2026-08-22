@@ -80,7 +80,7 @@ export default function LegalPage({ page }: { page: LegalPageKey }) {
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Legal" }, { label: document.title }]} />
           <p className={styles.eyebrow}>{document.eyebrow}</p>
-          <h1>{document.title}</h1>
+          <h1>Goodly Trials Wiki - {document.title}</h1>
           <p>Information for visitors to {siteConfig.name}, an independent Goodly Trials fan resource.</p>
           <HeroIntel eyebrow="Site record" title={document.title} items={[{ value: document.sections.length, label: "Sections" }, { value: "Clear", label: "Language" }, { value: "Open", label: "Access" }, { value: "Fan-made", label: "Status" }]} />
         </div>

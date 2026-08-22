@@ -22,7 +22,7 @@ export default function ItemsPage() {
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Gear" }]} />
           <p className={styles.eyebrow}>Gear archive · costs, requirements, and effects</p>
-          <h1>Gear Archive</h1>
+          <h1>Goodly Trials Wiki - Gear Archive</h1>
           <p>Check what an item costs, which attributes it needs, and where it fits before you spend a shop turn on it. Use the type filters to compare weapons, shields, trinkets, spells, and potions.</p>
           <HeroIntel
             eyebrow="Quartermaster"

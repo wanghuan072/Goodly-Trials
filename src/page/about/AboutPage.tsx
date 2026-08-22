@@ -19,7 +19,7 @@ export default function AboutPage() {
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About" }]} />
           <p className={styles.eyebrow}>About this player guide</p>
-          <h1>About Goodly Trials Wiki</h1>
+          <h1>Goodly Trials Wiki - About</h1>
           <p>This is a fan-made site for checking game cards, planning formations, and keeping up with changes that can affect a run.</p>
           <HeroIntel eyebrow="Player resource" title="Built around decisions" items={[{ value: "Wiki", label: "Compare cards" }, { value: "Builder", label: "Plan a company" }, { value: "Guides", label: "Learn systems" }, { value: "Updates", label: "Track changes" }]} />
         </div>

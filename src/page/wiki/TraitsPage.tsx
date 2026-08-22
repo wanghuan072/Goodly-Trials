@@ -45,7 +45,7 @@ export default function TraitsPage() {
           <p className={styles.eyebrow}>
             Trait archive · effects, caps, and card context
           </p>
-          <h1>Goodly Trials Wiki - Traits &amp; Effects</h1>
+          <h1>Goodly Trials Traits - Effects &amp; Unit Synergies</h1>
           <p>
             Compare every trait shown on the unit cards in one place. You can
             see its listed effect, cap, unit, faction, and tactic without

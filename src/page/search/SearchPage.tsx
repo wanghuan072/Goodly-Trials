@@ -88,7 +88,7 @@ export default function SearchPage({ query }: { query: string }) {
             items={[{ label: "Home", href: "/" }, { label: "Search" }]}
           />
           <p className={styles.eyebrow}>Search units, gear, guides, builds, and updates</p>
-          <h1>Goodly Trials - Search</h1>
+          <h1>Goodly Trials - Search Units, Gear &amp; Guides</h1>
           <p>
             Search the cards, gear, leaders, traits, factions, guides, builds,
             and patch notes collected on this site.

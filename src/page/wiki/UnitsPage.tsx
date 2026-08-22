@@ -36,7 +36,7 @@ export default function UnitsPage() {
             ]}
           />
           <p className={styles.eyebrow}>Unit cards · stats, traits, and tactics</p>
-          <h1>Goodly Trials Wiki - Units &amp; Tactics</h1>
+          <h1>Goodly Trials Units - Stats, Traits &amp; Tactics</h1>
           <p>
             Compare unit cards before you buy, equip, or
             place a unit. Filter by faction, tactic, and core attributes, then

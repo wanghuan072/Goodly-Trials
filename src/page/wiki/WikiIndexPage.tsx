@@ -108,7 +108,7 @@ export default function WikiIndexPage() {
           />
           <div className={styles.heroCopy}>
             <p className={styles.eyebrow}>Player wiki · connected game archive</p>
-            <h1>Goodly Trials Wiki - Game Archive</h1>
+            <h1>Goodly Trials Wiki - Units, Gear &amp; Factions</h1>
             <p>
               Pick the part of the game you want to check, then open the card,
               item, leader, trait, or faction page you need. Move from broad

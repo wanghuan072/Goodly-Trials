@@ -99,7 +99,7 @@ export default function HomePage() {
           <div className={styles.heroCopy}>
             <p className={styles.kicker}>Player guide · company planning archive</p>
             <h1>
-              Goodly Trials <span>- Plan Your Next Battle</span>
+              Goodly Trials <span>- Guide, Units, Gear &amp; Builds</span>
             </h1>
             <p className={styles.lede}>
               Check units and gear, sketch a formation, and head into your next

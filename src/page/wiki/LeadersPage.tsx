@@ -32,7 +32,7 @@ export default function LeadersPage() {
             ]}
           />
           <p className={styles.eyebrow}>Leader archive · traits and starting cards</p>
-          <h1>Goodly Trials Wiki - Company Leaders</h1>
+          <h1>Goodly Trials Leaders - Stats, Traits &amp; Builds</h1>
           <p>
             Compare leader cards, then open one for
             starting stats, gear and trinket slots, and the trait text shown on

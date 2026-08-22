@@ -23,7 +23,7 @@ export default function FactionsPage() {
         <div className={`container ${archive.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Factions" }]} />
           <p className={archive.eyebrow}>Faction archive · rosters and company identities</p>
-          <h1>Goodly Trials Wiki - Factions &amp; Rosters</h1>
+          <h1>Goodly Trials Factions - Rosters &amp; Units</h1>
           <p>See how Goodly Folk, Bone Host, and Belowborn differ, explore their rosters, and inspect the unit cards you need before building a company.</p>
           <HeroIntel
             eyebrow="Company registry"

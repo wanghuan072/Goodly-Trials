@@ -1,9 +1,14 @@
+const indexingOverride = process.env.NEXT_PUBLIC_ALLOW_INDEXING;
+
 export const siteConfig = {
   name: "Goodly Trials Wiki",
   shortName: "Goodly Trials",
   description: "Plan a Goodly Trials run with documented unit cards, gear effects, editable formations, player guides, build ideas, and versioned patch changes in one practical player reference.",
   url: "https://goodlytrials.org",
-  indexable: process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true",
+  indexable:
+    indexingOverride === undefined
+      ? process.env.VERCEL_ENV === "production"
+      : indexingOverride === "true",
   officialUrl: "https://goodlytrials.com/",
   patchNotesUrl: "https://goodlytrials.com/patch-notes",
   playUrl: "https://play.goodlytrials.com/",

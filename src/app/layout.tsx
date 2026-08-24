@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   publisher: siteConfig.name,
   category: "Games",
   alternates: { canonical: "/" },
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png", sizes: "32x32" }],
+    shortcut: "/icon.png",
+    apple: [{ url: "/icon.png", type: "image/png", sizes: "32x32" }],
+  },
   openGraph: { type: "website", siteName: siteConfig.name, locale: "en_US", title: pageTdk["/"].title, description: pageTdk["/"].description, url: "/", images: [{ url: siteConfig.socialImage, width: 1200, height: 630, alt: "Goodly Trials Wiki, Builds and Guides" }] },
   twitter: { card: "summary_large_image", title: pageTdk["/"].title, description: pageTdk["/"].description, images: [siteConfig.socialImage] },
   robots: siteConfig.indexable ? { index: true, follow: true } : { index: false, follow: true },

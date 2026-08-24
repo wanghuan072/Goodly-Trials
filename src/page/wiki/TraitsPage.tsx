@@ -43,13 +43,13 @@ export default function TraitsPage() {
             ]}
           />
           <p className={styles.eyebrow}>
-            Trait archive · effects, caps, and card context
+            Verified trait archive · effects, caps, and card context
           </p>
           <h1>Goodly Trials Traits - Effects &amp; Unit Synergies</h1>
           <p>
-            Compare every trait shown on the unit cards in one place. You can
-            see its listed effect, cap, unit, faction, and tactic without
-            opening a separate page that would add no useful detail.
+            Compare traits transcribed from complete public unit cards in one
+            place. Base client records remain on their unit pages until their
+            full trait text can be verified.
           </p>
           <HeroIntel
             eyebrow="Effect ledger"
@@ -126,9 +126,8 @@ export default function TraitsPage() {
           <h2>Traits are not roles</h2>
           <p>
             A trait can alter growth, income, spell damage, equipment value, or
-            death interactions. It should be read beside a unit&apos;s skills,
-            tactic, stats, and equipment slots—not converted into an unsupported
-            fixed role.
+            death interactions. Read it beside a unit&apos;s skills, tactic, stats,
+            and equipment slots—not as an unsupported fixed role.
           </p>
         </section>
       </section>

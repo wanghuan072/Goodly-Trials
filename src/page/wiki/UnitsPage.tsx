@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/navigation/Breadcrumb";
 import HeroIntel from "@/components/content/HeroIntel";
 import UnitSprite from "@/components/content/UnitSprite";
 import UnitExplorer from "@/page/wiki/components/UnitExplorer";
-import { factions, units } from "@/lib/data/game-content";
+import { factions, traits, units } from "@/lib/data/game-content";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
 
@@ -35,12 +35,12 @@ export default function UnitsPage() {
               { label: "Units" },
             ]}
           />
-          <p className={styles.eyebrow}>Unit cards · stats, traits, and tactics</p>
+          <p className={styles.eyebrow}>Unit archive · complete public cards and base client records</p>
           <h1>Goodly Trials Units - Stats, Traits &amp; Tactics</h1>
           <p>
-            Compare unit cards before you buy, equip, or
-            place a unit. Filter by faction, tactic, and core attributes, then
-            open a card when you need the full details.
+            Compare unit records before you buy, equip, or place a unit. Full
+            public cards include their published trait and skills; base client
+            records explicitly mark the details that have not been transcribed.
           </p>
           <HeroIntel
             eyebrow="Roster desk"
@@ -48,7 +48,7 @@ export default function UnitsPage() {
             items={[
               { label: "Unit cards", value: units.length },
               { label: "Factions", value: factions.length },
-              { label: "Compare", value: "Stats" },
+              { label: "Full cards", value: traits.length },
               { label: "Plan", value: "Tactics" },
             ]}
           />
@@ -79,7 +79,7 @@ export default function UnitsPage() {
                 <div>
                   <b>✥</b>
                   <h3>Traits</h3>
-                  <p>Define the rolled advantages that distinguish recruits.</p>
+                  <p>Full trait text is shown only when a public card has been verified.</p>
                 </div>
               </div>
             </div>

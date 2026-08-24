@@ -7,6 +7,7 @@ import {
   factions,
   items,
   leaders,
+  traits,
   units,
 } from "@/lib/data/game-content";
 import { siteConfig } from "@/config/site";
@@ -51,7 +52,7 @@ const archiveSections = [
     icon: "T",
     title: "Traits",
     href: "/wiki/traits",
-    count: `${units.length} traits on unit cards`,
+    count: `${traits.length} verified trait cards`,
     description:
       "Compare each trait with the unit that carries it, its listed effect, and its place on the board.",
     label: "Reference",

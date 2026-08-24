@@ -316,8 +316,8 @@
 .itemReferenceList { grid-template-columns: 1fr; }
 .referenceEntry {
   display: grid;
-  min-height: 98px;
-  grid-template-columns: 74px minmax(0, 1fr) auto;
+  min-height: 118px;
+  grid-template-columns: 102px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
   padding: 8px 10px 8px 8px;
@@ -333,15 +333,16 @@
 }
 .referenceArt {
   display: grid;
-  width: 66px;
-  height: 80px;
+  width: 92px;
+  height: 100px;
   place-items: center;
   overflow: hidden;
   border: 1px solid var(--border-soft);
   background: radial-gradient(circle at 50% 72%, #2b2d2a, #070808 70%);
 }
-.unitReferenceArt :global(.unit-sprite) { width: 54px; height: 70px; }
-.itemReferenceArt img { width: 48px; height: 48px; object-fit: contain; image-rendering: pixelated; transform: scale(1.45); }
+.unitReferenceArt :global(.unit-sprite) { width: 84px; height: 92px; }
+.unitReferenceArt :global(.unit-sprite img) { transform: scale(2.45); transform-origin: center bottom; }
+.itemReferenceArt img { width: 48px; height: 48px; object-fit: contain; image-rendering: pixelated; transform: scale(.92); }
 .referenceCopy { display: grid; min-width: 0; gap: 3px; }
 .referenceCopy small { color: var(--accent-red); font-size: .66rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .referenceCopy strong { overflow: hidden; color: var(--parchment); font-size: .84rem; letter-spacing: .035em; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
@@ -527,9 +528,10 @@
   .heroActions { align-items: stretch; flex-direction: column; }
   .heroActions a { width: 100%; }
   .archiveGrid { grid-template-columns: 1fr 1fr; }
-  .referenceEntry { min-height: 92px; grid-template-columns: 66px minmax(0, 1fr) auto; }
-  .referenceArt { width: 58px; height: 74px; }
-  .unitReferenceArt :global(.unit-sprite) { width: 48px; height: 64px; }
+  .referenceEntry { min-height: 108px; grid-template-columns: 82px minmax(0, 1fr) auto; }
+  .referenceArt { width: 74px; height: 90px; }
+  .unitReferenceArt :global(.unit-sprite) { width: 68px; height: 82px; }
+  .unitReferenceArt :global(.unit-sprite img) { transform: scale(2.05); }
   .threeColumns, .sourcePanel, .infoRow { grid-template-columns: 1fr; }
   .threeColumns > :last-child { grid-column: auto; }
   .mechanicsGrid { grid-template-columns: repeat(4, 1fr); }

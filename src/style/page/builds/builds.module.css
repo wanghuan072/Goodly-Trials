@@ -34,7 +34,7 @@
 .buildHeader dt { color: #686a63; font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: .07em; text-transform: uppercase; }
 .buildHeader dd { overflow: hidden; margin: 0; color: #c8c9c0; font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 
-.buildBody { display: grid; grid-template-columns: minmax(440px, 1fr) minmax(0, 1.3fr); min-height: 520px; }
+.buildBody { display: grid; grid-template-columns: minmax(440px, 1fr) minmax(0, 1.3fr); min-height: 0; }
 .previewPanel { padding: 14px; border-right: 1px solid #4e504a; background: linear-gradient(rgba(255,255,255,.014) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.014) 1px, transparent 1px), #030404; background-size: 42px 42px; }
 .leaderBar { display: grid; min-height: 64px; grid-template-columns: 46px minmax(0, 1fr); align-items: center; gap: 9px; margin-bottom: 9px; padding: 7px; border: 1px solid #52534e; background: #0a0b0b; font-family: var(--font-display); }
 .leaderBar > span { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid #73756c; color: #eee; background: #151616; font-size: 1rem; }
@@ -47,7 +47,8 @@
 .boardCell small { position: absolute; top: 3px; left: 3px; color: #3f413c; font-family: var(--font-display); font-size: 0.6875rem; }
 .activeCell { border-color: #3e403b; background: #050606; }
 .filledCell { border-color: #898b82; background: #101111; box-shadow: inset 0 0 0 2px #030404; }
-.boardCell :global([class*="sprite"]) { width: 35px; height: 43px; }
+.boardCell :global([class*="sprite"]) { width: 42px; height: 50px; }
+.boardCell :global([class*="sprite"] img) { filter: invert(1) contrast(1.12); transform: scale(2.05); transform-origin: center bottom; }
 .boardCell b { width: 100%; padding: 3px 2px; overflow: hidden; color: #d2d3ca; background: #090a0a; font-family: var(--font-display); font-size: 0.6875rem; text-align: center; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
 .previewPanel > p { display: grid; gap: 4px; margin-top: 9px; padding: 9px 10px; border: 1px solid #3b3d38; color: #7d7f76; background: #080909; font-family: var(--font-display); font-size: 0.75rem; line-height: 1.5; }
 .previewPanel > p strong { color: #babcb1; font-size: 0.75rem; letter-spacing: .08em; text-transform: uppercase; }
@@ -67,6 +68,7 @@
 .rosterBlock > ul { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 13px; }
 .memberCard { display: grid; min-width: 0; min-height: 83px; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 7px; padding: 7px; border: 1px solid #363833; background: #070808; font-family: var(--font-display); }
 .memberCard > :global([class*="sprite"]) { width: 46px; height: 59px; }
+.memberCard > :global([class*="sprite"] img) { filter: invert(1) contrast(1.12); transform: scale(2.15); transform-origin: center bottom; }
 .memberCard > div { display: grid; min-width: 0; gap: 2px; }
 .memberCard small { color: #74766e; font-size: 0.6875rem; text-transform: uppercase; }
 .memberCard strong { overflow: hidden; color: var(--parchment); font-size: 0.8125rem; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }

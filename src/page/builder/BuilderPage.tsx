@@ -3,7 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import HeroIntel from "@/components/content/HeroIntel";
 import { siteConfig } from "@/config/site";
-import { factions, items, leaders, units } from "@/lib/data/game-content";
+import { items, leaders, units } from "@/lib/data/game-content";
 import JsonLd from "@/seo/JsonLd";
 import { createMetadata } from "@/seo/metadata";
 import BuilderClient, { type BuilderLeader, type BuilderRosterUnit } from "./BuilderClient";
@@ -38,38 +38,27 @@ const builderSteps = [
   },
 ] as const;
 
-function slugify(name: string) {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-}
-
-const verifiedUnits = new Map(units.map((unit) => [unit.name, unit]));
-
-const roster: BuilderRosterUnit[] = factions.flatMap((faction) =>
-  faction.roster.map((name) => {
-    const verified = verifiedUnits.get(name);
-    return {
-      slug: verified?.slug ?? slugify(name),
-      name,
-      faction: faction.name,
-      factionSlug: faction.slug,
-      accent: faction.accent,
-      image: verified?.image ?? `/images/units/${slugify(name)}.png`,
-      verified: Boolean(verified),
-      gear: verified?.gear,
-      trinkets: verified?.trinkets,
-      stats: verified?.stats,
-      trait: verified?.trait.name,
-      gameVersion: verified?.gameVersion,
-      traitEffect: verified?.trait.effect,
-      tactic: verified?.tactic.name,
-      tacticEffect: verified?.tactic.effect,
-      skills: verified?.skills,
-      quote: verified?.quote,
-      recovery: verified?.recovery,
-      manaRegen: verified?.manaRegen,
-    };
-  }),
-);
+const roster: BuilderRosterUnit[] = units.map((unit) => ({
+  slug: unit.slug,
+  name: unit.name,
+  faction: unit.faction,
+  factionSlug: unit.factionSlug,
+  accent: unit.accent,
+  image: unit.image,
+  verified: true,
+  gear: unit.gear,
+  trinkets: unit.trinkets,
+  stats: unit.stats,
+  trait: unit.trait.name,
+  gameVersion: unit.gameVersion,
+  traitEffect: unit.trait.effect,
+  tactic: unit.tactic.name,
+  tacticEffect: unit.tactic.effect,
+  skills: unit.skills,
+  quote: unit.quote,
+  recovery: unit.recovery,
+  manaRegen: unit.manaRegen,
+}));
 
 const builderLeaders: BuilderLeader[] = leaders.map((leader) => ({
   slug: leader.slug,

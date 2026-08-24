@@ -64,6 +64,19 @@ const mechanics = [
   ["RNG", "Range"],
 ];
 
+const featuredUnitSlugs = [
+  "goodly-knight",
+  "portly-knight",
+  "archer",
+  "wizard",
+  "skeleton-child",
+  "skeleton-dog",
+];
+
+const featuredUnits = featuredUnitSlugs
+  .map((slug) => units.find((unit) => unit.slug === slug))
+  .filter((unit): unit is Unit => Boolean(unit));
+
 function PanelTitle({
   children,
   href,
@@ -256,7 +269,7 @@ export default function HomePage() {
               Unit Cards
             </PanelTitle>
             <div className={`${styles.referenceList} ${styles.unitReferenceList}`}>
-              {units.map((unit) => (
+              {featuredUnits.map((unit) => (
                 <HomeUnitEntry key={unit.slug} unit={unit} />
               ))}
             </div>
@@ -266,7 +279,7 @@ export default function HomePage() {
               Gear You Can Check
             </PanelTitle>
             <div className={`${styles.referenceList} ${styles.itemReferenceList}`}>
-              {items.slice(0, 4).map((item) => (
+              {items.slice(0, 3).map((item) => (
                 <HomeItemEntry key={item.slug} item={item} />
               ))}
             </div>

@@ -6,7 +6,7 @@
     "image": "/images/game/screenshot-7.webp",
     "imageAlt": "Goodly Trials leader training screen with a leader card and stat explanations",
     "excerpt": "Learn the verified road, how to read a card, and how to make your first shop and board decisions without guessing.",
-    "updated": "2026-08-20"
+    "updated": "2026-08-24"
   },
   {
     "slug": "formation-guide",
@@ -15,7 +15,7 @@
     "image": "/images/game/screenshot-6.webp",
     "imageAlt": "Goodly Trials training diagram explaining formation rows and targeting",
     "excerpt": "Use Formation, Backline, Flanking, range, and adjacency to make a readable board before combat begins.",
-    "updated": "2026-08-20"
+    "updated": "2026-08-24"
   },
   {
     "slug": "game-modes-progression-guide",
@@ -24,6 +24,6 @@
     "image": "/images/game/screenshot-9.webp",
     "imageAlt": "Goodly Trials Deed Shop with progression rewards and faction unlock cards",
     "excerpt": "Understand the public single-player route, Ranked caveat, multiplayer format, and Deed-based unlock context.",
-    "updated": "2026-08-20"
+    "updated": "2026-08-24"
   }
 ]

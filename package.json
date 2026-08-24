@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vinext dev",
+    "dev": "vinext dev --hostname ::",
     "build": "vinext build",
     "build:sites": "vinext build",
     "start": "vinext start",

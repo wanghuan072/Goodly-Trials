@@ -136,16 +136,22 @@ img {
   max-width: 100%;
 }
 .unit-sprite {
-  --sprite-image: none;
-  --sprite-color: var(--gold);
-  display: block;
+  display: grid;
   width: 68px;
   height: 84px;
-  background: linear-gradient(#f1f1ec, var(--sprite-color));
-  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.72));
+  place-items: end center;
+  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.68));
   image-rendering: pixelated;
-  -webkit-mask: var(--sprite-image) center bottom / contain no-repeat;
-  mask: var(--sprite-image) center bottom / contain no-repeat;
+}
+.unit-sprite img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  image-rendering: pixelated;
 }
 .unit-sprite--large {
   width: 118px;

@@ -11,9 +11,9 @@ export const siteConfig = {
   playUrl: "https://play.goodlytrials.com/",
   steamUrl: "https://store.steampowered.com/app/4985160/Goodly_Trials/",
   socialImage: "/images/og-image.png",
-  latestPatchVersion: "v0.307",
-  lastVerified: "2026-08-21",
-  accessStatus: "Open browser beta; Steam lists Early Access for August 18, 2026",
+  latestPatchVersion: "v0.312",
+  lastVerified: "2026-08-24",
+  accessStatus: "Check the official site and Steam listing for current access and platform availability.",
 } as const;
 
 export const primaryNavigation = [

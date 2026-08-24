@@ -1,18 +1,150 @@
 [
-  { "slug": "iron-sword-of-brawn", "name": "Iron Sword of Brawn", "type": "One-handed", "image": "/images/items/iron-sword.png", "requirements": "1 STR / 1 AGI", "effects": ["+2 STR", "+3 ATK", "+8 HP"], "cost": 4, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "wand-of-wit", "name": "Wand of Wit", "type": "One-handed", "image": "/images/items/wand.png", "requirements": "3 INT", "effects": ["+2 INT", "+2 ATK", "+4 MP", "+1 INT", "+1 trinket slot"], "cost": 5, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "boots-axe", "name": "Boot's Axe", "type": "Two-handed · Unique", "image": "/images/items/boots-axe.gif", "requirements": "12 STR", "effects": ["+8 ATK", "+80% CRT", "-4 AR", "On kill, deals the wielder's STR as spell damage to adjacent enemies"], "cost": 15, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "bow-of-grace", "name": "Bow of Grace", "type": "Two-handed", "image": "/images/items/bow-of-grace.png", "requirements": "4 AGI", "effects": ["+4 AGI", "+6 ATK", "-35% SPD", "+1 RNG"], "cost": 7, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "iron-shield-of-brawn", "name": "Iron Shield of Brawn", "type": "Shield", "image": "/images/items/iron-shield.png", "requirements": "1 STR", "effects": ["+2 STR", "+1 AR", "+10 HP", "+2 AR against ranged attacks"], "cost": 4, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "dignified-shield-of-balance", "name": "Dignified Shield of Balance", "type": "Shield", "image": "/images/items/dignified-shield.png", "requirements": "5 STR", "effects": ["+1 ALL", "+3 AR", "+2 ALL", "+3 AR against ranged attacks"], "cost": 10, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "feather-charm-of-reflex", "name": "Feather Charm of Reflex", "type": "Trinket", "image": "/images/items/feather-charm.png", "requirements": "3 AGI", "effects": ["+2 AGI", "+2G income"], "cost": 5, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "ruby-charm-of-wit", "name": "Ruby Charm of Wit", "type": "Trinket", "image": "/images/items/ruby-charm.png", "requirements": "6 INT", "effects": ["+2 INT", "+3G income"], "cost": 7, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "frostfall-of-lore", "name": "Frostfall of Lore", "type": "Spell", "image": "/images/items/frostfall.png", "requirements": "4 INT", "effects": ["Targets an enemy", "Deals 2 × INT as spell damage", "+4 INT"], "cost": 7, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "fire-palm-of-balance", "name": "Fire Palm of Balance", "type": "Spell", "image": "/images/items/fire-palm.png", "requirements": "6 INT", "effects": ["+6 MP", "Targets an enemy group", "Deals 3 × INT as spell damage", "+1 ALL"], "cost": 10, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "iron-tonic", "name": "Iron Tonic", "type": "Potion", "image": "/images/items/iron-tonic.png", "effects": ["+2 STR"], "cost": 4, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "quickwater", "name": "Quickwater", "type": "Potion", "image": "/images/items/quickwater.png", "effects": ["+2 AGI"], "cost": 4, "gameVersion": "v0.303", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/wiki/items" },
-  { "slug": "oxblood", "name": "Oxblood", "type": "Potion", "image": "/images/items/item-data-pending.svg", "effects": ["Targets an ally", "+12 HP"], "gameVersion": "v0.307", "lastVerified": "2026-08-21", "source": "https://goodlytrials.com/patch-notes" },
-  { "slug": "thin-blood", "name": "Thin Blood", "type": "Potion", "image": "/images/items/item-data-pending.svg", "effects": ["Targets an enemy", "-9 HP"], "gameVersion": "v0.307", "lastVerified": "2026-08-21", "source": "https://goodlytrials.com/patch-notes" },
-  { "slug": "bian-of-the-eagle", "name": "Bian of the Eagle", "type": "Gear", "image": "/images/items/item-data-pending.svg", "effects": ["-3 STR", "-3 AGI", "Grants +4 STR and +4 AGI to the ally below", "Stuns its killer for 2s when the wearer dies"], "gameVersion": "v0.298", "lastVerified": "2026-08-21", "source": "https://goodlytrials.com/patch-notes" },
-  { "slug": "rod-of-many-tales", "name": "Rod of Many Tales", "type": "Gear", "image": "/images/items/item-data-pending.svg", "effects": ["+15 MP", "+2 ALL", "+1 trinket slot", "+75% SPD for 3s after casting a spell"], "gameVersion": "v0.296", "lastVerified": "2026-08-21", "source": "https://goodlytrials.com/patch-notes" }
+  {
+    "slug": "iron-sword",
+    "name": "Iron Sword of Brawn",
+    "type": "One-handed",
+    "requirements": "1 STR · 1 AGI",
+    "effects": [
+      "+2 STR",
+      "+3 ATK",
+      "+8 HP"
+    ],
+    "cost": 4,
+    "image": "/images/items/official/iron-sword.png",
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "wand",
+    "name": "Wand of Wit",
+    "type": "One-handed",
+    "requirements": "3 INT",
+    "effects": [
+      "+2 INT",
+      "+2 ATK",
+      "+4 MP",
+      "+1 INT",
+      "+1 trinket slot"
+    ],
+    "cost": 5,
+    "image": "/images/items/official/wand.png",
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "bow",
+    "name": "Bow of Grace",
+    "type": "Two-handed",
+    "requirements": "4 AGI",
+    "effects": [
+      "+4 AGI",
+      "+6 ATK",
+      "-35% SPD",
+      "+1 RNG"
+    ],
+    "cost": 7,
+    "image": "/images/items/official/bow.png",
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "iron-shield",
+    "name": "Iron Shield of Brawn",
+    "type": "Shield",
+    "requirements": "1 STR",
+    "effects": [
+      "+2 STR",
+      "+1 AR",
+      "+10 HP",
+      "+2 AR against ranged ATKs"
+    ],
+    "cost": 4,
+    "image": "/images/items/official/iron-shield.png",
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "dignified-shield-of-balance",
+    "name": "Dignified Shield of Balance",
+    "type": "Shield",
+    "requirements": "5 STR",
+    "effects": [
+      "+1 ALL",
+      "+3 AR",
+      "+2 ALL",
+      "+3 AR against ranged ATKs"
+    ],
+    "cost": 10,
+    "image": "/images/items/official/dignified-shield.png",
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "feather-charm-of-reflex",
+    "name": "Feather Charm of Reflex",
+    "type": "Trinket",
+    "requirements": "3 AGI",
+    "effects": [
+      "+2 AGI",
+      "+2G income"
+    ],
+    "cost": 5,
+    "image": "/images/items/official/feather-charm.png",
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "ruby-charm-of-wit",
+    "name": "Ruby Charm of Wit",
+    "type": "Trinket",
+    "requirements": "6 INT",
+    "effects": [
+      "+2 INT",
+      "+3G income"
+    ],
+    "cost": 7,
+    "image": "/images/items/official/ruby-charm.png",
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "frostfall-of-lore",
+    "name": "Frostfall of Lore",
+    "type": "Spell",
+    "requirements": "4 INT",
+    "effects": [
+      "Targets enemy",
+      "Deal 2 × INT as spell DMG",
+      "+4 INT"
+    ],
+    "cost": 7,
+    "image": "/images/items/official/frostfall.png",
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "fire-palm-of-balance",
+    "name": "Fire Palm of Balance",
+    "type": "Spell",
+    "requirements": "6 INT",
+    "effects": [
+      "+6 MP",
+      "Targets enemy group",
+      "Deal 3 × INT as spell DMG",
+      "+1 ALL"
+    ],
+    "cost": 10,
+    "image": "/images/items/official/fire-palm.png",
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  }
 ]

@@ -53,6 +53,7 @@
   width: 156px;
   height: 218px;
 }
+.unitArt > span img { transform: scale(2.5); transform-origin: center bottom; }
 .heroCopy {
   position: relative;
   z-index: 3;
@@ -418,6 +419,7 @@
   width: 104px;
   height: 142px;
 }
+.profileArt > span img { transform: scale(2.1); transform-origin: center bottom; }
 .sideProfile > h2 {
   margin: 6px 0 2px;
   padding: 8px 4px;
@@ -521,7 +523,7 @@
   height: 96px;
   object-fit: contain;
   image-rendering: pixelated;
-  transform: scale(2);
+  transform: scale(1.08);
 }
 .itemCopy {
   padding: 28px;

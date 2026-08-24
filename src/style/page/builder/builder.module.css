@@ -87,16 +87,18 @@
 .lockedCell { display: grid; width: 36px; height: 46px; place-items: center; align-content: center; gap: 3px; border: 1px solid #292a27; color: #595b55; background: #090a0a; }
 .lockedCell b { font-size: 0.75rem; }
 .lockedCell small { font-size: 0.6875rem; letter-spacing: .08em; }
-.boardSlotMain { position: relative; display: flex; min-height: 70px; flex: 1; align-items: center; flex-direction: column; justify-content: end; padding: 4px 2px 2px; overflow: hidden; border: 0; color: inherit; background: transparent; font-family: inherit; cursor: pointer; }
+.boardSlotMain { position: relative; display: flex; min-height: 0; flex: 1; align-items: center; flex-direction: column; justify-content: end; box-sizing: border-box; padding: 4px 2px 36px; overflow: hidden; border: 0; color: inherit; background: transparent; font-family: inherit; cursor: pointer; }
+.boardSlot:has(.itemSlots > button:nth-of-type(3)) .boardSlotMain { padding-bottom: 52px; }
 .slotNumber { position: absolute; top: 4px; left: 4px; color: #6f706a; font-size: 0.6875rem; }
-.unitCardBody { display: grid; width: 100%; min-height: 70px; grid-template-columns: minmax(36px, 44%) minmax(0, 1fr); grid-template-rows: auto minmax(52px, 1fr); align-items: stretch; gap: 2px 4px; }
-.miniTitle { grid-column: 1 / -1; display: flex; min-width: 0; align-items: baseline; justify-content: center; padding: 0 20px; text-align: center; text-transform: uppercase; }
+.unitCardBody { display: grid; width: 100%; min-height: 0; height: 100%; grid-template-columns: 1fr; grid-template-rows: 16px minmax(0, 1fr); align-items: stretch; gap: 2px; }
+.miniTitle { grid-column: 1; display: flex; min-width: 0; align-items: baseline; justify-content: center; padding: 0 22px; text-align: center; text-transform: uppercase; }
 .miniTitle small { display: none; }
 .miniTitle b { flex: 1 1 auto; overflow: hidden; color: #f1e5cb; font-size: 0.6875rem; line-height: 1.15; text-overflow: ellipsis; white-space: nowrap; }
-.unitPortrait { position: relative; grid-column: 1; grid-row: 2; display: grid; min-width: 0; place-items: end center; overflow: hidden; border: 1px solid #3b3d39; background: radial-gradient(circle at 50% 75%, rgba(241,241,236,.12), transparent 67%), #070808; }
-.unitPortrait::after { position: absolute; right: 5px; bottom: 2px; left: 5px; height: 1px; background: linear-gradient(90deg, transparent, rgba(232,201,139,.48), transparent); content: ""; }
-.unitPortrait > :global([class*="sprite"]) { width: 46px; height: 57px; flex: none; background: linear-gradient(#fff8e8, var(--sprite-color)); filter: contrast(1.14) drop-shadow(0 4px 3px #000); }
-.unitStatBlock { grid-column: 2; grid-row: 2; display: grid; min-width: 0; align-content: center; gap: 3px; }
+.unitPortrait { grid-column: 1; grid-row: 2; display: grid; min-width: 0; place-items: start center; overflow: hidden; }
+.unitPortrait::after { display: none; }
+.unitPortrait > :global([class*="sprite"]) { width: 54px; height: 58px; flex: none; background: none; filter: drop-shadow(0 4px 3px #000); }
+.unitPortrait > :global([class*="sprite"] img) { filter: invert(1) contrast(1.12); transform: translateY(-4px) scale(2.12); transform-origin: center bottom; }
+.unitStatBlock, .pendingStats { display: none; }
 .miniVitals { display: grid; min-width: 0; gap: 1px; }
 .miniVitals span { overflow: hidden; padding: 1px 3px; border: 1px solid #353832; color: #c4c6bf; background: #090a0a; font-size: 0.625rem; line-height: 1.2; text-align: left; text-overflow: ellipsis; white-space: nowrap; }
 .miniAttrs { display: grid; min-width: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; }
@@ -107,15 +109,18 @@
 .pendingStats { margin-top: 4px; color: #9b927e; font-size: 0.75rem; text-align: center; }
 .emptyCell { display: grid; width: 28px; height: 40px; margin-bottom: 4px; place-items: center; border: 1px dashed #30312f; color: #4b4c48; font-size: 1rem; }
 .emptyText { color: #777971; font-size: 0.75rem; letter-spacing: .1em; }
-.loadoutDock { display: grid; min-height: 34px; grid-template-columns: 1fr 1fr; gap: 2px; padding: 2px; border-top: 1px solid #3a3b38; background: #060707; }
-.loadoutDock > div { display: grid; min-width: 0; align-items: center; gap: 2px; }
-.loadoutDock label { overflow: hidden; color: #74756f; font-size: 0.6875rem; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
-.itemSlots { display: flex; min-width: 0; flex-wrap: wrap; align-content: flex-start; gap: 2px; overflow: visible; }
-.itemSlots button, .itemSlots i { position: relative; display: grid; width: 18px; height: 18px; flex: 0 0 18px; place-items: center; padding: 1px; border: 1px solid #494a46; background: #0b0c0c; cursor: grab; }
+.loadoutDock { position: absolute; z-index: 6; right: 2px; bottom: 2px; left: 2px; display: grid; height: 32px; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 3px; padding: 2px 3px; border-top: 1px solid #4a4b46; background: #060707; }
+.boardSlot:has(.itemSlots > button:nth-of-type(3)) .loadoutDock { height: 48px; }
+.loadoutDock > div { display: grid; min-width: 0; grid-template-rows: 9px minmax(0, 1fr); align-items: start; gap: 2px; }
+.loadoutDock label { display: block; width: 100%; overflow: hidden; color: #b5b6ae; font-size: 0.5625rem; letter-spacing: .03em; line-height: 1; text-align: center; text-transform: uppercase; white-space: nowrap; }
+.loadoutDock .consumables { display: none; }
+.itemSlots { display: flex; min-width: 0; flex-wrap: nowrap; align-items: center; justify-content: center; gap: 2px; overflow: visible; }
+.boardSlot:has(.itemSlots > button:nth-of-type(3)) .itemSlots { display: grid; grid-template-columns: repeat(2, 18px); grid-auto-rows: 18px; align-content: start; }
+.itemSlots button, .itemSlots i { position: relative; display: grid; width: 18px; height: 18px; flex: 0 0 18px; place-items: center; padding: 1px; border: 1px solid #6c6d65; background: #0b0c0c; cursor: grab; }
 .itemSlots button::after { position: absolute; top: -4px; right: -3px; display: grid; width: 9px; height: 9px; place-items: center; border: 1px solid #6d3935; color: #f4b5ad; background: #210c0a; content: "×"; font-size: 0.6875rem; line-height: 1; }
 .itemSlots button:hover::after, .itemSlots button:focus-visible::after { border-color: #ff7568; color: #fff; background: #4a1612; }
-.itemSlots i { background: #030404; cursor: default; }
-.itemSlots img { width: 15px; height: 15px; object-fit: contain; filter: contrast(1.1); image-rendering: pixelated; }
+.itemSlots i { display: grid; border-style: dashed; background: #060707; cursor: default; }
+.itemSlots img { width: 16px; height: 16px; object-fit: contain; filter: contrast(1.16); image-rendering: pixelated; }
 .consumables { grid-column: 1 / -1; border-top: 1px dotted #333430; padding-top: 2px; }
 .slotWarning { grid-column: 1 / -1; color: #f05a45; font-size: 0.6875rem; letter-spacing: .05em; text-align: center; }
 .formationRail div { display: grid; min-height: 0; align-content: center; justify-items: center; gap: 3px; padding: 5px 3px; border: 1px solid #343532; color: #6d6e68; background: repeating-linear-gradient(135deg, #0b0c0c 0 2px, #070808 2px 4px); text-align: center; }
@@ -138,22 +143,23 @@
 .archiveList::-webkit-scrollbar { width: 8px; }
 .archiveList::-webkit-scrollbar-track { border-left: 1px solid #2d2e2b; background: #090a0a; }
 .archiveList::-webkit-scrollbar-thumb { border: 2px solid #090a0a; background: #74756f; }
-.archiveUnit, .archiveItem, .archiveLeader { position: relative; display: grid; width: 100%; min-height: 78px; grid-template-columns: 17px 48px minmax(0, 1fr); align-items: center; gap: 5px; margin: 0; padding: 5px 6px 18px; overflow: hidden; border: 1px solid #30312e; color: var(--game-text); background: #030404; font-family: inherit; cursor: grab; text-align: left; transition: border-color .12s ease, background-color .12s ease, transform .12s ease; }
-.archiveUnit::after, .archiveItem::after, .archiveLeader::after { position: absolute; right: 5px; bottom: 5px; color: #85867f; content: "⋮⋮ DRAG"; font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; }
+.archiveUnit, .archiveItem, .archiveLeader { position: relative; display: grid; width: 100%; min-height: 78px; grid-template-columns: 17px 48px minmax(0, 1fr); align-items: center; gap: 5px; margin: 0; padding: 6px; overflow: hidden; border: 1px solid #30312e; color: var(--game-text); background: #030404; font-family: inherit; cursor: grab; text-align: left; transition: border-color .12s ease, background-color .12s ease, transform .12s ease; }
+.archiveUnit::after, .archiveItem::after, .archiveLeader::after { display: none; }
 .archiveBlocked { border-color: #4b302d; cursor: not-allowed; }
-.archiveBlocked::after { color: #ef7569; content: attr(data-reason); }
+.archiveBlocked::after { position: absolute; right: 5px; bottom: 5px; display: block; color: #ef7569; content: attr(data-reason); font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; }
 .archiveBlocked > :not(.archiveIdentity) { opacity: .48; }
 .archiveUnit:active, .archiveItem:active, .archiveLeader:active { cursor: grabbing; transform: scale(.975); }
 .archiveUnit.archiveBlocked:active, .archiveItem.archiveBlocked:active { cursor: not-allowed; transform: none; }
 .archiveUnit:hover, .archiveItem:hover, .archiveLeader:hover, .archiveUnit:focus-visible, .archiveItem:focus-visible, .archiveLeader:focus-visible { border-color: #b7b8b0; outline: 0; }
 .archiveUnit:hover, .archiveItem:hover, .archiveLeader:hover { background: #0a0b0b; }
-.archiveUnit > :global([class*="sprite"]) { width: 44px; height: 54px; background: linear-gradient(#f4f1e8, #c8c8c0); filter: contrast(1.1); }
+.archiveUnit > :global([class*="sprite"]) { width: 44px; height: 54px; background: none; filter: drop-shadow(0 3px 2px #000); }
+.archiveUnit > :global([class*="sprite"] img) { filter: invert(1) contrast(1.12); transform: scale(2.1); transform-origin: center bottom; }
 .archiveIndex { align-self: start; padding-top: 3px; color: #676862; font-size: 0.75rem; }
 .archiveIdentity { min-width: 0; }
 .archiveIdentity small, .archiveIdentity strong, .archiveIdentity em { display: block; overflow: hidden; text-overflow: ellipsis; }
 .archiveIdentity small { color: var(--game-muted); font-size: 0.75rem; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
 .archiveIdentity strong { margin-top: 3px; color: #e4e4dd; font-size: 0.75rem; line-height: 1.2; text-transform: uppercase; }
-.archiveIdentity em { margin-top: 5px; color: var(--game-muted); font-size: 0.8125rem; font-style: normal; line-height: 1.4; }
+.archiveIdentity em { margin-top: 3px; color: var(--game-muted); font-size: 0.75rem; font-style: normal; line-height: 1.4; white-space: nowrap; }
 .archiveStats { grid-column: 2 / -1; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #373835; }
 .archiveStats i { padding-top: 4px; color: #9b9c94; font-size: 0.6875rem; font-style: normal; text-align: center; }
 .unverifiedTag { grid-column: 2 / -1; padding-top: 4px; border-top: 1px solid #373835; color: #686963; font-size: 0.6875rem; letter-spacing: .1em; text-align: center; }
@@ -172,7 +178,8 @@
 .inspectCard > header span { display: block; margin-top: 4px; color: #5f605b; font-size: 0.6875rem; }
 .inspectCard > header { grid-column: 1; grid-row: 1; }
 .inspectStage { grid-column: 1; grid-row: 2 / 5; display: grid; min-height: 175px; grid-template-columns: 1fr 92px 1fr; align-items: center; gap: 4px; padding: 7px 0 3px; border-bottom: 1px solid #484945; }
-.inspectStage > :global([class*="sprite"]) { width: 88px; height: 110px; background: linear-gradient(#fafaf2, #c8c8c0); filter: contrast(1.15) drop-shadow(0 5px 4px #000); }
+.inspectStage > :global([class*="sprite"]) { width: 88px; height: 110px; background: none; filter: drop-shadow(0 5px 4px #000); }
+.inspectStage > :global([class*="sprite"] img) { filter: invert(1) contrast(1.12); transform: scale(2.8); transform-origin: center bottom; }
 .slotPreview { align-self: start; padding-top: 7px; }
 .slotPreview small { display: block; color: #777871; font-size: 0.6875rem; text-align: center; }
 .slotPreview span { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; margin-top: 4px; }

@@ -31,12 +31,13 @@ export default function LeadersPage() {
               { label: "Leaders" },
             ]}
           />
-          <p className={styles.eyebrow}>Leader archive · traits and starting cards</p>
+          <p className={styles.eyebrow}>Leader archive · current official client records</p>
           <h1>Goodly Trials Leaders - Stats, Traits &amp; Builds</h1>
           <p>
-            Compare leader cards, then open one for
-            starting stats, gear and trinket slots, and the trait text shown on
-            the card.
+            Compare current leader records, then open one for starting stats,
+            gear and trinket slots. Leaders with fully transcribed public card
+            text show their complete trait wording; the remaining records are
+            clearly labelled as client records.
           </p>
           <HeroIntel
             eyebrow="Command desk"
@@ -87,10 +88,13 @@ export default function LeadersPage() {
           ))}
         </div>
         <section className={styles.sectionBlock}>
-          <h2>More leaders to meet</h2>
+          <h2>Leader record coverage</h2>
           <p>
-            Official progression and patch material also names Pip, Who Trades
-            Toys; Skit, Friendly Skeleton; Rex, The Abused; and Old Man.
+            This archive includes the current public client&apos;s leader records.
+            Seven leaders have fully transcribed public card text; the
+            remaining entries retain their current official names, faction,
+            slots, base stats, and trait names while their complete trait
+            wording is not yet published here.
           </p>
           <p>
             See the selected{" "}
@@ -112,7 +116,7 @@ export default function LeadersPage() {
               target="_blank"
               rel="noreferrer"
             >
-              Official Goodly Trials featured leader cards ↗
+              Official Goodly Trials leader cards ↗
             </a>
           </p>
         </section>

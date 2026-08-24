@@ -156,7 +156,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       const next = imported ?? saved ?? emptyBuild();
       setBuild(next);
       setTab(next.leaderSlug ? "units" : "leaders");
-      setFaction(next.mode === "Multiplayer" ? "all" : leaderBySlug.get(next.leaderSlug)?.factionSlug ?? "all");
+      setFaction("all");
       if (window.location.hash || window.location.search) window.history.replaceState(null, "", window.location.pathname);
       setReady(true);
       setMessage(queuedPreset ? `${next.title} loaded · review and edit every position` : imported ? "Company imported and saved on this device" : saved ? "Local company restored" : "Choose or drag a leader to begin");
@@ -197,6 +197,8 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const filteredUnits = roster.filter((unit) => (faction === "all" || unit.factionSlug === faction) && (!queryText || `${unit.name} ${unit.faction} ${unit.trait ?? ""}`.toLowerCase().includes(queryText)));
   const filteredItems = items.filter((item) => !queryText || `${item.name} ${item.type} ${item.effects.join(" ")}`.toLowerCase().includes(queryText));
   const filteredLeaders = leaders.filter((leader) => (faction === "all" || leader.factionSlug === faction) && (!queryText || `${leader.name} ${leader.epithet} ${leader.faction} ${leader.trait.name}`.toLowerCase().includes(queryText)));
+  const archiveTotal = tab === "units" ? roster.length : tab === "items" ? items.length : leaders.length;
+  const archiveVisible = tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length;
 
   function showCatalogPreview(kind: Exclude<CatalogPreview, null>["kind"], slug: string) {
     setCatalogPreview({ kind, slug });
@@ -210,6 +212,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     setDraggingPayload(payload);
     setDropTarget(null);
     setPendingPick(null);
+    setCatalogPreview(null);
     dragPointerY.current = event.clientY;
     if (dragScrollFrame.current === null) dragScrollFrame.current = window.requestAnimationFrame(runDragAutoScroll);
     writeDrag(event, payload);
@@ -218,6 +221,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   function finishDrag() {
     setDraggingPayload(null);
     setDropTarget(null);
+    setCatalogPreview(null);
     dragPointerY.current = null;
     if (dragScrollFrame.current !== null) {
       window.cancelAnimationFrame(dragScrollFrame.current);
@@ -462,7 +466,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     }
     setBuild((current) => ({ ...current, leaderSlug: slug }));
     setTab("units");
-    setFaction(build.mode === "Multiplayer" ? "all" : leader.factionSlug);
+    setFaction("all");
     setQuery("");
     setMessage(`${leader.name} assigned · ${followerCapLabel(build.mode, leader.factionSlug)}`);
   }
@@ -710,7 +714,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </section>
 
         <section className={`${styles.gamePanel} ${styles.shopPanel}`}>
-          <header className={styles.panelHeader}><strong>Archive [{tab === "units" ? filteredUnits.length : tab === "items" ? filteredItems.length : filteredLeaders.length}]</strong><span>{tab === "units" && selectedLeader ? `${filledCount}/${followerLimit} followers · drag or click to carry` : "Hover to inspect · drag or click to carry"}</span></header>
+          <header className={styles.panelHeader}><strong>Archive [{archiveVisible}/{archiveTotal}]</strong><span>{tab === "units" && selectedLeader ? `${filledCount}/${followerLimit} followers · all records shown, incompatible factions lock` : "Hover to inspect · drag or click to carry"}</span></header>
           <div className={styles.tabs} role="tablist" aria-label="Builder archive">{(["units", "items", "leaders"] as CatalogTab[]).map((catalogTab) => <button role="tab" aria-selected={tab === catalogTab} className={tab === catalogTab ? styles.selected : ""} type="button" key={catalogTab} onClick={() => { setTab(catalogTab); setQuery(""); setPendingPick(null); setCatalogPreview(null); }}>{catalogTab}</button>)}</div>
           <div className={styles.filters}><input aria-label="Search archive" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Search ${tab}…`} />{tab !== "items" && <select aria-label="Filter by faction" value={faction} onChange={(event) => setFaction(event.target.value)}><option value="all">All factions</option><option value="goodly-folk">Goodly Folk</option><option value="bone-host">Bone Host</option><option value="belowborn">Belowborn</option></select>}</div>
           <div className={styles.archiveHelp}><strong>Long move?</strong><span>Click a record, scroll normally, then click its target.</span></div>
@@ -723,11 +727,11 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                 onDragStart={(event) => { if (blockReason) event.preventDefault(); else startDrag(event, { kind: "unit", slug: unit.slug }); }}
                 onDragEnd={finishDrag}
                 onMouseEnter={() => showCatalogPreview("unit", unit.slug)}
-                onMouseLeave={() => clearCatalogPreview("unit", unit.slug)}
+                onMouseLeave={() => setCatalogPreview(null)}
                 onFocus={() => showCatalogPreview("unit", unit.slug)}
                 onBlur={() => clearCatalogPreview("unit", unit.slug)}
                 onClick={() => {
-                  showCatalogPreview("unit", unit.slug);
+                  setCatalogPreview(null);
                   if (blockReason) {
                     setPendingPick(null);
                     setMessage(blockReason === "LEADER REQUIRED" ? "Assign a leader before placing followers" : blockReason === "FACTION LOCKED" ? `${unit.name} is outside the selected leader's faction` : `Board is full (${filledCount}/${followerLimit} followers)`);
@@ -751,11 +755,11 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                 onDragStart={(event) => { if (blockReason) event.preventDefault(); else startDrag(event, { kind: "item", slug: item.slug }); }}
                 onDragEnd={finishDrag}
                 onMouseEnter={() => showCatalogPreview("item", item.slug)}
-                onMouseLeave={() => clearCatalogPreview("item", item.slug)}
+                onMouseLeave={() => setCatalogPreview(null)}
                 onFocus={() => showCatalogPreview("item", item.slug)}
                 onBlur={() => clearCatalogPreview("item", item.slug)}
                 onClick={() => {
-                  showCatalogPreview("item", item.slug);
+                  setCatalogPreview(null);
                   if (blockReason) {
                     setPendingPick(null);
                     setMessage(blockReason === "PLACE UNIT FIRST" ? "Place a unit before assigning equipment" : `${item.name} has no compatible open slot on the board`);
@@ -774,10 +778,10 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               onDragStart={(event) => startDrag(event, { kind: "leader", slug: leader.slug })}
               onDragEnd={finishDrag}
               onMouseEnter={() => showCatalogPreview("leader", leader.slug)}
-              onMouseLeave={() => clearCatalogPreview("leader", leader.slug)}
+              onMouseLeave={() => setCatalogPreview(null)}
               onFocus={() => showCatalogPreview("leader", leader.slug)}
               onBlur={() => clearCatalogPreview("leader", leader.slug)}
-              onClick={() => { showCatalogPreview("leader", leader.slug); if (build.leaderSlug === leader.slug) removeLeader(); else assignLeader(leader.slug); }}
+              onClick={() => { setCatalogPreview(null); if (build.leaderSlug === leader.slug) removeLeader(); else assignLeader(leader.slug); }}
             >
               <span className={styles.archiveIndex}>{index + 1}</span><span className={styles.leaderGlyph}>{leader.name.slice(0, 1)}</span><span className={styles.archiveIdentity}><small>{leader.faction}</small><strong>{leader.name}</strong><em>{leader.trait.name} · {leader.trait.effect}</em></span>
             </button>)}

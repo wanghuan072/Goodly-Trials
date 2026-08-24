@@ -1,9 +1,1668 @@
 [
-  { "slug": "aldric", "name": "Aldric", "epithet": "Softspoken Paladin", "faction": "Goodly Folk", "factionSlug": "goodly-folk", "gear": 2, "trinkets": 1, "stats": { "es": 0, "hp": 13, "mp": 8, "str": 3, "agi": 0, "int": 1 }, "trait": { "name": "Pious Chant", "effect": "This unit's HP regeneration also applies to adjacent allies." }, "gameVersion": "v0.301", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/" },
-  { "slug": "hobb", "name": "Hobb", "epithet": "Who Ate His Company", "faction": "Goodly Folk", "factionSlug": "goodly-folk", "gear": 2, "trinkets": 2, "stats": { "es": 0, "hp": 20, "mp": 10, "str": 5, "agi": 0, "int": 1 }, "trait": { "name": "Cannibalistic", "effect": "+4 STR. At battle start, kills a random adjacent ally and gains 50% of its attributes and stats." }, "gameVersion": "v0.301", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/" },
-  { "slug": "sallow", "name": "Sallow", "epithet": "of the Fever Bog", "faction": "Bone Host", "factionSlug": "bone-host", "gear": 2, "trinkets": 1, "stats": { "es": 0, "hp": 37, "mp": 9, "str": 3, "agi": 1, "int": 1 }, "trait": { "name": "Plagued", "effect": "+20 HP. This unit and adjacent allies carry a range-2 aura; allies take 1 spell damage per second and enemies take 2." }, "gameVersion": "v0.301", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/" },
-  { "slug": "young-keth", "name": "Young Keth", "epithet": "Unfulfilled", "faction": "Bone Host", "factionSlug": "bone-host", "gear": 2, "trinkets": 1, "stats": { "es": 0, "hp": 30, "mp": 9, "str": 3, "agi": 1, "int": 1 }, "trait": { "name": "Zealous", "effect": "After each battle gains +2 STR, +1 AGI, and -2 INT, capped at +8 STR, +8 AGI, and -4 INT." }, "gameVersion": "v0.301", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/" },
-  { "slug": "arrowheaded-gerry", "name": "Arrowheaded Gerry", "epithet": "", "faction": "Belowborn", "factionSlug": "belowborn", "gear": 2, "trinkets": 1, "stats": { "es": 0, "hp": 20, "mp": 10, "str": 4, "agi": 1, "int": 1 }, "trait": { "name": "Iron", "effect": "+1 AR per 3 STR." }, "gameVersion": "v0.301", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/" },
-  { "slug": "ivo", "name": "Ivo", "epithet": "Celebrated Negotiator", "faction": "Goodly Folk", "factionSlug": "goodly-folk", "gear": 2, "trinkets": 4, "stats": { "es": 37, "hp": 7, "mp": 31, "str": 0, "agi": 1, "int": 7 }, "trait": { "name": "Speculating", "effect": "Trinkets cost 1G less." }, "gameVersion": "v0.301", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/" },
-  { "slug": "frosc", "name": "Frosc", "epithet": "of the Green Cave", "faction": "Belowborn", "factionSlug": "belowborn", "gear": 2, "trinkets": 3, "stats": { "es": 35, "hp": 1, "mp": 31, "str": 0, "agi": 1, "int": 7 }, "trait": { "name": "Cavebloom", "effect": "On spell cast, heals an ally within range 2 for this unit's INT." }, "gameVersion": "v0.301", "lastVerified": "2026-08-20", "source": "https://goodlytrials.com/" }
+  {
+    "slug": "goodly-knight-magnanimous",
+    "name": "Bruch the Committed Flagbearer",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 4,
+      "mp": 0,
+      "str": 3,
+      "agi": 1,
+      "int": 1
+    },
+    "trait": {
+      "name": "Magnanimous",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Bruch the Committed Flagbearer",
+      "description": "Bruch the Committed Flagbearer is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Bruch the Committed Flagbearer",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "aldric",
+    "name": "Aldric",
+    "epithet": "Softspoken Paladin",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 13,
+      "mp": 8,
+      "str": 3,
+      "agi": 0,
+      "int": 1
+    },
+    "trait": {
+      "name": "Pious Chant",
+      "effect": "This unit's HP regeneration also applies to adjacent allies."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Aldric, Softspoken Paladin",
+      "description": "Aldric, Softspoken Paladin is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Aldric, Softspoken Paladin",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "portly-knight-ravenous",
+    "name": "The Hillman",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 9,
+      "mp": 5,
+      "str": 3,
+      "agi": 0,
+      "int": 1
+    },
+    "trait": {
+      "name": "Ravenous",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: The Hillman",
+      "description": "The Hillman is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "The Hillman",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "hobb",
+    "name": "Hobb",
+    "epithet": "Who Ate His Company",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 20,
+      "mp": 10,
+      "str": 5,
+      "agi": 0,
+      "int": 1
+    },
+    "trait": {
+      "name": "Cannibalistic",
+      "effect": "+4 STR. At battle start, kills a random adjacent ally and gains 50% of its attributes and stats."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Hobb, Who Ate His Company",
+      "description": "Hobb, Who Ate His Company is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Hobb, Who Ate His Company",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "old-man-martyr",
+    "name": "Cadoc Softpurse",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 1,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 4,
+      "mp": 0,
+      "str": 3,
+      "agi": 0,
+      "int": 2
+    },
+    "trait": {
+      "name": "Martyr",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Cadoc Softpurse",
+      "description": "Cadoc Softpurse is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Cadoc Softpurse",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "old-man-muster",
+    "name": "Noll of the Cracked Bell",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 4,
+      "mp": 0,
+      "str": 3,
+      "agi": 0,
+      "int": 2
+    },
+    "trait": {
+      "name": "Muster",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Noll of the Cracked Bell",
+      "description": "Noll of the Cracked Bell is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Noll of the Cracked Bell",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "banneret-captain-rallying-point",
+    "name": "Captain Cade",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 3,
+      "mp": 5,
+      "str": 2,
+      "agi": 2,
+      "int": 1
+    },
+    "trait": {
+      "name": "Rallying Point",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Captain Cade",
+      "description": "Captain Cade is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Captain Cade",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "scout-frugal",
+    "name": "Pimm Tightfist",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 8,
+      "mp": 5,
+      "str": 1,
+      "agi": 4,
+      "int": 0
+    },
+    "trait": {
+      "name": "Frugal",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Pimm Tightfist",
+      "description": "Pimm Tightfist is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Pimm Tightfist",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "scout-freehand",
+    "name": "Nye One-grip",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 10,
+      "mp": 5,
+      "str": 1,
+      "agi": 4,
+      "int": 0
+    },
+    "trait": {
+      "name": "Freehand",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Nye One-grip",
+      "description": "Nye One-grip is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Nye One-grip",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "scout-skirmish",
+    "name": "Lark",
+    "epithet": "Court Dancer",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 10,
+      "mp": 5,
+      "str": 1,
+      "agi": 4,
+      "int": 0
+    },
+    "trait": {
+      "name": "Skirmish",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Lark, Court Dancer",
+      "description": "Lark, Court Dancer is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Lark, Court Dancer",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "archer-phantom",
+    "name": "Mira",
+    "epithet": "Aspiring Arbalest",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 1,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 12,
+      "mp": 0,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Phantom",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Mira, Aspiring Arbalest",
+      "description": "Mira, Aspiring Arbalest is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Mira, Aspiring Arbalest",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "archer-vicious",
+    "name": "Rook Wetwork Specialist",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 12,
+      "mp": 0,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Vicious",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Rook Wetwork Specialist",
+      "description": "Rook Wetwork Specialist is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Rook Wetwork Specialist",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "wizard-practiced",
+    "name": "Soren",
+    "epithet": "Attentive Pupil",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 3,
+    "stats": {
+      "es": 0,
+      "hp": 7,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Practiced",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Soren, Attentive Pupil",
+      "description": "Soren, Attentive Pupil is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Soren, Attentive Pupil",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "ivo",
+    "name": "Ivo",
+    "epithet": "Celebrated Negotiator",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 4,
+    "stats": {
+      "es": 37,
+      "hp": 7,
+      "mp": 31,
+      "str": 0,
+      "agi": 1,
+      "int": 7
+    },
+    "trait": {
+      "name": "Speculating",
+      "effect": "Trinkets cost 1G less."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Ivo, Celebrated Negotiator",
+      "description": "Ivo, Celebrated Negotiator is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Ivo, Celebrated Negotiator",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "goodly-nurse-hermetic",
+    "name": "Eleanor Sternhand",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Hermetic",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Eleanor Sternhand",
+      "description": "Eleanor Sternhand is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Eleanor Sternhand",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "goodly-nurse-rebuke",
+    "name": "Nameless Puritan",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 1,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Rebuke",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Nameless Puritan",
+      "description": "Nameless Puritan is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Nameless Puritan",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "goodly-nurse-horizon",
+    "name": "Nell",
+    "epithet": "Savant Optometrist",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Horizon",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Nell, Savant Optometrist",
+      "description": "Nell, Savant Optometrist is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Nell, Savant Optometrist",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "saint-many-hands-crest",
+    "name": "Orla Chapel Matron",
+    "epithet": "",
+    "faction": "Goodly Folk",
+    "factionSlug": "goodly-folk",
+    "gear": 1,
+    "trinkets": 3,
+    "stats": {
+      "es": 0,
+      "hp": 11,
+      "mp": 5,
+      "str": 1,
+      "agi": 0,
+      "int": 4
+    },
+    "trait": {
+      "name": "Crest",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Orla Chapel Matron",
+      "description": "Orla Chapel Matron is a Goodly Folk leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Orla Chapel Matron",
+        "Goodly Folk",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "young-keth",
+    "name": "Young Keth",
+    "epithet": "Unfulfilled",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 30,
+      "mp": 9,
+      "str": 3,
+      "agi": 1,
+      "int": 1
+    },
+    "trait": {
+      "name": "Zealous",
+      "effect": "After each battle gains +2 STR, +1 AGI, and -2 INT, capped at +8 STR, +8 AGI, and -4 INT."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Young Keth, Unfulfilled",
+      "description": "Young Keth, Unfulfilled is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Young Keth, Unfulfilled",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-knight-corpse-rigging",
+    "name": "Zoltan",
+    "epithet": "Corpseplacer",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 3,
+      "agi": 2,
+      "int": 2
+    },
+    "trait": {
+      "name": "Corpse Rigging",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Zoltan, Corpseplacer",
+      "description": "Zoltan, Corpseplacer is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Zoltan, Corpseplacer",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-knight-plagued",
+    "name": "Sallow of the Fever Bog",
+    "epithet": "",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 0,
+      "mp": 5,
+      "str": 3,
+      "agi": 1,
+      "int": 1
+    },
+    "trait": {
+      "name": "Plagued",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Sallow of the Fever Bog",
+      "description": "Sallow of the Fever Bog is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Sallow of the Fever Bog",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-knight-thoughtful",
+    "name": "Penitent Grim",
+    "epithet": "Lost Paladin",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 3,
+      "mp": 5,
+      "str": 3,
+      "agi": 1,
+      "int": 1
+    },
+    "trait": {
+      "name": "Thoughtful",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Penitent Grim, Lost Paladin",
+      "description": "Penitent Grim, Lost Paladin is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Penitent Grim, Lost Paladin",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-knight-stone-heeding",
+    "name": "Right Hook Gib",
+    "epithet": "",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 5,
+      "mp": 5,
+      "str": 3,
+      "agi": 3,
+      "int": 1
+    },
+    "trait": {
+      "name": "Stone Heeding",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Right Hook Gib",
+      "description": "Right Hook Gib is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Right Hook Gib",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-child-versatile",
+    "name": "Pip",
+    "epithet": "Who Trades Toys",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 0,
+    "stats": {
+      "es": 0,
+      "hp": 2,
+      "mp": 5,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Versatile",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Pip, Who Trades Toys",
+      "description": "Pip, Who Trades Toys is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Pip, Who Trades Toys",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-child-ritualistic",
+    "name": "Lilt",
+    "epithet": "Lover of Sacrifice",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 1,
+    "trinkets": 0,
+    "stats": {
+      "es": 0,
+      "hp": 2,
+      "mp": 5,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Ritualistic",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Lilt, Lover of Sacrifice",
+      "description": "Lilt, Lover of Sacrifice is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Lilt, Lover of Sacrifice",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-child-woodland",
+    "name": "Toothpick",
+    "epithet": "",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 1,
+    "trinkets": 0,
+    "stats": {
+      "es": 0,
+      "hp": 2,
+      "mp": 5,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Woodland",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Toothpick",
+      "description": "Toothpick is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Toothpick",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-child-bone-brood",
+    "name": "Skit Friendly Skeleton",
+    "epithet": "",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 0,
+    "stats": {
+      "es": 0,
+      "hp": 2,
+      "mp": 5,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Bone Brood",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Skit Friendly Skeleton",
+      "description": "Skit Friendly Skeleton is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Skit Friendly Skeleton",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-dog-outcast",
+    "name": "Rex",
+    "epithet": "The Abused",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 0,
+    "trinkets": 0,
+    "stats": {
+      "es": 0,
+      "hp": 1,
+      "mp": 0,
+      "str": 5,
+      "agi": 5,
+      "int": 0
+    },
+    "trait": {
+      "name": "Outcast",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Rex, The Abused",
+      "description": "Rex, The Abused is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Rex, The Abused",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-mage-perceptive",
+    "name": "Vellum Blankpage",
+    "epithet": "",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 3,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Perceptive",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Vellum Blankpage",
+      "description": "Vellum Blankpage is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Vellum Blankpage",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-mage-bloodbound",
+    "name": "Marrow Vein Collector",
+    "epithet": "",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 3,
+    "stats": {
+      "es": 0,
+      "hp": 0,
+      "mp": 0,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Bloodbound",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Marrow Vein Collector",
+      "description": "Marrow Vein Collector is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Marrow Vein Collector",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-mage-musing",
+    "name": "Clerk",
+    "epithet": "Moonwolf Scholar",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 3,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Musing",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Clerk, Moonwolf Scholar",
+      "description": "Clerk, Moonwolf Scholar is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Clerk, Moonwolf Scholar",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-mage-fettle",
+    "name": "Spill Overflow",
+    "epithet": "",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 3,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Fettle",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Spill Overflow",
+      "description": "Spill Overflow is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Spill Overflow",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-mage-second-rise",
+    "name": "Twice-born Pell",
+    "epithet": "",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 3,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Second Rise",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Twice-born Pell",
+      "description": "Twice-born Pell is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Twice-born Pell",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "skeleton-horror-spite",
+    "name": "Pwent",
+    "epithet": "Late Chief of the Warboys",
+    "faction": "Bone Host",
+    "factionSlug": "bone-host",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 0,
+      "mp": 0,
+      "str": 2,
+      "agi": 1,
+      "int": 2
+    },
+    "trait": {
+      "name": "Spite",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Pwent, Late Chief of the Warboys",
+      "description": "Pwent, Late Chief of the Warboys is a Bone Host leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Pwent, Late Chief of the Warboys",
+        "Bone Host",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "tunnel-defender-anchored",
+    "name": "Four Eyes",
+    "epithet": "",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 3,
+      "mp": 5,
+      "str": 3,
+      "agi": 1,
+      "int": 1
+    },
+    "trait": {
+      "name": "Anchored",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Four Eyes",
+      "description": "Four Eyes is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Four Eyes",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "tunnel-defender-brother",
+    "name": "Ilmig",
+    "epithet": "Brother to the End",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 3,
+      "mp": 5,
+      "str": 3,
+      "agi": 1,
+      "int": 1
+    },
+    "trait": {
+      "name": "Brother",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Ilmig, Brother to the End",
+      "description": "Ilmig, Brother to the End is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Ilmig, Brother to the End",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "arrowheaded-gerry",
+    "name": "Arrowheaded Gerry",
+    "epithet": "",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 20,
+      "mp": 10,
+      "str": 4,
+      "agi": 1,
+      "int": 1
+    },
+    "trait": {
+      "name": "Hardened",
+      "effect": "On a lethal hit, spends 2 AR and stays at 1 HP."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Arrowheaded Gerry",
+      "description": "Arrowheaded Gerry is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Arrowheaded Gerry",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "tunnel-defender-patrician",
+    "name": "Dvorjak First to the Spoils",
+    "epithet": "",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 3,
+      "mp": 5,
+      "str": 2,
+      "agi": 0,
+      "int": 0
+    },
+    "trait": {
+      "name": "Patrician",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Dvorjak First to the Spoils",
+      "description": "Dvorjak First to the Spoils is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Dvorjak First to the Spoils",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "tunnel-defender-frenzied",
+    "name": "Tippler Tankard",
+    "epithet": "",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 1,
+    "stats": {
+      "es": 0,
+      "hp": 3,
+      "mp": 5,
+      "str": 5,
+      "agi": 1,
+      "int": 1
+    },
+    "trait": {
+      "name": "Frenzied",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Tippler Tankard",
+      "description": "Tippler Tankard is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Tippler Tankard",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-messenger-orator",
+    "name": "Dorr",
+    "epithet": "Songleader",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Orator",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Dorr, Songleader",
+      "description": "Dorr, Songleader is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Dorr, Songleader",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-messenger-slaver",
+    "name": "Goblin Slaver Hesk",
+    "epithet": "",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 1,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Slaver",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Goblin Slaver Hesk",
+      "description": "Goblin Slaver Hesk is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Goblin Slaver Hesk",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-messenger-ballistic",
+    "name": "Pinn",
+    "epithet": "Breach Miner",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 1,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 1,
+      "mp": 5,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Ballistic",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Pinn, Breach Miner",
+      "description": "Pinn, Breach Miner is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Pinn, Breach Miner",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-messenger-bale",
+    "name": "Bale",
+    "epithet": "Meticulous Craftsman",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 1,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 4,
+      "int": 1
+    },
+    "trait": {
+      "name": "Bale",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Bale, Meticulous Craftsman",
+      "description": "Bale, Meticulous Craftsman is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Bale, Meticulous Craftsman",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-messenger-alchemist",
+    "name": "Alchemist Belwick",
+    "epithet": "",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 1,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 15,
+      "str": 1,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Alchemist",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Alchemist Belwick",
+      "description": "Alchemist Belwick is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Alchemist Belwick",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-knower-oracle",
+    "name": "Greedy Tebb",
+    "epithet": "",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Oracle",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Greedy Tebb",
+      "description": "Greedy Tebb is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Greedy Tebb",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-knower-conductor",
+    "name": "Thrum",
+    "epithet": "Cart Conductor",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Conductor",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Thrum, Cart Conductor",
+      "description": "Thrum, Cart Conductor is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Thrum, Cart Conductor",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-knower-bartering",
+    "name": "Vend",
+    "epithet": "Storied Trader",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 4,
+      "mp": 5,
+      "str": 0,
+      "agi": 2,
+      "int": 4
+    },
+    "trait": {
+      "name": "Bartering",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Vend, Storied Trader",
+      "description": "Vend, Storied Trader is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Vend, Storied Trader",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-knower-cavebloom",
+    "name": "Frosc of the Green Cave",
+    "epithet": "",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 0,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Cavebloom",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Frosc of the Green Cave",
+      "description": "Frosc of the Green Cave is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Frosc of the Green Cave",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  },
+  {
+    "slug": "dwarf-knower-ambush",
+    "name": "Sidways Cobb",
+    "epithet": "",
+    "faction": "Belowborn",
+    "factionSlug": "belowborn",
+    "gear": 2,
+    "trinkets": 2,
+    "stats": {
+      "es": 0,
+      "hp": 6,
+      "mp": 5,
+      "str": 0,
+      "agi": 1,
+      "int": 4
+    },
+    "trait": {
+      "name": "Ambush",
+      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+    },
+    "gameVersion": "v0.312",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/",
+    "tdk": {
+      "title": "Goodly Trials Leader: Sidways Cobb",
+      "description": "Sidways Cobb is a Belowborn leader record from the current official client.",
+      "keywords": [
+        "Goodly Trials",
+        "Sidways Cobb",
+        "Belowborn",
+        "leader"
+      ]
+    }
+  }
 ]

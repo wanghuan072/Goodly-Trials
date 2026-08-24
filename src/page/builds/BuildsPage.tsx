@@ -98,7 +98,7 @@ function MemberCard({ unit, itemSlugs }: { unit: Unit; itemSlugs: string[] }) {
             </Link>
           ))
         ) : (
-          <em>No preset items</em>
+          <em>Choose gear in Builder</em>
         )}
       </span>
     </li>

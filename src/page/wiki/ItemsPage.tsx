@@ -9,7 +9,7 @@ import styles from "@/style/page/archive/archive.module.css";
 
 export const metadata = createMetadata(
   "Goodly Trials Gear – Weapons, Trinkets & Requirements",
-  "Check Goodly Trials gear requirements, costs, slots, and effects for weapons, shields, trinkets, spells, and potions.",
+  "Check Goodly Trials gear requirements, costs, slots, and effects for the items currently documented on the official public item page.",
   "/wiki/gear",
 );
 
@@ -21,9 +21,9 @@ export default function ItemsPage() {
         <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Gear" }]} />
-          <p className={styles.eyebrow}>Gear archive · costs, requirements, and effects</p>
+          <p className={styles.eyebrow}>Gear archive · current official public item records</p>
           <h1>Goodly Trials Gear - Items, Weapons &amp; Trinkets</h1>
-          <p>Check what an item costs, which attributes it needs, and where it fits before you spend a shop turn on it. Use the type filters to compare weapons, shields, trinkets, spells, and potions.</p>
+          <p>Check what an item costs, which attributes it needs, and where it fits before you spend a shop turn on it. Every record on this page is matched to the current public item page.</p>
           <HeroIntel
             eyebrow="Quartermaster"
             title="Prepare the loadout"
@@ -44,12 +44,12 @@ export default function ItemsPage() {
               <h2>How gear changes a company</h2>
               <p>One-handed gear leaves another hand available. Two-handed equipment uses both hands. Shields help a frontline unit stay in the fight, trinkets use their own slots, spell tomes spend MP, and potions change a companion once without taking a slot.</p>
               <h3>Rolled attributes</h3>
-              <p>Some shop equipment can roll extra STR, AGI, INT, or ALL traits. Those rolls can change the item&apos;s name, cost, and best bearer, so use a listed item as a starting point rather than assuming every shop copy will be identical.</p>
+              <p>Shop equipment can roll extra STR, AGI, INT, or ALL traits. Those rolls can change an item&apos;s name, cost, and best bearer, so check the live card before treating a documented example as a guaranteed shop result.</p>
             </div>
           </div>
           <aside className={styles.sidebar}>
             <h2>Gear types</h2>
-            <div className={styles.sidebarTokens}>{["One-handed", "Two-handed", "Shields", "Trinkets", "Spells", "Potions"].map((type) => <span key={type}>{type}</span>)}</div>
+            <div className={styles.sidebarTokens}>{["One-handed", "Two-handed", "Shields", "Trinkets", "Spells"].map((type) => <span key={type}>{type}</span>)}</div>
             <h3>Keep reading</h3>
             <Link href="/guides/beginners-guide">First shop and equipment</Link>
             <Link href="/builds">Starting builds</Link>

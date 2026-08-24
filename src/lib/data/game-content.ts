@@ -19,11 +19,13 @@ import type {
 
 export const units = unitsData.map((unit) => ({ ...unit, tdk: detailTdk.unit(unit) })) as Unit[];
 export const items = itemsData.map((item) => ({ ...item, tdk: detailTdk.item(item) })) as Item[];
-export const traits: Trait[] = units.map((unit) => ({
-  slug: unit.trait.name
+export const traits: Trait[] = units
+  .filter((unit) => unit.trait.name !== "Base client record")
+  .map((unit) => ({
+  slug: `${unit.slug}-${unit.trait.name
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, ""),
+    .replace(/(^-|-$)/g, "")}`,
   name: unit.trait.name,
   effect: unit.trait.effect,
   cap: unit.trait.cap,
@@ -34,7 +36,7 @@ export const traits: Trait[] = units.map((unit) => ({
   lastVerified: unit.lastVerified,
   source: unit.source,
   tdk: unit.tdk,
-}));
+  }));
 export const leaders = leadersData.map((leader) => ({ ...leader, tdk: detailTdk.leader(leader) })) as Leader[];
 export const factions = factionsData.map((faction) => ({ ...faction, tdk: detailTdk.faction(faction) })) as Faction[];
 export const guides = guidesData.map((guide) => ({ ...guide, tdk: detailTdk.guide(guide) })) as Guide[];

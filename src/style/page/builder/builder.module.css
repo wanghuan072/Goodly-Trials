@@ -52,10 +52,10 @@
 .boardViewport:focus-visible { outline: var(--focus-ring); outline-offset: -2px; }
 .boardCanvas { display: flex; width: 100%; min-width: 0; min-height: 750px; height: 100%; flex-direction: column; gap: 7px; }
 .boardTopbar { display: flex; min-height: 44px; align-items: stretch; justify-content: space-between; gap: 8px; }
-.leaderDock { position: relative; width: min(360px, 48%); min-height: 44px; border: 1px solid var(--game-line); color: var(--game-text); background: #070808; }
+.leaderDock { position: relative; width: min(390px, 54%); min-height: 44px; border: 1px solid var(--game-line-bright); color: var(--game-text); background: linear-gradient(90deg, #111211, #070808 72%); }
 .leaderDock:hover { border-color: #ddd; }
-.leaderDockMain { display: grid; width: 100%; min-height: 54px; grid-template-columns: 44px minmax(0, 1fr); align-content: center; column-gap: 7px; padding: 6px 25px 6px 6px; border: 0; color: inherit; background: transparent; font-family: inherit; cursor: pointer; text-align: left; }
-.dockLabel { grid-row: 1 / 3; display: grid; place-items: center; border: 1px solid #595a55; color: #9d9d95; font-size: 0.75rem; text-transform: uppercase; }
+.leaderDockMain { display: grid; width: 100%; min-height: 54px; grid-template-columns: 54px minmax(0, 1fr); align-content: center; column-gap: 8px; padding: 6px 25px 6px 6px; border: 0; color: inherit; background: transparent; font-family: inherit; cursor: pointer; text-align: left; }
+.dockLabel { grid-row: 1 / 3; display: grid; place-items: center; border: 1px solid #595a55; color: #bcbcb4; font-size: 0.6875rem; line-height: 1.25; text-align: center; text-transform: uppercase; }
 .leaderDock b { align-self: end; overflow: hidden; font-size: 0.75rem; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
 .leaderDock small { overflow: hidden; color: var(--game-muted); font-size: 0.75rem; text-overflow: ellipsis; white-space: nowrap; }
 .boardLegend { display: flex; min-width: 0; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 7px 12px; padding: 7px 9px; border: 1px solid var(--game-line); color: var(--game-muted); background: #080909; font-size: 0.8125rem; text-transform: uppercase; }
@@ -97,7 +97,7 @@
 .unitPortrait { grid-column: 1; grid-row: 2; display: grid; min-width: 0; place-items: start center; overflow: hidden; }
 .unitPortrait::after { display: none; }
 .unitPortrait > :global([class*="sprite"]) { width: 54px; height: 58px; flex: none; background: none; filter: drop-shadow(0 4px 3px #000); }
-.unitPortrait > :global([class*="sprite"] img) { filter: invert(1) contrast(1.12); transform: translateY(-4px) scale(2.12); transform-origin: center bottom; }
+.unitPortrait > :global([class*="sprite"] img) { filter: invert(1) contrast(1.06); transform: translateY(-1px) scale(1.6); transform-origin: center bottom; }
 .unitStatBlock, .pendingStats { display: none; }
 .miniVitals { display: grid; min-width: 0; gap: 1px; }
 .miniVitals span { overflow: hidden; padding: 1px 3px; border: 1px solid #353832; color: #c4c6bf; background: #090a0a; font-size: 0.625rem; line-height: 1.2; text-align: left; text-overflow: ellipsis; white-space: nowrap; }
@@ -153,7 +153,7 @@
 .archiveUnit:hover, .archiveItem:hover, .archiveLeader:hover, .archiveUnit:focus-visible, .archiveItem:focus-visible, .archiveLeader:focus-visible { border-color: #b7b8b0; outline: 0; }
 .archiveUnit:hover, .archiveItem:hover, .archiveLeader:hover { background: #0a0b0b; }
 .archiveUnit > :global([class*="sprite"]) { width: 44px; height: 54px; background: none; filter: drop-shadow(0 3px 2px #000); }
-.archiveUnit > :global([class*="sprite"] img) { filter: invert(1) contrast(1.12); transform: scale(2.1); transform-origin: center bottom; }
+.archiveUnit > :global([class*="sprite"] img) { filter: invert(1) contrast(1.06); transform: scale(1.6); transform-origin: center bottom; }
 .archiveIndex { align-self: start; padding-top: 3px; color: #676862; font-size: 0.75rem; }
 .archiveIdentity { min-width: 0; }
 .archiveIdentity small, .archiveIdentity strong, .archiveIdentity em { display: block; overflow: hidden; text-overflow: ellipsis; }
@@ -179,7 +179,7 @@
 .inspectCard > header { grid-column: 1; grid-row: 1; }
 .inspectStage { grid-column: 1; grid-row: 2 / 5; display: grid; min-height: 175px; grid-template-columns: 1fr 92px 1fr; align-items: center; gap: 4px; padding: 7px 0 3px; border-bottom: 1px solid #484945; }
 .inspectStage > :global([class*="sprite"]) { width: 88px; height: 110px; background: none; filter: drop-shadow(0 5px 4px #000); }
-.inspectStage > :global([class*="sprite"] img) { filter: invert(1) contrast(1.12); transform: scale(2.8); transform-origin: center bottom; }
+.inspectStage > :global([class*="sprite"] img) { filter: invert(1) contrast(1.06); transform: scale(2); transform-origin: center bottom; }
 .slotPreview { align-self: start; padding-top: 7px; }
 .slotPreview small { display: block; color: #777871; font-size: 0.6875rem; text-align: center; }
 .slotPreview span { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; margin-top: 4px; }

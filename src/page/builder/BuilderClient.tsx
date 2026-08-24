@@ -48,6 +48,12 @@ type CatalogPreview = { kind: "unit" | "item" | "leader"; slug: string } | null;
 type PendingPick = { kind: "unit" | "item"; slug: string } | null;
 type DragPayload = { kind: "unit" | "item" | "leader" | "slot"; slug?: string; from?: number };
 
+const CATALOG_TABS: ReadonlyArray<{ value: CatalogTab; label: string }> = [
+  { value: "leaders", label: "Leaders" },
+  { value: "units", label: "Units" },
+  { value: "items", label: "Gear" },
+];
+
 const DRAG_TYPE = "application/x-goodly-builder";
 const MODES = ["Theorycraft", "Single-player", "Ranked", "Multiplayer"];
 const LEGACY_SLOT_POSITIONS = [9, 10, 14, 15, 20, 21];
@@ -591,17 +597,17 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
 
       <div className={styles.workbench}>
         <section className={`${styles.gamePanel} ${styles.boardPanel}`}>
-          <header className={styles.panelHeader}><strong>Board [{filledCount}/{followerLimit}]</strong><span>Drag from Archive · select a cell to inspect</span></header>
+          <header className={styles.panelHeader}><strong>Board [{filledCount}/{followerLimit}]</strong><span>Choose a leader, then place followers from Shop</span></header>
           <div className={styles.boardStage}>
             <div className={`${styles.rulesStrip} ${rulesInvalid ? styles.rulesInvalid : ""}`}><strong>{selectedLeader ? rulesSummary : "Leader required"}</strong><span>Week {build.week} · {availableCells.size} active cells · leader occupies one combatant slot</span></div>
             <div className={styles.boardViewport} tabIndex={0} role="region" aria-label="Formation board. Scroll horizontally on smaller screens.">
               <div className={styles.boardCanvas}>
                 <div className={styles.boardTopbar}>
                   <div className={styles.leaderDock} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
-                    <button className={styles.leaderDockMain} type="button" onClick={() => setTab("leaders")}>
-                      <span className={styles.dockLabel}>Leader</span>
+                    <button className={styles.leaderDockMain} type="button" onClick={() => { setTab("leaders"); setQuery(""); setPendingPick(null); setCatalogPreview(null); }}>
+                      <span className={styles.dockLabel}>Company<br />Leader</span>
                       <b>{selectedLeader?.name ?? "+ ASSIGN LEADER"}</b>
-                      <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Drag a leader here or open Leaders"}</small>
+                      <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Select a leader before placing followers"}</small>
                     </button>
                     {selectedLeader && <button className={styles.removeLeaderButton} type="button" onClick={removeLeader} aria-label={`Remove ${selectedLeader.name} as leader`} title="Remove leader">×</button>}
                   </div>
@@ -714,9 +720,9 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </section>
 
         <section className={`${styles.gamePanel} ${styles.shopPanel}`}>
-          <header className={styles.panelHeader}><strong>Archive [{archiveVisible}/{archiveTotal}]</strong><span>{tab === "units" && selectedLeader ? `${filledCount}/${followerLimit} followers · all records shown, incompatible factions lock` : "Hover to inspect · drag or click to carry"}</span></header>
-          <div className={styles.tabs} role="tablist" aria-label="Builder archive">{(["units", "items", "leaders"] as CatalogTab[]).map((catalogTab) => <button role="tab" aria-selected={tab === catalogTab} className={tab === catalogTab ? styles.selected : ""} type="button" key={catalogTab} onClick={() => { setTab(catalogTab); setQuery(""); setPendingPick(null); setCatalogPreview(null); }}>{catalogTab}</button>)}</div>
-          <div className={styles.filters}><input aria-label="Search archive" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Search ${tab}…`} />{tab !== "items" && <select aria-label="Filter by faction" value={faction} onChange={(event) => setFaction(event.target.value)}><option value="all">All factions</option><option value="goodly-folk">Goodly Folk</option><option value="bone-host">Bone Host</option><option value="belowborn">Belowborn</option></select>}</div>
+          <header className={styles.panelHeader}><strong>Shop [{archiveVisible}/{archiveTotal}]</strong><span>{tab === "leaders" ? "Step 1 · choose your company leader" : tab === "units" && selectedLeader ? `${filledCount}/${followerLimit} followers · incompatible factions lock` : tab === "units" ? "Choose a leader first" : "Place a follower, then assign gear"}</span></header>
+          <div className={styles.tabs} role="tablist" aria-label="Builder shop">{CATALOG_TABS.map(({ value, label }) => <button role="tab" aria-selected={tab === value} className={tab === value ? styles.selected : ""} type="button" key={value} onClick={() => { setTab(value); setQuery(""); setPendingPick(null); setCatalogPreview(null); }}>{label}</button>)}</div>
+          <div className={styles.filters}><input aria-label="Search shop" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Search ${CATALOG_TABS.find(({ value }) => value === tab)?.label.toLowerCase()}…`} />{tab !== "items" && <select aria-label="Filter by faction" value={faction} onChange={(event) => setFaction(event.target.value)}><option value="all">All factions</option><option value="goodly-folk">Goodly Folk</option><option value="bone-host">Bone Host</option><option value="belowborn">Belowborn</option></select>}</div>
           <div className={styles.archiveHelp}><strong>Long move?</strong><span>Click a record, scroll normally, then click its target.</span></div>
           <div className={styles.archiveList} role="tabpanel">
             {tab === "units" && filteredUnits.map((unit, index) => {

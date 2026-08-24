@@ -17,12 +17,14 @@ export type BuilderRosterUnit = {
   accent: string;
   image: string;
   verified: boolean;
+  cost?: number;
   gameVersion?: string;
   gear?: number;
   trinkets?: number;
   stats?: UnitStats;
   trait?: string;
   traitEffect?: string;
+  baseEffects?: string[];
   tactic?: string;
   tacticEffect?: string;
   skills?: { name: string; effect: string }[];
@@ -37,6 +39,7 @@ export type BuilderLeader = {
   epithet: string;
   faction: string;
   factionSlug: FactionSlug;
+  image?: string;
   trait: { name: string; effect: string };
   stats: Pick<UnitStats, "es" | "hp" | "mp" | "str" | "agi" | "int">;
 };
@@ -147,6 +150,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const [confirmClear, setConfirmClear] = useState(false);
   const dragPointerY = useRef<number | null>(null);
   const dragScrollFrame = useRef<number | null>(null);
+  const boardViewportRef = useRef<HTMLDivElement>(null);
 
   const unitBySlug = useMemo(() => new Map(roster.map((unit) => [unit.slug, unit])), [roster]);
   const itemBySlug = useMemo(() => new Map(items.map((item) => [item.slug, item])), [items]);
@@ -241,6 +245,22 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       dragScrollFrame.current = null;
       return;
     }
+    const boardViewport = boardViewportRef.current;
+    if (boardViewport) {
+      const bounds = boardViewport.getBoundingClientRect();
+      const boardEdge = Math.min(90, Math.max(54, bounds.height * 0.16));
+      let boardScroll = 0;
+      if (pointerY >= bounds.top && pointerY <= bounds.bottom) {
+        if (pointerY < bounds.top + boardEdge) boardScroll = -Math.ceil(4 + (bounds.top + boardEdge - pointerY) / boardEdge * 16);
+        if (pointerY > bounds.bottom - boardEdge) boardScroll = Math.ceil(4 + (pointerY - (bounds.bottom - boardEdge)) / boardEdge * 16);
+      }
+      if (boardScroll !== 0) {
+        boardViewport.scrollBy({ top: boardScroll });
+        dragScrollFrame.current = window.requestAnimationFrame(runDragAutoScroll);
+        return;
+      }
+    }
+
     const viewportHeight = window.innerHeight;
     const edgeZone = Math.min(150, Math.max(90, viewportHeight * 0.18));
     let scrollAmount = 0;
@@ -600,12 +620,12 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
           <header className={styles.panelHeader}><strong>Board [{filledCount}/{followerLimit}]</strong><span>Choose a leader, then place followers from Shop</span></header>
           <div className={styles.boardStage}>
             <div className={`${styles.rulesStrip} ${rulesInvalid ? styles.rulesInvalid : ""}`}><strong>{selectedLeader ? rulesSummary : "Leader required"}</strong><span>Week {build.week} · {availableCells.size} active cells · leader occupies one combatant slot</span></div>
-            <div className={styles.boardViewport} tabIndex={0} role="region" aria-label="Formation board. Scroll horizontally on smaller screens.">
+            <div ref={boardViewportRef} className={styles.boardViewport} tabIndex={0} role="region" aria-label="Formation board. Scroll within the board to reach every unlocked position.">
               <div className={styles.boardCanvas}>
                 <div className={styles.boardTopbar}>
                   <div className={styles.leaderDock} onDragOver={(event) => event.preventDefault()} onDrop={handleLeaderDrop}>
                     <button className={styles.leaderDockMain} type="button" onClick={() => { setTab("leaders"); setQuery(""); setPendingPick(null); setCatalogPreview(null); }}>
-                      <span className={styles.dockLabel}>Company<br />Leader</span>
+                      <span className={styles.leaderDockArt}>{selectedLeader?.image ? <UnitSprite src={selectedLeader.image} color="#c9c9c9" /> : <span className={styles.dockLabel}>Company<br />Leader</span>}</span>
                       <b>{selectedLeader?.name ?? "+ ASSIGN LEADER"}</b>
                       <small>{selectedLeader ? `${selectedLeader.trait.name} · ${selectedLeader.faction}` : "Select a leader before placing followers"}</small>
                     </button>
@@ -653,7 +673,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                       <span className={styles.unitCardBody}>
                         <span className={styles.miniTitle}><small>{unit.faction}</small><b>{unit.name}</b></span>
                         <span className={styles.unitPortrait}><UnitSprite src={unit.image} color={unit.accent} large /></span>
-                        {unit.stats ? <span className={styles.unitStatBlock}><span className={styles.miniVitals}><span>ES {unit.stats.es}</span><span>HP {unit.stats.hp}</span><span>MP {unit.stats.mp}</span></span><span className={styles.miniAttrs}><b title={`STR ${unit.stats.str}`}>{unit.stats.str}</b><b title={`AGI ${unit.stats.agi}`}>{unit.stats.agi}</b><b title={`INT ${unit.stats.int}`}>{unit.stats.int}</b></span></span> : <span className={styles.pendingStats}>PUBLIC STATS PENDING</span>}
+                        {unit.stats ? <span className={styles.unitStatBlock}><span className={styles.miniVitals}><span><b>ES</b><i style={{ width: `${Math.min(100, (unit.stats.es / 45) * 100)}%` }} /><em>{unit.stats.es}</em></span><span><b>HP</b><i style={{ width: `${Math.min(100, (unit.stats.hp / 40) * 100)}%` }} /><em>{unit.stats.hp}</em></span><span><b>MP</b><i style={{ width: `${Math.min(100, (unit.stats.mp / 35) * 100)}%` }} /><em>{unit.stats.mp}</em></span></span><span className={styles.miniAttrs}><b title={`STR ${unit.stats.str}`}><small>STR</small>{unit.stats.str}</b><b title={`AGI ${unit.stats.agi}`}><small>AGI</small>{unit.stats.agi}</b><b title={`INT ${unit.stats.int}`}><small>INT</small>{unit.stats.int}</b></span></span> : <span className={styles.pendingStats}>PUBLIC STATS PENDING</span>}
                       </span>
                     </> : cellAvailable ? <><span className={styles.emptyCell}>+</span><b className={styles.emptyText}>{pendingPick ? "PLACE HERE" : "OPEN"}</b></> : <span className={styles.lockedCell}><b>×</b><small>LOCKED</small></span>}
                   </button>
@@ -678,17 +698,21 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
             {previewUnit && <aside className={`${styles.gamePanel} ${styles.hoverInspect}`} aria-live="polite">
               <header className={styles.panelHeader}><strong>Inspect · Unit</strong><span>Archive hover</span></header>
               <div className={styles.inspectCard}>
-                <header><small>{previewUnit.faction}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? "UNIT CARD" : "ROSTER MEMBER"}</span></header>
+                <header><small>{previewUnit.faction}{previewUnit.cost === undefined ? "" : ` · ${previewUnit.cost}G`}</small><h2>{previewUnit.name}</h2><span>{previewUnit.verified ? "BASE CARD" : "ROSTER MEMBER"}</span></header>
                 <div className={styles.inspectStage}>
                   <div className={styles.slotPreview}><small>GEAR: {previewUnit.gear ?? "?"}</small><span>{Array.from({ length: previewUnit.gear ?? 2 }, (_, index) => <i key={index} />)}</span></div>
                   <UnitSprite src={previewUnit.image} color="#eeeeee" large />
                   <div className={styles.slotPreview}><small>TRINKETS: {previewUnit.trinkets ?? "?"}</small><span>{Array.from({ length: previewUnit.trinkets ?? 1 }, (_, index) => <i key={index} />)}</span></div>
                 </div>
                 {previewUnit.stats ? <>
-                  <div className={styles.resources}><ResourceBar label="ES" value={previewUnit.stats.es} suffix="+0/s" maximum={45} /><ResourceBar label="HP" value={previewUnit.stats.hp} suffix={previewUnit.recovery} maximum={40} /><ResourceBar label="MP" value={previewUnit.stats.mp} suffix={previewUnit.manaRegen} maximum={35} /></div>
+                  <div className={styles.resources}><ResourceBar label="ES" value={previewUnit.stats.es} suffix="—" maximum={45} /><ResourceBar label="HP" value={previewUnit.stats.hp} suffix={previewUnit.recovery} maximum={40} /><ResourceBar label="MP" value={previewUnit.stats.mp} suffix={previewUnit.manaRegen} maximum={35} /></div>
                   <div className={styles.attributes}><div><span>STR</span><b>{previewUnit.stats.str}</b></div><div><span>AGI</span><b>{previewUnit.stats.agi}</b></div><div><span>INT</span><b>{previewUnit.stats.int}</b></div></div>
                   <div className={styles.combatStats}><span><b>ATK</b>{previewUnit.stats.atk}</span><span><b>CRT</b>{previewUnit.stats.crt}%</span><span><b>RNG</b>{previewUnit.stats.rng}</span><span><b>SPD</b>{previewUnit.stats.spd > 0 ? "+" : ""}{previewUnit.stats.spd}%</span><span><b>AR</b>{previewUnit.stats.ar}</span><span><b>EVA</b>{previewUnit.stats.eva}%</span></div>
-                  <section className={styles.inspectText}><h3>Trait</h3><p><strong>{previewUnit.trait}</strong> — {previewUnit.traitEffect}</p><h3>Skills</h3>{previewUnit.skills?.map((skill) => <p key={skill.name}><strong>{skill.name}</strong> — {skill.effect}</p>)}<h3>Tactics</h3><p><strong>{previewUnit.tactic}</strong> — {previewUnit.tacticEffect}</p></section>
+                  <section className={styles.inspectText}>
+                    {previewUnit.baseEffects && previewUnit.baseEffects.length > 0 && <><h3>Card effects</h3>{previewUnit.baseEffects.map((effect) => <p key={effect}>{effect}</p>)}</>}
+                    <h3>Tactics</h3><p><strong>{previewUnit.tactic}</strong> — {previewUnit.tacticEffect}</p>
+                    <h3>Card scope</h3><p>{previewUnit.traitEffect}</p>
+                  </section>
                   {previewUnit.quote && <blockquote>“{previewUnit.quote}”</blockquote>}
                 </> : <div className={styles.pendingPanel}><strong>ROSTER MEMBER</strong><p>Use this record to plan the formation while its equipment controls remain unavailable.</p></div>}
               </div>
@@ -709,7 +733,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               <header className={styles.panelHeader}><strong>Inspect · Leader</strong><span>Archive hover</span></header>
               <div className={styles.catalogInspect}>
                 <header><small>{previewLeader.faction}</small><h2>{previewLeader.name}</h2><span>{previewLeader.epithet}</span></header>
-                <div className={styles.leaderInspectStage}><span className={styles.leaderGlyph}>{previewLeader.name.slice(0, 1)}</span><strong>Company Leader</strong></div>
+                <div className={styles.leaderInspectStage}>{previewLeader.image ? <UnitSprite src={previewLeader.image} color="#c9c9c9" /> : <span className={styles.leaderGlyph}>{previewLeader.name.slice(0, 1)}</span>}<strong>Company Leader</strong></div>
                 <div className={styles.resources}><ResourceBar label="ES" value={previewLeader.stats.es} maximum={45} /><ResourceBar label="HP" value={previewLeader.stats.hp} maximum={40} /><ResourceBar label="MP" value={previewLeader.stats.mp} maximum={35} /></div>
                 <div className={styles.attributes}><div><span>STR</span><b>{previewLeader.stats.str}</b></div><div><span>AGI</span><b>{previewLeader.stats.agi}</b></div><div><span>INT</span><b>{previewLeader.stats.int}</b></div></div>
                 <section className={styles.catalogEffects}><h3>Leader Trait</h3><p><strong>{previewLeader.trait.name}</strong> — {previewLeader.trait.effect}</p></section>
@@ -733,7 +757,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                 onDragStart={(event) => { if (blockReason) event.preventDefault(); else startDrag(event, { kind: "unit", slug: unit.slug }); }}
                 onDragEnd={finishDrag}
                 onMouseEnter={() => showCatalogPreview("unit", unit.slug)}
-                onMouseLeave={() => setCatalogPreview(null)}
+                onMouseLeave={() => clearCatalogPreview("unit", unit.slug)}
                 onFocus={() => showCatalogPreview("unit", unit.slug)}
                 onBlur={() => clearCatalogPreview("unit", unit.slug)}
                 onClick={() => {
@@ -749,7 +773,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               >
                 <span className={styles.archiveIndex}>{index + 1}</span>
                 <UnitSprite src={unit.image} color="#e6e6e6" />
-                <span className={styles.archiveIdentity}><small>{unit.faction}</small><strong>{unit.name}</strong><em>{unit.verified ? `${unit.trait} · ${unit.tactic}` : "Roster member"}</em></span>
+                <span className={styles.archiveIdentity}><small>{unit.faction}</small><strong>{unit.name}</strong><em>{unit.verified ? `${unit.cost ?? "—"}G · ${unit.tactic}` : "Roster member"}</em></span>
                 {unit.stats ? <span className={styles.archiveStats}><i>HP {unit.stats.hp}</i><i>STR {unit.stats.str}</i><i>AGI {unit.stats.agi}</i><i>INT {unit.stats.int}</i></span> : <span className={styles.unverifiedTag}>ROSTER</span>}
               </button>;
             })}
@@ -761,7 +785,7 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
                 onDragStart={(event) => { if (blockReason) event.preventDefault(); else startDrag(event, { kind: "item", slug: item.slug }); }}
                 onDragEnd={finishDrag}
                 onMouseEnter={() => showCatalogPreview("item", item.slug)}
-                onMouseLeave={() => setCatalogPreview(null)}
+                onMouseLeave={() => clearCatalogPreview("item", item.slug)}
                 onFocus={() => showCatalogPreview("item", item.slug)}
                 onBlur={() => clearCatalogPreview("item", item.slug)}
                 onClick={() => {
@@ -784,12 +808,12 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
               onDragStart={(event) => startDrag(event, { kind: "leader", slug: leader.slug })}
               onDragEnd={finishDrag}
               onMouseEnter={() => showCatalogPreview("leader", leader.slug)}
-              onMouseLeave={() => setCatalogPreview(null)}
+              onMouseLeave={() => clearCatalogPreview("leader", leader.slug)}
               onFocus={() => showCatalogPreview("leader", leader.slug)}
               onBlur={() => clearCatalogPreview("leader", leader.slug)}
               onClick={() => { setCatalogPreview(null); if (build.leaderSlug === leader.slug) removeLeader(); else assignLeader(leader.slug); }}
             >
-              <span className={styles.archiveIndex}>{index + 1}</span><span className={styles.leaderGlyph}>{leader.name.slice(0, 1)}</span><span className={styles.archiveIdentity}><small>{leader.faction}</small><strong>{leader.name}</strong><em>{leader.trait.name} · {leader.trait.effect}</em></span>
+              <span className={styles.archiveIndex}>{index + 1}</span>{leader.image ? <UnitSprite src={leader.image} color="#c9c9c9" /> : <span className={styles.leaderGlyph}>{leader.name.slice(0, 1)}</span>}<span className={styles.archiveIdentity}><small>{leader.faction}</small><strong>{leader.name}</strong><em>{leader.trait.name} · {leader.trait.effect}</em></span>
             </button>)}
           </div>
         </section>

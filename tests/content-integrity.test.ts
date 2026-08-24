@@ -3,6 +3,9 @@ import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { pageTdk } from "../src/seo/tdk.js";
+import { hasCompleteLeaderCard, hasCompleteUnitCard } from "../src/lib/data/record-coverage.ts";
+import { getCompatibleGear, getLeaderCompanyPlan } from "../src/lib/data/editorial-recommendations.ts";
+import type { Item, Leader, Unit } from "../src/types/content.ts";
 
 const dataDirectory = path.resolve("src/data/game");
 const publicDirectory = path.resolve("public");
@@ -51,4 +54,36 @@ test("core metadata follows the visible H1 naming convention", () => {
   assert.equal(pageTdk["/guides"].title, "Goodly Trials Guides - Tactics, Builds & Game Modes");
   assert.equal(pageTdk["/builder"].title, "Goodly Trials Builder - Plan Your Company");
   assert.equal(pageTdk["/builds"].title, "Goodly Trials Builds - Team Comps & Formations");
+});
+
+test("verified base cards qualify for search-facing detail indexing", () => {
+  const units = read<(Slugged & { cost?: number; stats: unknown; tactic: { name: string }; source: string })[]>("units.json");
+  const leaders = read<(Slugged & { trait: { name: string; effect: string }; source: string })[]>("leaders.json");
+
+  const fullUnits = units.filter(hasCompleteUnitCard);
+  const fullLeaders = leaders.filter(hasCompleteLeaderCard);
+
+  assert.equal(fullUnits.length, units.length);
+  assert.ok(fullLeaders.length > 0 && fullLeaders.length < leaders.length);
+  assert.ok([...units, ...leaders].every((record) => ["goodlytrials.com", "play.goodlytrials.com"].includes(new URL(record.source).hostname)));
+});
+
+test("gear comparisons respect current base requirements and slot capacity", () => {
+  const units = read<Unit[]>("units.json");
+  const items = read<Item[]>("items.json");
+  const archer = units.find((unit) => unit.slug === "archer");
+  assert.ok(archer);
+  assert.ok(!getCompatibleGear(archer, items).some(({ item }) => item.slug === "bow"), "Archer has one Gear slot, so a two-handed bow must not be suggested");
+  assert.ok(getCompatibleGear(archer, items).some(({ item }) => item.slug === "feather-charm-of-reflex"));
+});
+
+test("leader company frames only link to units that exist", () => {
+  const units = read<Unit[]>("units.json");
+  const leaders = read<Leader[]>("leaders.json");
+  const unitSlugs = new Set(units.map((unit) => unit.slug));
+  for (const leader of leaders) {
+    for (const slug of getLeaderCompanyPlan(leader, units).unitSlugs) {
+      assert.ok(unitSlugs.has(slug), `${leader.slug} company frame references an unknown unit: ${slug}`);
+    }
+  }
 });

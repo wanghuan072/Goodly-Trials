@@ -27,7 +27,7 @@ export default function TraitsPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/hero-traits-v3.webp"
+          src="/images/game/screenshot-7.webp"
           alt="Three warriors awakening different powers inside a ruined sanctuary"
           fill
           preload

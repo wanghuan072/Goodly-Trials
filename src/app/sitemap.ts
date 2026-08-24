@@ -7,6 +7,7 @@ import {
   leaders,
   units,
 } from "@/lib/data/game-content";
+import { hasCompleteLeaderCard, hasCompleteUnitCard } from "@/lib/data/record-coverage";
 
 const staticRoutes = [
   { path: "", updated: "2026-08-24", priority: 1 },
@@ -37,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         route.path === "/updates" ? ("daily" as const) : ("weekly" as const),
       priority: route.priority,
     })),
-    ...units.map((unit) => ({
+    ...units.filter(hasCompleteUnitCard).map((unit) => ({
       url: `${siteConfig.url}/wiki/units/${unit.slug}`,
       lastModified: new Date(`${unit.lastVerified}T00:00:00Z`),
       changeFrequency: "weekly" as const,
@@ -49,7 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: 0.72,
     })),
-    ...leaders.map((leader) => ({
+    ...leaders.filter(hasCompleteLeaderCard).map((leader) => ({
       url: `${siteConfig.url}/wiki/leaders/${leader.slug}`,
       lastModified: new Date(`${leader.lastVerified}T00:00:00Z`),
       changeFrequency: "weekly" as const,

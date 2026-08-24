@@ -80,7 +80,7 @@ function MemberCard({ unit, itemSlugs }: { unit: Unit; itemSlugs: string[] }) {
           <Link href={`/wiki/units/${unit.slug}`}>{unit.name}</Link>
         </strong>
         <span>
-          <EntityLinks>{unit.trait.name}</EntityLinks>
+          <EntityLinks>{unit.baseEffects?.[0] ?? "Base card details available in the wiki."}</EntityLinks>
         </span>
       </div>
       <span className={styles.memberItems}>

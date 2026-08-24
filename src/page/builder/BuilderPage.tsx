@@ -4,6 +4,7 @@ import Breadcrumb from "@/components/navigation/Breadcrumb";
 import HeroIntel from "@/components/content/HeroIntel";
 import { siteConfig } from "@/config/site";
 import { items, leaders, units } from "@/lib/data/game-content";
+import { leaderImage } from "@/lib/data/leader-images";
 import JsonLd from "@/seo/JsonLd";
 import { createMetadata } from "@/seo/metadata";
 import BuilderClient, { type BuilderLeader, type BuilderRosterUnit } from "./BuilderClient";
@@ -34,7 +35,7 @@ const builderSteps = [
   },
   {
     title: "Inspect, adjust, and record the plan",
-    text: "Hover or focus a card to review its available details, move units between cells, rotate an active formation row when useful, and add notes. The current plan saves automatically on this device.",
+    text: "Hover or focus a card to review its available details, move units between open cells, and add notes. The current plan saves automatically on this device.",
   },
 ] as const;
 
@@ -46,12 +47,14 @@ const roster: BuilderRosterUnit[] = units.map((unit) => ({
   accent: unit.accent,
   image: unit.image,
   verified: true,
+  cost: unit.cost,
   gear: unit.gear,
   trinkets: unit.trinkets,
   stats: unit.stats,
   trait: unit.trait.name,
   gameVersion: unit.gameVersion,
   traitEffect: unit.trait.effect,
+  baseEffects: unit.baseEffects,
   tactic: unit.tactic.name,
   tacticEffect: unit.tactic.effect,
   skills: unit.skills,
@@ -66,6 +69,7 @@ const builderLeaders: BuilderLeader[] = leaders.map((leader) => ({
   epithet: leader.epithet,
   faction: leader.faction,
   factionSlug: leader.factionSlug,
+  image: leaderImage(leader.slug),
   trait: leader.trait,
   stats: leader.stats,
 }));

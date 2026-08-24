@@ -104,7 +104,7 @@ function HomeUnitEntry({ unit }: { unit: Unit }) {
         <small>{unit.faction}</small>
         <strong>{unit.name}</strong>
         <span>STR {unit.stats.str} · AGI {unit.stats.agi} · INT {unit.stats.int}</span>
-        <em>{unit.trait.name} · {unit.tactic.name}</em>
+        <em>{unit.cost ?? "—"}G · {unit.tactic.name}</em>
       </span>
       <span className={styles.referenceArrow} aria-hidden="true">→</span>
     </Link>
@@ -430,6 +430,7 @@ export default function HomePage() {
             Read how it works
           </Link>
         </section>
+
       </div>
     </main>
   );

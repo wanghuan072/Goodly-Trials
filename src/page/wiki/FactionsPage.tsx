@@ -18,7 +18,7 @@ export default function FactionsPage() {
   return (
     <main>
       <section className={archive.hero}>
-        <Image className={archive.heroImage} src="/images/game/hero-factions-v3.webp" alt="Three rival companies meeting beneath weathered banners in a mountain pass" fill preload sizes="100vw" />
+        <Image className={archive.heroImage} src="/images/game/screenshot-9.webp" alt="Goodly Trials faction unlock screen with Bone Host unit artwork" fill preload sizes="100vw" />
         <div className={archive.heroShade} />
         <div className={`container ${archive.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Factions" }]} />

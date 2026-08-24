@@ -1,4 +1,4 @@
-import type { Item } from "../../types/content";
+import type { Item } from "../../types/content.ts";
 
 export type EquipmentKind = "gear" | "trinkets" | "consumable";
 

@@ -16,7 +16,7 @@ export default function UpdatesPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/hero-updates-v3.webp"
+          src="/images/game/screenshot-5.webp"
           alt="A company rebuilding a bridge and raising its banner after battle"
           fill
           preload

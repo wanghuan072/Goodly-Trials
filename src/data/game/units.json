@@ -6,44 +6,42 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/goodly_knight.png",
     "accent": "#d8b46a",
-    "summary": "Official public card · Formation identity.",
+    "summary": "5G formation unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Takes the worst place in the line and calls it an oath.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "+1 HP / 2s",
-    "manaRegen": "+0 MP / s",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
-      "hp": 37,
-      "mp": 4,
+      "hp": 10,
+      "mp": 0,
       "str": 3,
       "agi": 1,
       "int": 1,
-      "atk": 8,
-      "crt": 5,
+      "atk": 2,
+      "crt": 0,
       "rng": 1,
-      "spd": 3,
-      "ar": 5,
-      "eva": 5
+      "spd": 0,
+      "ar": 3,
+      "eva": 0
     },
     "trait": {
-      "name": "Oracle",
-      "effect": "After each battle: -2 STR, +1 AGI, +2 INT.",
-      "cap": "Caps at -4 STR, +8 AGI, +8 INT."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
-    "skills": [
-      {
-        "name": "Knight's Oath",
-        "effect": "+1 STR to adjacent allies."
-      }
-    ],
+    "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Stays in formation and can reduce damage taken."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/wiki/units"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 5,
+    "baseEffects": [
+      "Aura: +1 STR to allies adjacent."
+    ]
   },
   {
     "slug": "scout",
@@ -52,12 +50,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/scout.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 5G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "5G flanking unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Knows which old border roads still reach the fight.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 10,
@@ -73,17 +71,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 5,
+    "baseEffects": [
+      "Aura: +1 AGI to allies above, below and to the left.",
+      "Gain +10% EVA per hit."
+    ]
   },
   {
     "slug": "gifted-child",
@@ -92,12 +95,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/gifted_child.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 5G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "5G backline unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "Set the chapel curtains alight before learning to read.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 2,
@@ -113,17 +116,19 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 5,
+    "baseEffects": []
   },
   {
     "slug": "wizard",
@@ -132,43 +137,42 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/wizard.png",
     "accent": "#d8b46a",
-    "summary": "Official public card · Backline identity.",
+    "summary": "6G backline unit with 2 Gear slots and 3 Trinket slots.",
     "quote": "Carries three books from a college that denies knowing him.",
     "gear": 2,
     "trinkets": 3,
-    "recovery": "+0 HP / 2s",
-    "manaRegen": "+1 MP / s",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
-      "es": 41,
-      "hp": 10,
-      "mp": 27,
+      "es": 0,
+      "hp": 7,
+      "mp": 5,
       "str": 0,
       "agi": 3,
-      "int": 7,
-      "atk": 16,
-      "crt": 5,
+      "int": 6,
+      "atk": 7,
+      "crt": 0,
       "rng": 1,
-      "spd": -16,
+      "spd": 0,
       "ar": 0,
-      "eva": 5
+      "eva": 0
     },
     "trait": {
-      "name": "Potent",
-      "effect": "+20% spell damage."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
-    "skills": [
-      {
-        "name": "Quick-Witted",
-        "effect": "+2 ES per 1 AGI; -1 STR to adjacent allies."
-      }
-    ],
+    "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Prefers to stay in the backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/wiki/units"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "Aura: -1 STR to allies adjacent."
+    ]
   },
   {
     "slug": "merchant",
@@ -177,12 +181,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/merchant.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 6G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "6G formation unit with 2 Gear slots and 3 Trinket slots.",
     "quote": "Buys from deserters. Sells to their replacements.",
     "gear": 2,
     "trinkets": 3,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 8,
@@ -198,17 +202,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "Aura: +1 INT to allies behind."
+    ]
   },
   {
     "slug": "goodly-nurse",
@@ -217,12 +225,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/goodly_nurse.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 6G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "6G backline unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "She binds what battle opens.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 6,
@@ -238,17 +246,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "Aura: +1 STR to allies in front and behind.",
+      "Heals allies within 2 tiles."
+    ]
   },
   {
     "slug": "squire",
@@ -257,12 +270,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/squire.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 3G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "3G formation unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "Inherited the armor when his knight failed to return.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 9,
@@ -278,17 +291,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 3,
+    "baseEffects": [
+      "Aura: +2 STR to allies above and to the right.",
+      "Aura: -1 STR to allies below and to the left."
+    ]
   },
   {
     "slug": "archer",
@@ -297,44 +315,43 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/archer.png",
     "accent": "#d8b46a",
-    "summary": "Official public card · Backline identity.",
+    "summary": "6G backline unit with 1 Gear slot and 1 Trinket slot.",
     "quote": "Hunted elk for the knights. Soldiers are slower.",
     "gear": 1,
     "trinkets": 1,
-    "recovery": "+0 HP / 2s",
-    "manaRegen": "+0 MP / s",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
-      "hp": 13,
-      "mp": 3,
-      "str": -1,
-      "agi": 3,
-      "int": 0,
-      "atk": 13,
-      "crt": 5,
-      "rng": 3,
-      "spd": -26,
+      "hp": 10,
+      "mp": 0,
+      "str": 0,
+      "agi": 4,
+      "int": 1,
+      "atk": 4,
+      "crt": 0,
+      "rng": 1,
+      "spd": 0,
       "ar": 0,
-      "eva": 7.9
+      "eva": 0
     },
     "trait": {
-      "name": "Versatile",
-      "effect": "-1 ALL once; +1 STR and +1 AGI after each battle.",
-      "cap": "Caps at +10 STR, +10 AGI, +0 INT."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
-    "skills": [
-      {
-        "name": "Range bonus",
-        "effect": "+1 RNG."
-      }
-    ],
+    "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Prefers to stay in the backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/wiki/units"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "+1 RNG.",
+      "Minimum attack range: 2."
+    ]
   },
   {
     "slug": "portly-knight",
@@ -343,43 +360,43 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/portly_knight.png",
     "accent": "#d8b46a",
-    "summary": "Official public card · Formation identity.",
+    "summary": "10G formation unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "Will hold the line to the end.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "+2 HP / 2s",
-    "manaRegen": "+0 MP / s",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
-      "hp": 35,
-      "mp": 17,
+      "hp": 14,
+      "mp": 0,
       "str": 7,
       "agi": 0,
       "int": 4,
-      "atk": 36,
-      "crt": 28.8,
+      "atk": 6,
+      "crt": 0,
       "rng": 1,
-      "spd": -10,
-      "ar": 4,
-      "eva": 5
+      "spd": 0,
+      "ar": 2,
+      "eva": 0
     },
     "trait": {
-      "name": "Hoarding",
-      "effect": "+4G income with Trinket, one-handed, two-handed, Shield, and Spell equipment on the board."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
-    "skills": [
-      {
-        "name": "Rotund",
-        "effect": "Gains ATK equal to 15% of starting HP; -10% SPD."
-      }
-    ],
+    "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Stays in formation and can reduce damage taken."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/wiki/units"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 10,
+    "baseEffects": [
+      "Gain ATK equal to 15% of starting HP.",
+      "-10% SPD."
+    ]
   },
   {
     "slug": "elk-knight",
@@ -388,12 +405,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/elk_knight.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 13G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "13G formation unit with 2 Gear slots and 3 Trinket slots.",
     "quote": "Trained by the Elk Order for every post in the Goodly line.",
     "gear": 2,
     "trinkets": 3,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 15,
@@ -409,17 +426,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 13,
+    "baseEffects": [
+      "Aura: +2 AR to allies adjacent.",
+      "Receives double benefits from auras."
+    ]
   },
   {
     "slug": "old-man",
@@ -428,12 +450,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/old_man.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 5G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "5G backline unit with 1 Gear slot and 1 Trinket slot.",
     "quote": "Rings the muster bell that called three generations to war.",
     "gear": 1,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 13,
@@ -449,17 +471,23 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 5,
+    "baseEffects": [
+      "Uses STR and INT for defense.",
+      "Cannot critically strike.",
+      "Maximum AGI: 1."
+    ]
   },
   {
     "slug": "sage",
@@ -468,12 +496,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/sage.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 13G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "13G backline unit with 2 Gear slots and 3 Trinket slots.",
     "quote": "Old enough to remember when fire needed kindling.",
     "gear": 2,
     "trinkets": 3,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 4,
@@ -489,17 +517,23 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 13,
+    "baseEffects": [
+      "Aura: +1 INT to allies adjacent.",
+      "Uses AGI and INT for defense.",
+      "Cannot critically strike."
+    ]
   },
   {
     "slug": "giant-peasant",
@@ -508,12 +542,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/giant_peasant.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 5G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "5G formation unit with 2 Gear slots and 0 Trinket slots.",
     "quote": "Don't hire him for his ideas.",
     "gear": 2,
     "trinkets": 0,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 8,
@@ -529,17 +563,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 5,
+    "baseEffects": [
+      "Aura: -1 INT to allies adjacent."
+    ]
   },
   {
     "slug": "seam-finder",
@@ -548,12 +586,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/seam_finder.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 7G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "7G formation unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Mined iron before the lords taught it to march.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 10,
@@ -569,17 +607,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 7,
+    "baseEffects": [
+      "Aura: +10 SPD% to allies below and behind."
+    ]
   },
   {
     "slug": "wandering-monk",
@@ -588,12 +630,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/wandering_monk.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 8G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "8G flanking unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "Left by the east gate. Arrived again from the west.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 16,
@@ -609,17 +651,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 8,
+    "baseEffects": [
+      "Teleports elsewhere when an ally is hit."
+    ]
   },
   {
     "slug": "ronin",
@@ -628,12 +674,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/ronin.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 12G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "12G flanking unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "If you have him outnumbered, you are wrong.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 18,
@@ -649,17 +695,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 12,
+    "baseEffects": [
+      "Attacks deal 35% damage to adjacent targets."
+    ]
   },
   {
     "slug": "banneret-captain",
@@ -668,12 +718,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/banneret_captain.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 13G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "13G formation unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "Carries the last banner of a company erased from the rolls.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 16,
@@ -689,17 +739,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 13,
+    "baseEffects": [
+      "Allies in the same column gain +2 HP per point of this unit's STR."
+    ]
   },
   {
     "slug": "saint-many-hands",
@@ -708,12 +762,12 @@
     "factionSlug": "goodly-folk",
     "image": "/images/units/official/saint_many_hands.png",
     "accent": "#d8b46a",
-    "summary": "Official client base record · 11G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "11G backline unit with 1 Gear slot and 3 Trinket slots.",
     "quote": "Every village statue gives her another hand.",
     "gear": 1,
     "trinkets": 3,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 15,
@@ -729,17 +783,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 11,
+    "baseEffects": [
+      "Energy Shield multiplier: 0.5×.",
+      "Grants Energy Shield to adjacent allies below half HP."
+    ]
   },
   {
     "slug": "skeleton",
@@ -748,12 +807,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 4G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "4G formation unit with 2 Gear slots and 0 Trinket slots.",
     "quote": "Still wears the levy tag from three kingdoms ago.",
     "gear": 2,
     "trinkets": 0,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 9,
@@ -769,17 +828,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 4,
+    "baseEffects": [
+      "Uses STR and AGI for defense.",
+      "Cannot critically strike."
+    ]
   },
   {
     "slug": "skeleton-child",
@@ -788,47 +852,42 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_child.png",
     "accent": "#9b78c6",
-    "summary": "Official public card · Flanking identity.",
+    "summary": "4G flanking unit with 1 Gear slot and 0 Trinket slots.",
     "quote": "Buried with a toy sword. Came back with a real one.",
     "gear": 1,
     "trinkets": 0,
-    "recovery": "+0 HP / 2s",
-    "manaRegen": "+0 MP / s",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
-      "hp": 18,
-      "mp": 5,
+      "hp": 9,
+      "mp": 0,
       "str": 1,
       "agi": 4,
       "int": 0,
-      "atk": 7,
-      "crt": 5,
+      "atk": 3,
+      "crt": 0,
       "rng": 1,
-      "spd": 12,
+      "spd": 0,
       "ar": 0,
-      "eva": 10.7
+      "eva": 0
     },
     "trait": {
-      "name": "Magnanimous",
-      "effect": "Gains no benefits from hand gear; adjacent allies receive 50% of those benefits."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
-    "skills": [
-      {
-        "name": "Loot",
-        "effect": "Spawns with one random weapon."
-      },
-      {
-        "name": "Respawn",
-        "effect": "Once per battle at a back corner."
-      }
-    ],
+    "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Can enter combat from behind enemy lines."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/wiki/units"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 4,
+    "baseEffects": [
+      "Respawns once per battle."
+    ]
   },
   {
     "slug": "skeleton-archer",
@@ -837,12 +896,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_archer.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 4G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "4G backline unit with 1 Gear slot and 2 Trinket slots.",
     "quote": "Carries arrows from a war no living clerk recorded.",
     "gear": 1,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 2,
@@ -858,17 +917,24 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 4,
+    "baseEffects": [
+      "+1 RNG.",
+      "Minimum attack range: 2.",
+      "Respawns once per battle.",
+      "Rattlefire triggers when an adjacent unit dies."
+    ]
   },
   {
     "slug": "skeleton-knight",
@@ -877,12 +943,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_knight.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 5G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "5G formation unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Rust bears the crest of a house with no living heirs.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 6,
@@ -898,17 +964,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 5,
+    "baseEffects": [
+      "Respawns once per battle."
+    ]
   },
   {
     "slug": "skeleton-mage",
@@ -917,12 +987,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_mage.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 7G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "7G backline unit with 2 Gear slots and 3 Trinket slots.",
     "quote": "Casts from memory. The spellbook rotted long ago.",
     "gear": 2,
     "trinkets": 3,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 2,
@@ -938,17 +1008,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 7,
+    "baseEffects": [
+      "Gain 2 MP when an ally dies."
+    ]
   },
   {
     "slug": "skeleton-mother",
@@ -957,12 +1031,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_mother.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 6G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "6G backline unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "Keeps village remedies that call for grave dirt.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 4,
@@ -978,17 +1052,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "Aura: -1 STR to allies adjacent.",
+      "Heals allies within 1 tile."
+    ]
   },
   {
     "slug": "skeleton-witness",
@@ -997,12 +1076,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_witness.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 6G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "6G backline unit with 2 Gear slots and 3 Trinket slots.",
     "quote": "Recorded the first rising. Refuses to name who ordered it.",
     "gear": 2,
     "trinkets": 3,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 6,
@@ -1018,17 +1097,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "+1 RNG.",
+      "Steal 1 INT on hit."
+    ]
   },
   {
     "slug": "skeleton-king",
@@ -1037,12 +1121,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_king.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 11G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "11G formation unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "Still crowns a kingdom no living map admits.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 18,
@@ -1058,17 +1142,19 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 11,
+    "baseEffects": []
   },
   {
     "slug": "skeleton-dog",
@@ -1077,43 +1163,40 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_dog.png",
     "accent": "#9b78c6",
-    "summary": "Official public card · Flanking identity.",
+    "summary": "3G flanking unit with 0 Gear slots and 0 Trinket slots.",
     "quote": "Fed on battlefield scraps since the first rising.",
     "gear": 0,
     "trinkets": 0,
-    "recovery": "+1 HP / 2s",
-    "manaRegen": "+0 MP / s",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
-      "hp": 19,
-      "mp": 9,
+      "hp": 1,
+      "mp": 0,
       "str": 3,
       "agi": 6,
       "int": 0,
-      "atk": 7,
-      "crt": 5,
+      "atk": 1,
+      "crt": 0,
       "rng": 1,
-      "spd": 18,
+      "spd": 0,
       "ar": 0,
-      "eva": 13.6
+      "eva": 0
     },
     "trait": {
-      "name": "Rampaging",
-      "effect": "+2% ATK per 2 STR."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
-    "skills": [
-      {
-        "name": "Feast",
-        "effect": "When an ally dies: gain +1 ATK and +2 HP."
-      }
-    ],
+    "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Can enter combat from behind enemy lines."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/wiki/units"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 3,
+    "baseEffects": []
   },
   {
     "slug": "skeleton-collector",
@@ -1122,12 +1205,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_collector.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 7G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "7G backline unit with 1 Gear slot and 3 Trinket slots.",
     "quote": "Empties each grave before the Tithe clerks arrive.",
     "gear": 1,
     "trinkets": 3,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 2,
@@ -1143,17 +1226,19 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 7,
+    "baseEffects": []
   },
   {
     "slug": "skeleton-horror",
@@ -1162,12 +1247,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_horror.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 9G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "9G flanking unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "Too many bones in one form.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 12,
@@ -1183,17 +1268,19 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 9,
+    "baseEffects": []
   },
   {
     "slug": "skeleton-shepherd",
@@ -1202,12 +1289,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_shepherd.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 9G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "9G backline unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Whistles the old kennel call. Every grave answers.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 6,
@@ -1223,17 +1310,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 9,
+    "baseEffects": [
+      "Cannot attack.",
+      "Summons Skeleton Dog: 15 MP, range 5, 7s cooldown."
+    ]
   },
   {
     "slug": "skeleton-bloat",
@@ -1242,12 +1334,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_bloat.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 9G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "9G formation unit with 2 Gear slots and 0 Trinket slots.",
     "quote": "Built from the champions of two different armies.",
     "gear": 2,
     "trinkets": 0,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 14,
@@ -1263,17 +1355,23 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 9,
+    "baseEffects": [
+      "Maximum AGI: 4.",
+      "Can wield two-handed gear in both hand slots.",
+      "Hand gear cannot grant RNG."
+    ]
   },
   {
     "slug": "skeleton-revenant",
@@ -1282,12 +1380,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_revenant.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 12G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "12G flanking unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Returned from every pit the Host could find.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 15,
@@ -1303,17 +1401,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 12,
+    "baseEffects": [
+      "Gain +5% CRT per hit.",
+      "Heals on hit using AGI ÷ 3."
+    ]
   },
   {
     "slug": "skeleton-moon-wolf",
@@ -1322,12 +1425,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/skeleton_moon_wolf.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 11G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "11G flanking unit with 0 Gear slots and 2 Trinket slots.",
     "quote": "The bones look better suited to a prior form.",
     "gear": 0,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 1,
@@ -1343,17 +1446,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 11,
+    "baseEffects": [
+      "Moon Step after 3 seconds; stuns the row for 2 seconds.",
+      "Gain 3 ES on hit."
+    ]
   },
   {
     "slug": "grave-tyrant",
@@ -1362,12 +1470,12 @@
     "factionSlug": "bone-host",
     "image": "/images/units/official/grave_tyrant.png",
     "accent": "#9b78c6",
-    "summary": "Official client base record · 9G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "9G flanking unit with 1 Gear slot and 3 Trinket slots.",
     "quote": "Spends bodies the way living mages spend ink.",
     "gear": 1,
     "trinkets": 3,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 12,
@@ -1383,17 +1491,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 9,
+    "baseEffects": [
+      "Respawns once per battle."
+    ]
   },
   {
     "slug": "dwarf-midget",
@@ -1402,12 +1514,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/dwarf_midget.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 3G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "3G flanking unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Works seams too narrow for the claim maps.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 7,
@@ -1420,20 +1532,26 @@
       "rng": 1,
       "spd": 0,
       "ar": 1,
-      "eva": 0
+      "eva": 10
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 3,
+    "baseEffects": [
+      "Uses STR and AGI for defense.",
+      "Cannot critically strike.",
+      "Gain +2 ATK on evade."
+    ]
   },
   {
     "slug": "dwarf-messenger",
@@ -1442,12 +1560,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/dwarf_messenger.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 4G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "4G flanking unit with 1 Gear slot and 2 Trinket slots.",
     "quote": "Few know the tunnels like a dwarf fined for tardiness.",
     "gear": 1,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 6,
@@ -1463,17 +1581,19 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 4,
+    "baseEffects": []
   },
   {
     "slug": "stone-hopper",
@@ -1482,12 +1602,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/stone_hopper.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 8G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "8G flanking unit with 1 Gear slot and 1 Trinket slot.",
     "quote": "Miners learn to tap twice before stepping on loose stone.",
     "gear": 1,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 8,
@@ -1503,17 +1623,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 8,
+    "baseEffects": [
+      "Starts combat with 100% EVA; loses 10% per second.",
+      "Gain +10% CRT on evade."
+    ]
   },
   {
     "slug": "echo-toad",
@@ -1522,12 +1647,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/echo_toad.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 7G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "7G backline unit with 1 Gear slot and 2 Trinket slots.",
     "quote": "A third croak is almost never necessary.",
     "gear": 1,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 15,
@@ -1543,17 +1668,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 7,
+    "baseEffects": [
+      "Spells gain 1 additional target."
+    ]
   },
   {
     "slug": "horned-sprinter",
@@ -1562,12 +1691,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/horned_sprinter.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 5G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "5G flanking unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Bred to pull ore carts. Never learned to stop without one.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 7,
@@ -1583,17 +1712,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 5,
+    "baseEffects": [
+      "Gain +1 ATK per cell moved."
+    ]
   },
   {
     "slug": "dark-dwarf",
@@ -1602,12 +1735,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/dark_dwarf.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 8G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "8G flanking unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "The depths have left him unrecognizable, even to kin.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 10,
@@ -1623,17 +1756,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 8,
+    "baseEffects": [
+      "Cannot critically strike.",
+      "Uses all defense layers."
+    ]
   },
   {
     "slug": "hammer-thrower",
@@ -1642,12 +1780,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/hammer_thrower.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 5G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "5G backline unit with 1 Gear slot and 1 Trinket slot.",
     "quote": "Throws for work. Throws for fun.",
     "gear": 1,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 4,
@@ -1663,17 +1801,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 5,
+    "baseEffects": [
+      "+1 RNG.",
+      "Minimum attack range: 2."
+    ]
   },
   {
     "slug": "tunnel-defender",
@@ -1682,12 +1825,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/tunnel_defender.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 6G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "6G formation unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Holds the tunnel mouth so the line above can hit harder.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "+1 HP / s",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 12,
@@ -1703,17 +1846,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "Aura: -2 AGI to allies above.",
+      "Aura: +2 AR, +4 ATK to allies above."
+    ]
   },
   {
     "slug": "dwarf-knower",
@@ -1722,12 +1870,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/dwarf_knower.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 6G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "6G backline unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "The dwarves have an old for oral histories, carried in song by their knowers.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 4,
@@ -1743,17 +1891,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "Can equip any gear."
+    ]
   },
   {
     "slug": "observer",
@@ -1762,12 +1914,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/observer.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 20G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "20G backline unit with 1 Gear slot and 4 Trinket slots.",
     "quote": "The ancient watcher rarely interferes with surface matters.",
     "gear": 1,
     "trinkets": 4,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 31,
@@ -1783,17 +1935,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 20,
+    "baseEffects": [
+      "Spell cooldown multiplier: 0.5×."
+    ]
   },
   {
     "slug": "dwarf-bruiser",
@@ -1802,12 +1958,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/dwarf_bruiser.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 5G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "5G formation unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "The forge union sends him when meetings run long.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 5,
@@ -1823,17 +1979,19 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 5,
+    "baseEffects": []
   },
   {
     "slug": "mud-ogre",
@@ -1842,12 +2000,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/mud_ogre.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 6G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "6G formation unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Giant, filthy, and hard to tell from the wall.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 16,
@@ -1863,17 +2021,22 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "Aura: -2 AGI to allies adjacent.",
+      "Attacks cannot miss."
+    ]
   },
   {
     "slug": "dwarf-investor",
@@ -1882,12 +2045,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/dwarf_investor.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 6G · Backline identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "6G backline unit with 1 Gear slot and 1 Trinket slot.",
     "quote": "Still collecting dividends from three collapsed claims.",
     "gear": 1,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 8,
@@ -1897,23 +2060,28 @@
       "int": 3,
       "atk": 3,
       "crt": 0,
-      "rng": 1,
+      "rng": 2,
       "spd": 0,
       "ar": 0,
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Backline",
-      "effect": "Official combat identity: Backline."
+      "effect": "Backline combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 6,
+    "baseEffects": [
+      "Aura: -1 INT to allies adjacent.",
+      "Aura: +2 INT to allies within two cells."
+    ]
   },
   {
     "slug": "flayer",
@@ -1922,12 +2090,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/flayer.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 18G · Flanking identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "18G flanking unit with 2 Gear slots and 1 Trinket slot.",
     "quote": "Peels champions from what they protect.",
     "gear": 2,
     "trinkets": 1,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 36,
@@ -1943,17 +2111,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Flanking",
-      "effect": "Official combat identity: Flanking."
+      "effect": "Flanking combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 18,
+    "baseEffects": [
+      "Gain ATK from the target's primary attribute, up to 10."
+    ]
   },
   {
     "slug": "dwarf-mudlord",
@@ -1962,12 +2134,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/dwarf_mudlord.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 13G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "13G formation unit with 2 Gear slots and 2 Trinket slots.",
     "quote": "Owns the claim and charges rent on the ladders.",
     "gear": 2,
     "trinkets": 2,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 22,
@@ -1983,17 +2155,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 13,
+    "baseEffects": [
+      "Steal 1 STR on hit."
+    ]
   },
   {
     "slug": "cave-dragon",
@@ -2002,12 +2178,12 @@
     "factionSlug": "belowborn",
     "image": "/images/units/official/cave_dragon.png",
     "accent": "#92ad6f",
-    "summary": "Official client base record · 24G · Formation identity. Full trait and skill text is not yet publicly transcribed here.",
+    "summary": "24G formation unit with 4 Gear slots and 4 Trinket slots.",
     "quote": "The oldest tunnels end where the claw marks begin.",
     "gear": 4,
     "trinkets": 4,
-    "recovery": "Not publicly transcribed",
-    "manaRegen": "Not publicly transcribed",
+    "recovery": "—",
+    "manaRegen": "—",
     "stats": {
       "es": 0,
       "hp": 34,
@@ -2023,16 +2199,21 @@
       "eva": 0
     },
     "trait": {
-      "name": "Base client record",
-      "effect": "Stats, slots, and combat identity are verified from the official client. Full trait and skill wording has not yet been transcribed from a public card."
+      "name": "Base card",
+      "effect": "This record lists the unit before leader bonuses, equipped gear, and in-run effects change the Inspect panel."
     },
     "skills": [],
     "tactic": {
       "name": "Formation",
-      "effect": "Official combat identity: Formation."
+      "effect": "Formation combat identity."
     },
     "gameVersion": "v0.312",
     "lastVerified": "2026-08-24",
-    "source": "https://goodlytrials.com/"
+    "source": "https://play.goodlytrials.com/assets/combat-fx-DMZBzH2v.js",
+    "cost": 24,
+    "baseEffects": [
+      "Maximum AGI: 6.",
+      "Can wield two-handed gear in both hand slots."
+    ]
   }
 ]

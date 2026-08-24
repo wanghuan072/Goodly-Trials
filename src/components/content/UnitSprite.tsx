@@ -4,10 +4,22 @@ type UnitSpriteProps = {
   large?: boolean;
 };
 
-export default function UnitSprite({ src, color = "#d8b46a", large = false }: UnitSpriteProps) {
+/**
+ * The game's art files are luminance masks, not finished card portraits. The
+ * official client colours their bright pixels at render time while retaining
+ * the dark pixel work, so rendering these files as ordinary images is wrong.
+ */
+export default function UnitSprite({ src, color = "#c9c9c9", large = false }: UnitSpriteProps) {
   return (
-    <span aria-hidden="true" className={`unit-sprite ${large ? "unit-sprite--large" : ""}`} style={{ color }}>
-      <img src={src} alt="" />
+    <span aria-hidden="true" className={`unit-sprite ${large ? "unit-sprite--large" : ""}`}>
+      <span
+        className="unit-sprite__art"
+        style={{
+          backgroundColor: color,
+          WebkitMaskImage: `url("${src}")`,
+          maskImage: `url("${src}")`,
+        }}
+      />
     </span>
   );
 }

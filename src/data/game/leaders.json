@@ -93,12 +93,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: The Hillman",
       "description": "The Hillman is a Goodly Folk leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "The Hillman",
-        "Goodly Folk",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "The Hillman", "Goodly Folk", "leader"]
     }
   },
   {
@@ -161,12 +156,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Cadoc Softpurse",
       "description": "Cadoc Softpurse is a Goodly Folk leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Cadoc Softpurse",
-        "Goodly Folk",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Cadoc Softpurse", "Goodly Folk", "leader"]
     }
   },
   {
@@ -229,12 +219,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Captain Cade",
       "description": "Captain Cade is a Goodly Folk leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Captain Cade",
-        "Goodly Folk",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Captain Cade", "Goodly Folk", "leader"]
     }
   },
   {
@@ -263,12 +248,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Pimm Tightfist",
       "description": "Pimm Tightfist is a Goodly Folk leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Pimm Tightfist",
-        "Goodly Folk",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Pimm Tightfist", "Goodly Folk", "leader"]
     }
   },
   {
@@ -297,12 +277,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Nye One-grip",
       "description": "Nye One-grip is a Goodly Folk leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Nye One-grip",
-        "Goodly Folk",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Nye One-grip", "Goodly Folk", "leader"]
     }
   },
   {
@@ -535,12 +510,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Nameless Puritan",
       "description": "Nameless Puritan is a Goodly Folk leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Nameless Puritan",
-        "Goodly Folk",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Nameless Puritan", "Goodly Folk", "leader"]
     }
   },
   {
@@ -689,17 +659,17 @@
     "trinkets": 1,
     "stats": {
       "es": 0,
-      "hp": 0,
-      "mp": 5,
+      "hp": 37,
+      "mp": 9,
       "str": 3,
       "agi": 1,
       "int": 1
     },
     "trait": {
       "name": "Plagued",
-      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+      "effect": "+20 HP. This unit and adjacent allies carry a RNG 2 aura: allies take 1 spell DMG each second; enemies take 2 spell DMG."
     },
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/",
     "tdk": {
@@ -773,12 +743,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Right Hook Gib",
       "description": "Right Hook Gib is a Bone Host leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Right Hook Gib",
-        "Bone Host",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Right Hook Gib", "Bone Host", "leader"]
     }
   },
   {
@@ -875,12 +840,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Toothpick",
       "description": "Toothpick is a Bone Host leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Toothpick",
-        "Bone Host",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Toothpick", "Bone Host", "leader"]
     }
   },
   {
@@ -943,12 +903,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Rex, The Abused",
       "description": "Rex, The Abused is a Bone Host leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Rex, The Abused",
-        "Bone Host",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Rex, The Abused", "Bone Host", "leader"]
     }
   },
   {
@@ -977,12 +932,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Vellum Blankpage",
       "description": "Vellum Blankpage is a Bone Host leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Vellum Blankpage",
-        "Bone Host",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Vellum Blankpage", "Bone Host", "leader"]
     }
   },
   {
@@ -1079,12 +1029,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Spill Overflow",
       "description": "Spill Overflow is a Bone Host leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Spill Overflow",
-        "Bone Host",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Spill Overflow", "Bone Host", "leader"]
     }
   },
   {
@@ -1113,12 +1058,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Twice-born Pell",
       "description": "Twice-born Pell is a Bone Host leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Twice-born Pell",
-        "Bone Host",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Twice-born Pell", "Bone Host", "leader"]
     }
   },
   {
@@ -1181,12 +1121,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Four Eyes",
       "description": "Four Eyes is a Belowborn leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Four Eyes",
-        "Belowborn",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Four Eyes", "Belowborn", "leader"]
     }
   },
   {
@@ -1240,21 +1175,16 @@
       "int": 1
     },
     "trait": {
-      "name": "Hardened",
-      "effect": "On a lethal hit, spends 2 AR and stays at 1 HP."
+      "name": "Iron",
+      "effect": "+1 AR per 3 STR."
     },
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/",
     "tdk": {
       "title": "Goodly Trials Leader: Arrowheaded Gerry",
       "description": "Arrowheaded Gerry is a Belowborn leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Arrowheaded Gerry",
-        "Belowborn",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Arrowheaded Gerry", "Belowborn", "leader"]
     }
   },
   {
@@ -1317,12 +1247,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Tippler Tankard",
       "description": "Tippler Tankard is a Belowborn leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Tippler Tankard",
-        "Belowborn",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Tippler Tankard", "Belowborn", "leader"]
     }
   },
   {
@@ -1351,12 +1276,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Dorr, Songleader",
       "description": "Dorr, Songleader is a Belowborn leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Dorr, Songleader",
-        "Belowborn",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Dorr, Songleader", "Belowborn", "leader"]
     }
   },
   {
@@ -1385,12 +1305,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Goblin Slaver Hesk",
       "description": "Goblin Slaver Hesk is a Belowborn leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Goblin Slaver Hesk",
-        "Belowborn",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Goblin Slaver Hesk", "Belowborn", "leader"]
     }
   },
   {
@@ -1419,12 +1334,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Pinn, Breach Miner",
       "description": "Pinn, Breach Miner is a Belowborn leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Pinn, Breach Miner",
-        "Belowborn",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Pinn, Breach Miner", "Belowborn", "leader"]
     }
   },
   {
@@ -1487,12 +1397,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Alchemist Belwick",
       "description": "Alchemist Belwick is a Belowborn leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Alchemist Belwick",
-        "Belowborn",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Alchemist Belwick", "Belowborn", "leader"]
     }
   },
   {
@@ -1521,12 +1426,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Greedy Tebb",
       "description": "Greedy Tebb is a Belowborn leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Greedy Tebb",
-        "Belowborn",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Greedy Tebb", "Belowborn", "leader"]
     }
   },
   {
@@ -1604,20 +1504,20 @@
     "faction": "Belowborn",
     "factionSlug": "belowborn",
     "gear": 2,
-    "trinkets": 2,
+    "trinkets": 3,
     "stats": {
-      "es": 0,
-      "hp": 0,
-      "mp": 5,
+      "es": 35,
+      "hp": 1,
+      "mp": 31,
       "str": 0,
       "agi": 1,
-      "int": 4
+      "int": 7
     },
     "trait": {
       "name": "Cavebloom",
-      "effect": "Current official client leader record. Full trait wording has not yet been transcribed here."
+      "effect": "When this unit casts a spell, heal an ally within 2 RNG for this unit's INT."
     },
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/",
     "tdk": {
@@ -1657,12 +1557,7 @@
     "tdk": {
       "title": "Goodly Trials Leader: Sidways Cobb",
       "description": "Sidways Cobb is a Belowborn leader record from the current official client.",
-      "keywords": [
-        "Goodly Trials",
-        "Sidways Cobb",
-        "Belowborn",
-        "leader"
-      ]
+      "keywords": ["Goodly Trials", "Sidways Cobb", "Belowborn", "leader"]
     }
   }
 ]

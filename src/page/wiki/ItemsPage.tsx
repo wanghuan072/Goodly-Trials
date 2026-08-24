@@ -21,9 +21,9 @@ export default function ItemsPage() {
         <div className={styles.heroShade} />
         <div className={`container ${styles.heroContent}`}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Wiki", href: "/wiki" }, { label: "Gear" }]} />
-          <p className={styles.eyebrow}>Gear archive · current official public item records</p>
+          <p className={styles.eyebrow}>Gear archive · publicly documented item records</p>
           <h1>Goodly Trials Gear - Items, Weapons &amp; Trinkets</h1>
-          <p>Check what an item costs, which attributes it needs, and where it fits before you spend a shop turn on it. Every record on this page is matched to the current public item page.</p>
+          <p>Check what a documented item costs, which attributes it needs, and where it fits before you spend a shop turn. This is a verified public reference, not a claim to list every item in the live game.</p>
           <HeroIntel
             eyebrow="Quartermaster"
             title="Prepare the loadout"

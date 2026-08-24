@@ -4,7 +4,8 @@ import Breadcrumb from "@/components/navigation/Breadcrumb";
 import HeroIntel from "@/components/content/HeroIntel";
 import UnitSprite from "@/components/content/UnitSprite";
 import UnitExplorer from "@/page/wiki/components/UnitExplorer";
-import { factions, traits, units } from "@/lib/data/game-content";
+import { factions, units } from "@/lib/data/game-content";
+import { hasCompleteUnitCard } from "@/lib/data/record-coverage";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
 
@@ -20,7 +21,7 @@ export default function UnitsPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/hero-units-v3.webp"
+          src="/images/game/screenshot-2.webp"
           alt="A varied fellowship assembling beneath the moon before a campaign"
           fill
           preload
@@ -35,12 +36,13 @@ export default function UnitsPage() {
               { label: "Units" },
             ]}
           />
-          <p className={styles.eyebrow}>Unit archive · complete public cards and base client records</p>
+          <p className={styles.eyebrow}>Unit archive · public cards and readable client records</p>
           <h1>Goodly Trials Units - Stats, Traits &amp; Tactics</h1>
           <p>
             Compare unit records before you buy, equip, or place a unit. Full
-            public cards include their published trait and skills; base client
-            records explicitly mark the details that have not been transcribed.
+            public cards include their published trait and skills. Base client
+            records keep verified stats and combat identity, while clearly
+            marking text that is not yet available from a public card.
           </p>
           <HeroIntel
             eyebrow="Roster desk"
@@ -48,7 +50,7 @@ export default function UnitsPage() {
             items={[
               { label: "Unit cards", value: units.length },
               { label: "Factions", value: factions.length },
-              { label: "Full cards", value: traits.length },
+              { label: "Full cards", value: units.filter(hasCompleteUnitCard).length },
               { label: "Plan", value: "Tactics" },
             ]}
           />
@@ -79,7 +81,7 @@ export default function UnitsPage() {
                 <div>
                   <b>✥</b>
                   <h3>Traits</h3>
-                  <p>Full trait text is shown only when a public card has been verified.</p>
+              <p>Full trait text appears only when the public card itself provides it.</p>
                 </div>
               </div>
             </div>

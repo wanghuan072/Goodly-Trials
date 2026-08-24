@@ -28,7 +28,7 @@ export default function UnitExplorer({ units }: { units: Unit[] }) {
       <p className={styles.resultCount} aria-live="polite">{visibleUnits.length} unit{visibleUnits.length === 1 ? "" : "s"} found</p>
       {visibleUnits.length ? <div className={styles.recordList} aria-label="Unit records">{visibleUnits.map((unit) => <Link className={styles.unitRecord} key={unit.slug} href={`/wiki/units/${unit.slug}`}>
         <span className={styles.recordArt}><UnitSprite src={unit.image} color={unit.accent} large /></span>
-        <span className={styles.recordTitle}><small>{unit.faction} · {unit.trait.name === "Base client record" ? "Base record" : "Public card"}</small><b>{unit.name}</b><em>{unit.trait.name} · {unit.tactic.name}</em></span>
+        <span className={styles.recordTitle}><small>{unit.faction} · Verified base card</small><b>{unit.name}</b><em>{unit.cost ?? "—"}G · {unit.tactic.name}</em></span>
         <span className={styles.recordStats}><i><small>HP</small>{unit.stats.hp}</i><i><small>ATK</small>{unit.stats.atk}</i><i><small>AR</small>{unit.stats.ar}</i><i><small>RNG</small>{unit.stats.rng}</i></span>
         <span className={styles.openRecord}>View details →</span>
       </Link>)}</div> : <div className={styles.empty}>No units match these filters.</div>}

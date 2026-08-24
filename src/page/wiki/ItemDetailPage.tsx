@@ -3,25 +3,14 @@ import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import EntityLinks from "@/components/content/EntityLinks";
 import { builds, items, units } from "@/lib/data/game-content";
+import { getCompatibleUnits } from "@/lib/data/editorial-recommendations";
 import type { Item } from "@/types/content";
 import styles from "@/style/page/wiki/detail.module.css";
 
-const unitMatches: Record<string, string[]> = {
-  "iron-sword-of-brawn": ["goodly-knight", "portly-knight"],
-  "iron-shield-of-brawn": ["goodly-knight", "portly-knight"],
-  "bow-of-grace": ["archer"],
-  "feather-charm-of-reflex": ["archer", "skeleton-dog"],
-  "wand-of-wit": ["wizard"],
-  "ruby-charm-of-wit": ["wizard"],
-  "frostfall-of-lore": ["wizard"],
-  "fire-palm-of-balance": ["wizard"],
-};
-
 export default function ItemDetailPage({ item }: { item: Item }) {
   const artworkPending = item.image?.endsWith("item-data-pending.svg");
-  const matchedUnits = (unitMatches[item.slug] ?? [])
-    .map((slug) => units.find((unit) => unit.slug === slug))
-    .filter(Boolean);
+  const compatibleUnits = getCompatibleUnits(item, units);
+  const matchedUnits = compatibleUnits.slice(0, 12);
   const relatedItems = items
     .filter(
       (entry) =>
@@ -31,7 +20,7 @@ export default function ItemDetailPage({ item }: { item: Item }) {
     )
     .slice(0, 3);
   const relatedBuilds = builds.filter((build) =>
-    matchedUnits.some((unit) => unit?.slug === build.unitSlug),
+    matchedUnits.some(({ unit }) => unit.slug === build.unitSlug),
   );
   return (
     <main className={`container ${styles.detailShell}`}>
@@ -114,25 +103,31 @@ export default function ItemDetailPage({ item }: { item: Item }) {
           </section>
           {matchedUnits.length > 0 && (
             <section className={`${styles.panel} ${styles.editorial}`}>
-              <h2>Editorial Unit Fit</h2>
+              <h2>Units to Compare</h2>
               <p>
-                Recommendation layer. Matching below is based on current public
-                attributes and requirements, not a developer-authored tier list.
+                This compatibility list checks only the base card: listed item
+                requirements and enough Gear or Trinket capacity. It does not
+                claim a best-in-slot choice or account for temporary bonuses.
               </p>
               <div className={styles.relatedGrid}>
                 {matchedUnits.map(
-                  (unit) =>
-                    unit && (
+                  ({ unit, reason }) => (
                       <Link key={unit.slug} href={`/wiki/units/${unit.slug}`}>
                         <b>{unit.name}</b>
                         <span>
-                          {unit.faction} · {unit.stats.str}/{unit.stats.agi}/
-                          {unit.stats.int} STR/AGI/INT
+                          {reason} {unit.faction} · {unit.stats.str}/{unit.stats.agi}/{unit.stats.int} STR/AGI/INT
                         </span>
                       </Link>
-                    ),
+                  ),
                 )}
               </div>
+              {compatibleUnits.length > matchedUnits.length && <p>Showing {matchedUnits.length} of {compatibleUnits.length} compatible base cards. <Link href="/wiki/units">Browse all units</Link> to compare more.</p>}
+            </section>
+          )}
+          {!matchedUnits.length && (
+            <section className={`${styles.panel} ${styles.editorial}`}>
+              <h2>Base-Card Availability</h2>
+              <p>{item.type.startsWith("Potion") ? "Potions do not reserve Gear or Trinket capacity in the Builder, so their use depends on the live run rather than a permanent equipment pairing." : "No current base card both meets this item’s listed requirement and has enough capacity. Leader bonuses, other equipment, and run effects can change that, so the site does not invent a unit recommendation here."}</p>
             </section>
           )}
           {relatedBuilds.length > 0 && (
@@ -178,6 +173,14 @@ export default function ItemDetailPage({ item }: { item: Item }) {
             <div>
               <dt>Cost</dt>
               <dd>{item.cost === undefined ? "Not published" : `${item.cost}G`}</dd>
+            </div>
+            <div>
+              <dt>Recorded version</dt>
+              <dd>{item.gameVersion}</dd>
+            </div>
+            <div>
+              <dt>Last checked</dt>
+              <dd>{item.lastVerified}</dd>
             </div>
           </dl>
           <h3>Explore</h3>

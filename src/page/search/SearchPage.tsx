@@ -24,7 +24,7 @@ const index: SearchResult[] = [
   ...units.map((unit) => ({
     type: "Unit",
     title: unit.name,
-    description: `${unit.faction} · ${unit.trait.name} · ${unit.tactic.name}`,
+    description: `${unit.faction} · ${unit.cost ?? "—"}G · ${unit.tactic.name} · ${(unit.baseEffects ?? []).join(" ")}`,
     href: `/wiki/units/${unit.slug}`,
   })),
   ...items.map((item) => ({

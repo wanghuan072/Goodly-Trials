@@ -3,7 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import UnitCard from "@/components/content/UnitCard";
 import UnitSprite from "@/components/content/UnitSprite";
-import { builds, factions, units } from "@/lib/data/game-content";
+import { builds, factions, leaders, units } from "@/lib/data/game-content";
 import type { Faction } from "@/types/content";
 import styles from "@/style/page/wiki/detail.module.css";
 
@@ -14,6 +14,7 @@ export default function FactionDetailPage({ faction }: { faction: Faction }) {
   const factionBuilds = builds.filter(
     (build) => build.faction === faction.name,
   );
+  const factionLeaders = leaders.filter((leader) => leader.factionSlug === faction.slug);
   return (
     <main className={`container ${styles.detailShell}`}>
       <Breadcrumb
@@ -66,7 +67,7 @@ export default function FactionDetailPage({ faction }: { faction: Faction }) {
                     <span className={styles.relatedUnitCopy}>
                       <b>{name}</b>
                       <small>
-                        {unit.trait.name} · {unit.tactic.name} · View card →
+                        {unit.cost ?? "—"}G · {unit.tactic.name} · View card →
                       </small>
                     </span>
                   </Link>
@@ -105,6 +106,20 @@ export default function FactionDetailPage({ faction }: { faction: Faction }) {
                   <p>{build.summary}</p>
                 </div>
               ))}
+            </section>
+          )}
+          {factionLeaders.length > 0 && (
+            <section className={`${styles.panel} ${styles.editorial}`}>
+              <h2>Faction Leaders</h2>
+              <p>Open a leader card to compare its starting attributes, known trait text, and a linked company starting point built from this faction&apos;s roster.</p>
+              <div className={styles.relatedGrid}>
+                {factionLeaders.map((leader) => (
+                  <Link key={leader.slug} href={`/wiki/leaders/${leader.slug}`}>
+                    <b>{leader.name}{leader.epithet ? ` · ${leader.epithet}` : ""}</b>
+                    <span>{leader.trait.name} · {leader.gear} Gear · {leader.trinkets} Trinkets</span>
+                  </Link>
+                ))}
+              </div>
             </section>
           )}
           <section className={styles.panel}>

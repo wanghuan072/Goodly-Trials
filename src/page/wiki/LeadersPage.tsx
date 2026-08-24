@@ -2,7 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/navigation/Breadcrumb";
 import HeroIntel from "@/components/content/HeroIntel";
+import UnitSprite from "@/components/content/UnitSprite";
 import { leaders } from "@/lib/data/game-content";
+import { leaderImage } from "@/lib/data/leader-images";
+import { hasCompleteLeaderCard } from "@/lib/data/record-coverage";
 import { createMetadata } from "@/seo/metadata";
 import styles from "@/style/page/archive/archive.module.css";
 export const metadata = createMetadata(
@@ -16,7 +19,7 @@ export default function LeadersPage() {
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
-          src="/images/game/hero-leaders-v3.webp"
+          src="/images/game/screenshot-7.webp"
           alt="A company leader overlooking a moonlit valley from a fortress battlement"
           fill
           preload
@@ -31,10 +34,10 @@ export default function LeadersPage() {
               { label: "Leaders" },
             ]}
           />
-          <p className={styles.eyebrow}>Leader archive · current official client records</p>
+          <p className={styles.eyebrow}>Leader archive · transcribed cards and client records</p>
           <h1>Goodly Trials Leaders - Stats, Traits &amp; Builds</h1>
           <p>
-            Compare current leader records, then open one for starting stats,
+            Compare documented leader records, then open one for starting stats,
             gear and trinket slots. Leaders with fully transcribed public card
             text show their complete trait wording; the remaining records are
             clearly labelled as client records.
@@ -53,26 +56,21 @@ export default function LeadersPage() {
       </section>
       <section className="container section">
         <div className={styles.portalGrid}>
-          {leaders.map((leader) => (
+          {leaders.map((leader) => {
+            const portrait = leaderImage(leader.slug);
+            return (
             <Link
               className={styles.portalCard}
               href={`/wiki/leaders/${leader.slug}`}
               key={leader.slug}
             >
-              <span>♛</span>
-              <h2>
-                {leader.name}
-                {leader.epithet && (
-                  <>
-                    <br />
-                    <small>{leader.epithet}</small>
-                  </>
-                )}
-              </h2>
-              <p>
-                <strong>{leader.faction}</strong> · {leader.gear} gear ·{" "}
-                {leader.trinkets} trinket{leader.trinkets === 1 ? "" : "s"}
-              </p>
+              <div className={styles.leaderCardHeading}>
+                <span className={styles.leaderPortrait}>{portrait ? <UnitSprite src={portrait} color="#c9c9c9" /> : "♛"}</span>
+                <div>
+                  <h2>{leader.name}{leader.epithet && <><br /><small>{leader.epithet}</small></>}</h2>
+                  <p><strong>{leader.faction}</strong> · {leader.gear} gear · {leader.trinkets} trinket{leader.trinkets === 1 ? "" : "s"}</p>
+                </div>
+              </div>
               <p>
                 ES {leader.stats.es} · HP {leader.stats.hp} · MP{" "}
                 {leader.stats.mp}
@@ -85,13 +83,14 @@ export default function LeadersPage() {
               </p>
               <b>View leader →</b>
             </Link>
-          ))}
+            );
+          })}
         </div>
         <section className={styles.sectionBlock}>
           <h2>Leader record coverage</h2>
           <p>
-            This archive includes the current public client&apos;s leader records.
-            Seven leaders have fully transcribed public card text; the
+            This archive includes public card transcriptions and client-readable leader records.
+            {leaders.filter(hasCompleteLeaderCard).length} leaders have fully transcribed public card text; the
             remaining entries retain their current official names, faction,
             slots, base stats, and trait names while their complete trait
             wording is not yet published here.

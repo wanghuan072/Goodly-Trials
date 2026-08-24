@@ -18,7 +18,7 @@ export default function UnitCard({ unit }: { unit: Unit }) {
           <span><b>AGI</b> {unit.stats.agi}</span>
           <span><b>INT</b> {unit.stats.int}</span>
         </div>
-        <div className={styles.tags}><span>{unit.trait.name}</span><span>{unit.tactic.name}</span></div>
+        <div className={styles.tags}><span>{unit.cost ?? "—"}G</span><span>{unit.tactic.name}</span></div>
       </div>
     </article>
   );

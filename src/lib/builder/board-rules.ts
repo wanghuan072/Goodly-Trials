@@ -4,8 +4,8 @@ export const BOARD_COLUMNS = 6;
 export const BOARD_ROWS = 6;
 export const BOARD_CELLS = BOARD_COLUMNS * BOARD_ROWS;
 export const MAX_TRIAL_WEEK = 12;
-export const BOARD_RULES_VERSION = "v0.302";
-export const BOARD_RULES_CHECKED = "2026-08-20";
+export const BOARD_RULES_VERSION = "v0.311";
+export const BOARD_RULES_CHECKED = "2026-08-24";
 
 const MAX_ACTIVE_COMBATANTS = 17;
 const MULTIPLAYER_COMBATANT_CAP = 12;
@@ -17,9 +17,10 @@ export const FACTION_FOLLOWER_CAPS: Record<FactionSlug, number> = {
 };
 
 /**
- * Board rules last verified for v0.302 on 2026-08-20 against the official
- * play.goodlytrials.com client bundle. The board starts at 2x3 and alternates
- * adding a column and a row until it reaches 6x6.
+ * Board rules verified for v0.311 on 2026-08-24 against the public
+ * play.goodlytrials.com client bundle. The physical board is 6 lanes by 6
+ * rows; each week starts from a 2x3 active area and alternates one lane then
+ * one row until all 36 positions are active at week 8.
  */
 export function boardDimensionsForWeek(week: number) {
   const safeWeek = Math.min(MAX_TRIAL_WEEK, Math.max(1, Math.floor(week)));

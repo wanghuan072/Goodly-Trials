@@ -30,12 +30,16 @@ export type Unit = {
   accent: string;
   summary: string;
   quote: string;
+  /** Gold cost on the current base unit card. */
+  cost?: number;
   gear?: number;
   trinkets?: number;
   recovery?: string;
   manaRegen?: string;
   stats: UnitStats;
   trait: { name: string; effect: string; cap?: string };
+  /** Directly transcribed effects carried by the base unit before run modifiers. */
+  baseEffects?: string[];
   skills: { name: string; effect: string }[];
   tactic: { name: string; effect: string };
   gameVersion: string;

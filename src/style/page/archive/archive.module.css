@@ -1,4 +1,4 @@
-.hero { position: relative; min-height: 320px; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: linear-gradient(90deg, rgba(3,4,4,.94), rgba(3,4,4,.7) 48%, rgba(3,4,4,.18)), var(--hero-image, url("/images/game/hero-battlefield-v2.webp")) center / cover no-repeat; }
+.hero { position: relative; min-height: 320px; overflow: hidden; border-bottom: 1px solid var(--border-bronze); background: linear-gradient(90deg, rgba(3,4,4,.94), rgba(3,4,4,.7) 48%, rgba(3,4,4,.18)), var(--hero-image, url("/images/game/screenshot-1.webp")) center / cover no-repeat; }
 .heroImage { object-fit: cover; object-position: center; filter: brightness(.84) contrast(1.08) saturate(.72); image-rendering: pixelated; }
 .referenceHeroImage { top: -64px !important; height: calc(100% + 64px) !important; object-position: center top; filter: brightness(.7) contrast(1.08); }
 .heroShade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,4,4,.92), rgba(5,6,6,.62) 52%, rgba(5,6,6,.3) 100%), linear-gradient(0deg, rgba(3,4,4,.94), transparent 55%); }
@@ -40,8 +40,15 @@
 .portalGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .portalCard { min-height: 210px; padding: 24px; border: 1px solid var(--border-bronze); background: linear-gradient(145deg, #202221, #0b0c0c); }
 .portalCard > span { color: var(--gold); font-size: 1.6rem; }
+.leaderCardHeading { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 12px; }
+.leaderPortrait { position: relative; display: grid; width: 76px; height: 54px; place-items: end center; overflow: hidden; color: var(--gold); background: #050606; font-size: 1.2rem; }
+.leaderPortrait::after { position: absolute; right: 0; bottom: 5px; left: 0; height: 1px; background: #545550; content: ""; }
+.leaderPortrait img { position: relative; z-index: 1; width: 46px; height: 46px; object-fit: contain; filter: brightness(.9) contrast(1.08) drop-shadow(0 2px 1px #000); image-rendering: pixelated; transform: none; transform-origin: center bottom; }
+.leaderCardHeading h2 { margin: 0; font-size: 1.12rem; }
+.leaderCardHeading p { margin-top: 6px; color: var(--text-muted); font-size: .75rem; line-height: 1.35; }
 .portalCard > small { display: block; margin-top: 14px; color: var(--text-muted); font-size: 0.75rem; letter-spacing: .1em; text-transform: uppercase; }
 .portalCard h2 { margin-top: 14px; font-size: 1.45rem; }
+.portalCard .leaderCardHeading h2 { margin-top: 0; font-size: 1.12rem; }
 .portalCard p { margin-top: 10px; color: var(--text-muted); font-size: 0.875rem; }
 .portalCard b { display: block; margin-top: 22px; color: var(--gold-bright); font-family: var(--font-display); font-size: 0.75rem; text-transform: uppercase; }
 .entryList { display: grid; gap: 12px; }

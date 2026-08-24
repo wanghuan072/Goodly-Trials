@@ -4,14 +4,10 @@
     "name": "Iron Sword of Brawn",
     "type": "One-handed",
     "requirements": "1 STR · 1 AGI",
-    "effects": [
-      "+2 STR",
-      "+3 ATK",
-      "+8 HP"
-    ],
+    "effects": ["+2 STR", "+3 ATK", "+8 HP"],
     "cost": 4,
     "image": "/images/items/official/iron-sword.png",
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/wiki/items"
   },
@@ -20,16 +16,10 @@
     "name": "Wand of Wit",
     "type": "One-handed",
     "requirements": "3 INT",
-    "effects": [
-      "+2 INT",
-      "+2 ATK",
-      "+4 MP",
-      "+1 INT",
-      "+1 trinket slot"
-    ],
+    "effects": ["+2 INT", "+2 ATK", "+4 MP", "+1 INT", "+1 trinket slot"],
     "cost": 5,
     "image": "/images/items/official/wand.png",
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/wiki/items"
   },
@@ -38,15 +28,10 @@
     "name": "Bow of Grace",
     "type": "Two-handed",
     "requirements": "4 AGI",
-    "effects": [
-      "+4 AGI",
-      "+6 ATK",
-      "-35% SPD",
-      "+1 RNG"
-    ],
+    "effects": ["+4 AGI", "+6 ATK", "-35% SPD", "+1 RNG"],
     "cost": 7,
     "image": "/images/items/official/bow.png",
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/wiki/items"
   },
@@ -55,15 +40,10 @@
     "name": "Iron Shield of Brawn",
     "type": "Shield",
     "requirements": "1 STR",
-    "effects": [
-      "+2 STR",
-      "+1 AR",
-      "+10 HP",
-      "+2 AR against ranged ATKs"
-    ],
+    "effects": ["+2 STR", "+1 AR", "+10 HP", "+2 AR against ranged ATKs"],
     "cost": 4,
     "image": "/images/items/official/iron-shield.png",
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/wiki/items"
   },
@@ -72,15 +52,10 @@
     "name": "Dignified Shield of Balance",
     "type": "Shield",
     "requirements": "5 STR",
-    "effects": [
-      "+1 ALL",
-      "+3 AR",
-      "+2 ALL",
-      "+3 AR against ranged ATKs"
-    ],
+    "effects": ["+1 ALL", "+3 AR", "+2 ALL", "+3 AR against ranged ATKs"],
     "cost": 10,
     "image": "/images/items/official/dignified-shield.png",
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/wiki/items"
   },
@@ -89,13 +64,10 @@
     "name": "Feather Charm of Reflex",
     "type": "Trinket",
     "requirements": "3 AGI",
-    "effects": [
-      "+2 AGI",
-      "+2G income"
-    ],
+    "effects": ["+2 AGI", "+2G income"],
     "cost": 5,
     "image": "/images/items/official/feather-charm.png",
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/wiki/items"
   },
@@ -104,13 +76,10 @@
     "name": "Ruby Charm of Wit",
     "type": "Trinket",
     "requirements": "6 INT",
-    "effects": [
-      "+2 INT",
-      "+3G income"
-    ],
+    "effects": ["+2 INT", "+3G income"],
     "cost": 7,
     "image": "/images/items/official/ruby-charm.png",
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/wiki/items"
   },
@@ -119,14 +88,10 @@
     "name": "Frostfall of Lore",
     "type": "Spell",
     "requirements": "4 INT",
-    "effects": [
-      "Targets enemy",
-      "Deal 2 × INT as spell DMG",
-      "+4 INT"
-    ],
+    "effects": ["Targets enemy", "Deal 2 × INT as spell DMG", "+4 INT"],
     "cost": 7,
     "image": "/images/items/official/frostfall.png",
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/wiki/items"
   },
@@ -143,7 +108,46 @@
     ],
     "cost": 10,
     "image": "/images/items/official/fire-palm.png",
-    "gameVersion": "v0.312",
+    "gameVersion": "v0.311",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "boots-war-axe",
+    "name": "Unique Boot's Axe",
+    "type": "Two-handed",
+    "requirements": "12 STR",
+    "effects": [
+      "+8 ATK",
+      "+80% CRT",
+      "-4 AR",
+      "On kill: deal this unit's STR as spell DMG to adjacent enemies"
+    ],
+    "cost": 15,
+    "image": "/images/items/official/boots-war-axe.png",
+    "gameVersion": "v0.311",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "iron-tonic",
+    "name": "Iron Tonic",
+    "type": "Potion",
+    "effects": ["+2 STR"],
+    "cost": 4,
+    "image": "/images/items/official/iron-tonic.png",
+    "gameVersion": "v0.311",
+    "lastVerified": "2026-08-24",
+    "source": "https://goodlytrials.com/wiki/items"
+  },
+  {
+    "slug": "quickwater",
+    "name": "Quickwater",
+    "type": "Potion",
+    "effects": ["+2 AGI"],
+    "cost": 4,
+    "image": "/images/items/official/quickwater.png",
+    "gameVersion": "v0.311",
     "lastVerified": "2026-08-24",
     "source": "https://goodlytrials.com/wiki/items"
   }

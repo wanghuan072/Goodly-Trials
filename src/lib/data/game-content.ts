@@ -20,7 +20,7 @@ import type {
 export const units = unitsData.map((unit) => ({ ...unit, tdk: detailTdk.unit(unit) })) as Unit[];
 export const items = itemsData.map((item) => ({ ...item, tdk: detailTdk.item(item) })) as Item[];
 export const traits: Trait[] = units
-  .filter((unit) => unit.trait.name !== "Base client record")
+  .filter((unit) => unit.trait.name !== "Base card")
   .map((unit) => ({
   slug: `${unit.slug}-${unit.trait.name
     .toLowerCase()

@@ -8,19 +8,14 @@ import {
   builds,
   getTraitForUnit,
   items,
+  leaders,
   units,
   updates,
 } from "@/lib/data/game-content";
+import { getCompatibleGear, getLeaderCompanyPlan } from "@/lib/data/editorial-recommendations";
 import type { Unit } from "@/types/content";
+import { hasCompleteUnitCard } from "@/lib/data/record-coverage";
 import styles from "@/style/page/wiki/detail.module.css";
-
-const itemRecommendations: Record<string, string[]> = {
-  "goodly-knight": ["iron-sword-of-brawn", "iron-shield-of-brawn"],
-  "portly-knight": ["iron-sword-of-brawn", "iron-shield-of-brawn"],
-  archer: ["bow-of-grace", "feather-charm-of-reflex"],
-  wizard: ["wand-of-wit", "frostfall-of-lore"],
-  "skeleton-child": ["iron-sword-of-brawn", "iron-shield-of-brawn"],
-};
 
 function signed(value: number, suffix = "") {
   return `${value > 0 ? "+" : ""}${value}${suffix}`;
@@ -28,9 +23,11 @@ function signed(value: number, suffix = "") {
 
 export default function UnitDetailPage({ unit }: { unit: Unit }) {
   const traitRecord = getTraitForUnit(unit.slug);
-  const recommendedItems = (itemRecommendations[unit.slug] ?? [])
-    .map((slug) => items.find((item) => item.slug === slug))
-    .filter(Boolean);
+  const compatibleGear = getCompatibleGear(unit, items);
+  const companyLeaders = leaders
+    .filter((leader) => leader.factionSlug === unit.factionSlug)
+    .filter((leader) => getLeaderCompanyPlan(leader, units).unitSlugs.includes(unit.slug))
+    .slice(0, 4);
   const build = builds.find((entry) => entry.unitSlug === unit.slug);
   const relatedUnits = units
     .filter(
@@ -68,6 +65,7 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
               <h1>{unit.name}</h1>
               <div className={styles.badges}>
                 <span>♜ {unit.faction}</span>
+                {unit.cost !== undefined && <span>◉ {unit.cost}G</span>}
                 <span>◈ {unit.tactic.name}</span>
               </div>
               <p className={styles.summary}>
@@ -96,7 +94,9 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
             <div className={styles.overviewBody}>
               <UnitSprite src={unit.image} color={unit.accent} />
               <p>
-                <EntityLinks>{unit.summary}</EntityLinks> Its card lists{" "}
+                <EntityLinks>{unit.summary}</EntityLinks> The values on this
+                page are the base card values, before a leader, equipment, or
+                battle effects change them. Its card lists{" "}
                 <strong>
                   <EntityLinks>{unit.tactic.name}</EntityLinks>
                 </strong>{" "}
@@ -108,6 +108,7 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
 
           <section className={styles.panel} id="stats">
             <h2>Full Stats</h2>
+            <p>Base values shown before leader bonuses, equipment, and combat effects.</p>
             <div className={styles.tableScroll}>
               <table className={styles.statsTable}>
                 <thead>
@@ -148,7 +149,7 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
 
           <section className={styles.panel} id="abilities">
             <h2>
-              Trait:{" "}
+              Trait &amp; Card Effects{traitRecord ? ": " : ""}
               {traitRecord ? (
                 <Link href={`/wiki/traits#${traitRecord.slug}`}>
                   {unit.trait.name}
@@ -160,14 +161,20 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
             <div className={styles.traitBody}>
               <span>✥</span>
               <div>
-                <p>
-                  <EntityLinks>{unit.trait.effect}</EntityLinks>
-                </p>
+                <p><EntityLinks>{unit.trait.effect}</EntityLinks></p>
                 {unit.trait.cap && <em>{unit.trait.cap}</em>}
               </div>
             </div>
             <h2 className={styles.subheading}>Skills / Tactics</h2>
             <div className={styles.skillList}>
+              {(unit.baseEffects ?? []).map((effect) => (
+                <div key={effect}>
+                  <span>✥</span>
+                  <h3>Card effect</h3>
+                  <p><EntityLinks>{effect}</EntityLinks></p>
+                  <small>Base unit</small>
+                </div>
+              ))}
               {unit.skills.map((skill) => (
                 <div key={skill.name}>
                   <span>✦</span>
@@ -191,24 +198,22 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
             </div>
           </section>
 
-          <div
-            className={`${styles.panelPair} ${!recommendedItems.length ? styles.panelPairSingle : ""}`}
-          >
-            {recommendedItems.length > 0 && (
+          <div className={`${styles.panelPair} ${!compatibleGear.length ? styles.panelPairSingle : ""}`}>
+            {compatibleGear.length > 0 && (
               <section
                 className={`${styles.panel} ${styles.editorial}`}
-                id="items"
+                id="gear-fit"
               >
-                <h2>Editorial Item Starting Points</h2>
+                <h2>Gear to Compare</h2>
                 <p className={styles.disclaimer}>
-                  Independent pairing based on published requirements and effects;
-                  not an official or universal best-in-slot claim.
+                  These are compatible base-card comparisons, not a best-in-slot
+                  ranking. Each item meets this unit&apos;s listed attributes and
+                  fits its available slots before leader, shop, and combat
+                  modifiers are applied.
                 </p>
                 <div className={styles.itemTiles}>
-                  {recommendedItems.map(
-                    (item) =>
-                      item && (
-                        <Link key={item.slug} href={`/wiki/gear/${item.slug}`}>
+                  {compatibleGear.map(({ item, reason }) => (
+                    <Link key={item.slug} href={`/wiki/gear/${item.slug}`}>
                           <Image
                             className={styles.itemTileImage}
                             src={item.image}
@@ -218,11 +223,16 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
                             unoptimized={item.image.endsWith(".gif") || item.image.startsWith("http")}
                           />
                           <span>{item.name}</span>
-                          <small>{item.effects.slice(0, 1).join("")}</small>
+                          <small>{reason} {item.effects.slice(0, 1).join("")}</small>
                         </Link>
-                      ),
-                  )}
+                  ))}
                 </div>
+              </section>
+            )}
+            {!compatibleGear.length && (
+              <section className={`${styles.panel} ${styles.editorial}`} id="gear-fit">
+                <h2>Gear to Compare</h2>
+                <p className={styles.disclaimer}>This base card has no compatible published gear at its current attributes and slot capacity. That is a base-card check, not proof that temporary run bonuses can never open an option.</p>
               </section>
             )}
             <section
@@ -257,6 +267,19 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
             </section>
           </div>
 
+          {companyLeaders.length > 0 && (
+            <section className={`${styles.panel} ${styles.editorial}`} id="company-context">
+              <h2>Leader &amp; Company Context</h2>
+              <p>These leader pages include {unit.name} in a linked company frame. They use a verified leader effect where one is available, otherwise a faction-role starting point; neither is a fixed team ranking.</p>
+              <div className={styles.relatedGrid}>
+                {companyLeaders.map((leader) => {
+                  const plan = getLeaderCompanyPlan(leader, units);
+                  return <Link key={leader.slug} href={`/wiki/leaders/${leader.slug}`}><b>{leader.name}{leader.epithet ? ` · ${leader.epithet}` : ""}</b><span>{plan.title}</span></Link>;
+                })}
+              </div>
+            </section>
+          )}
+
           {(build || relatedUpdates.length > 0) && (
             <div
               className={`${styles.panelPair} ${!build || !relatedUpdates.length ? styles.panelPairSingle : ""}`}
@@ -281,9 +304,7 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
                         <UnitSprite src={entry.image} color={entry.accent} />
                         <span className={styles.relatedUnitCopy}>
                           <b>{entry.name}</b>
-                          <small>
-                            {entry.trait.name} · {entry.tactic.name}
-                          </small>
+                          <small>{entry.cost ?? "—"}G · {entry.tactic.name}</small>
                         </span>
                       </Link>
                     ))}
@@ -314,7 +335,7 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
                 <Link key={entry.slug} href={`/wiki/units/${entry.slug}`}>
                   <b>{entry.name}</b>
                   <span>
-                    {entry.trait.name} · {entry.tactic.name}
+                    {entry.cost ?? "—"}G · {entry.tactic.name}
                   </span>
                 </Link>
               ))}
@@ -349,12 +370,28 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
               <dd>{unit.tactic.name}</dd>
             </div>
             <div>
+              <dt>Cost</dt>
+              <dd>{unit.cost === undefined ? "Not listed" : `${unit.cost}G`}</dd>
+            </div>
+            <div>
               <dt>Gear</dt>
               <dd>{unit.gear ?? "Not listed"}</dd>
             </div>
             <div>
               <dt>Trinkets</dt>
               <dd>{unit.trinkets ?? "Not listed"}</dd>
+            </div>
+            <div>
+              <dt>Record scope</dt>
+              <dd>{hasCompleteUnitCard(unit) ? "Verified base card" : "Partial record"}</dd>
+            </div>
+            <div>
+              <dt>Recorded version</dt>
+              <dd>{unit.gameVersion}</dd>
+            </div>
+            <div>
+              <dt>Last checked</dt>
+              <dd>{unit.lastVerified}</dd>
             </div>
           </dl>
           <h3>Key Stats</h3>
@@ -384,8 +421,9 @@ export default function UnitDetailPage({ unit }: { unit: Unit }) {
           <a href="#overview">⚓ Overview</a>
           <a href="#stats">⚔ Full stats</a>
           <a href="#abilities">✦ Skills / tactics</a>
-          {recommendedItems.length > 0 && <a href="#items">▣ Item notes</a>}
+          {compatibleGear.length > 0 && <a href="#gear-fit">▣ Gear to compare</a>}
           <a href="#formation">♜ Position notes</a>
+          {companyLeaders.length > 0 && <a href="#company-context">♛ Company context</a>}
           {build && <a href="#build">✥ Synergies</a>}
           {relatedUpdates.length > 0 && (
             <a href="#patch-history">◈ Patch history</a>

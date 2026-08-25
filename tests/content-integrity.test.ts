@@ -5,6 +5,7 @@ import test from "node:test";
 import { detailTdk, pageTdk } from "../src/seo/tdk.js";
 import { hasCompleteLeaderCard, hasCompleteUnitCard } from "../src/lib/data/record-coverage.ts";
 import { getCompatibleGear, getLeaderCompanyPlan } from "../src/lib/data/editorial-recommendations.ts";
+import { legacyRedirects, securityHeaders } from "../src/config/http.ts";
 import type { Item, Leader, Unit } from "../src/types/content.ts";
 
 const dataDirectory = path.resolve("src/data/game");
@@ -46,6 +47,24 @@ test("game content keeps local media and cross-record references valid", () => {
       }
     }
   }
+});
+
+test("published gear detail routes are not shadowed by legacy redirects", () => {
+  const items = read<Slugged[]>("items.json");
+  const currentPaths = new Set(items.map((item) => `/wiki/gear/${item.slug}`));
+  const conflicts = legacyRedirects.filter((redirect) => currentPaths.has(redirect.source));
+
+  assert.deepEqual(conflicts, []);
+});
+
+test("site responses include the baseline security headers", () => {
+  const headers = new Map(securityHeaders.map((header) => [header.key, header.value]));
+
+  assert.match(headers.get("Content-Security-Policy") ?? "", /default-src 'self'/);
+  assert.equal(headers.get("X-Content-Type-Options"), "nosniff");
+  assert.equal(headers.get("Referrer-Policy"), "strict-origin-when-cross-origin");
+  assert.ok(headers.has("Permissions-Policy"));
+  assert.ok(headers.has("X-Frame-Options"));
 });
 
 test("core metadata follows the visible H1 naming convention", () => {

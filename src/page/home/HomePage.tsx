@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import HeroVideo from "@/page/home/HeroVideo";
 import UnitSprite from "@/components/content/UnitSprite";
+import { siteConfig } from "@/config/site";
 import {
   builds,
   factions,
@@ -12,6 +13,8 @@ import {
   updates,
 } from "@/lib/data/game-content";
 import type { Item, Unit } from "@/types/content";
+import JsonLd from "@/seo/JsonLd";
+import { pageTdk } from "@/seo/tdk";
 import styles from "@/style/page/home/home.module.css";
 
 const archiveLinks = [
@@ -139,6 +142,7 @@ function HomeItemEntry({ item }: { item: Item }) {
 export default function HomePage() {
   return (
     <main className={styles.page}>
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "WebPage", "@id": `${siteConfig.url}/#webpage`, url: siteConfig.url, name: pageTdk["/"].title, description: pageTdk["/"].description, isPartOf: { "@id": `${siteConfig.url}/#website` }, about: { "@id": `${siteConfig.url}/#game` }, inLanguage: "en" }} />
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}

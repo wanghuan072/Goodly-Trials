@@ -1,4 +1,4 @@
-import type { FactionSlug } from "../../types/content";
+import type { FactionSlug } from "@/types/game";
 
 export const BOARD_COLUMNS = 6;
 export const BOARD_ROWS = 6;

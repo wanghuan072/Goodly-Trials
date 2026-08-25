@@ -30,8 +30,8 @@ Unit pages should not target “best build” as their primary intent. Build pag
 
 ## Deployment and indexing
 
-- Sites/vinext is the primary development and hosting path. `npm run build` produces the deployment build and then regenerates canonical Next.js route types.
-- Vercel remains an optional compatibility path through `npm run build:next`; run each build from a clean CI checkout.
+- Next.js is the only application build path. `npm run build` produces the deployment build used by Vercel.
+- Vercel deploys the `main` branch to the canonical production domain; run validation from a clean checkout before publishing.
 - Production builds default to indexable. Set `NEXT_PUBLIC_ALLOW_INDEXING=false` explicitly for preview or staging deployments.
 - `NEXT_PUBLIC_SITE_URL` must match the public canonical origin used by Metadata, JSON-LD, Sitemap, and robots.txt.
 - The site intentionally ships without third-party visitor analytics. If analytics is added later, update the privacy policy and consent behavior in the same change.

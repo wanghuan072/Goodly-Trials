@@ -22,7 +22,7 @@ export default function GlobalError({
           <p className={styles.eyebrow}>Archive interruption</p>
           <h1>Something blocked this record</h1>
           <p>Try loading the page again, or return to the archive and continue from another record.</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 24 }}>
+          <div className={styles.errorActions}>
             <button className="button button-primary" type="button" onClick={reset}>Try again</button>
             <Link className="button button-ghost" href="/wiki">Explore the Wiki</Link>
           </div>

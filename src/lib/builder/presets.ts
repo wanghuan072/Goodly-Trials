@@ -1,6 +1,6 @@
 import { BOARD_CELLS } from "@/lib/builder/board-rules";
-import type { BuilderPlanState } from "@/lib/builder/plan-state";
-import type { Build } from "@/types/content";
+import type { Build } from "@/types/build";
+import type { BuilderPlanState } from "@/types/builder";
 
 export function builderStateFromBuild(build: Build): BuilderPlanState {
   const slots = Array.from({ length: BOARD_CELLS }, () => ({ unitSlug: "", itemSlugs: [] as string[] }));

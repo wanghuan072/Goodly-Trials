@@ -1,4 +1,4 @@
-import type { Leader, Unit } from "../../types/content";
+import type { Leader, Unit } from "@/types/game";
 
 /** A unit page is complete when its current official base card can be checked. */
 export function hasCompleteUnitCard(unit: Pick<Unit, "cost" | "stats" | "tactic">) {

@@ -4,6 +4,7 @@ import AppFooter from "@/components/layout/AppFooter";
 import AppHeader from "@/components/layout/AppHeader";
 import { siteConfig } from "@/config/site";
 import JsonLd from "@/seo/JsonLd";
+import { siteJsonLd } from "@/seo/schema";
 import { pageTdk } from "@/seo/tdk";
 import "@/style/globals.css";
 
@@ -38,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={pixel.variable}>
       <body>
-        <JsonLd data={{ "@context": "https://schema.org", "@graph": [{ "@type": "WebSite", "@id": `${siteConfig.url}/#website`, url: siteConfig.url, name: siteConfig.name, description: siteConfig.description, inLanguage: "en", potentialAction: { "@type": "SearchAction", target: `${siteConfig.url}/search?q={search_term_string}`, "query-input": "required name=search_term_string" } }, { "@type": "VideoGame", "@id": `${siteConfig.url}/#game`, name: "Goodly Trials", url: siteConfig.officialUrl, description: "A turn-based strategy game with roguelike and auto-battler elements.", genre: ["Turn-based strategy", "Roguelike", "Auto battler"], playMode: ["SinglePlayer", "MultiPlayer"], publisher: { "@type": "Organization", name: "Osborn Design Works" } }] }} />
+        <JsonLd data={siteJsonLd} />
         <a className="skip-link" href="#main-content">Skip to content</a>
         <AppHeader />
         <div id="main-content">{children}</div>

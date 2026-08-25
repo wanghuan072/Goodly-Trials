@@ -1,14 +1,14 @@
+import type { Build } from "@/types/build";
 import type {
-  Build,
   Faction,
   FactionSlug,
   GameUpdate,
-  Guide,
   Item,
   Leader,
   Unit,
   UnitStats,
-} from "../../types/content.ts";
+} from "@/types/game";
+import type { Guide } from "@/types/guide";
 
 export type UnitSource = Omit<Unit, "tdk">;
 export type ItemSource = Omit<Item, "tdk">;

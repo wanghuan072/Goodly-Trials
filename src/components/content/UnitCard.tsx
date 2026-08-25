@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Unit } from "@/types/content";
+import type { Unit } from "@/types/game";
 import UnitSprite from "@/components/content/UnitSprite";
 import styles from "@/style/content/cards.module.css";
 

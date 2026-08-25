@@ -1,22 +1,7 @@
 import { activeBoardCells, BOARD_CELLS, followerLimitForRules, MAX_TRIAL_WEEK } from "./board-rules.ts";
-import type { FactionSlug } from "../../types/content.ts";
+import type { BuilderPlanCatalog, BuilderPlanSlot, BuilderPlanState } from "../../types/builder.ts";
 
-export type BuilderPlanSlot = { unitSlug: string; itemSlugs: string[] };
-export type BuilderPlanState = {
-  title: string;
-  mode: string;
-  week: number;
-  leaderSlug: string;
-  slots: BuilderPlanSlot[];
-  notes: string;
-};
-
-export type BuilderPlanCatalog = {
-  unitFactionBySlug: ReadonlyMap<string, FactionSlug>;
-  leaderFactionBySlug: ReadonlyMap<string, FactionSlug>;
-  itemSlugs: ReadonlySet<string>;
-  uniqueItemSlugs: ReadonlySet<string>;
-};
+export type { BuilderPlanCatalog, BuilderPlanSlot, BuilderPlanState } from "@/types/builder";
 
 export const BUILDER_STORAGE_KEY = "goodly-trials-company-builder-v2";
 export const BUILDER_PRESET_KEY = "goodly-trials-company-preset-v1";

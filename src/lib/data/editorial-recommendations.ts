@@ -1,5 +1,5 @@
 import { itemKind, itemSlotUse } from "../builder/equipment-rules.ts";
-import type { Item, Leader, Unit } from "../../types/content.ts";
+import type { Item, Leader, Unit } from "@/types/game";
 
 type AttributeKey = "str" | "agi" | "int";
 type GearMatch = { item: Item; reason: string };

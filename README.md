@@ -73,11 +73,21 @@ Email [wyong@goodlytrials.org](mailto:wyong@goodlytrials.org) with the page URL,
 
 Copyright © 2026 Goodly Trials Wiki. All rights reserved. Goodly Trials Wiki is an independent fan site and is not affiliated with the official Goodly Trials website or its rights holders.
 
+## Project structure
+
+- `src/app` contains only Next.js routes and framework boundaries.
+- `src/page` contains complete page implementations and page-private components.
+- `src/components` contains UI shared by multiple site areas.
+- `src/data/game` contains the local JSON collections used by the site.
+- `src/lib` contains data access, validation, Builder rules, and pure calculations.
+- `src/types`, `src/config`, `src/seo`, and `src/style` contain their corresponding shared concerns.
+- `public`, `scripts`, and `tests` contain static assets, maintenance scripts, and cross-module tests.
+
 ## Development
 
-- `npm run dev` starts the Sites/vinext development server.
+- `npm run dev` starts the native Next.js development server.
 - `npm run verify` runs data and rules tests, ESLint, route type generation, and TypeScript.
-- `npm run build` creates the Sites production build and leaves compatible generated route types behind.
-- `npm run build:next` verifies the optional native Next.js/Vercel production path.
+- `npm run build` creates the production build used by Vercel.
+- `npm run start` serves a completed production build locally.
 
 Copy `.env.example` only as a starting point. Keep `NEXT_PUBLIC_ALLOW_INDEXING=true` for the canonical production domain and set it to `false` for preview or staging deployments.

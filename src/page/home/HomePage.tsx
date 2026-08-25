@@ -1,9 +1,14 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import HeroVideo from "@/page/home/HeroVideo";
+import {
+  HomeItemEntry,
+  HomeUnitEntry,
+  PanelTitle,
+} from "@/page/home/components/HomeArchiveEntries";
+import HomeAboutSection from "@/page/home/sections/HomeAboutSection";
 import UnitSprite from "@/components/content/UnitSprite";
-import { siteConfig } from "@/config/site";
 import {
   builds,
   factions,
@@ -12,9 +17,9 @@ import {
   units,
   updates,
 } from "@/lib/data/game-content";
-import type { Item, Unit } from "@/types/content";
+import type { Unit } from "@/types/game";
 import JsonLd from "@/seo/JsonLd";
-import { pageTdk } from "@/seo/tdk";
+import { homePageJsonLd } from "@/seo/schema";
 import styles from "@/style/page/home/home.module.css";
 
 const archiveLinks = [
@@ -80,69 +85,10 @@ const featuredUnits = featuredUnitSlugs
   .map((slug) => units.find((unit) => unit.slug === slug))
   .filter((unit): unit is Unit => Boolean(unit));
 
-function PanelTitle({
-  children,
-  href,
-  link,
-}: {
-  children: ReactNode;
-  href?: string;
-  link?: string;
-}) {
-  return (
-    <header className={styles.panelTitle}>
-      <h2>{children}</h2>
-      {href && link && <Link href={href}>{link} →</Link>}
-    </header>
-  );
-}
-
-function HomeUnitEntry({ unit }: { unit: Unit }) {
-  return (
-    <Link className={styles.referenceEntry} href={`/wiki/units/${unit.slug}`}>
-      <span className={`${styles.referenceArt} ${styles.unitReferenceArt}`}>
-        <UnitSprite src={unit.image} color={unit.accent} />
-      </span>
-      <span className={styles.referenceCopy}>
-        <small>{unit.faction}</small>
-        <strong>{unit.name}</strong>
-        <span>STR {unit.stats.str} · AGI {unit.stats.agi} · INT {unit.stats.int}</span>
-        <em>{unit.cost ?? "—"}G · {unit.tactic.name}</em>
-      </span>
-      <span className={styles.referenceArrow} aria-hidden="true">→</span>
-    </Link>
-  );
-}
-
-function HomeItemEntry({ item }: { item: Item }) {
-  const artworkPending = item.image.endsWith("item-data-pending.svg");
-
-  return (
-    <Link className={styles.referenceEntry} href={`/wiki/gear/${item.slug}`}>
-      <span className={`${styles.referenceArt} ${styles.itemReferenceArt}`}>
-        <Image
-          src={item.image}
-          alt={artworkPending ? `${item.name} artwork pending` : `${item.name} official game icon`}
-          width={62}
-          height={62}
-          unoptimized={item.image.endsWith(".gif")}
-        />
-      </span>
-      <span className={styles.referenceCopy}>
-        <small>{item.type}</small>
-        <strong>{item.name}</strong>
-        <span>{item.effects.slice(0, 2).join(" · ")}</span>
-        <em>{item.cost === undefined ? "Cost not published" : `${item.cost}G`}</em>
-      </span>
-      <span className={styles.referenceArrow} aria-hidden="true">→</span>
-    </Link>
-  );
-}
-
 export default function HomePage() {
   return (
     <main className={styles.page}>
-      <JsonLd data={{ "@context": "https://schema.org", "@type": "WebPage", "@id": `${siteConfig.url}/#webpage`, url: siteConfig.url, name: pageTdk["/"].title, description: pageTdk["/"].description, isPartOf: { "@id": `${siteConfig.url}/#website` }, about: { "@id": `${siteConfig.url}/#game` }, inLanguage: "en" }} />
+      <JsonLd data={homePageJsonLd} />
       <section className={styles.hero}>
         <Image
           className={styles.heroImage}
@@ -393,47 +339,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className={styles.infoRow}>
-          <article className={styles.frame}>
-            <p className={styles.kicker}>Built for the moment before a match</p>
-            <h2>Check the card. Shape the board. Try the idea.</h2>
-            <p>
-              This site brings together the parts of Goodly Trials that players
-              tend to look up mid-run: unit stats, gear requirements, leader
-              cards, faction context, formation ideas, and patch changes. It is
-              a planning companion, not the official game or a promise that one
-              setup will win every fight.
-            </p>
-            <Link className="button button-ghost" href="/about">
-              How this site is maintained
-            </Link>
-          </article>
-          <article className={styles.frame}>
-            <p className={styles.kicker}>Questions players ask first</p>
-            <h2>Before you build a company</h2>
-            <div className={styles.faqGrid}>
-              <div><h3>Is this an official site?</h3><p>No. It is an independent player guide that links back to the official game pages.</p></div>
-              <div><h3>Can a build guarantee a win?</h3><p>No. Builds are editable starting points; the live board, shop, and opponents still decide the run.</p></div>
-              <div><h3>What does the Builder check?</h3><p>It checks the selected week, active cells, follower limits, and known equipment capacity.</p></div>
-              <div><h3>Where should I begin?</h3><p>Choose a leader, compare the unit roles you need, then test the spacing in the Builder.</p></div>
-            </div>
-          </article>
-        </section>
-
-        <section className={`${styles.frame} ${styles.sourcePanel}`}>
-          <div>
-            <p className={styles.kicker}>Keep the facts and the ideas separate</p>
-            <h2>Use the game data to make your own call.</h2>
-          </div>
-          <p>
-            Compare the cards, effects, and formation rules first. Then treat
-            builds and positioning notes as editable starting points for your
-            own company.
-          </p>
-          <Link className="button button-ghost" href="/about">
-            Read how it works
-          </Link>
-        </section>
+        <HomeAboutSection />
 
       </div>
     </main>

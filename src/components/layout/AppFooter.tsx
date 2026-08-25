@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { primaryNavigation, siteConfig } from "@/config/site";
+import { primaryNavigation } from "@/config/navigation";
+import { siteConfig } from "@/config/site";
 import styles from "@/style/layout/app-footer.module.css";
 
 export default function AppFooter() {

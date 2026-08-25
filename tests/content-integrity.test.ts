@@ -2,11 +2,11 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
-import { detailTdk, pageTdk } from "../src/seo/tdk.js";
+import { detailTdk, pageTdk } from "../src/seo/tdk.ts";
 import { hasCompleteLeaderCard, hasCompleteUnitCard } from "../src/lib/data/record-coverage.ts";
 import { getCompatibleGear, getLeaderCompanyPlan } from "../src/lib/data/editorial-recommendations.ts";
 import { legacyRedirects, securityHeaders } from "../src/config/http.ts";
-import type { Item, Leader, Unit } from "../src/types/content.ts";
+import type { Item, Leader, Unit } from "../src/types/game.ts";
 
 const dataDirectory = path.resolve("src/data/game");
 const publicDirectory = path.resolve("public");

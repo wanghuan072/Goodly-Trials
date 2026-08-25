@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useId, useState } from "react";
-import { primaryNavigation, wikiNavigation } from "@/config/site";
+import { primaryNavigation, wikiNavigation } from "@/config/navigation";
 import WikiNavigationMenu from "@/components/layout/WikiNavigationMenu";
 import styles from "@/style/layout/app-header.module.css";
 

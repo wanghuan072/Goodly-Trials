@@ -7,7 +7,8 @@ import { items, leaders, units } from "@/lib/data/game-content";
 import { leaderImage } from "@/lib/data/leader-images";
 import JsonLd from "@/seo/JsonLd";
 import { createMetadata } from "@/seo/metadata";
-import BuilderClient, { type BuilderLeader, type BuilderRosterUnit } from "./BuilderClient";
+import BuilderClient from "./BuilderClient";
+import type { BuilderLeader, BuilderRosterUnit } from "@/types/builder";
 import styles from "@/style/page/builder/builder.module.css";
 
 export const metadata = createMetadata(

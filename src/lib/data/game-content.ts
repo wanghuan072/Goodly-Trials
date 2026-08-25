@@ -1,5 +1,6 @@
 import buildsData from "@/data/game/builds.json";
 import factionsData from "@/data/game/factions.json";
+import guideDetailsData from "@/data/game/guide-details.json";
 import guidesData from "@/data/game/guides.json";
 import itemsData from "@/data/game/items.json";
 import leadersData from "@/data/game/leaders.json";
@@ -7,16 +8,16 @@ import unitsData from "@/data/game/units.json";
 import updatesData from "@/data/game/updates.json";
 import { assertGameContent } from "@/lib/data/validate-game-content";
 import { detailTdk } from "@/seo/tdk";
+import type { Build } from "@/types/build";
 import type {
-  Build,
   Faction,
-  Guide,
   GameUpdate,
   Item,
   Leader,
   Trait,
   Unit,
-} from "@/types/content";
+} from "@/types/game";
+import type { Guide, GuideDetail } from "@/types/guide";
 
 const rawContent: unknown = {
   units: unitsData,
@@ -53,6 +54,7 @@ export const traits: Trait[] = units
 export const leaders: Leader[] = rawContent.leaders.map((leader) => ({ ...leader, tdk: detailTdk.leader(leader) }));
 export const factions: Faction[] = rawContent.factions.map((faction) => ({ ...faction, tdk: detailTdk.faction(faction) }));
 export const guides: Guide[] = rawContent.guides.map((guide) => ({ ...guide, tdk: detailTdk.guide(guide) }));
+export const guideDetails = guideDetailsData as GuideDetail[];
 export const builds: Build[] = rawContent.builds;
 export const updates: GameUpdate[] = rawContent.updates;
 
@@ -60,8 +62,6 @@ export const getUnit = (slug: string) =>
   units.find((unit) => unit.slug === slug);
 export const getItem = (slug: string) =>
   items.find((item) => item.slug === slug);
-export const getTrait = (slug: string) =>
-  traits.find((trait) => trait.slug === slug);
 export const getTraitForUnit = (unitSlug: string) =>
   traits.find((trait) => trait.unitSlug === unitSlug);
 export const getLeader = (slug: string) =>
@@ -70,7 +70,5 @@ export const getFaction = (slug: string) =>
   factions.find((faction) => faction.slug === slug);
 export const getGuide = (slug: string) =>
   guides.find((guide) => guide.slug === slug);
-export const getBuild = (slug: string) =>
-  builds.find((build) => build.slug === slug);
-export const getUpdate = (slug: string) =>
-  updates.find((update) => update.slug === slug);
+export const getGuideDetail = (slug: string) =>
+  guideDetails.find((guide) => guide.slug === slug);

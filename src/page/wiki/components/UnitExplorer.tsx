@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import UnitSprite from "@/components/content/UnitSprite";
-import type { Unit } from "@/types/content";
+import type { Unit } from "@/types/game";
 import styles from "@/style/page/wiki/explorer.module.css";
 
 export default function UnitExplorer({ units }: { units: Unit[] }) {

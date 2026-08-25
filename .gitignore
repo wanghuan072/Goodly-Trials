@@ -19,16 +19,14 @@
 
 # production
 /build
-/dist
-/.wrangler
-/.vinext
 
-# local agent tooling and deployment archives
+# local tool caches and deployment archives
 /.agents
 /.cursor
 /.site-*.tgz
-AGENTS.md
-CLAUDE.md
+/.vinext
+/.wrangler
+/dist
 
 # local editor files
 .idea/

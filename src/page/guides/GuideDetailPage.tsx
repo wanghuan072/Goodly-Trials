@@ -6,19 +6,8 @@ import EntityLinks from "@/components/content/EntityLinks";
 import HeroIntel from "@/components/content/HeroIntel";
 import JsonLd from "@/seo/JsonLd";
 import { siteConfig } from "@/config/site";
-import type { Guide } from "@/types/content";
+import type { Guide, GuideDetail } from "@/types/guide";
 import styles from "@/style/page/archive/archive.module.css";
-
-type GuideDetail = {
-  quickAnswer: string;
-  sections: { title: string; paragraphs: string[]; bullets?: string[] }[];
-  media?: {
-    afterSection: number;
-    src: string;
-    alt: string;
-    caption: string;
-  }[];
-};
 
 export default function GuideDetailPage({
   guide,

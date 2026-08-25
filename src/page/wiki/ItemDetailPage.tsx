@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/navigation/Breadcrumb";
 import EntityLinks from "@/components/content/EntityLinks";
 import { builds, items, units } from "@/lib/data/game-content";
 import { getCompatibleUnits } from "@/lib/data/editorial-recommendations";
-import type { Item } from "@/types/content";
+import type { Item } from "@/types/game";
 import styles from "@/style/page/wiki/detail.module.css";
 
 export default function ItemDetailPage({ item }: { item: Item }) {

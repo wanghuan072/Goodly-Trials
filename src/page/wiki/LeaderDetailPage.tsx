@@ -3,7 +3,7 @@ import Breadcrumb from "@/components/navigation/Breadcrumb";
 import UnitSprite from "@/components/content/UnitSprite";
 import { builds, factions, leaders, units } from "@/lib/data/game-content";
 import { getLeaderCompanyPlan } from "@/lib/data/editorial-recommendations";
-import type { Leader } from "@/types/content";
+import type { Leader } from "@/types/game";
 import { hasCompleteLeaderCard } from "@/lib/data/record-coverage";
 import styles from "@/style/page/wiki/detail.module.css";
 

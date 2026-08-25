@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/navigation/Breadcrumb";
 import UnitCard from "@/components/content/UnitCard";
 import UnitSprite from "@/components/content/UnitSprite";
 import { builds, factions, leaders, units } from "@/lib/data/game-content";
-import type { Faction } from "@/types/content";
+import type { Faction } from "@/types/game";
 import styles from "@/style/page/wiki/detail.module.css";
 
 export default function FactionDetailPage({ faction }: { faction: Faction }) {

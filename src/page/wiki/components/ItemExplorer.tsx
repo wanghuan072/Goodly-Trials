@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Item } from "@/types/content";
+import type { Item } from "@/types/game";
 import styles from "@/style/page/wiki/explorer.module.css";
 
 const typeGroups = ["All", "One-handed", "Two-handed", "Shield", "Trinket", "Spell", "Potion", "Gear"];

@@ -5,7 +5,18 @@ import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import UnitSprite from "@/components/content/UnitSprite";
 import { activeBoardCells, BOARD_CELLS, BOARD_COLUMNS, BOARD_ROWS, followerCapLabel, followerLimitForRules, MAX_TRIAL_WEEK } from "@/lib/builder/board-rules";
 import { itemKind, itemSlotUse, type EquipmentKind } from "@/lib/builder/equipment-rules";
-import { BUILDER_PRESET_KEY, BUILDER_STORAGE_KEY, type BuilderPlanState } from "@/lib/builder/presets";
+import {
+  BUILDER_MODES,
+  BUILDER_PRESET_KEY,
+  BUILDER_STORAGE_KEY,
+  decodeBuilderPlan,
+  decodeBuilderPreset,
+  emptyBuilderPlan,
+  encodeBuilderPlan,
+  type BuilderPlanCatalog,
+  type BuilderPlanSlot,
+  type BuilderPlanState,
+} from "@/lib/builder/plan-state";
 import type { FactionSlug, Item, UnitStats } from "@/types/content";
 import styles from "@/style/page/builder/builder.module.css";
 
@@ -44,7 +55,7 @@ export type BuilderLeader = {
   stats: Pick<UnitStats, "es" | "hp" | "mp" | "str" | "agi" | "int">;
 };
 
-type BuilderSlot = { unitSlug: string; itemSlugs: string[] };
+type BuilderSlot = BuilderPlanSlot;
 type BuilderState = BuilderPlanState;
 type CatalogTab = "units" | "items" | "leaders";
 type CatalogPreview = { kind: "unit" | "item" | "leader"; slug: string } | null;
@@ -58,62 +69,7 @@ const CATALOG_TABS: ReadonlyArray<{ value: CatalogTab; label: string }> = [
 ];
 
 const DRAG_TYPE = "application/x-goodly-builder";
-const MODES = ["Theorycraft", "Single-player", "Ranked", "Multiplayer"];
-const LEGACY_SLOT_POSITIONS = [9, 10, 14, 15, 20, 21];
-
-function emptySlots(): BuilderSlot[] {
-  return Array.from({ length: BOARD_CELLS }, () => ({ unitSlug: "", itemSlugs: [] }));
-}
-
-function emptyBuild(): BuilderState {
-  return { title: "Untitled Company", mode: "Theorycraft", week: 1, leaderSlug: "", slots: emptySlots(), notes: "" };
-}
-
-function encodeBuild(build: BuilderState) {
-  const bytes = new TextEncoder().encode(JSON.stringify(build));
-  let binary = "";
-  bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-}
-
-function normalizeBuild(parsed: Partial<BuilderState>): BuilderState {
-  const sourceSlots = Array.isArray(parsed.slots) ? parsed.slots.slice(0, BOARD_CELLS).map((slot) => ({
-    unitSlug: typeof slot?.unitSlug === "string" ? slot.unitSlug : "",
-    itemSlugs: Array.isArray(slot?.itemSlugs) ? slot.itemSlugs.filter((slug): slug is string => typeof slug === "string").slice(0, 8) : [],
-  })) : [];
-  const slots = emptySlots();
-  if (sourceSlots.length <= 6) {
-    sourceSlots.forEach((slot, index) => { slots[LEGACY_SLOT_POSITIONS[index]] = slot; });
-  } else {
-    sourceSlots.forEach((slot, index) => { slots[index] = slot; });
-  }
-  return {
-    title: typeof parsed.title === "string" ? parsed.title.slice(0, 64) : "Untitled Company",
-    mode: MODES.includes(parsed.mode ?? "") ? parsed.mode as string : "Theorycraft",
-    week: typeof parsed.week === "number" ? Math.min(MAX_TRIAL_WEEK, Math.max(1, Math.floor(parsed.week))) : MAX_TRIAL_WEEK,
-    leaderSlug: typeof parsed.leaderSlug === "string" ? parsed.leaderSlug : "",
-    slots,
-    notes: typeof parsed.notes === "string" ? parsed.notes.slice(0, 280) : "",
-  };
-}
-
-function decodeBuild(value: string): BuilderState | null {
-  try {
-    const padded = value.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
-    const bytes = Uint8Array.from(atob(padded), (character) => character.charCodeAt(0));
-    return normalizeBuild(JSON.parse(new TextDecoder().decode(bytes)) as Partial<BuilderState>);
-  } catch {
-    return null;
-  }
-}
-
-function decodePreset(value: string): BuilderState | null {
-  try {
-    return normalizeBuild(JSON.parse(value) as Partial<BuilderState>);
-  } catch {
-    return null;
-  }
-}
+const MODES = BUILDER_MODES;
 
 function writeDrag(event: DragEvent, payload: DragPayload) {
   const encoded = JSON.stringify(payload);
@@ -136,7 +92,7 @@ function ResourceBar({ label, value, suffix, maximum }: { label: string; value: 
 }
 
 export default function BuilderClient({ roster, leaders, items }: { roster: BuilderRosterUnit[]; leaders: BuilderLeader[]; items: Item[] }) {
-  const [build, setBuild] = useState<BuilderState>(emptyBuild);
+  const [build, setBuild] = useState<BuilderState>(emptyBuilderPlan);
   const [ready, setReady] = useState(false);
   const [activeSlot, setActiveSlot] = useState(0);
   const [tab, setTab] = useState<CatalogTab>("leaders");
@@ -155,15 +111,21 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
   const unitBySlug = useMemo(() => new Map(roster.map((unit) => [unit.slug, unit])), [roster]);
   const itemBySlug = useMemo(() => new Map(items.map((item) => [item.slug, item])), [items]);
   const leaderBySlug = useMemo(() => new Map(leaders.map((leader) => [leader.slug, leader])), [leaders]);
+  const planCatalog = useMemo<BuilderPlanCatalog>(() => ({
+    unitFactionBySlug: new Map(roster.map((unit) => [unit.slug, unit.factionSlug])),
+    leaderFactionBySlug: new Map(leaders.map((leader) => [leader.slug, leader.factionSlug])),
+    itemSlugs: new Set(items.map((item) => item.slug)),
+    uniqueItemSlugs: new Set(items.filter((item) => item.type.includes("Unique")).map((item) => item.slug)),
+  }), [items, leaders, roster]);
 
   useEffect(() => {
     const restore = window.setTimeout(() => {
-      const queuedPreset = decodePreset(window.localStorage.getItem(BUILDER_PRESET_KEY) ?? "");
+      const queuedPreset = decodeBuilderPreset(window.localStorage.getItem(BUILDER_PRESET_KEY) ?? "", planCatalog);
       if (queuedPreset) window.localStorage.removeItem(BUILDER_PRESET_KEY);
       const hashValue = window.location.hash.startsWith("#b=") ? window.location.hash.slice(3) : "";
-      const imported = queuedPreset ?? (hashValue ? decodeBuild(hashValue) : null);
-      const saved = !imported ? decodeBuild(window.localStorage.getItem(BUILDER_STORAGE_KEY) ?? "") : null;
-      const next = imported ?? saved ?? emptyBuild();
+      const imported = queuedPreset ?? (hashValue ? decodeBuilderPlan(hashValue, planCatalog) : null);
+      const saved = !imported ? decodeBuilderPlan(window.localStorage.getItem(BUILDER_STORAGE_KEY) ?? "", planCatalog) : null;
+      const next = imported ?? saved ?? emptyBuilderPlan();
       setBuild(next);
       setTab(next.leaderSlug ? "units" : "leaders");
       setFaction("all");
@@ -172,11 +134,11 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
       setMessage(queuedPreset ? `${next.title} loaded · review and edit every position` : imported ? "Company imported and saved on this device" : saved ? "Local company restored" : "Choose or drag a leader to begin");
     }, 0);
     return () => window.clearTimeout(restore);
-  }, [leaderBySlug]);
+  }, [planCatalog]);
 
   useEffect(() => {
     if (!ready) return;
-    const encoded = encodeBuild(build);
+    const encoded = encodeBuilderPlan(build);
     window.localStorage.setItem(BUILDER_STORAGE_KEY, encoded);
   }, [build, ready]);
 
@@ -533,8 +495,33 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
     setMessage(`Week ${week} board applied · ${nextLimit} follower slots available`);
   }
 
+  async function copyShareLink() {
+    const shareUrl = new URL(window.location.pathname, window.location.origin);
+    shareUrl.hash = `b=${encodeBuilderPlan(build)}`;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(shareUrl.toString());
+      } else {
+        const field = document.createElement("textarea");
+        field.value = shareUrl.toString();
+        field.setAttribute("readonly", "");
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.appendChild(field);
+        field.select();
+        const copied = document.execCommand("copy");
+        field.remove();
+        if (!copied) throw new Error("Copy command was rejected");
+      }
+      setMessage("Share link copied · anyone with the link can import this plan");
+    } catch {
+      setMessage("Could not copy the share link · check this browser's clipboard permission");
+    }
+  }
+
   function clearBuild() {
-    setBuild(emptyBuild());
+    setBuild(emptyBuilderPlan());
     setActiveSlot(0);
     setPendingPick(null);
     setTab("leaders");
@@ -604,7 +591,10 @@ export default function BuilderClient({ roster, leaders, items }: { roster: Buil
         </div>
         <div className={styles.toolbarStatus}>
           <div><span>Current action</span><strong aria-live="polite">{message}</strong><small>Changes save automatically on this device</small></div>
-          <button className={`${styles.clearButton} ${confirmClear ? styles.confirmClear : ""}`} type="button" onBlur={() => setConfirmClear(false)} onClick={requestClearBuild}>{confirmClear ? "Confirm clear" : "Clear company"}</button>
+          <div className={styles.toolbarActions}>
+            <button className={styles.shareButton} type="button" onClick={copyShareLink}>Copy share link</button>
+            <button className={`${styles.clearButton} ${confirmClear ? styles.confirmClear : ""}`} type="button" onBlur={() => setConfirmClear(false)} onClick={requestClearBuild}>{confirmClear ? "Confirm clear" : "Clear company"}</button>
+          </div>
         </div>
       </div>
 

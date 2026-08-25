@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Pixelify_Sans } from "next/font/google";
-import Script from "next/script";
 import AppFooter from "@/components/layout/AppFooter";
 import AppHeader from "@/components/layout/AppHeader";
 import { siteConfig } from "@/config/site";
@@ -39,16 +38,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={pixel.variable}>
       <body>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-N8MNNVWQY9"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-N8MNNVWQY9');`}
-        </Script>
         <JsonLd data={{ "@context": "https://schema.org", "@graph": [{ "@type": "WebSite", "@id": `${siteConfig.url}/#website`, url: siteConfig.url, name: siteConfig.name, description: siteConfig.description, inLanguage: "en", potentialAction: { "@type": "SearchAction", target: `${siteConfig.url}/search?q={search_term_string}`, "query-input": "required name=search_term_string" } }, { "@type": "WebPage", "@id": `${siteConfig.url}/#webpage`, url: siteConfig.url, name: pageTdk["/"].title, description: pageTdk["/"].description, isPartOf: { "@id": `${siteConfig.url}/#website` }, inLanguage: "en" }, { "@type": "VideoGame", "@id": `${siteConfig.url}/#game`, name: "Goodly Trials", url: siteConfig.officialUrl, description: "A turn-based strategy game with roguelike and auto-battler elements.", genre: ["Turn-based strategy", "Roguelike", "Auto battler"], playMode: ["SinglePlayer", "MultiPlayer"], publisher: { "@type": "Organization", name: "Osborn Design Works" } }] }} />
         <a className="skip-link" href="#main-content">Skip to content</a>
         <AppHeader />

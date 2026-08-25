@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "vinext dev --hostname ::",
-    "build": "vinext build",
-    "build:sites": "vinext build",
+    "build": "vinext build && next typegen",
+    "build:sites": "vinext build && next typegen",
+    "build:next": "next build",
     "start": "vinext start",
     "lint": "eslint",
-    "test": "node --test --experimental-strip-types tests/**/*.test.ts"
+    "test": "node --test --experimental-strip-types tests/**/*.test.ts",
+    "typecheck": "next typegen && tsc --noEmit --incremental false",
+    "verify": "npm run test && npm run lint && npm run typecheck"
   },
   "engines": {
     "node": ">=22"

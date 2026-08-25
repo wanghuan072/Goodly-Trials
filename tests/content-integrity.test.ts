@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
-import { pageTdk } from "../src/seo/tdk.js";
+import { detailTdk, pageTdk } from "../src/seo/tdk.js";
 import { hasCompleteLeaderCard, hasCompleteUnitCard } from "../src/lib/data/record-coverage.ts";
 import { getCompatibleGear, getLeaderCompanyPlan } from "../src/lib/data/editorial-recommendations.ts";
 import type { Item, Leader, Unit } from "../src/types/content.ts";
@@ -54,6 +54,28 @@ test("core metadata follows the visible H1 naming convention", () => {
   assert.equal(pageTdk["/guides"].title, "Goodly Trials Guides - Tactics, Builds & Game Modes");
   assert.equal(pageTdk["/builder"].title, "Goodly Trials Builder - Plan Your Company");
   assert.equal(pageTdk["/builds"].title, "Goodly Trials Builds - Team Comps & Formations");
+});
+
+test("generated detail metadata stays readable, bounded, and unique", () => {
+  const units = read<Unit[]>("units.json");
+  const items = read<Item[]>("items.json");
+  const leaders = read<Leader[]>("leaders.json");
+  const factions = read<Array<{ name: string }>>("factions.json");
+  const guides = read<Array<{ title: string }>>("guides.json");
+  const records = [
+    ...units.map((record) => detailTdk.unit(record)),
+    ...items.map((record) => detailTdk.item(record)),
+    ...leaders.map((record) => detailTdk.leader(record)),
+    ...factions.map((record) => detailTdk.faction(record)),
+    ...guides.map((record) => detailTdk.guide(record)),
+  ];
+  const danglingConnector = /\b(?:a|an|and|at|by|for|from|in|of|on|or|the|to|with)\.$/i;
+
+  for (const record of records) {
+    assert.ok(record.description.length >= 140 && record.description.length <= 160, record.description);
+    assert.ok(!danglingConnector.test(record.description), record.description);
+  }
+  assert.equal(new Set(records.map((record) => record.title)).size, records.length);
 });
 
 test("verified base cards qualify for search-facing detail indexing", () => {

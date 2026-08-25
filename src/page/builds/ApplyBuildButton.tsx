@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { BUILDER_PRESET_KEY, builderStateFromBuild } from "@/lib/builder/presets";
+import { BUILDER_PRESET_KEY } from "@/lib/builder/plan-state";
+import { builderStateFromBuild } from "@/lib/builder/presets";
 import type { Build } from "@/types/content";
 import styles from "@/style/page/builds/builds.module.css";
 

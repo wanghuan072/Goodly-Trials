@@ -1,11 +1,6 @@
 import { BOARD_CELLS } from "@/lib/builder/board-rules";
+import type { BuilderPlanState } from "@/lib/builder/plan-state";
 import type { Build } from "@/types/content";
-
-export type BuilderPlanSlot = { unitSlug: string; itemSlugs: string[] };
-export type BuilderPlanState = { title: string; mode: string; week: number; leaderSlug: string; slots: BuilderPlanSlot[]; notes: string };
-
-export const BUILDER_STORAGE_KEY = "goodly-trials-company-builder-v2";
-export const BUILDER_PRESET_KEY = "goodly-trials-company-preset-v1";
 
 export function builderStateFromBuild(build: Build): BuilderPlanState {
   const slots = Array.from({ length: BOARD_CELLS }, () => ({ unitSlug: "", itemSlugs: [] as string[] }));

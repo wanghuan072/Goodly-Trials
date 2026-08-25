@@ -1,11 +1,28 @@
-const fillDescription = (copy) => {
-  const normalized = copy.replace(/\s+/g, " ").trim();
-  if (normalized.length >= 140 && normalized.length <= 160) return normalized;
-  if (normalized.length < 140) {
-    return `${normalized} Check the listed version before relying on an older note.`.slice(0, 160);
+const TRAILING_CONNECTOR = /\s+\b(?:a|an|and|at|by|for|from|in|of|on|or|the|to|with)$/i;
+
+const truncateDescription = (copy, maximum = 160) => {
+  if (copy.length <= maximum) return copy;
+
+  const window = copy.slice(0, maximum);
+  const lastSpace = window.lastIndexOf(" ");
+  let shortened = (lastSpace > 0 ? window.slice(0, lastSpace) : window).replace(/[,:;.!?]+$/, "");
+  while (TRAILING_CONNECTOR.test(shortened)) shortened = shortened.replace(TRAILING_CONNECTOR, "");
+  return `${shortened}.`;
+};
+
+export const fillDescription = (copy) => {
+  let normalized = copy.replace(/\s+/g, " ").trim();
+  const additions = [
+    " Check the documented version before relying on an older note.",
+    " Compare linked records before planning a company.",
+  ];
+
+  for (const addition of additions) {
+    if (normalized.length >= 140) break;
+    normalized += addition;
   }
-  const shortened = normalized.slice(0, 160);
-  return `${shortened.slice(0, shortened.lastIndexOf(" ")).replace(/[,:;]$/, "")}.`;
+
+  return truncateDescription(normalized);
 };
 
 const detailDescription = (name, topic) => fillDescription(

@@ -37,7 +37,7 @@ This site is not affiliated with, endorsed by, or operated by the developer or p
 2. Drag a unit into an available board slot. The board follows the currently documented placement limits rather than allowing an unlimited company.
 3. Drag suitable gear, trinkets, spells, or consumables onto a placed unit. The Builder shows known slot use and highlights a conflict when the public data supports one.
 4. Move cards to test adjacency, a frontline, a backline, or a flank. Read the linked unit card before assuming a tactic guarantees a result.
-5. Save the planning link or open a [Build](https://goodlytrials.org/builds) as a starting point, then change it for the run you are actually playing.
+5. Copy the planning link or open a [Build](https://goodlytrials.org/builds) as a starting point, then change it for the run you are actually playing. A shared link contains an editable draft; it does not publish the build to the site.
 
 ## Data and Version Notes
 
@@ -72,3 +72,12 @@ Email [wyong@goodlytrials.org](mailto:wyong@goodlytrials.org) with the page URL,
 - [Contact Us](https://goodlytrials.org/legal/contact-us)
 
 Copyright © 2026 Goodly Trials Wiki. All rights reserved. Goodly Trials Wiki is an independent fan site and is not affiliated with the official Goodly Trials website or its rights holders.
+
+## Development
+
+- `npm run dev` starts the Sites/vinext development server.
+- `npm run verify` runs data and rules tests, ESLint, route type generation, and TypeScript.
+- `npm run build` creates the Sites production build and leaves compatible generated route types behind.
+- `npm run build:next` verifies the optional native Next.js/Vercel production path.
+
+Copy `.env.example` only as a starting point. Keep `NEXT_PUBLIC_ALLOW_INDEXING=true` for the canonical production domain and set it to `false` for preview or staging deployments.

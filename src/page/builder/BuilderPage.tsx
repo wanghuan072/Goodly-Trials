@@ -226,7 +226,7 @@ export default function BuilderPage() {
           <div>
             <article><h3>Why can’t I place a unit in every cell?</h3><p>Available cells depend on the selected trial week. A cell can also reject a drop when it is occupied or when the company has reached its current follower limit.</p></article>
             <article><h3>Why is a unit or item blocked in the list?</h3><p>It may require a leader, a matching faction, an open follower slot, a unit already on the board, or compatible Gear or Trinket capacity. The disabled card shows why.</p></article>
-            <article><h3>Does the Builder save or share my formation?</h3><p>The plan saves automatically in the current browser on this device. It is not published as a public build and is not transferred automatically to another browser or device.</p></article>
+            <article><h3>Does the Builder save or share my formation?</h3><p>The plan saves automatically in the current browser. Use Copy share link to transfer the current draft to another browser or send it to another player; the link imports an editable copy and does not publish a public build.</p></article>
             <article><h3>Where can I check the game details?</h3><p>Use the <Link href="/wiki/units">unit pages</Link>, <Link href="/wiki/gear">gear pages</Link>, and <Link href="/guides">player guides</Link> when you want to check the cards behind a plan.</p></article>
           </div>
         </section>

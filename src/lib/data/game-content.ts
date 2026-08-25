@@ -5,6 +5,7 @@ import itemsData from "@/data/game/items.json";
 import leadersData from "@/data/game/leaders.json";
 import unitsData from "@/data/game/units.json";
 import updatesData from "@/data/game/updates.json";
+import { assertGameContent } from "@/lib/data/validate-game-content";
 import { detailTdk } from "@/seo/tdk";
 import type {
   Build,
@@ -17,8 +18,20 @@ import type {
   Unit,
 } from "@/types/content";
 
-export const units = unitsData.map((unit) => ({ ...unit, tdk: detailTdk.unit(unit) })) as Unit[];
-export const items = itemsData.map((item) => ({ ...item, tdk: detailTdk.item(item) })) as Item[];
+const rawContent: unknown = {
+  units: unitsData,
+  items: itemsData,
+  leaders: leadersData,
+  factions: factionsData,
+  guides: guidesData,
+  builds: buildsData,
+  updates: updatesData,
+};
+
+assertGameContent(rawContent);
+
+export const units: Unit[] = rawContent.units.map((unit) => ({ ...unit, tdk: detailTdk.unit(unit) }));
+export const items: Item[] = rawContent.items.map((item) => ({ ...item, tdk: detailTdk.item(item) }));
 export const traits: Trait[] = units
   .filter((unit) => unit.trait.name !== "Base card")
   .map((unit) => ({
@@ -37,11 +50,11 @@ export const traits: Trait[] = units
   source: unit.source,
   tdk: unit.tdk,
   }));
-export const leaders = leadersData.map((leader) => ({ ...leader, tdk: detailTdk.leader(leader) })) as Leader[];
-export const factions = factionsData.map((faction) => ({ ...faction, tdk: detailTdk.faction(faction) })) as Faction[];
-export const guides = guidesData.map((guide) => ({ ...guide, tdk: detailTdk.guide(guide) })) as Guide[];
-export const builds = buildsData as Build[];
-export const updates = updatesData as GameUpdate[];
+export const leaders: Leader[] = rawContent.leaders.map((leader) => ({ ...leader, tdk: detailTdk.leader(leader) }));
+export const factions: Faction[] = rawContent.factions.map((faction) => ({ ...faction, tdk: detailTdk.faction(faction) }));
+export const guides: Guide[] = rawContent.guides.map((guide) => ({ ...guide, tdk: detailTdk.guide(guide) }));
+export const builds: Build[] = rawContent.builds;
+export const updates: GameUpdate[] = rawContent.updates;
 
 export const getUnit = (slug: string) =>
   units.find((unit) => unit.slug === slug);

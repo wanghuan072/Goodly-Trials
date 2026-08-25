@@ -14,11 +14,11 @@ const read = <T>(file: string): T => JSON.parse(fs.readFileSync(path.join(dataDi
 type Slugged = { slug: string };
 type Guide = Slugged & { image: string };
 type Build = Slugged & { unitSlug: string; leaderSlug: string; placements: { unitSlug: string; itemSlugs: string[] }[] };
-type Item = Slugged & { image?: string };
+type AssetItem = Slugged & { image?: string };
 
 test("game content keeps local media and cross-record references valid", () => {
   const units = read<(Slugged & { image: string })[]>("units.json");
-  const items = read<Item[]>("items.json");
+  const items = read<AssetItem[]>("items.json");
   const leaders = read<Slugged[]>("leaders.json");
   const factions = read<(Slugged & { image: string })[]>("factions.json");
   const guides = read<Guide[]>("guides.json");
@@ -57,8 +57,8 @@ test("core metadata follows the visible H1 naming convention", () => {
 });
 
 test("verified base cards qualify for search-facing detail indexing", () => {
-  const units = read<(Slugged & { cost?: number; stats: unknown; tactic: { name: string }; source: string })[]>("units.json");
-  const leaders = read<(Slugged & { trait: { name: string; effect: string }; source: string })[]>("leaders.json");
+  const units = read<Unit[]>("units.json");
+  const leaders = read<Leader[]>("leaders.json");
 
   const fullUnits = units.filter(hasCompleteUnitCard);
   const fullLeaders = leaders.filter(hasCompleteLeaderCard);

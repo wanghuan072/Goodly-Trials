@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
-import { legacyRedirects, securityHeaders } from "./src/config/http";
+import { getSecurityHeaders, legacyRedirects } from "./src/config/http";
+
+const securityHeaders = getSecurityHeaders(process.env.NODE_ENV === "development");
 
 const nextConfig: NextConfig = {
   async redirects() {

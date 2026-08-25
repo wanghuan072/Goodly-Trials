@@ -5,7 +5,7 @@ import test from "node:test";
 import { detailTdk, pageTdk } from "../src/seo/tdk.ts";
 import { hasCompleteLeaderCard, hasCompleteUnitCard } from "../src/lib/data/record-coverage.ts";
 import { getCompatibleGear, getLeaderCompanyPlan } from "../src/lib/data/editorial-recommendations.ts";
-import { legacyRedirects, securityHeaders } from "../src/config/http.ts";
+import { getSecurityHeaders, legacyRedirects, securityHeaders } from "../src/config/http.ts";
 import type { Item, Leader, Unit } from "../src/types/game.ts";
 
 const dataDirectory = path.resolve("src/data/game");
@@ -61,6 +61,9 @@ test("site responses include the baseline security headers", () => {
   const headers = new Map(securityHeaders.map((header) => [header.key, header.value]));
 
   assert.match(headers.get("Content-Security-Policy") ?? "", /default-src 'self'/);
+  assert.doesNotMatch(headers.get("Content-Security-Policy") ?? "", /'unsafe-eval'/);
+  const developmentHeaders = new Map(getSecurityHeaders(true).map((header) => [header.key, header.value]));
+  assert.match(developmentHeaders.get("Content-Security-Policy") ?? "", /script-src[^;]*'unsafe-eval'/);
   assert.equal(headers.get("X-Content-Type-Options"), "nosniff");
   assert.equal(headers.get("Referrer-Policy"), "strict-origin-when-cross-origin");
   assert.ok(headers.has("Permissions-Policy"));
